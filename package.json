@@ -1,10 +1,10 @@
 {
-  "name": "@mergeapi/merge-sdk-node",
+  "name": "@mergeapi/merge-sdk-typescript",
   "version": "1.0.0",
-  "description": "NodeJS client for @mergeapi/merge-sdk-node",
+  "description": "NodeJS client for @mergeapi/merge-sdk-typescript",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/merge-api/merge-sdk-node.git"
+    "url": "git+https://github.com/merge-api/merge-sdk-typescript.git"
   },
   "main": "dist/api.js",
   "files": [
@@ -31,7 +31,7 @@
     "@types/node": "^15.12.2"
   },
   "bugs": {
-    "url": "https://github.com/merge-api/merge-sdk-node/issues"
+    "url": "https://github.com/merge-api/merge-sdk-typescript/issues"
   },
-  "homepage": "https://github.com/merge-api/merge-sdk-node#readme"
+  "homepage": "https://github.com/merge-api/merge-sdk-typescript#readme"
 }
