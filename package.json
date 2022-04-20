@@ -1,0 +1,37 @@
+{
+  "name": "@mergeapi/merge-sdk-node",
+  "version": "1.0.0",
+  "description": "NodeJS client for @mergeapi/merge-sdk-node",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/merge-api/merge-sdk-node.git"
+  },
+  "main": "dist/api.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/api.d.ts",
+  "scripts": {
+    "clean": "rm -Rf node_modules/ *.js",
+    "build": "tsc -p ./tsconfig.json",
+    "prepublishOnly": "npm ci --ignore-scripts && npm run build",
+    "test": "npm run build && node dist/client.js"
+  },
+  "author": "OpenAPI-Generator Contributors",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "request": "^2.81.0",
+    "@types/bluebird": "*",
+    "@types/request": "*",
+    "rewire": "^3.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^4.3.3",
+    "@types/node": "^15.12.2"
+  },
+  "bugs": {
+    "url": "https://github.com/merge-api/merge-sdk-node/issues"
+  },
+  "homepage": "https://github.com/merge-api/merge-sdk-node#readme"
+}
