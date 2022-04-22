@@ -10,10 +10,8 @@ export * from './accountToken';
 export * from './attachment';
 export * from './attachmentRequest';
 export * from './availableActions';
-export * from './categories143Enum';
-export * from './categories3d0Enum';
-export * from './category143Enum';
-export * from './category3d0Enum';
+export * from './categoriesEnum';
+export * from './categoryEnum';
 export * from './comment';
 export * from './commentEndpointRequest';
 export * from './commentRequest';
@@ -93,10 +91,8 @@ import { AccountToken } from './accountToken';
 import { Attachment } from './attachment';
 import { AttachmentRequest } from './attachmentRequest';
 import { AvailableActions } from './availableActions';
-import { Categories143Enum, Categories143EnumExpected } from './categories143Enum';
-import { Categories3d0Enum, Categories3d0EnumExpected } from './categories3d0Enum';
-import { Category143Enum, Category143EnumExpected } from './category143Enum';
-import { Category3d0Enum, Category3d0EnumExpected } from './category3d0Enum';
+import { CategoriesEnum, CategoriesEnumExpected } from './categoriesEnum';
+import { CategoryEnum, CategoryEnumExpected } from './categoryEnum';
 import { Comment } from './comment';
 import { CommentEndpointRequest } from './commentEndpointRequest';
 import { CommentRequest } from './commentRequest';
@@ -167,10 +163,8 @@ let primitives = [
 
 let enumsMap: {[index: string]: any} = {
         "AccountDetailsAndActionsStatusEnum": AccountDetailsAndActionsStatusEnumExpected,
-        "Categories143Enum": Categories143EnumExpected,
-        "Categories3d0Enum": Categories3d0EnumExpected,
-        "Category143Enum": Category143EnumExpected,
-        "Category3d0Enum": Category3d0EnumExpected,
+        "CategoriesEnum": CategoriesEnumExpected,
+        "CategoryEnum": CategoryEnumExpected,
         "EncodingEnum": EncodingEnumExpected,
         "IssueStatusEnum": IssueStatusEnumExpected,
         "MethodEnum": MethodEnumExpected,

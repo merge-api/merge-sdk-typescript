@@ -1,6 +1,6 @@
 /**
- * Merge Ticketing API
- * The unified API for building rich integrations with multiple Ticketing platforms.
+ * Merge Accounting API
+ * The unified API for building rich integrations with multiple Accounting & Finance platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev
@@ -12,7 +12,7 @@
 
 import { RequestFile } from './models';
 
-export enum Categories3d0EnumExpected {
+export enum CategoryEnumExpected {
     Hris = <any> 'hris',
     Ats = <any> 'ats',
     Accounting = <any> 'accounting',
@@ -20,4 +20,4 @@ export enum Categories3d0EnumExpected {
     Crm = <any> 'crm'
 }
 
-export type Categories3d0Enum = Categories3d0EnumExpected | string;
+export type CategoryEnum = CategoryEnumExpected | string;

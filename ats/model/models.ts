@@ -23,10 +23,8 @@ export * from './candidate';
 export * from './candidateEndpointRequest';
 export * from './candidateRequest';
 export * from './candidateResponse';
-export * from './categories143Enum';
-export * from './categories3d0Enum';
-export * from './category143Enum';
-export * from './category3d0Enum';
+export * from './categoriesEnum';
+export * from './categoryEnum';
 export * from './dataPassthroughRequest';
 export * from './debugModeLog';
 export * from './debugModelLogSummary';
@@ -141,10 +139,8 @@ import { Candidate } from './candidate';
 import { CandidateEndpointRequest } from './candidateEndpointRequest';
 import { CandidateRequest } from './candidateRequest';
 import { CandidateResponse } from './candidateResponse';
-import { Categories143Enum, Categories143EnumExpected } from './categories143Enum';
-import { Categories3d0Enum, Categories3d0EnumExpected } from './categories3d0Enum';
-import { Category143Enum, Category143EnumExpected } from './category143Enum';
-import { Category3d0Enum, Category3d0EnumExpected } from './category3d0Enum';
+import { CategoriesEnum, CategoriesEnumExpected } from './categoriesEnum';
+import { CategoryEnum, CategoryEnumExpected } from './categoryEnum';
 import { DataPassthroughRequest } from './dataPassthroughRequest';
 import { DebugModeLog } from './debugModeLog';
 import { DebugModelLogSummary } from './debugModelLogSummary';
@@ -240,10 +236,8 @@ let enumsMap: {[index: string]: any} = {
         "AccountDetailsAndActionsStatusEnum": AccountDetailsAndActionsStatusEnumExpected,
         "ActivityTypeEnum": ActivityTypeEnumExpected,
         "AttachmentTypeEnum": AttachmentTypeEnumExpected,
-        "Categories143Enum": Categories143EnumExpected,
-        "Categories3d0Enum": Categories3d0EnumExpected,
-        "Category143Enum": Category143EnumExpected,
-        "Category3d0Enum": Category3d0EnumExpected,
+        "CategoriesEnum": CategoriesEnumExpected,
+        "CategoryEnum": CategoryEnumExpected,
         "DisabilityStatusEnum": DisabilityStatusEnumExpected,
         "EmailAddressTypeEnum": EmailAddressTypeEnumExpected,
         "EncodingEnum": EncodingEnumExpected,

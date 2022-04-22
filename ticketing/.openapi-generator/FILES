@@ -37,10 +37,8 @@ model/accountToken.ts
 model/attachment.ts
 model/attachmentRequest.ts
 model/availableActions.ts
-model/categories143Enum.ts
-model/categories3d0Enum.ts
-model/category143Enum.ts
-model/category3d0Enum.ts
+model/categoriesEnum.ts
+model/categoryEnum.ts
 model/comment.ts
 model/commentEndpointRequest.ts
 model/commentRequest.ts

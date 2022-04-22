@@ -10,10 +10,8 @@ export * from './accountTypeEnum';
 export * from './availableActions';
 export * from './bankInfo';
 export * from './benefit';
-export * from './categories143Enum';
-export * from './categories3d0Enum';
-export * from './category143Enum';
-export * from './category3d0Enum';
+export * from './categoriesEnum';
+export * from './categoryEnum';
 export * from './company';
 export * from './countryEnum';
 export * from './dataPassthroughRequest';
@@ -124,10 +122,8 @@ import { AccountTypeEnum, AccountTypeEnumExpected } from './accountTypeEnum';
 import { AvailableActions } from './availableActions';
 import { BankInfo } from './bankInfo';
 import { Benefit } from './benefit';
-import { Categories143Enum, Categories143EnumExpected } from './categories143Enum';
-import { Categories3d0Enum, Categories3d0EnumExpected } from './categories3d0Enum';
-import { Category143Enum, Category143EnumExpected } from './category143Enum';
-import { Category3d0Enum, Category3d0EnumExpected } from './category3d0Enum';
+import { CategoriesEnum, CategoriesEnumExpected } from './categoriesEnum';
+import { CategoryEnum, CategoryEnumExpected } from './categoryEnum';
 import { Company } from './company';
 import { CountryEnum, CountryEnumExpected } from './countryEnum';
 import { DataPassthroughRequest } from './dataPassthroughRequest';
@@ -230,10 +226,8 @@ let primitives = [
 let enumsMap: {[index: string]: any} = {
         "AccountDetailsAndActionsStatusEnum": AccountDetailsAndActionsStatusEnumExpected,
         "AccountTypeEnum": AccountTypeEnumExpected,
-        "Categories143Enum": Categories143EnumExpected,
-        "Categories3d0Enum": Categories3d0EnumExpected,
-        "Category143Enum": Category143EnumExpected,
-        "Category3d0Enum": Category3d0EnumExpected,
+        "CategoriesEnum": CategoriesEnumExpected,
+        "CategoryEnum": CategoryEnumExpected,
         "CountryEnum": CountryEnumExpected,
         "EarningTypeEnum": EarningTypeEnumExpected,
         "EmploymentStatusEnum": EmploymentStatusEnumExpected,

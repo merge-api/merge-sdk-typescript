@@ -56,10 +56,8 @@ model/candidate.ts
 model/candidateEndpointRequest.ts
 model/candidateRequest.ts
 model/candidateResponse.ts
-model/categories143Enum.ts
-model/categories3d0Enum.ts
-model/category143Enum.ts
-model/category3d0Enum.ts
+model/categoriesEnum.ts
+model/categoryEnum.ts
 model/dataPassthroughRequest.ts
 model/debugModeLog.ts
 model/debugModelLogSummary.ts

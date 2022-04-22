@@ -13,14 +13,14 @@
 import { RequestFile } from './models';
 import { AccountDetailsAndActionsIntegration } from './accountDetailsAndActionsIntegration';
 import { AccountDetailsAndActionsStatusEnum } from './accountDetailsAndActionsStatusEnum';
-import { Category143Enum } from './category143Enum';
+import { CategoryEnum } from './categoryEnum';
 
 /**
 * # The LinkedAccount Object ### Description The `LinkedAccount` object is used to represent an end user\'s link with a specific integration.  ### Usage Example View a list of your organization\'s `LinkedAccount` objects.
 */
 export class AccountDetailsAndActions {
     'id': string;
-    'category'?: Category143Enum;
+    'category'?: CategoryEnum;
     'status': AccountDetailsAndActionsStatusEnum;
     'status_detail'?: string;
     'end_user_origin_id'?: string;
@@ -40,7 +40,7 @@ export class AccountDetailsAndActions {
         {
             "name": "category",
             "baseName": "category",
-            "type": "Category143Enum"
+            "type": "CategoryEnum"
         },
         {
             "name": "status",

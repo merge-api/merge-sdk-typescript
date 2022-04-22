@@ -11,7 +11,7 @@
  */
 
 import { RequestFile } from './models';
-import { Categories3d0Enum } from './categories3d0Enum';
+import { CategoriesEnum } from './categoriesEnum';
 
 export class AccountIntegration {
     /**
@@ -21,7 +21,7 @@ export class AccountIntegration {
     /**
     * Category or categories this integration belongs to. Multiple categories should be comma separated.<br/><br>Example: For [ats, hris], enter <i>ats,hris</i>
     */
-    'categories'?: Array<Categories3d0Enum>;
+    'categories'?: Array<CategoriesEnum>;
     /**
     * Company logo in rectangular shape. <b>Upload an image with a clear background.</b>
     */
@@ -47,7 +47,7 @@ export class AccountIntegration {
         {
             "name": "categories",
             "baseName": "categories",
-            "type": "Array<Categories3d0Enum>"
+            "type": "Array<CategoriesEnum>"
         },
         {
             "name": "image",

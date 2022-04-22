@@ -15,10 +15,8 @@ export * from './addressTypeEnum';
 export * from './availableActions';
 export * from './balanceSheet';
 export * from './cashFlowStatement';
-export * from './categories143Enum';
-export * from './categories3d0Enum';
-export * from './category143Enum';
-export * from './category3d0Enum';
+export * from './categoriesEnum';
+export * from './categoryEnum';
 export * from './classificationEnum';
 export * from './companyInfo';
 export * from './contact';
@@ -127,10 +125,8 @@ import { AddressTypeEnum, AddressTypeEnumExpected } from './addressTypeEnum';
 import { AvailableActions } from './availableActions';
 import { BalanceSheet } from './balanceSheet';
 import { CashFlowStatement } from './cashFlowStatement';
-import { Categories143Enum, Categories143EnumExpected } from './categories143Enum';
-import { Categories3d0Enum, Categories3d0EnumExpected } from './categories3d0Enum';
-import { Category143Enum, Category143EnumExpected } from './category143Enum';
-import { Category3d0Enum, Category3d0EnumExpected } from './category3d0Enum';
+import { CategoriesEnum, CategoriesEnumExpected } from './categoriesEnum';
+import { CategoryEnum, CategoryEnumExpected } from './categoryEnum';
 import { ClassificationEnum, ClassificationEnumExpected } from './classificationEnum';
 import { CompanyInfo } from './companyInfo';
 import { Contact } from './contact';
@@ -227,10 +223,8 @@ let enumsMap: {[index: string]: any} = {
         "AccountDetailsAndActionsStatusEnum": AccountDetailsAndActionsStatusEnumExpected,
         "AccountStatusEnum": AccountStatusEnumExpected,
         "AddressTypeEnum": AddressTypeEnumExpected,
-        "Categories143Enum": Categories143EnumExpected,
-        "Categories3d0Enum": Categories3d0EnumExpected,
-        "Category143Enum": Category143EnumExpected,
-        "Category3d0Enum": Category3d0EnumExpected,
+        "CategoriesEnum": CategoriesEnumExpected,
+        "CategoryEnum": CategoryEnumExpected,
         "ClassificationEnum": ClassificationEnumExpected,
         "CountryEnum": CountryEnumExpected,
         "CreditNoteStatusEnum": CreditNoteStatusEnumExpected,

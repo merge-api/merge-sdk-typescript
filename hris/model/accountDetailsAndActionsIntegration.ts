@@ -11,12 +11,12 @@
  */
 
 import { RequestFile } from './models';
-import { Categories143Enum } from './categories143Enum';
+import { CategoriesEnum } from './categoriesEnum';
 import { ModelOperation } from './modelOperation';
 
 export class AccountDetailsAndActionsIntegration {
     'name': string;
-    'categories': Array<Categories143Enum>;
+    'categories': Array<CategoriesEnum>;
     'image'?: string;
     'square_image'?: string;
     'color': string;
@@ -35,7 +35,7 @@ export class AccountDetailsAndActionsIntegration {
         {
             "name": "categories",
             "baseName": "categories",
-            "type": "Array<Categories143Enum>"
+            "type": "Array<CategoriesEnum>"
         },
         {
             "name": "image",

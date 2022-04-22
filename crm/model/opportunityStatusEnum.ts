@@ -12,11 +12,10 @@
 
 import { RequestFile } from './models';
 
-export enum Categories143EnumExpected {
-    Hris = <any> 'hris',
-    Ats = <any> 'ats',
-    Accounting = <any> 'accounting',
-    Ticketing = <any> 'ticketing'
+export enum OpportunityStatusEnumExpected {
+    Open = <any> 'OPEN',
+    Won = <any> 'WON',
+    Lost = <any> 'LOST'
 }
 
-export type Categories143Enum = Categories143EnumExpected | string;
+export type OpportunityStatusEnum = OpportunityStatusEnumExpected | string;

@@ -11,6 +11,7 @@
  */
 
 import { RequestFile } from './models';
+import { OpportunityStatusEnum } from './opportunityStatusEnum';
 
 /**
 * # The Opportunity Object ### Description The `Opportunity` object is used to represent an opportunity in the remote system. ### Usage Example TODO
@@ -36,13 +37,9 @@ export class OpportunityRequest {
     'account'?: string | null;
     'stage'?: string | null;
     /**
-    * Whether or not the opportunity is closed.
+    * The opportunity\'s status.
     */
-    'is_closed'?: boolean | null;
-    /**
-    * Whether or not the opportunity has been won.
-    */
-    'is_won'?: boolean | null;
+    'status'?: OpportunityStatusEnum | null;
     /**
     * When the opportunity\'s last activity occurred.
     */
@@ -97,14 +94,9 @@ export class OpportunityRequest {
             "type": "string"
         },
         {
-            "name": "is_closed",
-            "baseName": "is_closed",
-            "type": "boolean"
-        },
-        {
-            "name": "is_won",
-            "baseName": "is_won",
-            "type": "boolean"
+            "name": "status",
+            "baseName": "status",
+            "type": "OpportunityStatusEnum"
         },
         {
             "name": "last_activity_at",

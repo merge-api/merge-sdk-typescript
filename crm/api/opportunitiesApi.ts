@@ -184,12 +184,21 @@ export class OpportunitiesApi {
     }
     /**
      * Returns a list of `Opportunity` objects.
+     * @param accountId If provided, will only return opportunities with this account.
+     * @param createdAfter If provided, will only return objects created after this datetime.
+     * @param createdBefore If provided, will only return objects created before this datetime.
      * @param cursor The pagination cursor value.
      * @param includeDeletedData Whether to include data that was deleted in the third-party service.
      * @param includeRemoteData Whether to include the original data Merge fetched from the third-party to produce these models.
+     * @param modifiedAfter If provided, will only return objects modified after this datetime.
+     * @param modifiedBefore If provided, will only return objects modified before this datetime.
+     * @param ownerId If provided, will only return opportunities with this owner.
      * @param pageSize Number of results to return per page.
+     * @param remoteId The API provider\&#39;s ID for the given object.
+     * @param stageId If provided, will only return opportunities with this stage.
+     * @param status If provided, will only return opportunities with this status. Options: (\&#39;OPEN\&#39;, \&#39;WON\&#39;, \&#39;LOST\&#39;)
      */
-    public async opportunitiesList (cursor?: string, includeDeletedData?: boolean, includeRemoteData?: boolean, pageSize?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaginatedOpportunityList;  }> {
+    public async opportunitiesList (accountId?: string, createdAfter?: Date, createdBefore?: Date, cursor?: string, includeDeletedData?: boolean, includeRemoteData?: boolean, modifiedAfter?: Date, modifiedBefore?: Date, ownerId?: string, pageSize?: number, remoteId?: string, stageId?: string, status?: 'LOST' | 'OPEN' | 'WON', options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaginatedOpportunityList;  }> {
         const localVarPath = this.basePath + '/opportunities';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -201,6 +210,18 @@ export class OpportunitiesApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        if (accountId !== undefined) {
+            localVarQueryParameters['account_id'] = ObjectSerializer.serialize(accountId, "string");
+        }
+
+        if (createdAfter !== undefined) {
+            localVarQueryParameters['created_after'] = ObjectSerializer.serialize(createdAfter, "Date");
+        }
+
+        if (createdBefore !== undefined) {
+            localVarQueryParameters['created_before'] = ObjectSerializer.serialize(createdBefore, "Date");
+        }
 
         if (cursor !== undefined) {
             localVarQueryParameters['cursor'] = ObjectSerializer.serialize(cursor, "string");
@@ -214,8 +235,32 @@ export class OpportunitiesApi {
             localVarQueryParameters['include_remote_data'] = ObjectSerializer.serialize(includeRemoteData, "boolean");
         }
 
+        if (modifiedAfter !== undefined) {
+            localVarQueryParameters['modified_after'] = ObjectSerializer.serialize(modifiedAfter, "Date");
+        }
+
+        if (modifiedBefore !== undefined) {
+            localVarQueryParameters['modified_before'] = ObjectSerializer.serialize(modifiedBefore, "Date");
+        }
+
+        if (ownerId !== undefined) {
+            localVarQueryParameters['owner_id'] = ObjectSerializer.serialize(ownerId, "string");
+        }
+
         if (pageSize !== undefined) {
             localVarQueryParameters['page_size'] = ObjectSerializer.serialize(pageSize, "number");
+        }
+
+        if (remoteId !== undefined) {
+            localVarQueryParameters['remote_id'] = ObjectSerializer.serialize(remoteId, "string");
+        }
+
+        if (stageId !== undefined) {
+            localVarQueryParameters['stage_id'] = ObjectSerializer.serialize(stageId, "string");
+        }
+
+        if (status !== undefined) {
+            localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "'LOST' | 'OPEN' | 'WON'");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);

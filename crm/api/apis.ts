@@ -34,8 +34,8 @@ export * from './stagesApi';
 import { StagesApi } from './stagesApi';
 export * from './syncStatusApi';
 import { SyncStatusApi } from './syncStatusApi';
-export * from './tasksApi';
-import { TasksApi } from './tasksApi';
+export * from './usersApi';
+import { UsersApi } from './usersApi';
 export * from './webhookReceiversApi';
 import { WebhookReceiversApi } from './webhookReceiversApi';
 import * as http from 'http';
@@ -49,4 +49,4 @@ export class HttpError extends Error {
 
 export { RequestFile } from '../model/models';
 
-export const APIS = [AccountDetailsApi, AccountTokenApi, AccountsApi, AvailableActionsApi, ContactsApi, DeleteAccountApi, ForceResyncApi, GenerateKeyApi, IssuesApi, LeadsApi, LinkTokenApi, LinkedAccountsApi, NotesApi, OpportunitiesApi, PassthroughApi, RegenerateKeyApi, StagesApi, SyncStatusApi, TasksApi, WebhookReceiversApi];
+export const APIS = [AccountDetailsApi, AccountTokenApi, AccountsApi, AvailableActionsApi, ContactsApi, DeleteAccountApi, ForceResyncApi, GenerateKeyApi, IssuesApi, LeadsApi, LinkTokenApi, LinkedAccountsApi, NotesApi, OpportunitiesApi, PassthroughApi, RegenerateKeyApi, StagesApi, SyncStatusApi, UsersApi, WebhookReceiversApi];

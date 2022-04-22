@@ -11,13 +11,13 @@
  */
 
 import { RequestFile } from './models';
-import { Categories143Enum } from './categories143Enum';
+import { CategoriesEnum } from './categoriesEnum';
 
 export class EndUserDetailsRequest {
     'end_user_email_address': string;
     'end_user_organization_name': string;
     'end_user_origin_id': string;
-    'categories': Array<Categories143Enum>;
+    'categories': Array<CategoriesEnum>;
     /**
     * The slug of a specific pre-selected integration for this linking flow token, for examples of slugs see https://www.merge.dev/docs/basics/integration-metadata
     */
@@ -48,7 +48,7 @@ export class EndUserDetailsRequest {
         {
             "name": "categories",
             "baseName": "categories",
-            "type": "Array<Categories143Enum>"
+            "type": "Array<CategoriesEnum>"
         },
         {
             "name": "integration",

@@ -1,6 +1,6 @@
 /**
- * Merge Ticketing API
- * The unified API for building rich integrations with multiple Ticketing platforms.
+ * Merge ATS API
+ * The unified API for building rich integrations with multiple Applicant Tracking System platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev
@@ -12,11 +12,12 @@
 
 import { RequestFile } from './models';
 
-export enum Category143EnumExpected {
+export enum CategoriesEnumExpected {
     Hris = <any> 'hris',
     Ats = <any> 'ats',
     Accounting = <any> 'accounting',
-    Ticketing = <any> 'ticketing'
+    Ticketing = <any> 'ticketing',
+    Crm = <any> 'crm'
 }
 
-export type Category143Enum = Category143EnumExpected | string;
+export type CategoriesEnum = CategoriesEnumExpected | string;
