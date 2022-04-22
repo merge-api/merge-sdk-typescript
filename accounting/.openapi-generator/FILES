@@ -51,10 +51,8 @@ model/addressTypeEnum.ts
 model/availableActions.ts
 model/balanceSheet.ts
 model/cashFlowStatement.ts
-model/categories143Enum.ts
-model/categories3d0Enum.ts
-model/category143Enum.ts
-model/category3d0Enum.ts
+model/categoriesEnum.ts
+model/categoryEnum.ts
 model/classificationEnum.ts
 model/companyInfo.ts
 model/contact.ts

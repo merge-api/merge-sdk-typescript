@@ -21,7 +21,7 @@ api/passthroughApi.ts
 api/regenerateKeyApi.ts
 api/stagesApi.ts
 api/syncStatusApi.ts
-api/tasksApi.ts
+api/usersApi.ts
 api/webhookReceiversApi.ts
 api_namespaced.ts
 git_push.sh
@@ -41,10 +41,8 @@ model/cRMAccountEndpointRequest.ts
 model/cRMAccountResponse.ts
 model/cRMContactEndpointRequest.ts
 model/cRMContactResponse.ts
-model/categories143Enum.ts
-model/categories3d0Enum.ts
-model/category143Enum.ts
-model/category3d0Enum.ts
+model/categoriesEnum.ts
+model/categoryEnum.ts
 model/contact.ts
 model/contactRequest.ts
 model/countryEnum.ts
@@ -78,6 +76,7 @@ model/opportunity.ts
 model/opportunityEndpointRequest.ts
 model/opportunityRequest.ts
 model/opportunityResponse.ts
+model/opportunityStatusEnum.ts
 model/paginatedAccountDetailsAndActionsList.ts
 model/paginatedAccountList.ts
 model/paginatedContactList.ts
@@ -87,7 +86,7 @@ model/paginatedNoteList.ts
 model/paginatedOpportunityList.ts
 model/paginatedStageList.ts
 model/paginatedSyncStatusList.ts
-model/paginatedTaskList.ts
+model/paginatedUserList.ts
 model/phoneNumber.ts
 model/phoneNumberRequest.ts
 model/remoteData.ts
@@ -99,10 +98,7 @@ model/requestFormatEnum.ts
 model/stage.ts
 model/syncStatus.ts
 model/syncStatusStatusEnum.ts
-model/task.ts
-model/taskEndpointRequest.ts
-model/taskRequest.ts
-model/taskResponse.ts
+model/user.ts
 model/validationProblemSource.ts
 model/warningValidationProblem.ts
 model/webhookReceiver.ts

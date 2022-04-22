@@ -16,10 +16,8 @@ export * from './cRMAccountEndpointRequest';
 export * from './cRMAccountResponse';
 export * from './cRMContactEndpointRequest';
 export * from './cRMContactResponse';
-export * from './categories143Enum';
-export * from './categories3d0Enum';
-export * from './category143Enum';
-export * from './category3d0Enum';
+export * from './categoriesEnum';
+export * from './categoryEnum';
 export * from './contact';
 export * from './contactRequest';
 export * from './countryEnum';
@@ -52,6 +50,7 @@ export * from './opportunity';
 export * from './opportunityEndpointRequest';
 export * from './opportunityRequest';
 export * from './opportunityResponse';
+export * from './opportunityStatusEnum';
 export * from './paginatedAccountDetailsAndActionsList';
 export * from './paginatedAccountList';
 export * from './paginatedContactList';
@@ -61,7 +60,7 @@ export * from './paginatedNoteList';
 export * from './paginatedOpportunityList';
 export * from './paginatedStageList';
 export * from './paginatedSyncStatusList';
-export * from './paginatedTaskList';
+export * from './paginatedUserList';
 export * from './phoneNumber';
 export * from './phoneNumberRequest';
 export * from './remoteData';
@@ -73,10 +72,7 @@ export * from './requestFormatEnum';
 export * from './stage';
 export * from './syncStatus';
 export * from './syncStatusStatusEnum';
-export * from './task';
-export * from './taskEndpointRequest';
-export * from './taskRequest';
-export * from './taskResponse';
+export * from './user';
 export * from './validationProblemSource';
 export * from './warningValidationProblem';
 export * from './webhookReceiver';
@@ -111,10 +107,8 @@ import { CRMAccountEndpointRequest } from './cRMAccountEndpointRequest';
 import { CRMAccountResponse } from './cRMAccountResponse';
 import { CRMContactEndpointRequest } from './cRMContactEndpointRequest';
 import { CRMContactResponse } from './cRMContactResponse';
-import { Categories143Enum, Categories143EnumExpected } from './categories143Enum';
-import { Categories3d0Enum, Categories3d0EnumExpected } from './categories3d0Enum';
-import { Category143Enum, Category143EnumExpected } from './category143Enum';
-import { Category3d0Enum, Category3d0EnumExpected } from './category3d0Enum';
+import { CategoriesEnum, CategoriesEnumExpected } from './categoriesEnum';
+import { CategoryEnum, CategoryEnumExpected } from './categoryEnum';
 import { Contact } from './contact';
 import { ContactRequest } from './contactRequest';
 import { CountryEnum, CountryEnumExpected } from './countryEnum';
@@ -147,6 +141,7 @@ import { Opportunity } from './opportunity';
 import { OpportunityEndpointRequest } from './opportunityEndpointRequest';
 import { OpportunityRequest } from './opportunityRequest';
 import { OpportunityResponse } from './opportunityResponse';
+import { OpportunityStatusEnum, OpportunityStatusEnumExpected } from './opportunityStatusEnum';
 import { PaginatedAccountDetailsAndActionsList } from './paginatedAccountDetailsAndActionsList';
 import { PaginatedAccountList } from './paginatedAccountList';
 import { PaginatedContactList } from './paginatedContactList';
@@ -156,7 +151,7 @@ import { PaginatedNoteList } from './paginatedNoteList';
 import { PaginatedOpportunityList } from './paginatedOpportunityList';
 import { PaginatedStageList } from './paginatedStageList';
 import { PaginatedSyncStatusList } from './paginatedSyncStatusList';
-import { PaginatedTaskList } from './paginatedTaskList';
+import { PaginatedUserList } from './paginatedUserList';
 import { PhoneNumber } from './phoneNumber';
 import { PhoneNumberRequest } from './phoneNumberRequest';
 import { RemoteData } from './remoteData';
@@ -168,10 +163,7 @@ import { RequestFormatEnum, RequestFormatEnumExpected } from './requestFormatEnu
 import { Stage } from './stage';
 import { SyncStatus } from './syncStatus';
 import { SyncStatusStatusEnum, SyncStatusStatusEnumExpected } from './syncStatusStatusEnum';
-import { Task } from './task';
-import { TaskEndpointRequest } from './taskEndpointRequest';
-import { TaskRequest } from './taskRequest';
-import { TaskResponse } from './taskResponse';
+import { User } from './user';
 import { ValidationProblemSource } from './validationProblemSource';
 import { WarningValidationProblem } from './warningValidationProblem';
 import { WebhookReceiver } from './webhookReceiver';
@@ -192,14 +184,13 @@ let primitives = [
 let enumsMap: {[index: string]: any} = {
         "AccountDetailsAndActionsStatusEnum": AccountDetailsAndActionsStatusEnumExpected,
         "AddressTypeEnum": AddressTypeEnumExpected,
-        "Categories143Enum": Categories143EnumExpected,
-        "Categories3d0Enum": Categories3d0EnumExpected,
-        "Category143Enum": Category143EnumExpected,
-        "Category3d0Enum": Category3d0EnumExpected,
+        "CategoriesEnum": CategoriesEnumExpected,
+        "CategoryEnum": CategoryEnumExpected,
         "CountryEnum": CountryEnumExpected,
         "EncodingEnum": EncodingEnumExpected,
         "IssueStatusEnum": IssueStatusEnumExpected,
         "MethodEnum": MethodEnumExpected,
+        "OpportunityStatusEnum": OpportunityStatusEnumExpected,
         "RequestFormatEnum": RequestFormatEnumExpected,
         "SyncStatusStatusEnum": SyncStatusStatusEnumExpected,
 }
@@ -256,7 +247,7 @@ let typeMap: {[index: string]: any} = {
     "PaginatedOpportunityList": PaginatedOpportunityList,
     "PaginatedStageList": PaginatedStageList,
     "PaginatedSyncStatusList": PaginatedSyncStatusList,
-    "PaginatedTaskList": PaginatedTaskList,
+    "PaginatedUserList": PaginatedUserList,
     "PhoneNumber": PhoneNumber,
     "PhoneNumberRequest": PhoneNumberRequest,
     "RemoteData": RemoteData,
@@ -266,10 +257,7 @@ let typeMap: {[index: string]: any} = {
     "RemoteResponse": RemoteResponse,
     "Stage": Stage,
     "SyncStatus": SyncStatus,
-    "Task": Task,
-    "TaskEndpointRequest": TaskEndpointRequest,
-    "TaskRequest": TaskRequest,
-    "TaskResponse": TaskResponse,
+    "User": User,
     "ValidationProblemSource": ValidationProblemSource,
     "WarningValidationProblem": WarningValidationProblem,
     "WebhookReceiver": WebhookReceiver,

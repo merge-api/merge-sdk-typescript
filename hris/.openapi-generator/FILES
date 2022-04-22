@@ -42,10 +42,8 @@ model/accountTypeEnum.ts
 model/availableActions.ts
 model/bankInfo.ts
 model/benefit.ts
-model/categories143Enum.ts
-model/categories3d0Enum.ts
-model/category143Enum.ts
-model/category3d0Enum.ts
+model/categoriesEnum.ts
+model/categoryEnum.ts
 model/company.ts
 model/countryEnum.ts
 model/dataPassthroughRequest.ts

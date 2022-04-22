@@ -1,6 +1,6 @@
 {
   "name": "@mergeapi/merge-sdk-typescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "NodeJS client for @mergeapi/merge-sdk-typescript",
   "repository": {
     "type": "git",

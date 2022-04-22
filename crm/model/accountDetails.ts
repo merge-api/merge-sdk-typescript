@@ -11,13 +11,13 @@
  */
 
 import { RequestFile } from './models';
-import { Category3d0Enum } from './category3d0Enum';
+import { CategoryEnum } from './categoryEnum';
 
 export class AccountDetails {
     'id'?: string;
     'integration'?: string;
     'integration_slug'?: string;
-    'category'?: Category3d0Enum | null;
+    'category'?: CategoryEnum | null;
     'end_user_origin_id'?: string;
     'end_user_organization_name'?: string;
     'end_user_email_address'?: string;
@@ -45,7 +45,7 @@ export class AccountDetails {
         {
             "name": "category",
             "baseName": "category",
-            "type": "Category3d0Enum"
+            "type": "CategoryEnum"
         },
         {
             "name": "end_user_origin_id",

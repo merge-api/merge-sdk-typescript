@@ -184,12 +184,21 @@ export class NotesApi {
     }
     /**
      * Returns a list of `Note` objects.
+     * @param accountId If provided, will only return notes with this account.
+     * @param contactId If provided, will only return notes with this contact.
+     * @param createdAfter If provided, will only return objects created after this datetime.
+     * @param createdBefore If provided, will only return objects created before this datetime.
      * @param cursor The pagination cursor value.
      * @param includeDeletedData Whether to include data that was deleted in the third-party service.
      * @param includeRemoteData Whether to include the original data Merge fetched from the third-party to produce these models.
+     * @param modifiedAfter If provided, will only return objects modified after this datetime.
+     * @param modifiedBefore If provided, will only return objects modified before this datetime.
+     * @param opportunityId If provided, will only return notes with this opportunity.
+     * @param ownerId If provided, will only return notes with this owner.
      * @param pageSize Number of results to return per page.
+     * @param remoteId The API provider\&#39;s ID for the given object.
      */
-    public async notesList (cursor?: string, includeDeletedData?: boolean, includeRemoteData?: boolean, pageSize?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaginatedNoteList;  }> {
+    public async notesList (accountId?: string, contactId?: string, createdAfter?: Date, createdBefore?: Date, cursor?: string, includeDeletedData?: boolean, includeRemoteData?: boolean, modifiedAfter?: Date, modifiedBefore?: Date, opportunityId?: string, ownerId?: string, pageSize?: number, remoteId?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: PaginatedNoteList;  }> {
         const localVarPath = this.basePath + '/notes';
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
@@ -201,6 +210,22 @@ export class NotesApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        if (accountId !== undefined) {
+            localVarQueryParameters['account_id'] = ObjectSerializer.serialize(accountId, "string");
+        }
+
+        if (contactId !== undefined) {
+            localVarQueryParameters['contact_id'] = ObjectSerializer.serialize(contactId, "string");
+        }
+
+        if (createdAfter !== undefined) {
+            localVarQueryParameters['created_after'] = ObjectSerializer.serialize(createdAfter, "Date");
+        }
+
+        if (createdBefore !== undefined) {
+            localVarQueryParameters['created_before'] = ObjectSerializer.serialize(createdBefore, "Date");
+        }
 
         if (cursor !== undefined) {
             localVarQueryParameters['cursor'] = ObjectSerializer.serialize(cursor, "string");
@@ -214,8 +239,28 @@ export class NotesApi {
             localVarQueryParameters['include_remote_data'] = ObjectSerializer.serialize(includeRemoteData, "boolean");
         }
 
+        if (modifiedAfter !== undefined) {
+            localVarQueryParameters['modified_after'] = ObjectSerializer.serialize(modifiedAfter, "Date");
+        }
+
+        if (modifiedBefore !== undefined) {
+            localVarQueryParameters['modified_before'] = ObjectSerializer.serialize(modifiedBefore, "Date");
+        }
+
+        if (opportunityId !== undefined) {
+            localVarQueryParameters['opportunity_id'] = ObjectSerializer.serialize(opportunityId, "string");
+        }
+
+        if (ownerId !== undefined) {
+            localVarQueryParameters['owner_id'] = ObjectSerializer.serialize(ownerId, "string");
+        }
+
         if (pageSize !== undefined) {
             localVarQueryParameters['page_size'] = ObjectSerializer.serialize(pageSize, "number");
+        }
+
+        if (remoteId !== undefined) {
+            localVarQueryParameters['remote_id'] = ObjectSerializer.serialize(remoteId, "string");
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
