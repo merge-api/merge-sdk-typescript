@@ -1,37 +1,15 @@
 {
   "name": "@mergeapi/merge-sdk-typescript",
   "version": "1.0.1",
-  "description": "NodeJS client for @mergeapi/merge-sdk-typescript",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/merge-api/merge-sdk-typescript.git"
-  },
-  "main": "dist/api.js",
-  "files": [
-    "dist"
-  ],
-  "types": "dist/api.d.ts",
+  "description": "OpenAPI client for @mergeapi/merge-sdk-typescript",
+  "author": "OpenAPI-Generator",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
-    "clean": "rm -Rf node_modules/ *.js",
-    "build": "tsc -p ./tsconfig.json",
-    "prepublishOnly": "npm ci --ignore-scripts && npm run build",
-    "test": "npm run build && node dist/client.js"
-  },
-  "author": "OpenAPI-Generator Contributors",
-  "license": "MIT",
-  "dependencies": {
-    "bluebird": "^3.5.0",
-    "request": "^2.81.0",
-    "@types/bluebird": "*",
-    "@types/request": "*",
-    "rewire": "^3.0.2"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "devDependencies": {
-    "typescript": "^4.3.3",
-    "@types/node": "^15.12.2"
-  },
-  "bugs": {
-    "url": "https://github.com/merge-api/merge-sdk-typescript/issues"
-  },
-  "homepage": "https://github.com/merge-api/merge-sdk-typescript#readme"
+    "typescript": "^2.4"
+  }
 }
