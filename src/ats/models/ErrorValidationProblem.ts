@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     ValidationProblemSource,
     ValidationProblemSourceFromJSON,
@@ -54,13 +54,13 @@ export interface ErrorValidationProblem {
     problem_type: string;
 }
 
-export function ErrorValidationProblemFromJSON(json: JSONValue): ErrorValidationProblem {
+export function ErrorValidationProblemFromJSON(json: JSONValue): ErrorValidationProblem | null {
     return ErrorValidationProblemFromJSONTyped(json);
 }
 
-export function ErrorValidationProblemFromJSONTyped(json: JSONValue): ErrorValidationProblem {
+export function ErrorValidationProblemFromJSONTyped(json: JSONValue): ErrorValidationProblem | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -72,9 +72,9 @@ export function ErrorValidationProblemFromJSONTyped(json: JSONValue): ErrorValid
     };
 }
 
-export function ErrorValidationProblemToJSON(value?: ErrorValidationProblem | null): JSONValue {
+export function ErrorValidationProblemToJSON(value?: ErrorValidationProblem): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

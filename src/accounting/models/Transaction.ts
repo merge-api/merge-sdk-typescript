@@ -12,22 +12,25 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
     CurrencyEnumFromJSONTyped,
     CurrencyEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     TransactionLineItem,
     TransactionLineItemFromJSON,
     TransactionLineItemFromJSONTyped,
     TransactionLineItemToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -110,13 +113,13 @@ export interface Transaction {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TransactionFromJSON(json: JSONValue): Transaction {
+export function TransactionFromJSON(json: JSONValue): Transaction | null {
     return TransactionFromJSONTyped(json);
 }
 
-export function TransactionFromJSONTyped(json: JSONValue): Transaction {
+export function TransactionFromJSONTyped(json: JSONValue): Transaction | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -136,9 +139,9 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction {
     };
 }
 
-export function TransactionToJSON(value?: Transaction | null): JSONValue {
+export function TransactionToJSON(value?: Transaction): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

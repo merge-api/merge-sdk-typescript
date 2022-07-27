@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Comment Object
@@ -76,13 +76,13 @@ export interface CommentRequest {
     remote_created_at?: Date | null;
 }
 
-export function CommentRequestFromJSON(json: JSONValue): CommentRequest {
+export function CommentRequestFromJSON(json: JSONValue): CommentRequest | null {
     return CommentRequestFromJSONTyped(json);
 }
 
-export function CommentRequestFromJSONTyped(json: JSONValue): CommentRequest {
+export function CommentRequestFromJSONTyped(json: JSONValue): CommentRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -98,9 +98,9 @@ export function CommentRequestFromJSONTyped(json: JSONValue): CommentRequest {
     };
 }
 
-export function CommentRequestToJSON(value?: CommentRequest | null): JSONValue {
+export function CommentRequestToJSON(value?: CommentRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

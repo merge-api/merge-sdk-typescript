@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EmploymentStatusEnum,
     EmploymentStatusEnumFromJSON,
@@ -221,13 +221,13 @@ export interface EmployeeRequest {
     custom_fields?: { [key: string]: any; } | null;
 }
 
-export function EmployeeRequestFromJSON(json: JSONValue): EmployeeRequest {
+export function EmployeeRequestFromJSON(json: JSONValue): EmployeeRequest | null {
     return EmployeeRequestFromJSONTyped(json);
 }
 
-export function EmployeeRequestFromJSONTyped(json: JSONValue): EmployeeRequest {
+export function EmployeeRequestFromJSONTyped(json: JSONValue): EmployeeRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -264,9 +264,9 @@ export function EmployeeRequestFromJSONTyped(json: JSONValue): EmployeeRequest {
     };
 }
 
-export function EmployeeRequestToJSON(value?: EmployeeRequest | null): JSONValue {
+export function EmployeeRequestToJSON(value?: EmployeeRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

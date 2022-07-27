@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
@@ -27,11 +27,14 @@ import {
     InvoiceTypeEnumFromJSON,
     InvoiceTypeEnumFromJSONTyped,
     InvoiceTypeEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -167,13 +170,13 @@ export interface Invoice {
     readonly remote_was_deleted?: boolean;
 }
 
-export function InvoiceFromJSON(json: JSONValue): Invoice {
+export function InvoiceFromJSON(json: JSONValue): Invoice | null {
     return InvoiceFromJSONTyped(json);
 }
 
-export function InvoiceFromJSONTyped(json: JSONValue): Invoice {
+export function InvoiceFromJSONTyped(json: JSONValue): Invoice | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -201,9 +204,9 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice {
     };
 }
 
-export function InvoiceToJSON(value?: Invoice | null): JSONValue {
+export function InvoiceToJSON(value?: Invoice): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

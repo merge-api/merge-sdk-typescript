@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     TicketStatusEnum,
     TicketStatusEnumFromJSON,
@@ -125,13 +125,13 @@ export interface TicketRequest {
     remote_updated_at?: Date | null;
 }
 
-export function TicketRequestFromJSON(json: JSONValue): TicketRequest {
+export function TicketRequestFromJSON(json: JSONValue): TicketRequest | null {
     return TicketRequestFromJSONTyped(json);
 }
 
-export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest {
+export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -154,9 +154,9 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest {
     };
 }
 
-export function TicketRequestToJSON(value?: TicketRequest | null): JSONValue {
+export function TicketRequestToJSON(value?: TicketRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

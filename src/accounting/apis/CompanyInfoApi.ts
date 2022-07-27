@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     CompanyInfo,
     CompanyInfoFromJSON,
     CompanyInfoToJSON,
-    PaginatedCompanyInfoList,
-    PaginatedCompanyInfoListFromJSON,
-    PaginatedCompanyInfoListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface CompanyInfoListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class CompanyInfoApi extends runtime.BaseAPI {
     /**
      * Returns a list of `CompanyInfo` objects.
      */
-    async companyInfoListRaw(requestParameters: CompanyInfoListRequest): Promise<runtime.ApiResponse<PaginatedCompanyInfoList>> {
+    async companyInfoListRaw(requestParameters: CompanyInfoListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CompanyInfo>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling companyInfoList.');
         }
@@ -99,8 +102,15 @@ export class CompanyInfoApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class CompanyInfoApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedCompanyInfoListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `CompanyInfo` objects.
      */
-    async companyInfoList(requestParameters: CompanyInfoListRequest): Promise<PaginatedCompanyInfoList> {
+    async companyInfoList(requestParameters: CompanyInfoListRequest): Promise<MergePaginatedResponse<CompanyInfo>> {
         const response = await this.companyInfoListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class CompanyInfoApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

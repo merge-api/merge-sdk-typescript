@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AccountIntegration,
     AccountIntegrationFromJSON,
@@ -57,13 +57,13 @@ export interface AvailableActions {
     available_model_operations?: Array<ModelOperation>;
 }
 
-export function AvailableActionsFromJSON(json: JSONValue): AvailableActions {
+export function AvailableActionsFromJSON(json: JSONValue): AvailableActions | null {
     return AvailableActionsFromJSONTyped(json);
 }
 
-export function AvailableActionsFromJSONTyped(json: JSONValue): AvailableActions {
+export function AvailableActionsFromJSONTyped(json: JSONValue): AvailableActions | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -74,9 +74,9 @@ export function AvailableActionsFromJSONTyped(json: JSONValue): AvailableActions
     };
 }
 
-export function AvailableActionsToJSON(value?: AvailableActions | null): JSONValue {
+export function AvailableActionsToJSON(value?: AvailableActions): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

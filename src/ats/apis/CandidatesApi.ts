@@ -13,7 +13,7 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Candidate,
     CandidateFromJSON,
@@ -33,10 +33,13 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    PaginatedCandidateList,
-    PaginatedCandidateListFromJSON,
-    PaginatedCandidateListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface CandidatesCreateRequest {
     xAccountToken: string;
@@ -111,8 +114,15 @@ export class CandidatesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -160,8 +170,15 @@ export class CandidatesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -186,7 +203,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Candidate` objects.
      */
-    async candidatesListRaw(requestParameters: CandidatesListRequest): Promise<runtime.ApiResponse<PaginatedCandidateList>> {
+    async candidatesListRaw(requestParameters: CandidatesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Candidate>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesList.');
         }
@@ -243,8 +260,15 @@ export class CandidatesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -254,13 +278,13 @@ export class CandidatesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedCandidateListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Candidate` objects.
      */
-    async candidatesList(requestParameters: CandidatesListRequest): Promise<PaginatedCandidateList> {
+    async candidatesList(requestParameters: CandidatesListRequest): Promise<MergePaginatedResponse<Candidate>> {
         const response = await this.candidatesListRaw(requestParameters);
         return await response.value();
     }
@@ -281,8 +305,15 @@ export class CandidatesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -327,8 +358,15 @@ export class CandidatesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

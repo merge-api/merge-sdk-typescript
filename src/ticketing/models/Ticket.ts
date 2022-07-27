@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     TicketStatusEnum,
     TicketStatusEnumFromJSON,
     TicketStatusEnumFromJSONTyped,
     TicketStatusEnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -147,13 +150,13 @@ export interface Ticket {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TicketFromJSON(json: JSONValue): Ticket {
+export function TicketFromJSON(json: JSONValue): Ticket | null {
     return TicketFromJSONTyped(json);
 }
 
-export function TicketFromJSONTyped(json: JSONValue): Ticket {
+export function TicketFromJSONTyped(json: JSONValue): Ticket | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -179,9 +182,9 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket {
     };
 }
 
-export function TicketToJSON(value?: Ticket | null): JSONValue {
+export function TicketToJSON(value?: Ticket): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

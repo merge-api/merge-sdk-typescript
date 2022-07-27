@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedTransactionList,
-    PaginatedTransactionListFromJSON,
-    PaginatedTransactionListToJSON,
+    
     Transaction,
     TransactionFromJSON,
     TransactionToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface TransactionsListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class TransactionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Transaction` objects.
      */
-    async transactionsListRaw(requestParameters: TransactionsListRequest): Promise<runtime.ApiResponse<PaginatedTransactionList>> {
+    async transactionsListRaw(requestParameters: TransactionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Transaction>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling transactionsList.');
         }
@@ -99,8 +102,15 @@ export class TransactionsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class TransactionsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedTransactionListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Transaction` objects.
      */
-    async transactionsList(requestParameters: TransactionsListRequest): Promise<PaginatedTransactionList> {
+    async transactionsList(requestParameters: TransactionsListRequest): Promise<MergePaginatedResponse<Transaction>> {
         const response = await this.transactionsListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class TransactionsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

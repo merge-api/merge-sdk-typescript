@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     IssueStatusEnum,
     IssueStatusEnumFromJSON,
@@ -72,13 +72,13 @@ export interface Issue {
     readonly is_muted?: boolean;
 }
 
-export function IssueFromJSON(json: JSONValue): Issue {
+export function IssueFromJSON(json: JSONValue): Issue | null {
     return IssueFromJSONTyped(json);
 }
 
-export function IssueFromJSONTyped(json: JSONValue): Issue {
+export function IssueFromJSONTyped(json: JSONValue): Issue | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -93,9 +93,9 @@ export function IssueFromJSONTyped(json: JSONValue): Issue {
     };
 }
 
-export function IssueToJSON(value?: Issue | null): JSONValue {
+export function IssueToJSON(value?: Issue): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

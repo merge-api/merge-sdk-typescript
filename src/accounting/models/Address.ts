@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AddressTypeEnum,
     AddressTypeEnumFromJSON,
@@ -85,13 +85,13 @@ export interface Address {
     zip_code?: string | null;
 }
 
-export function AddressFromJSON(json: JSONValue): Address {
+export function AddressFromJSON(json: JSONValue): Address | null {
     return AddressFromJSONTyped(json);
 }
 
-export function AddressFromJSONTyped(json: JSONValue): Address {
+export function AddressFromJSONTyped(json: JSONValue): Address | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -106,9 +106,9 @@ export function AddressFromJSONTyped(json: JSONValue): Address {
     };
 }
 
-export function AddressToJSON(value?: Address | null): JSONValue {
+export function AddressToJSON(value?: Address): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

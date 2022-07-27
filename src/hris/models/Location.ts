@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CountryEnum,
     CountryEnumFromJSON,
@@ -23,11 +23,14 @@ import {
     LocationTypeEnumFromJSON,
     LocationTypeEnumFromJSONTyped,
     LocationTypeEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -121,13 +124,13 @@ export interface Location {
     readonly remote_was_deleted?: boolean;
 }
 
-export function LocationFromJSON(json: JSONValue): Location {
+export function LocationFromJSON(json: JSONValue): Location | null {
     return LocationFromJSONTyped(json);
 }
 
-export function LocationFromJSONTyped(json: JSONValue): Location {
+export function LocationFromJSONTyped(json: JSONValue): Location | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -148,9 +151,9 @@ export function LocationFromJSONTyped(json: JSONValue): Location {
     };
 }
 
-export function LocationToJSON(value?: Location | null): JSONValue {
+export function LocationToJSON(value?: Location): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

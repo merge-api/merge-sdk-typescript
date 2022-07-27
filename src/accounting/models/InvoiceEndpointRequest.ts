@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     InvoiceRequest,
     InvoiceRequestFromJSON,
@@ -36,13 +36,13 @@ export interface InvoiceEndpointRequest {
     model: InvoiceRequest;
 }
 
-export function InvoiceEndpointRequestFromJSON(json: JSONValue): InvoiceEndpointRequest {
+export function InvoiceEndpointRequestFromJSON(json: JSONValue): InvoiceEndpointRequest | null {
     return InvoiceEndpointRequestFromJSONTyped(json);
 }
 
-export function InvoiceEndpointRequestFromJSONTyped(json: JSONValue): InvoiceEndpointRequest {
+export function InvoiceEndpointRequestFromJSONTyped(json: JSONValue): InvoiceEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function InvoiceEndpointRequestFromJSONTyped(json: JSONValue): InvoiceEnd
     };
 }
 
-export function InvoiceEndpointRequestToJSON(value?: InvoiceEndpointRequest | null): JSONValue {
+export function InvoiceEndpointRequestToJSON(value?: InvoiceEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -115,13 +118,13 @@ export interface Application {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ApplicationFromJSON(json: JSONValue): Application {
+export function ApplicationFromJSON(json: JSONValue): Application | null {
     return ApplicationFromJSONTyped(json);
 }
 
-export function ApplicationFromJSONTyped(json: JSONValue): Application {
+export function ApplicationFromJSONTyped(json: JSONValue): Application | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -142,9 +145,9 @@ export function ApplicationFromJSONTyped(json: JSONValue): Application {
     };
 }
 
-export function ApplicationToJSON(value?: Application | null): JSONValue {
+export function ApplicationToJSON(value?: Application): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

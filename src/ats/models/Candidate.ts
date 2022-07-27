@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EmailAddress,
     EmailAddressFromJSON,
@@ -23,15 +23,18 @@ import {
     PhoneNumberFromJSON,
     PhoneNumberFromJSONTyped,
     PhoneNumberToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     Url,
     UrlFromJSON,
     UrlFromJSONTyped,
     UrlToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -172,13 +175,13 @@ export interface Candidate {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CandidateFromJSON(json: JSONValue): Candidate {
+export function CandidateFromJSON(json: JSONValue): Candidate | null {
     return CandidateFromJSONTyped(json);
 }
 
-export function CandidateFromJSONTyped(json: JSONValue): Candidate {
+export function CandidateFromJSONTyped(json: JSONValue): Candidate | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -207,9 +210,9 @@ export function CandidateFromJSONTyped(json: JSONValue): Candidate {
     };
 }
 
-export function CandidateToJSON(value?: Candidate | null): JSONValue {
+export function CandidateToJSON(value?: Candidate): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -77,13 +80,13 @@ export interface Company {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CompanyFromJSON(json: JSONValue): Company {
+export function CompanyFromJSON(json: JSONValue): Company | null {
     return CompanyFromJSONTyped(json);
 }
 
-export function CompanyFromJSONTyped(json: JSONValue): Company {
+export function CompanyFromJSONTyped(json: JSONValue): Company | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -98,9 +101,9 @@ export function CompanyFromJSONTyped(json: JSONValue): Company {
     };
 }
 
-export function CompanyToJSON(value?: Company | null): JSONValue {
+export function CompanyToJSON(value?: Company): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

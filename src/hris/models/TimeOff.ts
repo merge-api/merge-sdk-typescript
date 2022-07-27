@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     RequestTypeEnum,
     RequestTypeEnumFromJSON,
     RequestTypeEnumFromJSONTyped,
@@ -32,6 +29,12 @@ import {
     UnitsEnumFromJSONTyped,
     UnitsEnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -125,13 +128,13 @@ export interface TimeOff {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TimeOffFromJSON(json: JSONValue): TimeOff {
+export function TimeOffFromJSON(json: JSONValue): TimeOff | null {
     return TimeOffFromJSONTyped(json);
 }
 
-export function TimeOffFromJSONTyped(json: JSONValue): TimeOff {
+export function TimeOffFromJSONTyped(json: JSONValue): TimeOff | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -152,9 +155,9 @@ export function TimeOffFromJSONTyped(json: JSONValue): TimeOff {
     };
 }
 
-export function TimeOffToJSON(value?: TimeOff | null): JSONValue {
+export function TimeOffToJSON(value?: TimeOff): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

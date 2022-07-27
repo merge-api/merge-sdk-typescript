@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The AccountingPhoneNumber Object
@@ -40,13 +40,13 @@ export interface AccountingPhoneNumber {
     type?: string | null;
 }
 
-export function AccountingPhoneNumberFromJSON(json: JSONValue): AccountingPhoneNumber {
+export function AccountingPhoneNumberFromJSON(json: JSONValue): AccountingPhoneNumber | null {
     return AccountingPhoneNumberFromJSONTyped(json);
 }
 
-export function AccountingPhoneNumberFromJSONTyped(json: JSONValue): AccountingPhoneNumber {
+export function AccountingPhoneNumberFromJSONTyped(json: JSONValue): AccountingPhoneNumber | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -56,9 +56,9 @@ export function AccountingPhoneNumberFromJSONTyped(json: JSONValue): AccountingP
     };
 }
 
-export function AccountingPhoneNumberToJSON(value?: AccountingPhoneNumber | null): JSONValue {
+export function AccountingPhoneNumberToJSON(value?: AccountingPhoneNumber): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

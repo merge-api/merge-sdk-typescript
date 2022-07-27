@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     DebugModeLog,
     DebugModeLogFromJSON,
@@ -66,13 +66,13 @@ export interface TimeOffResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function TimeOffResponseFromJSON(json: JSONValue): TimeOffResponse {
+export function TimeOffResponseFromJSON(json: JSONValue): TimeOffResponse | null {
     return TimeOffResponseFromJSONTyped(json);
 }
 
-export function TimeOffResponseFromJSONTyped(json: JSONValue): TimeOffResponse {
+export function TimeOffResponseFromJSONTyped(json: JSONValue): TimeOffResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function TimeOffResponseFromJSONTyped(json: JSONValue): TimeOffResponse {
     };
 }
 
-export function TimeOffResponseToJSON(value?: TimeOffResponse | null): JSONValue {
+export function TimeOffResponseToJSON(value?: TimeOffResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

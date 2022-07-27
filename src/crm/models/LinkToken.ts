@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * 
@@ -41,13 +41,13 @@ export interface LinkToken {
     magic_link_url?: string;
 }
 
-export function LinkTokenFromJSON(json: JSONValue): LinkToken {
+export function LinkTokenFromJSON(json: JSONValue): LinkToken | null {
     return LinkTokenFromJSONTyped(json);
 }
 
-export function LinkTokenFromJSONTyped(json: JSONValue): LinkToken {
+export function LinkTokenFromJSONTyped(json: JSONValue): LinkToken | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -58,9 +58,9 @@ export function LinkTokenFromJSONTyped(json: JSONValue): LinkToken {
     };
 }
 
-export function LinkTokenToJSON(value?: LinkToken | null): JSONValue {
+export function LinkTokenToJSON(value?: LinkToken): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

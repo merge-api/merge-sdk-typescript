@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Merge Accounting API
- * The unified API for building rich integrations with multiple Accounting & Finance platforms.
+ * Merge API
+ * The unified API for building rich integrations with multiple platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev
@@ -125,7 +125,7 @@ export const COLLECTION_FORMATS = {
     pipes: "|",
 };
 
-export type FetchAPI = GlobalFetch['fetch'];
+export type FetchAPI = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path
@@ -134,8 +134,8 @@ export interface ConfigurationParameters {
     queryParamsStringify?: (params: HTTPQuery) => string; // stringify function for query strings
     username?: string; // parameter for basic security
     password?: string; // parameter for basic security
-    apiKey?: string | ((name: string) => string); // parameter for apiKey security
-    accessToken?: string | ((name?: string, scopes?: string[]) => string); // parameter for oauth2 security
+    apiKey?: string; // parameter for apiKey security
+    accessToken?: string; // parameter for oauth2 security
     headers?: HTTPHeaders; //header params we want to use on every request
     credentials?: RequestCredentials; //value for the credentials param we want to use on each request
 }
@@ -167,18 +167,18 @@ export class Configuration {
         return this.configuration.password;
     }
 
-    get apiKey(): ((name: string) => string) | undefined {
+    get apiKey(): string | undefined {
         const apiKey = this.configuration.apiKey;
         if (apiKey) {
-            return typeof apiKey === 'function' ? apiKey : () => apiKey;
+            return apiKey;
         }
         return undefined;
     }
 
-    get accessToken(): ((name: string, scopes?: string[]) => string) | undefined {
+    get accessToken(): string | undefined {
         const accessToken = this.configuration.accessToken;
         if (accessToken) {
-            return typeof accessToken === 'function' ? accessToken : () => accessToken;
+            return accessToken;
         }
         return undefined;
     }

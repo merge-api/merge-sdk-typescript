@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Application,
     ApplicationFromJSON,
@@ -66,13 +66,13 @@ export interface ApplicationResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function ApplicationResponseFromJSON(json: JSONValue): ApplicationResponse {
+export function ApplicationResponseFromJSON(json: JSONValue): ApplicationResponse | null {
     return ApplicationResponseFromJSONTyped(json);
 }
 
-export function ApplicationResponseFromJSONTyped(json: JSONValue): ApplicationResponse {
+export function ApplicationResponseFromJSONTyped(json: JSONValue): ApplicationResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function ApplicationResponseFromJSONTyped(json: JSONValue): ApplicationRe
     };
 }
 
-export function ApplicationResponseToJSON(value?: ApplicationResponse | null): JSONValue {
+export function ApplicationResponseToJSON(value?: ApplicationResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

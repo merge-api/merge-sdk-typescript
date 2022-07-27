@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -65,13 +68,13 @@ export interface PayGroup {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PayGroupFromJSON(json: JSONValue): PayGroup {
+export function PayGroupFromJSON(json: JSONValue): PayGroup | null {
     return PayGroupFromJSONTyped(json);
 }
 
-export function PayGroupFromJSONTyped(json: JSONValue): PayGroup {
+export function PayGroupFromJSONTyped(json: JSONValue): PayGroup | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +87,9 @@ export function PayGroupFromJSONTyped(json: JSONValue): PayGroup {
     };
 }
 
-export function PayGroupToJSON(value?: PayGroup | null): JSONValue {
+export function PayGroupToJSON(value?: PayGroup): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

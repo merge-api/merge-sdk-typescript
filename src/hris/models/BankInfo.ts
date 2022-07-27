@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AccountTypeEnum,
     AccountTypeEnumFromJSON,
     AccountTypeEnumFromJSONTyped,
     AccountTypeEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -99,13 +102,13 @@ export interface BankInfo {
     readonly remote_was_deleted?: boolean;
 }
 
-export function BankInfoFromJSON(json: JSONValue): BankInfo {
+export function BankInfoFromJSON(json: JSONValue): BankInfo | null {
     return BankInfoFromJSONTyped(json);
 }
 
-export function BankInfoFromJSONTyped(json: JSONValue): BankInfo {
+export function BankInfoFromJSONTyped(json: JSONValue): BankInfo | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -123,9 +126,9 @@ export function BankInfoFromJSONTyped(json: JSONValue): BankInfo {
     };
 }
 
-export function BankInfoToJSON(value?: BankInfo | null): JSONValue {
+export function BankInfoToJSON(value?: BankInfo): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

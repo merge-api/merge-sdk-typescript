@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     EmployeePayrollRun,
     EmployeePayrollRunFromJSON,
     EmployeePayrollRunToJSON,
-    PaginatedEmployeePayrollRunList,
-    PaginatedEmployeePayrollRunListFromJSON,
-    PaginatedEmployeePayrollRunListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface EmployeePayrollRunsListRequest {
     xAccountToken: string;
@@ -56,7 +59,7 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `EmployeePayrollRun` objects.
      */
-    async employeePayrollRunsListRaw(requestParameters: EmployeePayrollRunsListRequest): Promise<runtime.ApiResponse<PaginatedEmployeePayrollRunList>> {
+    async employeePayrollRunsListRaw(requestParameters: EmployeePayrollRunsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EmployeePayrollRun>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeePayrollRunsList.');
         }
@@ -129,8 +132,15 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -140,13 +150,13 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedEmployeePayrollRunListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `EmployeePayrollRun` objects.
      */
-    async employeePayrollRunsList(requestParameters: EmployeePayrollRunsListRequest): Promise<PaginatedEmployeePayrollRunList> {
+    async employeePayrollRunsList(requestParameters: EmployeePayrollRunsListRequest): Promise<MergePaginatedResponse<EmployeePayrollRun>> {
         const response = await this.employeePayrollRunsListRaw(requestParameters);
         return await response.value();
     }
@@ -175,8 +185,15 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

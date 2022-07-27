@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * 
@@ -41,13 +41,13 @@ export interface WebhookReceiver {
     key?: string;
 }
 
-export function WebhookReceiverFromJSON(json: JSONValue): WebhookReceiver {
+export function WebhookReceiverFromJSON(json: JSONValue): WebhookReceiver | null {
     return WebhookReceiverFromJSONTyped(json);
 }
 
-export function WebhookReceiverFromJSONTyped(json: JSONValue): WebhookReceiver {
+export function WebhookReceiverFromJSONTyped(json: JSONValue): WebhookReceiver | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -58,9 +58,9 @@ export function WebhookReceiverFromJSONTyped(json: JSONValue): WebhookReceiver {
     };
 }
 
-export function WebhookReceiverToJSON(value?: WebhookReceiver | null): JSONValue {
+export function WebhookReceiverToJSON(value?: WebhookReceiver): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

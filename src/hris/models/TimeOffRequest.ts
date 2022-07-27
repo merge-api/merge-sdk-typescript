@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     RequestTypeEnum,
     RequestTypeEnumFromJSON,
@@ -103,13 +103,13 @@ export interface TimeOffRequest {
     end_time?: Date | null;
 }
 
-export function TimeOffRequestFromJSON(json: JSONValue): TimeOffRequest {
+export function TimeOffRequestFromJSON(json: JSONValue): TimeOffRequest | null {
     return TimeOffRequestFromJSONTyped(json);
 }
 
-export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest {
+export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -127,9 +127,9 @@ export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest {
     };
 }
 
-export function TimeOffRequestToJSON(value?: TimeOffRequest | null): JSONValue {
+export function TimeOffRequestToJSON(value?: TimeOffRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

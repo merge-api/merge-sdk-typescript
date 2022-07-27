@@ -13,7 +13,7 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     JournalEntry,
     JournalEntryFromJSON,
@@ -27,10 +27,13 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    PaginatedJournalEntryList,
-    PaginatedJournalEntryListFromJSON,
-    PaginatedJournalEntryListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface JournalEntriesCreateRequest {
     xAccountToken: string;
@@ -97,8 +100,15 @@ export class JournalEntriesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -123,7 +133,7 @@ export class JournalEntriesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `JournalEntry` objects.
      */
-    async journalEntriesListRaw(requestParameters: JournalEntriesListRequest): Promise<runtime.ApiResponse<PaginatedJournalEntryList>> {
+    async journalEntriesListRaw(requestParameters: JournalEntriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<JournalEntry>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling journalEntriesList.');
         }
@@ -172,8 +182,15 @@ export class JournalEntriesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -183,13 +200,13 @@ export class JournalEntriesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedJournalEntryListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `JournalEntry` objects.
      */
-    async journalEntriesList(requestParameters: JournalEntriesListRequest): Promise<PaginatedJournalEntryList> {
+    async journalEntriesList(requestParameters: JournalEntriesListRequest): Promise<MergePaginatedResponse<JournalEntry>> {
         const response = await this.journalEntriesListRaw(requestParameters);
         return await response.value();
     }
@@ -210,8 +227,15 @@ export class JournalEntriesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -256,8 +280,15 @@ export class JournalEntriesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

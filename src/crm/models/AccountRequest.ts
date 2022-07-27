@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Account Object
@@ -99,13 +99,13 @@ export interface AccountRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function AccountRequestFromJSON(json: JSONValue): AccountRequest {
+export function AccountRequestFromJSON(json: JSONValue): AccountRequest | null {
     return AccountRequestFromJSONTyped(json);
 }
 
-export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest {
+export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -125,9 +125,9 @@ export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest {
     };
 }
 
-export function AccountRequestToJSON(value?: AccountRequest | null): JSONValue {
+export function AccountRequestToJSON(value?: AccountRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

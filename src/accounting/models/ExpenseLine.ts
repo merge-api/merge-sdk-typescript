@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The ExpenseLine Object
@@ -64,13 +64,13 @@ export interface ExpenseLine {
     description?: string | null;
 }
 
-export function ExpenseLineFromJSON(json: JSONValue): ExpenseLine {
+export function ExpenseLineFromJSON(json: JSONValue): ExpenseLine | null {
     return ExpenseLineFromJSONTyped(json);
 }
 
-export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine {
+export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine {
     };
 }
 
-export function ExpenseLineToJSON(value?: ExpenseLine | null): JSONValue {
+export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

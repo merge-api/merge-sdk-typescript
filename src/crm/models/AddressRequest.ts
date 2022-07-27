@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AddressTypeEnum,
     AddressTypeEnumFromJSON,
@@ -80,13 +80,13 @@ export interface AddressRequest {
     address_type?: AddressTypeEnum | null;
 }
 
-export function AddressRequestFromJSON(json: JSONValue): AddressRequest {
+export function AddressRequestFromJSON(json: JSONValue): AddressRequest | null {
     return AddressRequestFromJSONTyped(json);
 }
 
-export function AddressRequestFromJSONTyped(json: JSONValue): AddressRequest {
+export function AddressRequestFromJSONTyped(json: JSONValue): AddressRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -101,9 +101,9 @@ export function AddressRequestFromJSONTyped(json: JSONValue): AddressRequest {
     };
 }
 
-export function AddressRequestToJSON(value?: AddressRequest | null): JSONValue {
+export function AddressRequestToJSON(value?: AddressRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

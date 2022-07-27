@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The GenerateRemoteKey Object
@@ -34,13 +34,13 @@ export interface GenerateRemoteKeyRequest {
     name: string;
 }
 
-export function GenerateRemoteKeyRequestFromJSON(json: JSONValue): GenerateRemoteKeyRequest {
+export function GenerateRemoteKeyRequestFromJSON(json: JSONValue): GenerateRemoteKeyRequest | null {
     return GenerateRemoteKeyRequestFromJSONTyped(json);
 }
 
-export function GenerateRemoteKeyRequestFromJSONTyped(json: JSONValue): GenerateRemoteKeyRequest {
+export function GenerateRemoteKeyRequestFromJSONTyped(json: JSONValue): GenerateRemoteKeyRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -49,9 +49,9 @@ export function GenerateRemoteKeyRequestFromJSONTyped(json: JSONValue): Generate
     };
 }
 
-export function GenerateRemoteKeyRequestToJSON(value?: GenerateRemoteKeyRequest | null): JSONValue {
+export function GenerateRemoteKeyRequestToJSON(value?: GenerateRemoteKeyRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

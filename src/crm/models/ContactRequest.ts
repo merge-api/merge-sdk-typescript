@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Contact Object
@@ -75,13 +75,13 @@ export interface ContactRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function ContactRequestFromJSON(json: JSONValue): ContactRequest {
+export function ContactRequestFromJSON(json: JSONValue): ContactRequest | null {
     return ContactRequestFromJSONTyped(json);
 }
 
-export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest {
+export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -97,9 +97,9 @@ export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest {
     };
 }
 
-export function ContactRequestToJSON(value?: ContactRequest | null): JSONValue {
+export function ContactRequestToJSON(value?: ContactRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

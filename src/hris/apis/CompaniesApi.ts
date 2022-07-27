@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Company,
     CompanyFromJSON,
     CompanyToJSON,
-    PaginatedCompanyList,
-    PaginatedCompanyListFromJSON,
-    PaginatedCompanyListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface CompaniesListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class CompaniesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Company` objects.
      */
-    async companiesListRaw(requestParameters: CompaniesListRequest): Promise<runtime.ApiResponse<PaginatedCompanyList>> {
+    async companiesListRaw(requestParameters: CompaniesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Company>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling companiesList.');
         }
@@ -99,8 +102,15 @@ export class CompaniesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class CompaniesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedCompanyListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Company` objects.
      */
-    async companiesList(requestParameters: CompaniesListRequest): Promise<PaginatedCompanyList> {
+    async companiesList(requestParameters: CompaniesListRequest): Promise<MergePaginatedResponse<Company>> {
         const response = await this.companiesListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class CompaniesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

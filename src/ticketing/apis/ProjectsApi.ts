@@ -13,18 +13,20 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedProjectList,
-    PaginatedProjectListFromJSON,
-    PaginatedProjectListToJSON,
-    PaginatedUserList,
-    PaginatedUserListFromJSON,
-    PaginatedUserListToJSON,
     Project,
     ProjectFromJSON,
     ProjectToJSON,
+    User,
+    UserFromJSON,
+    UserToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface ProjectsListRequest {
     xAccountToken: string;
@@ -61,7 +63,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Project` objects.
      */
-    async projectsListRaw(requestParameters: ProjectsListRequest): Promise<runtime.ApiResponse<PaginatedProjectList>> {
+    async projectsListRaw(requestParameters: ProjectsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Project>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsList.');
         }
@@ -110,8 +112,15 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -121,13 +130,13 @@ export class ProjectsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedProjectListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Project` objects.
      */
-    async projectsList(requestParameters: ProjectsListRequest): Promise<PaginatedProjectList> {
+    async projectsList(requestParameters: ProjectsListRequest): Promise<MergePaginatedResponse<Project>> {
         const response = await this.projectsListRaw(requestParameters);
         return await response.value();
     }
@@ -156,8 +165,15 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -181,7 +197,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async projectsUsersListRaw(requestParameters: ProjectsUsersListRequest): Promise<runtime.ApiResponse<PaginatedUserList>> {
+    async projectsUsersListRaw(requestParameters: ProjectsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsUsersList.');
         }
@@ -210,8 +226,15 @@ export class ProjectsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -221,13 +244,13 @@ export class ProjectsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedUserListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a `User` object with the given `id`.
      */
-    async projectsUsersList(requestParameters: ProjectsUsersListRequest): Promise<PaginatedUserList> {
+    async projectsUsersList(requestParameters: ProjectsUsersListRequest): Promise<MergePaginatedResponse<User>> {
         const response = await this.projectsUsersListRaw(requestParameters);
         return await response.value();
     }

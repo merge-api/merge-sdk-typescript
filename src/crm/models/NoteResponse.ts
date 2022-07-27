@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     DebugModeLog,
     DebugModeLogFromJSON,
@@ -66,13 +66,13 @@ export interface NoteResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function NoteResponseFromJSON(json: JSONValue): NoteResponse {
+export function NoteResponseFromJSON(json: JSONValue): NoteResponse | null {
     return NoteResponseFromJSONTyped(json);
 }
 
-export function NoteResponseFromJSONTyped(json: JSONValue): NoteResponse {
+export function NoteResponseFromJSONTyped(json: JSONValue): NoteResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function NoteResponseFromJSONTyped(json: JSONValue): NoteResponse {
     };
 }
 
-export function NoteResponseToJSON(value?: NoteResponse | null): JSONValue {
+export function NoteResponseToJSON(value?: NoteResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

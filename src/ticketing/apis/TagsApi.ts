@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedTagList,
-    PaginatedTagListFromJSON,
-    PaginatedTagListToJSON,
+    
     Tag,
     TagFromJSON,
     TagToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface TagsListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class TagsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Tag` objects.
      */
-    async tagsListRaw(requestParameters: TagsListRequest): Promise<runtime.ApiResponse<PaginatedTagList>> {
+    async tagsListRaw(requestParameters: TagsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Tag>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tagsList.');
         }
@@ -99,8 +102,15 @@ export class TagsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class TagsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedTagListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Tag` objects.
      */
-    async tagsList(requestParameters: TagsListRequest): Promise<PaginatedTagList> {
+    async tagsList(requestParameters: TagsListRequest): Promise<MergePaginatedResponse<Tag>> {
         const response = await this.tagsListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class TagsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

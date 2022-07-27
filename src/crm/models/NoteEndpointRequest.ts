@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     NoteRequest,
     NoteRequestFromJSON,
@@ -36,13 +36,13 @@ export interface NoteEndpointRequest {
     model: NoteRequest;
 }
 
-export function NoteEndpointRequestFromJSON(json: JSONValue): NoteEndpointRequest {
+export function NoteEndpointRequestFromJSON(json: JSONValue): NoteEndpointRequest | null {
     return NoteEndpointRequestFromJSONTyped(json);
 }
 
-export function NoteEndpointRequestFromJSONTyped(json: JSONValue): NoteEndpointRequest {
+export function NoteEndpointRequestFromJSONTyped(json: JSONValue): NoteEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function NoteEndpointRequestFromJSONTyped(json: JSONValue): NoteEndpointR
     };
 }
 
-export function NoteEndpointRequestToJSON(value?: NoteEndpointRequest | null): JSONValue {
+export function NoteEndpointRequestToJSON(value?: NoteEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

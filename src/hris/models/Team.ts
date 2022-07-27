@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -71,13 +74,13 @@ export interface Team {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TeamFromJSON(json: JSONValue): Team {
+export function TeamFromJSON(json: JSONValue): Team | null {
     return TeamFromJSONTyped(json);
 }
 
-export function TeamFromJSONTyped(json: JSONValue): Team {
+export function TeamFromJSONTyped(json: JSONValue): Team | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -91,9 +94,9 @@ export function TeamFromJSONTyped(json: JSONValue): Team {
     };
 }
 
-export function TeamToJSON(value?: Team | null): JSONValue {
+export function TeamToJSON(value?: Team): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

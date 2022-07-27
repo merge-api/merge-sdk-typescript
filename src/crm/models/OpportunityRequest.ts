@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     OpportunityStatusEnum,
     OpportunityStatusEnumFromJSON,
@@ -112,13 +112,13 @@ export interface OpportunityRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function OpportunityRequestFromJSON(json: JSONValue): OpportunityRequest {
+export function OpportunityRequestFromJSON(json: JSONValue): OpportunityRequest | null {
     return OpportunityRequestFromJSONTyped(json);
 }
 
-export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityRequest {
+export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -139,9 +139,9 @@ export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityReq
     };
 }
 
-export function OpportunityRequestToJSON(value?: OpportunityRequest | null): JSONValue {
+export function OpportunityRequestToJSON(value?: OpportunityRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Group,
     GroupFromJSON,
     GroupToJSON,
-    PaginatedGroupList,
-    PaginatedGroupListFromJSON,
-    PaginatedGroupListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface GroupsListRequest {
     xAccountToken: string;
@@ -52,7 +55,7 @@ export class GroupsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Group` objects.
      */
-    async groupsListRaw(requestParameters: GroupsListRequest): Promise<runtime.ApiResponse<PaginatedGroupList>> {
+    async groupsListRaw(requestParameters: GroupsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Group>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling groupsList.');
         }
@@ -105,8 +108,15 @@ export class GroupsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -116,13 +126,13 @@ export class GroupsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedGroupListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Group` objects.
      */
-    async groupsList(requestParameters: GroupsListRequest): Promise<PaginatedGroupList> {
+    async groupsList(requestParameters: GroupsListRequest): Promise<MergePaginatedResponse<Group>> {
         const response = await this.groupsListRaw(requestParameters);
         return await response.value();
     }
@@ -155,8 +165,15 @@ export class GroupsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

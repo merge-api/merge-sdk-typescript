@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     UrlTypeEnum,
     UrlTypeEnumFromJSON,
@@ -46,13 +46,13 @@ export interface UrlRequest {
     url_type?: UrlTypeEnum | null;
 }
 
-export function UrlRequestFromJSON(json: JSONValue): UrlRequest {
+export function UrlRequestFromJSON(json: JSONValue): UrlRequest | null {
     return UrlRequestFromJSONTyped(json);
 }
 
-export function UrlRequestFromJSONTyped(json: JSONValue): UrlRequest {
+export function UrlRequestFromJSONTyped(json: JSONValue): UrlRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -62,9 +62,9 @@ export function UrlRequestFromJSONTyped(json: JSONValue): UrlRequest {
     };
 }
 
-export function UrlRequestToJSON(value?: UrlRequest | null): JSONValue {
+export function UrlRequestToJSON(value?: UrlRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

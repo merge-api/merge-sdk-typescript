@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EmailAddressTypeEnum,
     EmailAddressTypeEnumFromJSON,
@@ -46,13 +46,13 @@ export interface EmailAddress {
     email_address_type?: EmailAddressTypeEnum | null;
 }
 
-export function EmailAddressFromJSON(json: JSONValue): EmailAddress {
+export function EmailAddressFromJSON(json: JSONValue): EmailAddress | null {
     return EmailAddressFromJSONTyped(json);
 }
 
-export function EmailAddressFromJSONTyped(json: JSONValue): EmailAddress {
+export function EmailAddressFromJSONTyped(json: JSONValue): EmailAddress | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -62,9 +62,9 @@ export function EmailAddressFromJSONTyped(json: JSONValue): EmailAddress {
     };
 }
 
-export function EmailAddressToJSON(value?: EmailAddress | null): JSONValue {
+export function EmailAddressToJSON(value?: EmailAddress): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

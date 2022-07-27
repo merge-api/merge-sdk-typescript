@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     MethodEnum,
     MethodEnumFromJSON,
@@ -91,13 +91,13 @@ export interface DataPassthroughRequest {
     normalize_response?: boolean;
 }
 
-export function DataPassthroughRequestFromJSON(json: JSONValue): DataPassthroughRequest {
+export function DataPassthroughRequestFromJSON(json: JSONValue): DataPassthroughRequest | null {
     return DataPassthroughRequestFromJSONTyped(json);
 }
 
-export function DataPassthroughRequestFromJSONTyped(json: JSONValue): DataPassthroughRequest {
+export function DataPassthroughRequestFromJSONTyped(json: JSONValue): DataPassthroughRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -113,9 +113,9 @@ export function DataPassthroughRequestFromJSONTyped(json: JSONValue): DataPassth
     };
 }
 
-export function DataPassthroughRequestToJSON(value?: DataPassthroughRequest | null): JSONValue {
+export function DataPassthroughRequestToJSON(value?: DataPassthroughRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     LeadRequest,
     LeadRequestFromJSON,
@@ -36,13 +36,13 @@ export interface LeadEndpointRequest {
     model: LeadRequest;
 }
 
-export function LeadEndpointRequestFromJSON(json: JSONValue): LeadEndpointRequest {
+export function LeadEndpointRequestFromJSON(json: JSONValue): LeadEndpointRequest | null {
     return LeadEndpointRequestFromJSONTyped(json);
 }
 
-export function LeadEndpointRequestFromJSONTyped(json: JSONValue): LeadEndpointRequest {
+export function LeadEndpointRequestFromJSONTyped(json: JSONValue): LeadEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function LeadEndpointRequestFromJSONTyped(json: JSONValue): LeadEndpointR
     };
 }
 
-export function LeadEndpointRequestToJSON(value?: LeadEndpointRequest | null): JSONValue {
+export function LeadEndpointRequestToJSON(value?: LeadEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

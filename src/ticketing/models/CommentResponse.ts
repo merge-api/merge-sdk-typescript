@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Comment,
     CommentFromJSON,
@@ -66,13 +66,13 @@ export interface CommentResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function CommentResponseFromJSON(json: JSONValue): CommentResponse {
+export function CommentResponseFromJSON(json: JSONValue): CommentResponse | null {
     return CommentResponseFromJSONTyped(json);
 }
 
-export function CommentResponseFromJSONTyped(json: JSONValue): CommentResponse {
+export function CommentResponseFromJSONTyped(json: JSONValue): CommentResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function CommentResponseFromJSONTyped(json: JSONValue): CommentResponse {
     };
 }
 
-export function CommentResponseToJSON(value?: CommentResponse | null): JSONValue {
+export function CommentResponseToJSON(value?: CommentResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

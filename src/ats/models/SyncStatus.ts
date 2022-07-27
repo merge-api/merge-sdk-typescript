@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     SyncStatusStatusEnum,
     SyncStatusStatusEnumFromJSON,
@@ -71,13 +71,13 @@ export interface SyncStatus {
     is_initial_sync: boolean;
 }
 
-export function SyncStatusFromJSON(json: JSONValue): SyncStatus {
+export function SyncStatusFromJSON(json: JSONValue): SyncStatus | null {
     return SyncStatusFromJSONTyped(json);
 }
 
-export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus {
+export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -91,9 +91,9 @@ export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus {
     };
 }
 
-export function SyncStatusToJSON(value?: SyncStatus | null): JSONValue {
+export function SyncStatusToJSON(value?: SyncStatus): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

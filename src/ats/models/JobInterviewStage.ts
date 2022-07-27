@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -70,13 +73,13 @@ export interface JobInterviewStage {
     readonly remote_was_deleted?: boolean;
 }
 
-export function JobInterviewStageFromJSON(json: JSONValue): JobInterviewStage {
+export function JobInterviewStageFromJSON(json: JSONValue): JobInterviewStage | null {
     return JobInterviewStageFromJSONTyped(json);
 }
 
-export function JobInterviewStageFromJSONTyped(json: JSONValue): JobInterviewStage {
+export function JobInterviewStageFromJSONTyped(json: JSONValue): JobInterviewStage | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -90,9 +93,9 @@ export function JobInterviewStageFromJSONTyped(json: JSONValue): JobInterviewSta
     };
 }
 
-export function JobInterviewStageToJSON(value?: JobInterviewStage | null): JSONValue {
+export function JobInterviewStageToJSON(value?: JobInterviewStage): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

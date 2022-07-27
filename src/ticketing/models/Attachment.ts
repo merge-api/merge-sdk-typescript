@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -95,13 +98,13 @@ export interface Attachment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function AttachmentFromJSON(json: JSONValue): Attachment {
+export function AttachmentFromJSON(json: JSONValue): Attachment | null {
     return AttachmentFromJSONTyped(json);
 }
 
-export function AttachmentFromJSONTyped(json: JSONValue): Attachment {
+export function AttachmentFromJSONTyped(json: JSONValue): Attachment | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -119,9 +122,9 @@ export function AttachmentFromJSONTyped(json: JSONValue): Attachment {
     };
 }
 
-export function AttachmentToJSON(value?: Attachment | null): JSONValue {
+export function AttachmentToJSON(value?: Attachment): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

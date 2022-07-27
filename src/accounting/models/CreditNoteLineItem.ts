@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * 
@@ -89,13 +89,13 @@ export interface CreditNoteLineItem {
     remote_id?: string | null;
 }
 
-export function CreditNoteLineItemFromJSON(json: JSONValue): CreditNoteLineItem {
+export function CreditNoteLineItemFromJSON(json: JSONValue): CreditNoteLineItem | null {
     return CreditNoteLineItemFromJSONTyped(json);
 }
 
-export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLineItem {
+export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLineItem | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -114,9 +114,9 @@ export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLine
     };
 }
 
-export function CreditNoteLineItemToJSON(value?: CreditNoteLineItem | null): JSONValue {
+export function CreditNoteLineItemToJSON(value?: CreditNoteLineItem): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

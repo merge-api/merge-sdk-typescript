@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Benefit,
     BenefitFromJSON,
     BenefitToJSON,
-    PaginatedBenefitList,
-    PaginatedBenefitListFromJSON,
-    PaginatedBenefitListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface BenefitsListRequest {
     xAccountToken: string;
@@ -51,7 +54,7 @@ export class BenefitsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Benefit` objects.
      */
-    async benefitsListRaw(requestParameters: BenefitsListRequest): Promise<runtime.ApiResponse<PaginatedBenefitList>> {
+    async benefitsListRaw(requestParameters: BenefitsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Benefit>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling benefitsList.');
         }
@@ -104,8 +107,15 @@ export class BenefitsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -115,13 +125,13 @@ export class BenefitsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedBenefitListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Benefit` objects.
      */
-    async benefitsList(requestParameters: BenefitsListRequest): Promise<PaginatedBenefitList> {
+    async benefitsList(requestParameters: BenefitsListRequest): Promise<MergePaginatedResponse<Benefit>> {
         const response = await this.benefitsListRaw(requestParameters);
         return await response.value();
     }
@@ -150,8 +160,15 @@ export class BenefitsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

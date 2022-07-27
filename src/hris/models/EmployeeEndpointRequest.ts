@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EmployeeRequest,
     EmployeeRequestFromJSON,
@@ -36,13 +36,13 @@ export interface EmployeeEndpointRequest {
     model: EmployeeRequest;
 }
 
-export function EmployeeEndpointRequestFromJSON(json: JSONValue): EmployeeEndpointRequest {
+export function EmployeeEndpointRequestFromJSON(json: JSONValue): EmployeeEndpointRequest | null {
     return EmployeeEndpointRequestFromJSONTyped(json);
 }
 
-export function EmployeeEndpointRequestFromJSONTyped(json: JSONValue): EmployeeEndpointRequest {
+export function EmployeeEndpointRequestFromJSONTyped(json: JSONValue): EmployeeEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function EmployeeEndpointRequestFromJSONTyped(json: JSONValue): EmployeeE
     };
 }
 
-export function EmployeeEndpointRequestToJSON(value?: EmployeeEndpointRequest | null): JSONValue {
+export function EmployeeEndpointRequestToJSON(value?: EmployeeEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

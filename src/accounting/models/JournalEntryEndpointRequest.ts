@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     JournalEntryRequest,
     JournalEntryRequestFromJSON,
@@ -36,13 +36,13 @@ export interface JournalEntryEndpointRequest {
     model: JournalEntryRequest;
 }
 
-export function JournalEntryEndpointRequestFromJSON(json: JSONValue): JournalEntryEndpointRequest {
+export function JournalEntryEndpointRequestFromJSON(json: JSONValue): JournalEntryEndpointRequest | null {
     return JournalEntryEndpointRequestFromJSONTyped(json);
 }
 
-export function JournalEntryEndpointRequestFromJSONTyped(json: JSONValue): JournalEntryEndpointRequest {
+export function JournalEntryEndpointRequestFromJSONTyped(json: JSONValue): JournalEntryEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function JournalEntryEndpointRequestFromJSONTyped(json: JSONValue): Journ
     };
 }
 
-export function JournalEntryEndpointRequestToJSON(value?: JournalEntryEndpointRequest | null): JSONValue {
+export function JournalEntryEndpointRequestToJSON(value?: JournalEntryEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Office,
     OfficeFromJSON,
     OfficeToJSON,
-    PaginatedOfficeList,
-    PaginatedOfficeListFromJSON,
-    PaginatedOfficeListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface OfficesListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class OfficesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Office` objects.
      */
-    async officesListRaw(requestParameters: OfficesListRequest): Promise<runtime.ApiResponse<PaginatedOfficeList>> {
+    async officesListRaw(requestParameters: OfficesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Office>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling officesList.');
         }
@@ -99,8 +102,15 @@ export class OfficesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class OfficesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedOfficeListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Office` objects.
      */
-    async officesList(requestParameters: OfficesListRequest): Promise<PaginatedOfficeList> {
+    async officesList(requestParameters: OfficesListRequest): Promise<MergePaginatedResponse<Office>> {
         const response = await this.officesListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class OfficesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

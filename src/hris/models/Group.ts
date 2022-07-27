@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     GroupTypeEnum,
     GroupTypeEnumFromJSON,
     GroupTypeEnumFromJSONTyped,
     GroupTypeEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -83,13 +86,13 @@ export interface Group {
     readonly remote_was_deleted?: boolean;
 }
 
-export function GroupFromJSON(json: JSONValue): Group {
+export function GroupFromJSON(json: JSONValue): Group | null {
     return GroupFromJSONTyped(json);
 }
 
-export function GroupFromJSONTyped(json: JSONValue): Group {
+export function GroupFromJSONTyped(json: JSONValue): Group | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -104,9 +107,9 @@ export function GroupFromJSONTyped(json: JSONValue): Group {
     };
 }
 
-export function GroupToJSON(value?: Group | null): JSONValue {
+export function GroupToJSON(value?: Group): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

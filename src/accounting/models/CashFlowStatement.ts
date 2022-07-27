@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     ReportItem,
     ReportItemFromJSON,
     ReportItemFromJSONTyped,
     ReportItemToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -117,13 +120,13 @@ export interface CashFlowStatement {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CashFlowStatementFromJSON(json: JSONValue): CashFlowStatement {
+export function CashFlowStatementFromJSON(json: JSONValue): CashFlowStatement | null {
     return CashFlowStatementFromJSONTyped(json);
 }
 
-export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStatement {
+export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStatement | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -144,9 +147,9 @@ export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStateme
     };
 }
 
-export function CashFlowStatementToJSON(value?: CashFlowStatement | null): JSONValue {
+export function CashFlowStatementToJSON(value?: CashFlowStatement): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

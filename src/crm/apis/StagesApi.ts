@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedStageList,
-    PaginatedStageListFromJSON,
-    PaginatedStageListToJSON,
+    
     Stage,
     StageFromJSON,
     StageToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface StagesListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class StagesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Stage` objects.
      */
-    async stagesListRaw(requestParameters: StagesListRequest): Promise<runtime.ApiResponse<PaginatedStageList>> {
+    async stagesListRaw(requestParameters: StagesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Stage>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling stagesList.');
         }
@@ -99,8 +102,15 @@ export class StagesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class StagesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedStageListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Stage` objects.
      */
-    async stagesList(requestParameters: StagesListRequest): Promise<PaginatedStageList> {
+    async stagesList(requestParameters: StagesListRequest): Promise<MergePaginatedResponse<Stage>> {
         const response = await this.stagesListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class StagesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

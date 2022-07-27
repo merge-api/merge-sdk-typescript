@@ -13,12 +13,15 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedAccountDetailsAndActionsList,
-    PaginatedAccountDetailsAndActionsListFromJSON,
-    PaginatedAccountDetailsAndActionsListToJSON,
+	AccountDetailsAndActions
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface LinkedAccountsListRequest {
     category?: LinkedAccountsListCategoryEnum;
@@ -43,7 +46,7 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
     /**
      * List linked accounts for your organization.
      */
-    async linkedAccountsListRaw(requestParameters: LinkedAccountsListRequest): Promise<runtime.ApiResponse<PaginatedAccountDetailsAndActionsList>> {
+    async linkedAccountsListRaw(requestParameters: LinkedAccountsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<AccountDetailsAndActions>>> {
         const queryParameters: any = {};
 
         if (requestParameters.category !== undefined) {
@@ -96,8 +99,15 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -107,13 +117,13 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedAccountDetailsAndActionsListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * List linked accounts for your organization.
      */
-    async linkedAccountsList(requestParameters: LinkedAccountsListRequest): Promise<PaginatedAccountDetailsAndActionsList> {
+    async linkedAccountsList(requestParameters: LinkedAccountsListRequest): Promise<MergePaginatedResponse<AccountDetailsAndActions>> {
         const response = await this.linkedAccountsListRaw(requestParameters);
         return await response.value();
     }

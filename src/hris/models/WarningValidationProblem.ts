@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     ValidationProblemSource,
     ValidationProblemSourceFromJSON,
@@ -54,13 +54,13 @@ export interface WarningValidationProblem {
     problem_type: string;
 }
 
-export function WarningValidationProblemFromJSON(json: JSONValue): WarningValidationProblem {
+export function WarningValidationProblemFromJSON(json: JSONValue): WarningValidationProblem | null {
     return WarningValidationProblemFromJSONTyped(json);
 }
 
-export function WarningValidationProblemFromJSONTyped(json: JSONValue): WarningValidationProblem {
+export function WarningValidationProblemFromJSONTyped(json: JSONValue): WarningValidationProblem | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -72,9 +72,9 @@ export function WarningValidationProblemFromJSONTyped(json: JSONValue): WarningV
     };
 }
 
-export function WarningValidationProblemToJSON(value?: WarningValidationProblem | null): JSONValue {
+export function WarningValidationProblemToJSON(value?: WarningValidationProblem): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

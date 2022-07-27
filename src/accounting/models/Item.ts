@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     Status7d1Enum,
     Status7d1EnumFromJSON,
     Status7d1EnumFromJSONTyped,
     Status7d1EnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -105,13 +108,13 @@ export interface Item {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ItemFromJSON(json: JSONValue): Item {
+export function ItemFromJSON(json: JSONValue): Item | null {
     return ItemFromJSONTyped(json);
 }
 
-export function ItemFromJSONTyped(json: JSONValue): Item {
+export function ItemFromJSONTyped(json: JSONValue): Item | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -130,9 +133,9 @@ export function ItemFromJSONTyped(json: JSONValue): Item {
     };
 }
 
-export function ItemToJSON(value?: Item | null): JSONValue {
+export function ItemToJSON(value?: Item): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

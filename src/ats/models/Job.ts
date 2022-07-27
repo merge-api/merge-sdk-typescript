@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     JobStatusEnum,
     JobStatusEnumFromJSON,
     JobStatusEnumFromJSONTyped,
     JobStatusEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -128,13 +131,13 @@ export interface Job {
     readonly remote_was_deleted?: boolean;
 }
 
-export function JobFromJSON(json: JSONValue): Job {
+export function JobFromJSON(json: JSONValue): Job | null {
     return JobFromJSONTyped(json);
 }
 
-export function JobFromJSONTyped(json: JSONValue): Job {
+export function JobFromJSONTyped(json: JSONValue): Job | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -157,9 +160,9 @@ export function JobFromJSONTyped(json: JSONValue): Job {
     };
 }
 
-export function JobToJSON(value?: Job | null): JSONValue {
+export function JobToJSON(value?: Job): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

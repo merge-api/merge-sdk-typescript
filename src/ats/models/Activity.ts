@@ -12,22 +12,25 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     ActivityTypeEnum,
     ActivityTypeEnumFromJSON,
     ActivityTypeEnumFromJSONTyped,
     ActivityTypeEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     VisibilityEnum,
     VisibilityEnumFromJSON,
     VisibilityEnumFromJSONTyped,
     VisibilityEnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -102,13 +105,13 @@ export interface Activity {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ActivityFromJSON(json: JSONValue): Activity {
+export function ActivityFromJSON(json: JSONValue): Activity | null {
     return ActivityFromJSONTyped(json);
 }
 
-export function ActivityFromJSONTyped(json: JSONValue): Activity {
+export function ActivityFromJSONTyped(json: JSONValue): Activity | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -126,9 +129,9 @@ export function ActivityFromJSONTyped(json: JSONValue): Activity {
     };
 }
 
-export function ActivityToJSON(value?: Activity | null): JSONValue {
+export function ActivityToJSON(value?: Activity): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

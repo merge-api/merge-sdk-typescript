@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedTimeOffBalanceList,
-    PaginatedTimeOffBalanceListFromJSON,
-    PaginatedTimeOffBalanceListToJSON,
+    
     TimeOffBalance,
     TimeOffBalanceFromJSON,
     TimeOffBalanceToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface TimeOffBalancesListRequest {
     xAccountToken: string;
@@ -54,7 +57,7 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TimeOffBalance` objects.
      */
-    async timeOffBalancesListRaw(requestParameters: TimeOffBalancesListRequest): Promise<runtime.ApiResponse<PaginatedTimeOffBalanceList>> {
+    async timeOffBalancesListRaw(requestParameters: TimeOffBalancesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TimeOffBalance>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffBalancesList.');
         }
@@ -115,8 +118,15 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -126,13 +136,13 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedTimeOffBalanceListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `TimeOffBalance` objects.
      */
-    async timeOffBalancesList(requestParameters: TimeOffBalancesListRequest): Promise<PaginatedTimeOffBalanceList> {
+    async timeOffBalancesList(requestParameters: TimeOffBalancesListRequest): Promise<MergePaginatedResponse<TimeOffBalance>> {
         const response = await this.timeOffBalancesListRaw(requestParameters);
         return await response.value();
     }
@@ -165,8 +175,15 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

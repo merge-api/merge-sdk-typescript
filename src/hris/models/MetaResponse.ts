@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     LinkedAccountStatus,
     LinkedAccountStatusFromJSON,
@@ -54,13 +54,13 @@ export interface MetaResponse {
     has_required_linked_account_params: boolean;
 }
 
-export function MetaResponseFromJSON(json: JSONValue): MetaResponse {
+export function MetaResponseFromJSON(json: JSONValue): MetaResponse | null {
     return MetaResponseFromJSONTyped(json);
 }
 
-export function MetaResponseFromJSONTyped(json: JSONValue): MetaResponse {
+export function MetaResponseFromJSONTyped(json: JSONValue): MetaResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -72,9 +72,9 @@ export function MetaResponseFromJSONTyped(json: JSONValue): MetaResponse {
     };
 }
 
-export function MetaResponseToJSON(value?: MetaResponse | null): JSONValue {
+export function MetaResponseToJSON(value?: MetaResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

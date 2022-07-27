@@ -1,6 +1,6 @@
 {
   "name": "@mergeapi/merge-sdk-typescript",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "OpenAPI client for @mergeapi/merge-sdk-typescript",
   "author": "OpenAPI-Generator",
   "main": "./dist/index.js",
@@ -10,6 +10,6 @@
     "prepare": "npm run build"
   },
   "devDependencies": {
-    "typescript": "^2.4"
+    "typescript": "^3.8"
   }
 }

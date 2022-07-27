@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Address,
     AddressFromJSON,
@@ -23,11 +23,14 @@ import {
     PhoneNumberFromJSON,
     PhoneNumberFromJSONTyped,
     PhoneNumberToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -132,13 +135,13 @@ export interface Account {
     readonly remote_was_deleted?: boolean;
 }
 
-export function AccountFromJSON(json: JSONValue): Account {
+export function AccountFromJSON(json: JSONValue): Account | null {
     return AccountFromJSONTyped(json);
 }
 
-export function AccountFromJSONTyped(json: JSONValue): Account {
+export function AccountFromJSONTyped(json: JSONValue): Account | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -161,9 +164,9 @@ export function AccountFromJSONTyped(json: JSONValue): Account {
     };
 }
 
-export function AccountToJSON(value?: Account | null): JSONValue {
+export function AccountToJSON(value?: Account): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

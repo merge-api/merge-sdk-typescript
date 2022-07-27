@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     ScheduledInterviewStatusEnum,
     ScheduledInterviewStatusEnumFromJSON,
     ScheduledInterviewStatusEnumFromJSONTyped,
     ScheduledInterviewStatusEnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -122,13 +125,13 @@ export interface ScheduledInterview {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ScheduledInterviewFromJSON(json: JSONValue): ScheduledInterview {
+export function ScheduledInterviewFromJSON(json: JSONValue): ScheduledInterview | null {
     return ScheduledInterviewFromJSONTyped(json);
 }
 
-export function ScheduledInterviewFromJSONTyped(json: JSONValue): ScheduledInterview {
+export function ScheduledInterviewFromJSONTyped(json: JSONValue): ScheduledInterview | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -150,9 +153,9 @@ export function ScheduledInterviewFromJSONTyped(json: JSONValue): ScheduledInter
     };
 }
 
-export function ScheduledInterviewToJSON(value?: ScheduledInterview | null): JSONValue {
+export function ScheduledInterviewToJSON(value?: ScheduledInterview): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     PolicyTypeEnum,
     PolicyTypeEnumFromJSON,
     PolicyTypeEnumFromJSONTyped,
     PolicyTypeEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -87,13 +90,13 @@ export interface TimeOffBalance {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TimeOffBalanceFromJSON(json: JSONValue): TimeOffBalance {
+export function TimeOffBalanceFromJSON(json: JSONValue): TimeOffBalance | null {
     return TimeOffBalanceFromJSONTyped(json);
 }
 
-export function TimeOffBalanceFromJSONTyped(json: JSONValue): TimeOffBalance {
+export function TimeOffBalanceFromJSONTyped(json: JSONValue): TimeOffBalance | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -109,9 +112,9 @@ export function TimeOffBalanceFromJSONTyped(json: JSONValue): TimeOffBalance {
     };
 }
 
-export function TimeOffBalanceToJSON(value?: TimeOffBalance | null): JSONValue {
+export function TimeOffBalanceToJSON(value?: TimeOffBalance): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

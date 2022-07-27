@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The PhoneNumber Object
@@ -39,13 +39,13 @@ export interface PhoneNumber {
     phone_number_type?: string | null;
 }
 
-export function PhoneNumberFromJSON(json: JSONValue): PhoneNumber {
+export function PhoneNumberFromJSON(json: JSONValue): PhoneNumber | null {
     return PhoneNumberFromJSONTyped(json);
 }
 
-export function PhoneNumberFromJSONTyped(json: JSONValue): PhoneNumber {
+export function PhoneNumberFromJSONTyped(json: JSONValue): PhoneNumber | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -55,9 +55,9 @@ export function PhoneNumberFromJSONTyped(json: JSONValue): PhoneNumber {
     };
 }
 
-export function PhoneNumberToJSON(value?: PhoneNumber | null): JSONValue {
+export function PhoneNumberToJSON(value?: PhoneNumber): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

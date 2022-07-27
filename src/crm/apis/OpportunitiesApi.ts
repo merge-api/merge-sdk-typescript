@@ -13,7 +13,7 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     MetaResponse,
     MetaResponseFromJSON,
@@ -27,10 +27,13 @@ import {
     OpportunityResponse,
     OpportunityResponseFromJSON,
     OpportunityResponseToJSON,
-    PaginatedOpportunityList,
-    PaginatedOpportunityListFromJSON,
-    PaginatedOpportunityListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface OpportunitiesCreateRequest {
     xAccountToken: string;
@@ -103,8 +106,15 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -129,7 +139,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Opportunity` objects.
      */
-    async opportunitiesListRaw(requestParameters: OpportunitiesListRequest): Promise<runtime.ApiResponse<PaginatedOpportunityList>> {
+    async opportunitiesListRaw(requestParameters: OpportunitiesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Opportunity>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesList.');
         }
@@ -198,8 +208,15 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -209,13 +226,13 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedOpportunityListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Opportunity` objects.
      */
-    async opportunitiesList(requestParameters: OpportunitiesListRequest): Promise<PaginatedOpportunityList> {
+    async opportunitiesList(requestParameters: OpportunitiesListRequest): Promise<MergePaginatedResponse<Opportunity>> {
         const response = await this.opportunitiesListRaw(requestParameters);
         return await response.value();
     }
@@ -236,8 +253,15 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -286,8 +310,15 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

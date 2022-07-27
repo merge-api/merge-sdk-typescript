@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -77,13 +80,13 @@ export interface Deduction {
     remote_was_deleted?: boolean;
 }
 
-export function DeductionFromJSON(json: JSONValue): Deduction {
+export function DeductionFromJSON(json: JSONValue): Deduction | null {
     return DeductionFromJSONTyped(json);
 }
 
-export function DeductionFromJSONTyped(json: JSONValue): Deduction {
+export function DeductionFromJSONTyped(json: JSONValue): Deduction | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -98,9 +101,9 @@ export function DeductionFromJSONTyped(json: JSONValue): Deduction {
     };
 }
 
-export function DeductionToJSON(value?: Deduction | null): JSONValue {
+export function DeductionToJSON(value?: Deduction): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

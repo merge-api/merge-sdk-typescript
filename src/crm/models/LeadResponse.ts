@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     DebugModeLog,
     DebugModeLogFromJSON,
@@ -66,13 +66,13 @@ export interface LeadResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function LeadResponseFromJSON(json: JSONValue): LeadResponse {
+export function LeadResponseFromJSON(json: JSONValue): LeadResponse | null {
     return LeadResponseFromJSONTyped(json);
 }
 
-export function LeadResponseFromJSONTyped(json: JSONValue): LeadResponse {
+export function LeadResponseFromJSONTyped(json: JSONValue): LeadResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function LeadResponseFromJSONTyped(json: JSONValue): LeadResponse {
     };
 }
 
-export function LeadResponseToJSON(value?: LeadResponse | null): JSONValue {
+export function LeadResponseToJSON(value?: LeadResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -64,13 +67,13 @@ export interface Department {
     readonly remote_was_deleted?: boolean;
 }
 
-export function DepartmentFromJSON(json: JSONValue): Department {
+export function DepartmentFromJSON(json: JSONValue): Department | null {
     return DepartmentFromJSONTyped(json);
 }
 
-export function DepartmentFromJSONTyped(json: JSONValue): Department {
+export function DepartmentFromJSONTyped(json: JSONValue): Department | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -83,9 +86,9 @@ export function DepartmentFromJSONTyped(json: JSONValue): Department {
     };
 }
 
-export function DepartmentToJSON(value?: Department | null): JSONValue {
+export function DepartmentToJSON(value?: Department): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

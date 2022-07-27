@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The PurchaseOrderLineItem Object
@@ -76,13 +76,13 @@ export interface PurchaseOrderLineItem {
     total_line_amount?: string | null;
 }
 
-export function PurchaseOrderLineItemFromJSON(json: JSONValue): PurchaseOrderLineItem {
+export function PurchaseOrderLineItemFromJSON(json: JSONValue): PurchaseOrderLineItem | null {
     return PurchaseOrderLineItemFromJSONTyped(json);
 }
 
-export function PurchaseOrderLineItemFromJSONTyped(json: JSONValue): PurchaseOrderLineItem {
+export function PurchaseOrderLineItemFromJSONTyped(json: JSONValue): PurchaseOrderLineItem | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -98,9 +98,9 @@ export function PurchaseOrderLineItemFromJSONTyped(json: JSONValue): PurchaseOrd
     };
 }
 
-export function PurchaseOrderLineItemToJSON(value?: PurchaseOrderLineItem | null): JSONValue {
+export function PurchaseOrderLineItemToJSON(value?: PurchaseOrderLineItem): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

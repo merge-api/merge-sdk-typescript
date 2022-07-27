@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Deduction,
     DeductionFromJSON,
     DeductionToJSON,
-    PaginatedDeductionList,
-    PaginatedDeductionListFromJSON,
-    PaginatedDeductionListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface DeductionsListRequest {
     xAccountToken: string;
@@ -51,7 +54,7 @@ export class DeductionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Deduction` objects.
      */
-    async deductionsListRaw(requestParameters: DeductionsListRequest): Promise<runtime.ApiResponse<PaginatedDeductionList>> {
+    async deductionsListRaw(requestParameters: DeductionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Deduction>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling deductionsList.');
         }
@@ -104,8 +107,15 @@ export class DeductionsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -115,13 +125,13 @@ export class DeductionsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedDeductionListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Deduction` objects.
      */
-    async deductionsList(requestParameters: DeductionsListRequest): Promise<PaginatedDeductionList> {
+    async deductionsList(requestParameters: DeductionsListRequest): Promise<MergePaginatedResponse<Deduction>> {
         const response = await this.deductionsListRaw(requestParameters);
         return await response.value();
     }
@@ -150,8 +160,15 @@ export class DeductionsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

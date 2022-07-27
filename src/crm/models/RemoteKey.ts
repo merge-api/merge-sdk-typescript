@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The RemoteKey Object
@@ -40,13 +40,13 @@ export interface RemoteKey {
     key: string;
 }
 
-export function RemoteKeyFromJSON(json: JSONValue): RemoteKey {
+export function RemoteKeyFromJSON(json: JSONValue): RemoteKey | null {
     return RemoteKeyFromJSONTyped(json);
 }
 
-export function RemoteKeyFromJSONTyped(json: JSONValue): RemoteKey {
+export function RemoteKeyFromJSONTyped(json: JSONValue): RemoteKey | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -56,9 +56,9 @@ export function RemoteKeyFromJSONTyped(json: JSONValue): RemoteKey {
     };
 }
 
-export function RemoteKeyToJSON(value?: RemoteKey | null): JSONValue {
+export function RemoteKeyToJSON(value?: RemoteKey): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

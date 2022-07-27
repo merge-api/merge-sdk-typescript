@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     DebugModelLogSummary,
     DebugModelLogSummaryFromJSON,
@@ -48,13 +48,13 @@ export interface DebugModeLog {
     log_summary: DebugModelLogSummary;
 }
 
-export function DebugModeLogFromJSON(json: JSONValue): DebugModeLog {
+export function DebugModeLogFromJSON(json: JSONValue): DebugModeLog | null {
     return DebugModeLogFromJSONTyped(json);
 }
 
-export function DebugModeLogFromJSONTyped(json: JSONValue): DebugModeLog {
+export function DebugModeLogFromJSONTyped(json: JSONValue): DebugModeLog | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -65,9 +65,9 @@ export function DebugModeLogFromJSONTyped(json: JSONValue): DebugModeLog {
     };
 }
 
-export function DebugModeLogToJSON(value?: DebugModeLog | null): JSONValue {
+export function DebugModeLogToJSON(value?: DebugModeLog): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

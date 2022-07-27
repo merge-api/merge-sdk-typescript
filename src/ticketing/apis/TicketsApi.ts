@@ -13,17 +13,11 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    PaginatedTicketList,
-    PaginatedTicketListFromJSON,
-    PaginatedTicketListToJSON,
-    PaginatedUserList,
-    PaginatedUserListFromJSON,
-    PaginatedUserListToJSON,
     Ticket,
     TicketFromJSON,
     TicketToJSON,
@@ -33,7 +27,15 @@ import {
     TicketResponse,
     TicketResponseFromJSON,
     TicketResponseToJSON,
+    User,
+    UserFromJSON,
+    UserToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface TicketsCollaboratorsListRequest {
     xAccountToken: string;
@@ -85,7 +87,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async ticketsCollaboratorsListRaw(requestParameters: TicketsCollaboratorsListRequest): Promise<runtime.ApiResponse<PaginatedUserList>> {
+    async ticketsCollaboratorsListRaw(requestParameters: TicketsCollaboratorsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsCollaboratorsList.');
         }
@@ -114,8 +116,15 @@ export class TicketsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -125,13 +134,13 @@ export class TicketsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedUserListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a `User` object with the given `id`.
      */
-    async ticketsCollaboratorsList(requestParameters: TicketsCollaboratorsListRequest): Promise<PaginatedUserList> {
+    async ticketsCollaboratorsList(requestParameters: TicketsCollaboratorsListRequest): Promise<MergePaginatedResponse<User>> {
         const response = await this.ticketsCollaboratorsListRaw(requestParameters);
         return await response.value();
     }
@@ -166,8 +175,15 @@ export class TicketsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -192,7 +208,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Ticket` objects.
      */
-    async ticketsListRaw(requestParameters: TicketsListRequest): Promise<runtime.ApiResponse<PaginatedTicketList>> {
+    async ticketsListRaw(requestParameters: TicketsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Ticket>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsList.');
         }
@@ -253,8 +269,15 @@ export class TicketsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -264,13 +287,13 @@ export class TicketsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedTicketListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Ticket` objects.
      */
-    async ticketsList(requestParameters: TicketsListRequest): Promise<PaginatedTicketList> {
+    async ticketsList(requestParameters: TicketsListRequest): Promise<MergePaginatedResponse<Ticket>> {
         const response = await this.ticketsListRaw(requestParameters);
         return await response.value();
     }
@@ -291,8 +314,15 @@ export class TicketsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -341,8 +371,15 @@ export class TicketsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

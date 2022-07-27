@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Candidate,
     CandidateFromJSON,
@@ -66,13 +66,13 @@ export interface CandidateResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function CandidateResponseFromJSON(json: JSONValue): CandidateResponse {
+export function CandidateResponseFromJSON(json: JSONValue): CandidateResponse | null {
     return CandidateResponseFromJSONTyped(json);
 }
 
-export function CandidateResponseFromJSONTyped(json: JSONValue): CandidateResponse {
+export function CandidateResponseFromJSONTyped(json: JSONValue): CandidateResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function CandidateResponseFromJSONTyped(json: JSONValue): CandidateRespon
     };
 }
 
-export function CandidateResponseToJSON(value?: CandidateResponse | null): JSONValue {
+export function CandidateResponseToJSON(value?: CandidateResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * 
@@ -77,13 +77,13 @@ export interface TransactionLineItem {
     remote_id?: string | null;
 }
 
-export function TransactionLineItemFromJSON(json: JSONValue): TransactionLineItem {
+export function TransactionLineItemFromJSON(json: JSONValue): TransactionLineItem | null {
     return TransactionLineItemFromJSONTyped(json);
 }
 
-export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLineItem {
+export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLineItem | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -100,9 +100,9 @@ export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLi
     };
 }
 
-export function TransactionLineItemToJSON(value?: TransactionLineItem | null): JSONValue {
+export function TransactionLineItemToJSON(value?: TransactionLineItem): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     OpportunityStatusEnum,
     OpportunityStatusEnumFromJSON,
     OpportunityStatusEnumFromJSONTyped,
     OpportunityStatusEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -122,13 +125,13 @@ export interface Opportunity {
     readonly remote_was_deleted?: boolean;
 }
 
-export function OpportunityFromJSON(json: JSONValue): Opportunity {
+export function OpportunityFromJSON(json: JSONValue): Opportunity | null {
     return OpportunityFromJSONTyped(json);
 }
 
-export function OpportunityFromJSONTyped(json: JSONValue): Opportunity {
+export function OpportunityFromJSONTyped(json: JSONValue): Opportunity | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -150,9 +153,9 @@ export function OpportunityFromJSONTyped(json: JSONValue): Opportunity {
     };
 }
 
-export function OpportunityToJSON(value?: Opportunity | null): JSONValue {
+export function OpportunityToJSON(value?: Opportunity): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -71,13 +74,13 @@ export interface Project {
     remote_was_deleted?: boolean;
 }
 
-export function ProjectFromJSON(json: JSONValue): Project {
+export function ProjectFromJSON(json: JSONValue): Project | null {
     return ProjectFromJSONTyped(json);
 }
 
-export function ProjectFromJSONTyped(json: JSONValue): Project {
+export function ProjectFromJSONTyped(json: JSONValue): Project | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -91,9 +94,9 @@ export function ProjectFromJSONTyped(json: JSONValue): Project {
     };
 }
 
-export function ProjectToJSON(value?: Project | null): JSONValue {
+export function ProjectToJSON(value?: Project): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

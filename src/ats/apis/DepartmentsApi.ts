@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Department,
     DepartmentFromJSON,
     DepartmentToJSON,
-    PaginatedDepartmentList,
-    PaginatedDepartmentListFromJSON,
-    PaginatedDepartmentListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface DepartmentsListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class DepartmentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Department` objects.
      */
-    async departmentsListRaw(requestParameters: DepartmentsListRequest): Promise<runtime.ApiResponse<PaginatedDepartmentList>> {
+    async departmentsListRaw(requestParameters: DepartmentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Department>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling departmentsList.');
         }
@@ -99,8 +102,15 @@ export class DepartmentsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class DepartmentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedDepartmentListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Department` objects.
      */
-    async departmentsList(requestParameters: DepartmentsListRequest): Promise<PaginatedDepartmentList> {
+    async departmentsList(requestParameters: DepartmentsListRequest): Promise<MergePaginatedResponse<Department>> {
         const response = await this.departmentsListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class DepartmentsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

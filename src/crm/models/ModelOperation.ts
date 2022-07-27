@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The ModelOperation Object
@@ -52,13 +52,13 @@ export interface ModelOperation {
     supported_fields: Array<string>;
 }
 
-export function ModelOperationFromJSON(json: JSONValue): ModelOperation {
+export function ModelOperationFromJSON(json: JSONValue): ModelOperation | null {
     return ModelOperationFromJSONTyped(json);
 }
 
-export function ModelOperationFromJSONTyped(json: JSONValue): ModelOperation {
+export function ModelOperationFromJSONTyped(json: JSONValue): ModelOperation | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -70,9 +70,9 @@ export function ModelOperationFromJSONTyped(json: JSONValue): ModelOperation {
     };
 }
 
-export function ModelOperationToJSON(value?: ModelOperation | null): JSONValue {
+export function ModelOperationToJSON(value?: ModelOperation): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

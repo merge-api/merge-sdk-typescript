@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CategoriesEnum,
     CategoriesEnumFromJSON,
@@ -66,13 +66,13 @@ export interface AccountIntegration {
     readonly slug?: string;
 }
 
-export function AccountIntegrationFromJSON(json: JSONValue): AccountIntegration {
+export function AccountIntegrationFromJSON(json: JSONValue): AccountIntegration | null {
     return AccountIntegrationFromJSONTyped(json);
 }
 
-export function AccountIntegrationFromJSONTyped(json: JSONValue): AccountIntegration {
+export function AccountIntegrationFromJSONTyped(json: JSONValue): AccountIntegration | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -86,9 +86,9 @@ export function AccountIntegrationFromJSONTyped(json: JSONValue): AccountIntegra
     };
 }
 
-export function AccountIntegrationToJSON(value?: AccountIntegration | null): JSONValue {
+export function AccountIntegrationToJSON(value?: AccountIntegration): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

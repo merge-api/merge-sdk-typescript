@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     Status7d1Enum,
     Status7d1EnumFromJSON,
     Status7d1EnumFromJSONTyped,
     Status7d1EnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -75,13 +78,13 @@ export interface TrackingCategory {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TrackingCategoryFromJSON(json: JSONValue): TrackingCategory {
+export function TrackingCategoryFromJSON(json: JSONValue): TrackingCategory | null {
     return TrackingCategoryFromJSONTyped(json);
 }
 
-export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory {
+export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -95,9 +98,9 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
     };
 }
 
-export function TrackingCategoryToJSON(value?: TrackingCategory | null): JSONValue {
+export function TrackingCategoryToJSON(value?: TrackingCategory): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     ReportItem,
     ReportItemFromJSON,
     ReportItemFromJSONTyped,
     ReportItemToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -105,13 +108,13 @@ export interface BalanceSheet {
     readonly remote_was_deleted?: boolean;
 }
 
-export function BalanceSheetFromJSON(json: JSONValue): BalanceSheet {
+export function BalanceSheetFromJSON(json: JSONValue): BalanceSheet | null {
     return BalanceSheetFromJSONTyped(json);
 }
 
-export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet {
+export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -130,9 +133,9 @@ export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet {
     };
 }
 
-export function BalanceSheetToJSON(value?: BalanceSheet | null): JSONValue {
+export function BalanceSheetToJSON(value?: BalanceSheet): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

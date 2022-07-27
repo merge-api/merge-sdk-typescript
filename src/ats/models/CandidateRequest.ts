@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EmailAddressRequest,
     EmailAddressRequestFromJSON,
@@ -168,13 +168,13 @@ export interface CandidateRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function CandidateRequestFromJSON(json: JSONValue): CandidateRequest {
+export function CandidateRequestFromJSON(json: JSONValue): CandidateRequest | null {
     return CandidateRequestFromJSONTyped(json);
 }
 
-export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest {
+export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -203,9 +203,9 @@ export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest
     };
 }
 
-export function CandidateRequestToJSON(value?: CandidateRequest | null): JSONValue {
+export function CandidateRequestToJSON(value?: CandidateRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

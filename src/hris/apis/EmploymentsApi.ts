@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Employment,
     EmploymentFromJSON,
     EmploymentToJSON,
-    PaginatedEmploymentList,
-    PaginatedEmploymentListFromJSON,
-    PaginatedEmploymentListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface EmploymentsListRequest {
     xAccountToken: string;
@@ -54,7 +57,7 @@ export class EmploymentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Employment` objects.
      */
-    async employmentsListRaw(requestParameters: EmploymentsListRequest): Promise<runtime.ApiResponse<PaginatedEmploymentList>> {
+    async employmentsListRaw(requestParameters: EmploymentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Employment>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employmentsList.');
         }
@@ -115,8 +118,15 @@ export class EmploymentsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -126,13 +136,13 @@ export class EmploymentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedEmploymentListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Employment` objects.
      */
-    async employmentsList(requestParameters: EmploymentsListRequest): Promise<PaginatedEmploymentList> {
+    async employmentsList(requestParameters: EmploymentsListRequest): Promise<MergePaginatedResponse<Employment>> {
         const response = await this.employmentsListRaw(requestParameters);
         return await response.value();
     }
@@ -165,8 +175,15 @@ export class EmploymentsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -194,8 +211,8 @@ export class EmploymentsApi extends runtime.BaseAPI {
     * @enum {string}
     */
 export enum EmploymentsListOrderByEnum {
-    EffectiveDate = '-effective_date',
-    EffectiveDate = 'effective_date'
+    EffectiveDateDESC = '-effective_date',
+    EffectiveDateASC = 'effective_date'
 }
 /**
     * @export

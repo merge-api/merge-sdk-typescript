@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     DebugModeLog,
     DebugModeLogFromJSON,
@@ -66,13 +66,13 @@ export interface InvoiceResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function InvoiceResponseFromJSON(json: JSONValue): InvoiceResponse {
+export function InvoiceResponseFromJSON(json: JSONValue): InvoiceResponse | null {
     return InvoiceResponseFromJSONTyped(json);
 }
 
-export function InvoiceResponseFromJSONTyped(json: JSONValue): InvoiceResponse {
+export function InvoiceResponseFromJSONTyped(json: JSONValue): InvoiceResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function InvoiceResponseFromJSONTyped(json: JSONValue): InvoiceResponse {
     };
 }
 
-export function InvoiceResponseToJSON(value?: InvoiceResponse | null): JSONValue {
+export function InvoiceResponseToJSON(value?: InvoiceResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Lead Object
@@ -111,13 +111,13 @@ export interface LeadRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function LeadRequestFromJSON(json: JSONValue): LeadRequest {
+export function LeadRequestFromJSON(json: JSONValue): LeadRequest | null {
     return LeadRequestFromJSONTyped(json);
 }
 
-export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest {
+export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -139,9 +139,9 @@ export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest {
     };
 }
 
-export function LeadRequestToJSON(value?: LeadRequest | null): JSONValue {
+export function LeadRequestToJSON(value?: LeadRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     OverallRecommendationEnum,
     OverallRecommendationEnumFromJSON,
     OverallRecommendationEnumFromJSONTyped,
     OverallRecommendationEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -98,13 +101,13 @@ export interface Scorecard {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ScorecardFromJSON(json: JSONValue): Scorecard {
+export function ScorecardFromJSON(json: JSONValue): Scorecard | null {
     return ScorecardFromJSONTyped(json);
 }
 
-export function ScorecardFromJSONTyped(json: JSONValue): Scorecard {
+export function ScorecardFromJSONTyped(json: JSONValue): Scorecard | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -122,9 +125,9 @@ export function ScorecardFromJSONTyped(json: JSONValue): Scorecard {
     };
 }
 
-export function ScorecardToJSON(value?: Scorecard | null): JSONValue {
+export function ScorecardToJSON(value?: Scorecard): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

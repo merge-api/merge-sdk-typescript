@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Attachment Object
@@ -70,13 +70,13 @@ export interface AttachmentRequest {
     remote_created_at?: Date | null;
 }
 
-export function AttachmentRequestFromJSON(json: JSONValue): AttachmentRequest {
+export function AttachmentRequestFromJSON(json: JSONValue): AttachmentRequest | null {
     return AttachmentRequestFromJSONTyped(json);
 }
 
-export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentRequest {
+export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -91,9 +91,9 @@ export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentReque
     };
 }
 
-export function AttachmentRequestToJSON(value?: AttachmentRequest | null): JSONValue {
+export function AttachmentRequestToJSON(value?: AttachmentRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

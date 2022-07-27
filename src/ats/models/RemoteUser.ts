@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AccessRoleEnum,
     AccessRoleEnumFromJSON,
     AccessRoleEnumFromJSONTyped,
     AccessRoleEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -98,13 +101,13 @@ export interface RemoteUser {
     readonly remote_was_deleted?: boolean;
 }
 
-export function RemoteUserFromJSON(json: JSONValue): RemoteUser {
+export function RemoteUserFromJSON(json: JSONValue): RemoteUser | null {
     return RemoteUserFromJSONTyped(json);
 }
 
-export function RemoteUserFromJSONTyped(json: JSONValue): RemoteUser {
+export function RemoteUserFromJSONTyped(json: JSONValue): RemoteUser | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -122,9 +125,9 @@ export function RemoteUserFromJSONTyped(json: JSONValue): RemoteUser {
     };
 }
 
-export function RemoteUserToJSON(value?: RemoteUser | null): JSONValue {
+export function RemoteUserToJSON(value?: RemoteUser): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

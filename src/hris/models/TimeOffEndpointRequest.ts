@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     TimeOffRequest,
     TimeOffRequestFromJSON,
@@ -36,13 +36,13 @@ export interface TimeOffEndpointRequest {
     model: TimeOffRequest;
 }
 
-export function TimeOffEndpointRequestFromJSON(json: JSONValue): TimeOffEndpointRequest {
+export function TimeOffEndpointRequestFromJSON(json: JSONValue): TimeOffEndpointRequest | null {
     return TimeOffEndpointRequestFromJSONTyped(json);
 }
 
-export function TimeOffEndpointRequestFromJSONTyped(json: JSONValue): TimeOffEndpointRequest {
+export function TimeOffEndpointRequestFromJSONTyped(json: JSONValue): TimeOffEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function TimeOffEndpointRequestFromJSONTyped(json: JSONValue): TimeOffEnd
     };
 }
 
-export function TimeOffEndpointRequestToJSON(value?: TimeOffEndpointRequest | null): JSONValue {
+export function TimeOffEndpointRequestToJSON(value?: TimeOffEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

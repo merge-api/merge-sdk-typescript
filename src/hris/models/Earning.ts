@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EarningTypeEnum,
     EarningTypeEnumFromJSON,
@@ -65,13 +65,13 @@ export interface Earning {
     remote_was_deleted?: boolean;
 }
 
-export function EarningFromJSON(json: JSONValue): Earning {
+export function EarningFromJSON(json: JSONValue): Earning | null {
     return EarningFromJSONTyped(json);
 }
 
-export function EarningFromJSONTyped(json: JSONValue): Earning {
+export function EarningFromJSONTyped(json: JSONValue): Earning | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function EarningFromJSONTyped(json: JSONValue): Earning {
     };
 }
 
-export function EarningToJSON(value?: Earning | null): JSONValue {
+export function EarningToJSON(value?: Earning): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

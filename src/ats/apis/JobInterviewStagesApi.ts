@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     JobInterviewStage,
     JobInterviewStageFromJSON,
     JobInterviewStageToJSON,
-    PaginatedJobInterviewStageList,
-    PaginatedJobInterviewStageListFromJSON,
-    PaginatedJobInterviewStageListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface JobInterviewStagesListRequest {
     xAccountToken: string;
@@ -51,7 +54,7 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `JobInterviewStage` objects.
      */
-    async jobInterviewStagesListRaw(requestParameters: JobInterviewStagesListRequest): Promise<runtime.ApiResponse<PaginatedJobInterviewStageList>> {
+    async jobInterviewStagesListRaw(requestParameters: JobInterviewStagesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<JobInterviewStage>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling jobInterviewStagesList.');
         }
@@ -104,8 +107,15 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -115,13 +125,13 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedJobInterviewStageListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `JobInterviewStage` objects.
      */
-    async jobInterviewStagesList(requestParameters: JobInterviewStagesListRequest): Promise<PaginatedJobInterviewStageList> {
+    async jobInterviewStagesList(requestParameters: JobInterviewStagesListRequest): Promise<MergePaginatedResponse<JobInterviewStage>> {
         const response = await this.jobInterviewStagesListRaw(requestParameters);
         return await response.value();
     }
@@ -150,8 +160,15 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     DebugModeLog,
     DebugModeLogFromJSON,
@@ -66,13 +66,13 @@ export interface TicketResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function TicketResponseFromJSON(json: JSONValue): TicketResponse {
+export function TicketResponseFromJSON(json: JSONValue): TicketResponse | null {
     return TicketResponseFromJSONTyped(json);
 }
 
-export function TicketResponseFromJSONTyped(json: JSONValue): TicketResponse {
+export function TicketResponseFromJSONTyped(json: JSONValue): TicketResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function TicketResponseFromJSONTyped(json: JSONValue): TicketResponse {
     };
 }
 
-export function TicketResponseToJSON(value?: TicketResponse | null): JSONValue {
+export function TicketResponseToJSON(value?: TicketResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

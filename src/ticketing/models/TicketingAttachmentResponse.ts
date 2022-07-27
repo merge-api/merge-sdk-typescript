@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Attachment,
     AttachmentFromJSON,
@@ -66,13 +66,13 @@ export interface TicketingAttachmentResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function TicketingAttachmentResponseFromJSON(json: JSONValue): TicketingAttachmentResponse {
+export function TicketingAttachmentResponseFromJSON(json: JSONValue): TicketingAttachmentResponse | null {
     return TicketingAttachmentResponseFromJSONTyped(json);
 }
 
-export function TicketingAttachmentResponseFromJSONTyped(json: JSONValue): TicketingAttachmentResponse {
+export function TicketingAttachmentResponseFromJSONTyped(json: JSONValue): TicketingAttachmentResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function TicketingAttachmentResponseFromJSONTyped(json: JSONValue): Ticke
     };
 }
 
-export function TicketingAttachmentResponseToJSON(value?: TicketingAttachmentResponse | null): JSONValue {
+export function TicketingAttachmentResponseToJSON(value?: TicketingAttachmentResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AccountIntegration,
     AccountIntegrationFromJSON,
@@ -42,13 +42,13 @@ export interface AccountToken {
     integration: AccountIntegration;
 }
 
-export function AccountTokenFromJSON(json: JSONValue): AccountToken {
+export function AccountTokenFromJSON(json: JSONValue): AccountToken | null {
     return AccountTokenFromJSONTyped(json);
 }
 
-export function AccountTokenFromJSONTyped(json: JSONValue): AccountToken {
+export function AccountTokenFromJSONTyped(json: JSONValue): AccountToken | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -58,9 +58,9 @@ export function AccountTokenFromJSONTyped(json: JSONValue): AccountToken {
     };
 }
 
-export function AccountTokenToJSON(value?: AccountToken | null): JSONValue {
+export function AccountTokenToJSON(value?: AccountToken): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

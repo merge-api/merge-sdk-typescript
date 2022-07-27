@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CategoriesEnum,
     CategoriesEnumFromJSON,
@@ -82,13 +82,13 @@ export interface AccountDetailsAndActionsIntegration {
     available_model_operations?: Array<ModelOperation>;
 }
 
-export function AccountDetailsAndActionsIntegrationFromJSON(json: JSONValue): AccountDetailsAndActionsIntegration {
+export function AccountDetailsAndActionsIntegrationFromJSON(json: JSONValue): AccountDetailsAndActionsIntegration | null {
     return AccountDetailsAndActionsIntegrationFromJSONTyped(json);
 }
 
-export function AccountDetailsAndActionsIntegrationFromJSONTyped(json: JSONValue): AccountDetailsAndActionsIntegration {
+export function AccountDetailsAndActionsIntegrationFromJSONTyped(json: JSONValue): AccountDetailsAndActionsIntegration | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -104,9 +104,9 @@ export function AccountDetailsAndActionsIntegrationFromJSONTyped(json: JSONValue
     };
 }
 
-export function AccountDetailsAndActionsIntegrationToJSON(value?: AccountDetailsAndActionsIntegration | null): JSONValue {
+export function AccountDetailsAndActionsIntegrationToJSON(value?: AccountDetailsAndActionsIntegration): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

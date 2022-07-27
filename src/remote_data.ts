@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Merge ATS API
- * The unified API for building rich integrations with multiple Applicant Tracking System platforms.
+ * Merge Accounting API
+ * The unified API for building rich integrations with multiple Accounting & Finance platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev
@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from './runtime';
+import { JSONValue } from './merge_json'
 
 /**
  * 
@@ -29,35 +29,33 @@ export interface RemoteData {
     path: string;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {JSONValue}
      * @memberof RemoteData
      */
-    data?: { [key: string]: any; };
+    data?: JSONValue;
 }
 
-export function RemoteDataFromJSON(json: JSONValue): RemoteData {
+export function RemoteDataFromJSON(json: JSONValue): RemoteData | null {
     return RemoteDataFromJSONTyped(json);
 }
 
-export function RemoteDataFromJSONTyped(json: JSONValue): RemoteData {
+export function RemoteDataFromJSONTyped(json: JSONValue): RemoteData | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
-        
         'path': json['path'],
         'data': !exists(json, 'data') ? undefined : json['data'],
     };
 }
 
-export function RemoteDataToJSON(value?: RemoteData | null): JSONValue {
+export function RemoteDataToJSON(value?: RemoteData): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
-    return {
-        
+    return {        
         'path': value.path,
         'data': value.data,
     };

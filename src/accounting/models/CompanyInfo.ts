@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AccountingPhoneNumber,
     AccountingPhoneNumberFromJSON,
@@ -27,11 +27,14 @@ import {
     CurrencyEnumFromJSON,
     CurrencyEnumFromJSONTyped,
     CurrencyEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -131,13 +134,13 @@ export interface CompanyInfo {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CompanyInfoFromJSON(json: JSONValue): CompanyInfo {
+export function CompanyInfoFromJSON(json: JSONValue): CompanyInfo | null {
     return CompanyInfoFromJSONTyped(json);
 }
 
-export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo {
+export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -159,9 +162,9 @@ export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo {
     };
 }
 
-export function CompanyInfoToJSON(value?: CompanyInfo | null): JSONValue {
+export function CompanyInfoToJSON(value?: CompanyInfo): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

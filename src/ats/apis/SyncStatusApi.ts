@@ -13,12 +13,15 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedSyncStatusList,
-    PaginatedSyncStatusListFromJSON,
-    PaginatedSyncStatusListToJSON,
+	SyncStatus
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface SyncStatusListRequest {
     xAccountToken: string;
@@ -34,7 +37,7 @@ export class SyncStatusApi extends runtime.BaseAPI {
     /**
      * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
      */
-    async syncStatusListRaw(requestParameters: SyncStatusListRequest): Promise<runtime.ApiResponse<PaginatedSyncStatusList>> {
+    async syncStatusListRaw(requestParameters: SyncStatusListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<SyncStatus>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling syncStatusList.');
         }
@@ -55,8 +58,15 @@ export class SyncStatusApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -66,13 +76,13 @@ export class SyncStatusApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedSyncStatusListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
      */
-    async syncStatusList(requestParameters: SyncStatusListRequest): Promise<PaginatedSyncStatusList> {
+    async syncStatusList(requestParameters: SyncStatusListRequest): Promise<MergePaginatedResponse<SyncStatus>> {
         const response = await this.syncStatusListRaw(requestParameters);
         return await response.value();
     }

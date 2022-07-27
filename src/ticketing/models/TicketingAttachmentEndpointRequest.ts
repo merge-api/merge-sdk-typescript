@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AttachmentRequest,
     AttachmentRequestFromJSON,
@@ -36,13 +36,13 @@ export interface TicketingAttachmentEndpointRequest {
     model: AttachmentRequest;
 }
 
-export function TicketingAttachmentEndpointRequestFromJSON(json: JSONValue): TicketingAttachmentEndpointRequest {
+export function TicketingAttachmentEndpointRequestFromJSON(json: JSONValue): TicketingAttachmentEndpointRequest | null {
     return TicketingAttachmentEndpointRequestFromJSONTyped(json);
 }
 
-export function TicketingAttachmentEndpointRequestFromJSONTyped(json: JSONValue): TicketingAttachmentEndpointRequest {
+export function TicketingAttachmentEndpointRequestFromJSONTyped(json: JSONValue): TicketingAttachmentEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function TicketingAttachmentEndpointRequestFromJSONTyped(json: JSONValue)
     };
 }
 
-export function TicketingAttachmentEndpointRequestToJSON(value?: TicketingAttachmentEndpointRequest | null): JSONValue {
+export function TicketingAttachmentEndpointRequestToJSON(value?: TicketingAttachmentEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

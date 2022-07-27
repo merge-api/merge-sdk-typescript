@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -64,13 +67,13 @@ export interface Stage {
     readonly remote_was_deleted?: boolean;
 }
 
-export function StageFromJSON(json: JSONValue): Stage {
+export function StageFromJSON(json: JSONValue): Stage | null {
     return StageFromJSONTyped(json);
 }
 
-export function StageFromJSONTyped(json: JSONValue): Stage {
+export function StageFromJSONTyped(json: JSONValue): Stage | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -83,9 +86,9 @@ export function StageFromJSONTyped(json: JSONValue): Stage {
     };
 }
 
-export function StageToJSON(value?: Stage | null): JSONValue {
+export function StageToJSON(value?: Stage): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

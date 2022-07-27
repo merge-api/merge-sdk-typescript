@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EncodingEnum,
     EncodingEnumFromJSON,
@@ -65,13 +65,13 @@ export interface MultipartFormFieldRequest {
     content_type?: string | null;
 }
 
-export function MultipartFormFieldRequestFromJSON(json: JSONValue): MultipartFormFieldRequest {
+export function MultipartFormFieldRequestFromJSON(json: JSONValue): MultipartFormFieldRequest | null {
     return MultipartFormFieldRequestFromJSONTyped(json);
 }
 
-export function MultipartFormFieldRequestFromJSONTyped(json: JSONValue): MultipartFormFieldRequest {
+export function MultipartFormFieldRequestFromJSONTyped(json: JSONValue): MultipartFormFieldRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function MultipartFormFieldRequestFromJSONTyped(json: JSONValue): Multipa
     };
 }
 
-export function MultipartFormFieldRequestToJSON(value?: MultipartFormFieldRequest | null): JSONValue {
+export function MultipartFormFieldRequestToJSON(value?: MultipartFormFieldRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

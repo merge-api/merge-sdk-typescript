@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -70,13 +73,13 @@ export interface Office {
     readonly remote_was_deleted?: boolean;
 }
 
-export function OfficeFromJSON(json: JSONValue): Office {
+export function OfficeFromJSON(json: JSONValue): Office | null {
     return OfficeFromJSONTyped(json);
 }
 
-export function OfficeFromJSONTyped(json: JSONValue): Office {
+export function OfficeFromJSONTyped(json: JSONValue): Office | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -90,9 +93,9 @@ export function OfficeFromJSONTyped(json: JSONValue): Office {
     };
 }
 
-export function OfficeToJSON(value?: Office | null): JSONValue {
+export function OfficeToJSON(value?: Office): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

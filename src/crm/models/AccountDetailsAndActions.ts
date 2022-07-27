@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AccountDetailsAndActionsIntegration,
     AccountDetailsAndActionsIntegrationFromJSON,
@@ -97,13 +97,13 @@ export interface AccountDetailsAndActions {
     integration?: AccountDetailsAndActionsIntegration;
 }
 
-export function AccountDetailsAndActionsFromJSON(json: JSONValue): AccountDetailsAndActions {
+export function AccountDetailsAndActionsFromJSON(json: JSONValue): AccountDetailsAndActions | null {
     return AccountDetailsAndActionsFromJSONTyped(json);
 }
 
-export function AccountDetailsAndActionsFromJSONTyped(json: JSONValue): AccountDetailsAndActions {
+export function AccountDetailsAndActionsFromJSONTyped(json: JSONValue): AccountDetailsAndActions | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -120,9 +120,9 @@ export function AccountDetailsAndActionsFromJSONTyped(json: JSONValue): AccountD
     };
 }
 
-export function AccountDetailsAndActionsToJSON(value?: AccountDetailsAndActions | null): JSONValue {
+export function AccountDetailsAndActionsToJSON(value?: AccountDetailsAndActions): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

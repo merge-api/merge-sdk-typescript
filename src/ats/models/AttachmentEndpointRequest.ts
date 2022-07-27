@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AttachmentRequest,
     AttachmentRequestFromJSON,
@@ -42,13 +42,13 @@ export interface AttachmentEndpointRequest {
     remote_user_id: string;
 }
 
-export function AttachmentEndpointRequestFromJSON(json: JSONValue): AttachmentEndpointRequest {
+export function AttachmentEndpointRequestFromJSON(json: JSONValue): AttachmentEndpointRequest | null {
     return AttachmentEndpointRequestFromJSONTyped(json);
 }
 
-export function AttachmentEndpointRequestFromJSONTyped(json: JSONValue): AttachmentEndpointRequest {
+export function AttachmentEndpointRequestFromJSONTyped(json: JSONValue): AttachmentEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -58,9 +58,9 @@ export function AttachmentEndpointRequestFromJSONTyped(json: JSONValue): Attachm
     };
 }
 
-export function AttachmentEndpointRequestToJSON(value?: AttachmentEndpointRequest | null): JSONValue {
+export function AttachmentEndpointRequestToJSON(value?: AttachmentEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

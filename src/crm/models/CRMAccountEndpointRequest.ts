@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     AccountRequest,
     AccountRequestFromJSON,
@@ -36,13 +36,13 @@ export interface CRMAccountEndpointRequest {
     model: AccountRequest;
 }
 
-export function CRMAccountEndpointRequestFromJSON(json: JSONValue): CRMAccountEndpointRequest {
+export function CRMAccountEndpointRequestFromJSON(json: JSONValue): CRMAccountEndpointRequest | null {
     return CRMAccountEndpointRequestFromJSONTyped(json);
 }
 
-export function CRMAccountEndpointRequestFromJSONTyped(json: JSONValue): CRMAccountEndpointRequest {
+export function CRMAccountEndpointRequestFromJSONTyped(json: JSONValue): CRMAccountEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function CRMAccountEndpointRequestFromJSONTyped(json: JSONValue): CRMAcco
     };
 }
 
-export function CRMAccountEndpointRequestToJSON(value?: CRMAccountEndpointRequest | null): JSONValue {
+export function CRMAccountEndpointRequestToJSON(value?: CRMAccountEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

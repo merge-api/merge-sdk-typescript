@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
@@ -27,11 +27,14 @@ import {
     PurchaseOrderStatusEnumFromJSON,
     PurchaseOrderStatusEnumFromJSONTyped,
     PurchaseOrderStatusEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -143,13 +146,13 @@ export interface PurchaseOrder {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PurchaseOrderFromJSON(json: JSONValue): PurchaseOrder {
+export function PurchaseOrderFromJSON(json: JSONValue): PurchaseOrder | null {
     return PurchaseOrderFromJSONTyped(json);
 }
 
-export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder {
+export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -173,9 +176,9 @@ export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder {
     };
 }
 
-export function PurchaseOrderToJSON(value?: PurchaseOrder | null): JSONValue {
+export function PurchaseOrderToJSON(value?: PurchaseOrder): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

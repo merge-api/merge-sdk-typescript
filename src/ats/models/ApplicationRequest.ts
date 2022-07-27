@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Application Object
@@ -108,13 +108,13 @@ export interface ApplicationRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function ApplicationRequestFromJSON(json: JSONValue): ApplicationRequest {
+export function ApplicationRequestFromJSON(json: JSONValue): ApplicationRequest | null {
     return ApplicationRequestFromJSONTyped(json);
 }
 
-export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationRequest {
+export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -135,9 +135,9 @@ export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationReq
     };
 }
 
-export function ApplicationRequestToJSON(value?: ApplicationRequest | null): JSONValue {
+export function ApplicationRequestToJSON(value?: ApplicationRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

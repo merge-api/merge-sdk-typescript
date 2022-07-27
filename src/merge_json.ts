@@ -1,12 +1,13 @@
-type JSONValue =
+export type JSONValue =
     | string
     | number
     | boolean
     | JSONObject
-    | JSONArray;
+    | JSONArray
+    | null;
 
-interface JSONObject {
+export interface JSONObject {
     [x: string]: JSONValue;
 }
 
-interface JSONArray extends Array<JSONValue> { }
+export interface JSONArray extends Array<JSONValue> { }

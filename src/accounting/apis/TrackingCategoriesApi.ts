@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedTrackingCategoryList,
-    PaginatedTrackingCategoryListFromJSON,
-    PaginatedTrackingCategoryListToJSON,
+    
     TrackingCategory,
     TrackingCategoryFromJSON,
     TrackingCategoryToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface TrackingCategoriesListRequest {
     xAccountToken: string;
@@ -52,7 +55,7 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TrackingCategory` objects.
      */
-    async trackingCategoriesListRaw(requestParameters: TrackingCategoriesListRequest): Promise<runtime.ApiResponse<PaginatedTrackingCategoryList>> {
+    async trackingCategoriesListRaw(requestParameters: TrackingCategoriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TrackingCategory>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling trackingCategoriesList.');
         }
@@ -105,8 +108,15 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -116,13 +126,13 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedTrackingCategoryListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `TrackingCategory` objects.
      */
-    async trackingCategoriesList(requestParameters: TrackingCategoriesListRequest): Promise<PaginatedTrackingCategoryList> {
+    async trackingCategoriesList(requestParameters: TrackingCategoriesListRequest): Promise<MergePaginatedResponse<TrackingCategory>> {
         const response = await this.trackingCategoriesListRaw(requestParameters);
         return await response.value();
     }
@@ -155,8 +165,15 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

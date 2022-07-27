@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The EmailAddress Object
@@ -39,13 +39,13 @@ export interface EmailAddressRequest {
     email_address_type?: string | null;
 }
 
-export function EmailAddressRequestFromJSON(json: JSONValue): EmailAddressRequest {
+export function EmailAddressRequestFromJSON(json: JSONValue): EmailAddressRequest | null {
     return EmailAddressRequestFromJSONTyped(json);
 }
 
-export function EmailAddressRequestFromJSONTyped(json: JSONValue): EmailAddressRequest {
+export function EmailAddressRequestFromJSONTyped(json: JSONValue): EmailAddressRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -55,9 +55,9 @@ export function EmailAddressRequestFromJSONTyped(json: JSONValue): EmailAddressR
     };
 }
 
-export function EmailAddressRequestToJSON(value?: EmailAddressRequest | null): JSONValue {
+export function EmailAddressRequestToJSON(value?: EmailAddressRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

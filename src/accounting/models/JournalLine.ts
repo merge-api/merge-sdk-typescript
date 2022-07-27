@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The JournalLine Object
@@ -64,13 +64,13 @@ export interface JournalLine {
     description?: string | null;
 }
 
-export function JournalLineFromJSON(json: JSONValue): JournalLine {
+export function JournalLineFromJSON(json: JSONValue): JournalLine | null {
     return JournalLineFromJSONTyped(json);
 }
 
-export function JournalLineFromJSONTyped(json: JSONValue): JournalLine {
+export function JournalLineFromJSONTyped(json: JSONValue): JournalLine | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function JournalLineFromJSONTyped(json: JSONValue): JournalLine {
     };
 }
 
-export function JournalLineToJSON(value?: JournalLine | null): JSONValue {
+export function JournalLineToJSON(value?: JournalLine): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

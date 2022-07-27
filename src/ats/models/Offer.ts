@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     OfferStatusEnum,
     OfferStatusEnumFromJSON,
     OfferStatusEnumFromJSONTyped,
     OfferStatusEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -104,13 +107,13 @@ export interface Offer {
     readonly remote_was_deleted?: boolean;
 }
 
-export function OfferFromJSON(json: JSONValue): Offer {
+export function OfferFromJSON(json: JSONValue): Offer | null {
     return OfferFromJSONTyped(json);
 }
 
-export function OfferFromJSONTyped(json: JSONValue): Offer {
+export function OfferFromJSONTyped(json: JSONValue): Offer | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -129,9 +132,9 @@ export function OfferFromJSONTyped(json: JSONValue): Offer {
     };
 }
 
-export function OfferToJSON(value?: Offer | null): JSONValue {
+export function OfferToJSON(value?: Offer): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CategoryEnum,
     CategoryEnumFromJSON,
@@ -84,13 +84,13 @@ export interface AccountDetails {
     readonly webhook_listener_url?: string;
 }
 
-export function AccountDetailsFromJSON(json: JSONValue): AccountDetails {
+export function AccountDetailsFromJSON(json: JSONValue): AccountDetails | null {
     return AccountDetailsFromJSONTyped(json);
 }
 
-export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails {
+export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -107,9 +107,9 @@ export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails {
     };
 }
 
-export function AccountDetailsToJSON(value?: AccountDetails | null): JSONValue {
+export function AccountDetailsToJSON(value?: AccountDetails): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

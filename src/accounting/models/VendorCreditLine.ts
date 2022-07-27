@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The VendorCreditLine Object
@@ -58,13 +58,13 @@ export interface VendorCreditLine {
     account?: string | null;
 }
 
-export function VendorCreditLineFromJSON(json: JSONValue): VendorCreditLine {
+export function VendorCreditLineFromJSON(json: JSONValue): VendorCreditLine | null {
     return VendorCreditLineFromJSONTyped(json);
 }
 
-export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine {
+export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -77,9 +77,9 @@ export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine
     };
 }
 
-export function VendorCreditLineToJSON(value?: VendorCreditLine | null): JSONValue {
+export function VendorCreditLineToJSON(value?: VendorCreditLine): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

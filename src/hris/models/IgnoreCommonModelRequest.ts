@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     ReasonEnum,
     ReasonEnumFromJSON,
@@ -42,13 +42,13 @@ export interface IgnoreCommonModelRequest {
     message?: string;
 }
 
-export function IgnoreCommonModelRequestFromJSON(json: JSONValue): IgnoreCommonModelRequest {
+export function IgnoreCommonModelRequestFromJSON(json: JSONValue): IgnoreCommonModelRequest | null {
     return IgnoreCommonModelRequestFromJSONTyped(json);
 }
 
-export function IgnoreCommonModelRequestFromJSONTyped(json: JSONValue): IgnoreCommonModelRequest {
+export function IgnoreCommonModelRequestFromJSONTyped(json: JSONValue): IgnoreCommonModelRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -58,9 +58,9 @@ export function IgnoreCommonModelRequestFromJSONTyped(json: JSONValue): IgnoreCo
     };
 }
 
-export function IgnoreCommonModelRequestToJSON(value?: IgnoreCommonModelRequest | null): JSONValue {
+export function IgnoreCommonModelRequestToJSON(value?: IgnoreCommonModelRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Note Object
@@ -87,13 +87,13 @@ export interface NoteRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function NoteRequestFromJSON(json: JSONValue): NoteRequest {
+export function NoteRequestFromJSON(json: JSONValue): NoteRequest | null {
     return NoteRequestFromJSONTyped(json);
 }
 
-export function NoteRequestFromJSONTyped(json: JSONValue): NoteRequest {
+export function NoteRequestFromJSONTyped(json: JSONValue): NoteRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -111,9 +111,9 @@ export function NoteRequestFromJSONTyped(json: JSONValue): NoteRequest {
     };
 }
 
-export function NoteRequestToJSON(value?: NoteRequest | null): JSONValue {
+export function NoteRequestToJSON(value?: NoteRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

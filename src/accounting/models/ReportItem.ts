@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The ReportItem Object
@@ -52,13 +52,13 @@ export interface ReportItem {
     readonly sub_items?: { [key: string]: any; };
 }
 
-export function ReportItemFromJSON(json: JSONValue): ReportItem {
+export function ReportItemFromJSON(json: JSONValue): ReportItem | null {
     return ReportItemFromJSONTyped(json);
 }
 
-export function ReportItemFromJSONTyped(json: JSONValue): ReportItem {
+export function ReportItemFromJSONTyped(json: JSONValue): ReportItem | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -70,9 +70,9 @@ export function ReportItemFromJSONTyped(json: JSONValue): ReportItem {
     };
 }
 
-export function ReportItemToJSON(value?: ReportItem | null): JSONValue {
+export function ReportItemToJSON(value?: ReportItem): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

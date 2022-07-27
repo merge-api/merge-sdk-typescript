@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * 
@@ -35,13 +35,13 @@ export interface LinkedAccountStatus {
     can_make_request: boolean;
 }
 
-export function LinkedAccountStatusFromJSON(json: JSONValue): LinkedAccountStatus {
+export function LinkedAccountStatusFromJSON(json: JSONValue): LinkedAccountStatus | null {
     return LinkedAccountStatusFromJSONTyped(json);
 }
 
-export function LinkedAccountStatusFromJSONTyped(json: JSONValue): LinkedAccountStatus {
+export function LinkedAccountStatusFromJSONTyped(json: JSONValue): LinkedAccountStatus | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function LinkedAccountStatusFromJSONTyped(json: JSONValue): LinkedAccount
     };
 }
 
-export function LinkedAccountStatusToJSON(value?: LinkedAccountStatus | null): JSONValue {
+export function LinkedAccountStatusToJSON(value?: LinkedAccountStatus): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Tag Object
@@ -51,13 +51,13 @@ export interface Tag {
     remote_was_deleted?: boolean;
 }
 
-export function TagFromJSON(json: JSONValue): Tag {
+export function TagFromJSON(json: JSONValue): Tag | null {
     return TagFromJSONTyped(json);
 }
 
-export function TagFromJSONTyped(json: JSONValue): Tag {
+export function TagFromJSONTyped(json: JSONValue): Tag | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -69,9 +69,9 @@ export function TagFromJSONTyped(json: JSONValue): Tag {
     };
 }
 
-export function TagToJSON(value?: Tag | null): JSONValue {
+export function TagToJSON(value?: Tag): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

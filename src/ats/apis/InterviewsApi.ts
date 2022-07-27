@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedScheduledInterviewList,
-    PaginatedScheduledInterviewListFromJSON,
-    PaginatedScheduledInterviewListToJSON,
+    
     ScheduledInterview,
     ScheduledInterviewFromJSON,
     ScheduledInterviewToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface InterviewsListRequest {
     xAccountToken: string;
@@ -55,7 +58,7 @@ export class InterviewsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `ScheduledInterview` objects.
      */
-    async interviewsListRaw(requestParameters: InterviewsListRequest): Promise<runtime.ApiResponse<PaginatedScheduledInterviewList>> {
+    async interviewsListRaw(requestParameters: InterviewsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<ScheduledInterview>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling interviewsList.');
         }
@@ -120,8 +123,15 @@ export class InterviewsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -131,13 +141,13 @@ export class InterviewsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedScheduledInterviewListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `ScheduledInterview` objects.
      */
-    async interviewsList(requestParameters: InterviewsListRequest): Promise<PaginatedScheduledInterviewList> {
+    async interviewsList(requestParameters: InterviewsListRequest): Promise<MergePaginatedResponse<ScheduledInterview>> {
         const response = await this.interviewsListRaw(requestParameters);
         return await response.value();
     }
@@ -170,8 +180,15 @@ export class InterviewsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

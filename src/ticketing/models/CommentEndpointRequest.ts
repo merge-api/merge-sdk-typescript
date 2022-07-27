@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CommentRequest,
     CommentRequestFromJSON,
@@ -36,13 +36,13 @@ export interface CommentEndpointRequest {
     model: CommentRequest;
 }
 
-export function CommentEndpointRequestFromJSON(json: JSONValue): CommentEndpointRequest {
+export function CommentEndpointRequestFromJSON(json: JSONValue): CommentEndpointRequest | null {
     return CommentEndpointRequestFromJSONTyped(json);
 }
 
-export function CommentEndpointRequestFromJSONTyped(json: JSONValue): CommentEndpointRequest {
+export function CommentEndpointRequestFromJSONTyped(json: JSONValue): CommentEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function CommentEndpointRequestFromJSONTyped(json: JSONValue): CommentEnd
     };
 }
 
-export function CommentEndpointRequestToJSON(value?: CommentEndpointRequest | null): JSONValue {
+export function CommentEndpointRequestToJSON(value?: CommentEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Location,
     LocationFromJSON,
     LocationToJSON,
-    PaginatedLocationList,
-    PaginatedLocationListFromJSON,
-    PaginatedLocationListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface LocationsListRequest {
     xAccountToken: string;
@@ -52,7 +55,7 @@ export class LocationsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Location` objects.
      */
-    async locationsListRaw(requestParameters: LocationsListRequest): Promise<runtime.ApiResponse<PaginatedLocationList>> {
+    async locationsListRaw(requestParameters: LocationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Location>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling locationsList.');
         }
@@ -105,8 +108,15 @@ export class LocationsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -116,13 +126,13 @@ export class LocationsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedLocationListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Location` objects.
      */
-    async locationsList(requestParameters: LocationsListRequest): Promise<PaginatedLocationList> {
+    async locationsList(requestParameters: LocationsListRequest): Promise<MergePaginatedResponse<Location>> {
         const response = await this.locationsListRaw(requestParameters);
         return await response.value();
     }
@@ -155,8 +165,15 @@ export class LocationsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

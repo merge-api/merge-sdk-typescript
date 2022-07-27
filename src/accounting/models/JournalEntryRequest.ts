@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
@@ -71,13 +71,13 @@ export interface JournalEntryRequest {
     currency?: CurrencyEnum | null;
 }
 
-export function JournalEntryRequestFromJSON(json: JSONValue): JournalEntryRequest {
+export function JournalEntryRequestFromJSON(json: JSONValue): JournalEntryRequest | null {
     return JournalEntryRequestFromJSONTyped(json);
 }
 
-export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryRequest {
+export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -91,9 +91,9 @@ export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryR
     };
 }
 
-export function JournalEntryRequestToJSON(value?: JournalEntryRequest | null): JSONValue {
+export function JournalEntryRequestToJSON(value?: JournalEntryRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

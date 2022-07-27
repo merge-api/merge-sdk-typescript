@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CategoriesEnum,
     CategoriesEnumFromJSON,
@@ -29,56 +29,56 @@ import {
  */
 export interface EndUserDetailsRequest {
     /**
-     * 
+     * Unique ID for your end user.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */
     end_user_email_address: string;
     /**
-     * 
+     * Your end user's organization.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */
     end_user_organization_name: string;
     /**
-     * 
+     * Your end user's email address.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */
     end_user_origin_id: string;
     /**
-     * 
+     * The integration categories to show in Merge Link.
      * @type {Array<CategoriesEnum>}
      * @memberof EndUserDetailsRequest
      */
     categories: Array<CategoriesEnum>;
     /**
-     * The slug of a specific pre-selected integration for this linking flow token, for examples of slugs see https://www.merge.dev/docs/basics/integration-metadata
+     * The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */
     integration?: string | null;
     /**
-     * An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30
+     * An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.
      * @type {number}
      * @memberof EndUserDetailsRequest
      */
     link_expiry_mins?: number;
     /**
-     * Whether to generate a Magic Link URL. Defaults to false
+     * Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.
      * @type {boolean}
      * @memberof EndUserDetailsRequest
      */
-    should_create_magic_link_url?: boolean;
+    should_create_magic_link_url?: boolean | null;
 }
 
-export function EndUserDetailsRequestFromJSON(json: JSONValue): EndUserDetailsRequest {
+export function EndUserDetailsRequestFromJSON(json: JSONValue): EndUserDetailsRequest | null {
     return EndUserDetailsRequestFromJSONTyped(json);
 }
 
-export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDetailsRequest {
+export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDetailsRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -93,9 +93,9 @@ export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDeta
     };
 }
 
-export function EndUserDetailsRequestToJSON(value?: EndUserDetailsRequest | null): JSONValue {
+export function EndUserDetailsRequestToJSON(value?: EndUserDetailsRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

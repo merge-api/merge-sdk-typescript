@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     IncomeStatement,
     IncomeStatementFromJSON,
     IncomeStatementToJSON,
-    PaginatedIncomeStatementList,
-    PaginatedIncomeStatementListFromJSON,
-    PaginatedIncomeStatementListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface IncomeStatementsListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class IncomeStatementsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `IncomeStatement` objects.
      */
-    async incomeStatementsListRaw(requestParameters: IncomeStatementsListRequest): Promise<runtime.ApiResponse<PaginatedIncomeStatementList>> {
+    async incomeStatementsListRaw(requestParameters: IncomeStatementsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<IncomeStatement>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling incomeStatementsList.');
         }
@@ -99,8 +102,15 @@ export class IncomeStatementsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class IncomeStatementsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedIncomeStatementListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `IncomeStatement` objects.
      */
-    async incomeStatementsList(requestParameters: IncomeStatementsListRequest): Promise<PaginatedIncomeStatementList> {
+    async incomeStatementsList(requestParameters: IncomeStatementsListRequest): Promise<MergePaginatedResponse<IncomeStatement>> {
         const response = await this.incomeStatementsListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class IncomeStatementsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

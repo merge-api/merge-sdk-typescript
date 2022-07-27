@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The Tax Object
@@ -64,13 +64,13 @@ export interface Tax {
     remote_was_deleted?: boolean;
 }
 
-export function TaxFromJSON(json: JSONValue): Tax {
+export function TaxFromJSON(json: JSONValue): Tax | null {
     return TaxFromJSONTyped(json);
 }
 
-export function TaxFromJSONTyped(json: JSONValue): Tax {
+export function TaxFromJSONTyped(json: JSONValue): Tax | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function TaxFromJSONTyped(json: JSONValue): Tax {
     };
 }
 
-export function TaxToJSON(value?: Tax | null): JSONValue {
+export function TaxToJSON(value?: Tax): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

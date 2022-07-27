@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CreditNoteLineItem,
     CreditNoteLineItemFromJSON,
@@ -27,11 +27,14 @@ import {
     CurrencyEnumFromJSON,
     CurrencyEnumFromJSONTyped,
     CurrencyEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -137,13 +140,13 @@ export interface CreditNote {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CreditNoteFromJSON(json: JSONValue): CreditNote {
+export function CreditNoteFromJSON(json: JSONValue): CreditNote | null {
     return CreditNoteFromJSONTyped(json);
 }
 
-export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote {
+export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -166,9 +169,9 @@ export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote {
     };
 }
 
-export function CreditNoteToJSON(value?: CreditNote | null): JSONValue {
+export function CreditNoteToJSON(value?: CreditNote): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The InvoiceLineItem Object
@@ -76,13 +76,13 @@ export interface InvoiceLineItemRequest {
     tracking_category?: string | null;
 }
 
-export function InvoiceLineItemRequestFromJSON(json: JSONValue): InvoiceLineItemRequest {
+export function InvoiceLineItemRequestFromJSON(json: JSONValue): InvoiceLineItemRequest | null {
     return InvoiceLineItemRequestFromJSONTyped(json);
 }
 
-export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLineItemRequest {
+export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLineItemRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -98,9 +98,9 @@ export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLin
     };
 }
 
-export function InvoiceLineItemRequestToJSON(value?: InvoiceLineItemRequest | null): JSONValue {
+export function InvoiceLineItemRequestToJSON(value?: InvoiceLineItemRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

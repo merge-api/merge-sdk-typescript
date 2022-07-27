@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CandidateRequest,
     CandidateRequestFromJSON,
@@ -42,13 +42,13 @@ export interface CandidateEndpointRequest {
     remote_user_id: string;
 }
 
-export function CandidateEndpointRequestFromJSON(json: JSONValue): CandidateEndpointRequest {
+export function CandidateEndpointRequestFromJSON(json: JSONValue): CandidateEndpointRequest | null {
     return CandidateEndpointRequestFromJSONTyped(json);
 }
 
-export function CandidateEndpointRequestFromJSONTyped(json: JSONValue): CandidateEndpointRequest {
+export function CandidateEndpointRequestFromJSONTyped(json: JSONValue): CandidateEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -58,9 +58,9 @@ export function CandidateEndpointRequestFromJSONTyped(json: JSONValue): Candidat
     };
 }
 
-export function CandidateEndpointRequestToJSON(value?: CandidateEndpointRequest | null): JSONValue {
+export function CandidateEndpointRequestToJSON(value?: CandidateEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

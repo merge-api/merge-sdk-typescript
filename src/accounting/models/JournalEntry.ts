@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
@@ -23,11 +23,14 @@ import {
     JournalLineFromJSON,
     JournalLineFromJSONTyped,
     JournalLineToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -103,13 +106,13 @@ export interface JournalEntry {
     readonly remote_was_deleted?: boolean;
 }
 
-export function JournalEntryFromJSON(json: JSONValue): JournalEntry {
+export function JournalEntryFromJSON(json: JSONValue): JournalEntry | null {
     return JournalEntryFromJSONTyped(json);
 }
 
-export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry {
+export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -127,9 +130,9 @@ export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry {
     };
 }
 
-export function JournalEntryToJSON(value?: JournalEntry | null): JSONValue {
+export function JournalEntryToJSON(value?: JournalEntry): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     DisabilityStatusEnum,
     DisabilityStatusEnumFromJSON,
@@ -27,15 +27,18 @@ import {
     RaceEnumFromJSON,
     RaceEnumFromJSONTyped,
     RaceEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     VeteranStatusEnum,
     VeteranStatusEnumFromJSON,
     VeteranStatusEnumFromJSONTyped,
     VeteranStatusEnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -110,13 +113,13 @@ export interface EEOC {
     readonly remote_was_deleted?: boolean;
 }
 
-export function EEOCFromJSON(json: JSONValue): EEOC {
+export function EEOCFromJSON(json: JSONValue): EEOC | null {
     return EEOCFromJSONTyped(json);
 }
 
-export function EEOCFromJSONTyped(json: JSONValue): EEOC {
+export function EEOCFromJSONTyped(json: JSONValue): EEOC | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -134,9 +137,9 @@ export function EEOCFromJSONTyped(json: JSONValue): EEOC {
     };
 }
 
-export function EEOCToJSON(value?: EEOC | null): JSONValue {
+export function EEOCToJSON(value?: EEOC): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

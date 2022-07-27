@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedUserList,
-    PaginatedUserListFromJSON,
-    PaginatedUserListToJSON,
+    
     User,
     UserFromJSON,
     UserToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface UsersListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class UsersApi extends runtime.BaseAPI {
     /**
      * Returns a list of `User` objects.
      */
-    async usersListRaw(requestParameters: UsersListRequest): Promise<runtime.ApiResponse<PaginatedUserList>> {
+    async usersListRaw(requestParameters: UsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling usersList.');
         }
@@ -99,8 +102,15 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class UsersApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedUserListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `User` objects.
      */
-    async usersList(requestParameters: UsersListRequest): Promise<PaginatedUserList> {
+    async usersList(requestParameters: UsersListRequest): Promise<MergePaginatedResponse<User>> {
         const response = await this.usersListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class UsersApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

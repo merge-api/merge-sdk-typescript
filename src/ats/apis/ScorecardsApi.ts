@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedScorecardList,
-    PaginatedScorecardListFromJSON,
-    PaginatedScorecardListToJSON,
+    
     Scorecard,
     ScorecardFromJSON,
     ScorecardToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface ScorecardsListRequest {
     xAccountToken: string;
@@ -55,7 +58,7 @@ export class ScorecardsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Scorecard` objects.
      */
-    async scorecardsListRaw(requestParameters: ScorecardsListRequest): Promise<runtime.ApiResponse<PaginatedScorecardList>> {
+    async scorecardsListRaw(requestParameters: ScorecardsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Scorecard>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling scorecardsList.');
         }
@@ -120,8 +123,15 @@ export class ScorecardsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -131,13 +141,13 @@ export class ScorecardsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedScorecardListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Scorecard` objects.
      */
-    async scorecardsList(requestParameters: ScorecardsListRequest): Promise<PaginatedScorecardList> {
+    async scorecardsList(requestParameters: ScorecardsListRequest): Promise<MergePaginatedResponse<Scorecard>> {
         const response = await this.scorecardsListRaw(requestParameters);
         return await response.value();
     }
@@ -170,8 +180,15 @@ export class ScorecardsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

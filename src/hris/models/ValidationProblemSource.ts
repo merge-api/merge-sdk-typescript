@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * 
@@ -29,13 +29,13 @@ export interface ValidationProblemSource {
     pointer: string;
 }
 
-export function ValidationProblemSourceFromJSON(json: JSONValue): ValidationProblemSource {
+export function ValidationProblemSourceFromJSON(json: JSONValue): ValidationProblemSource | null {
     return ValidationProblemSourceFromJSONTyped(json);
 }
 
-export function ValidationProblemSourceFromJSONTyped(json: JSONValue): ValidationProblemSource {
+export function ValidationProblemSourceFromJSONTyped(json: JSONValue): ValidationProblemSource | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -44,9 +44,9 @@ export function ValidationProblemSourceFromJSONTyped(json: JSONValue): Validatio
     };
 }
 
-export function ValidationProblemSourceToJSON(value?: ValidationProblemSource | null): JSONValue {
+export function ValidationProblemSourceToJSON(value?: ValidationProblemSource): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

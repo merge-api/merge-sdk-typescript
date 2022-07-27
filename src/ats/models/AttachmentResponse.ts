@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Attachment,
     AttachmentFromJSON,
@@ -66,13 +66,13 @@ export interface AttachmentResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function AttachmentResponseFromJSON(json: JSONValue): AttachmentResponse {
+export function AttachmentResponseFromJSON(json: JSONValue): AttachmentResponse | null {
     return AttachmentResponseFromJSONTyped(json);
 }
 
-export function AttachmentResponseFromJSONTyped(json: JSONValue): AttachmentResponse {
+export function AttachmentResponseFromJSONTyped(json: JSONValue): AttachmentResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function AttachmentResponseFromJSONTyped(json: JSONValue): AttachmentResp
     };
 }
 
-export function AttachmentResponseToJSON(value?: AttachmentResponse | null): JSONValue {
+export function AttachmentResponseToJSON(value?: AttachmentResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

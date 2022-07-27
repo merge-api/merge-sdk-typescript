@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The RemoteResponse Object
@@ -64,13 +64,13 @@ export interface RemoteResponse {
     headers?: { [key: string]: any; };
 }
 
-export function RemoteResponseFromJSON(json: JSONValue): RemoteResponse {
+export function RemoteResponseFromJSON(json: JSONValue): RemoteResponse | null {
     return RemoteResponseFromJSONTyped(json);
 }
 
-export function RemoteResponseFromJSONTyped(json: JSONValue): RemoteResponse {
+export function RemoteResponseFromJSONTyped(json: JSONValue): RemoteResponse | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -84,9 +84,9 @@ export function RemoteResponseFromJSONTyped(json: JSONValue): RemoteResponse {
     };
 }
 
-export function RemoteResponseToJSON(value?: RemoteResponse | null): JSONValue {
+export function RemoteResponseToJSON(value?: RemoteResponse): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

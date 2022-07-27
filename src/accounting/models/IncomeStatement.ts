@@ -12,18 +12,21 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     ReportItem,
     ReportItemFromJSON,
     ReportItemFromJSONTyped,
     ReportItemToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -123,13 +126,13 @@ export interface IncomeStatement {
     readonly remote_was_deleted?: boolean;
 }
 
-export function IncomeStatementFromJSON(json: JSONValue): IncomeStatement {
+export function IncomeStatementFromJSON(json: JSONValue): IncomeStatement | null {
     return IncomeStatementFromJSONTyped(json);
 }
 
-export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement {
+export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -151,9 +154,9 @@ export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement {
     };
 }
 
-export function IncomeStatementToJSON(value?: IncomeStatement | null): JSONValue {
+export function IncomeStatementToJSON(value?: IncomeStatement): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

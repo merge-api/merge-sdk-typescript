@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -77,13 +80,13 @@ export interface TaxRate {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TaxRateFromJSON(json: JSONValue): TaxRate {
+export function TaxRateFromJSON(json: JSONValue): TaxRate | null {
     return TaxRateFromJSONTyped(json);
 }
 
-export function TaxRateFromJSONTyped(json: JSONValue): TaxRate {
+export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -98,9 +101,9 @@ export function TaxRateFromJSONTyped(json: JSONValue): TaxRate {
     };
 }
 
-export function TaxRateToJSON(value?: TaxRate | null): JSONValue {
+export function TaxRateToJSON(value?: TaxRate): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,13 +12,10 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     RunStateEnum,
     RunStateEnumFromJSON,
     RunStateEnumFromJSONTyped,
@@ -28,6 +25,12 @@ import {
     RunTypeEnumFromJSONTyped,
     RunTypeEnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -97,13 +100,13 @@ export interface PayrollRun {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PayrollRunFromJSON(json: JSONValue): PayrollRun {
+export function PayrollRunFromJSON(json: JSONValue): PayrollRun | null {
     return PayrollRunFromJSONTyped(json);
 }
 
-export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun {
+export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -120,9 +123,9 @@ export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun {
     };
 }
 
-export function PayrollRunToJSON(value?: PayrollRun | null): JSONValue {
+export function PayrollRunToJSON(value?: PayrollRun): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

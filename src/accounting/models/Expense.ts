@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
@@ -23,11 +23,14 @@ import {
     ExpenseLineFromJSON,
     ExpenseLineFromJSONTyped,
     ExpenseLineToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -115,13 +118,13 @@ export interface Expense {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ExpenseFromJSON(json: JSONValue): Expense {
+export function ExpenseFromJSON(json: JSONValue): Expense | null {
     return ExpenseFromJSONTyped(json);
 }
 
-export function ExpenseFromJSONTyped(json: JSONValue): Expense {
+export function ExpenseFromJSONTyped(json: JSONValue): Expense | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -141,9 +144,9 @@ export function ExpenseFromJSONTyped(json: JSONValue): Expense {
     };
 }
 
-export function ExpenseToJSON(value?: Expense | null): JSONValue {
+export function ExpenseToJSON(value?: Expense): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

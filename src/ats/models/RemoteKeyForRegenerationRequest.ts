@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 
 /**
  * # The RemoteKeyForRegeneration Object
@@ -34,13 +34,13 @@ export interface RemoteKeyForRegenerationRequest {
     name: string;
 }
 
-export function RemoteKeyForRegenerationRequestFromJSON(json: JSONValue): RemoteKeyForRegenerationRequest {
+export function RemoteKeyForRegenerationRequestFromJSON(json: JSONValue): RemoteKeyForRegenerationRequest | null {
     return RemoteKeyForRegenerationRequestFromJSONTyped(json);
 }
 
-export function RemoteKeyForRegenerationRequestFromJSONTyped(json: JSONValue): RemoteKeyForRegenerationRequest {
+export function RemoteKeyForRegenerationRequestFromJSONTyped(json: JSONValue): RemoteKeyForRegenerationRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -49,9 +49,9 @@ export function RemoteKeyForRegenerationRequestFromJSONTyped(json: JSONValue): R
     };
 }
 
-export function RemoteKeyForRegenerationRequestToJSON(value?: RemoteKeyForRegenerationRequest | null): JSONValue {
+export function RemoteKeyForRegenerationRequestToJSON(value?: RemoteKeyForRegenerationRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

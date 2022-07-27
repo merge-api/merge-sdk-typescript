@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     EmploymentTypeEnum,
     EmploymentTypeEnumFromJSON,
@@ -35,11 +35,14 @@ import {
     PayPeriodEnumFromJSON,
     PayPeriodEnumFromJSONTyped,
     PayPeriodEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -141,13 +144,13 @@ export interface Employment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function EmploymentFromJSON(json: JSONValue): Employment {
+export function EmploymentFromJSON(json: JSONValue): Employment | null {
     return EmploymentFromJSONTyped(json);
 }
 
-export function EmploymentFromJSONTyped(json: JSONValue): Employment {
+export function EmploymentFromJSONTyped(json: JSONValue): Employment | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -169,9 +172,9 @@ export function EmploymentFromJSONTyped(json: JSONValue): Employment {
     };
 }
 
-export function EmploymentToJSON(value?: Employment | null): JSONValue {
+export function EmploymentToJSON(value?: Employment): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

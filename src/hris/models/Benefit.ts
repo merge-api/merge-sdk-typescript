@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -89,13 +92,13 @@ export interface Benefit {
     readonly remote_was_deleted?: boolean;
 }
 
-export function BenefitFromJSON(json: JSONValue): Benefit {
+export function BenefitFromJSON(json: JSONValue): Benefit | null {
     return BenefitFromJSONTyped(json);
 }
 
-export function BenefitFromJSONTyped(json: JSONValue): Benefit {
+export function BenefitFromJSONTyped(json: JSONValue): Benefit | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -112,9 +115,9 @@ export function BenefitFromJSONTyped(json: JSONValue): Benefit {
     };
 }
 
-export function BenefitToJSON(value?: Benefit | null): JSONValue {
+export function BenefitToJSON(value?: Benefit): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

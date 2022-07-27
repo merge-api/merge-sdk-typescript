@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Deduction,
     DeductionFromJSON,
@@ -23,15 +23,18 @@ import {
     EarningFromJSON,
     EarningFromJSONTyped,
     EarningToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     Tax,
     TaxFromJSON,
     TaxFromJSONTyped,
     TaxToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -131,13 +134,13 @@ export interface EmployeePayrollRun {
     readonly remote_was_deleted?: boolean;
 }
 
-export function EmployeePayrollRunFromJSON(json: JSONValue): EmployeePayrollRun {
+export function EmployeePayrollRunFromJSON(json: JSONValue): EmployeePayrollRun | null {
     return EmployeePayrollRunFromJSONTyped(json);
 }
 
-export function EmployeePayrollRunFromJSONTyped(json: JSONValue): EmployeePayrollRun {
+export function EmployeePayrollRunFromJSONTyped(json: JSONValue): EmployeePayrollRun | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -159,9 +162,9 @@ export function EmployeePayrollRunFromJSONTyped(json: JSONValue): EmployeePayrol
     };
 }
 
-export function EmployeePayrollRunToJSON(value?: EmployeePayrollRun | null): JSONValue {
+export function EmployeePayrollRunToJSON(value?: EmployeePayrollRun): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

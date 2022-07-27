@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -101,13 +104,13 @@ export interface Comment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CommentFromJSON(json: JSONValue): Comment {
+export function CommentFromJSON(json: JSONValue): Comment | null {
     return CommentFromJSONTyped(json);
 }
 
-export function CommentFromJSONTyped(json: JSONValue): Comment {
+export function CommentFromJSONTyped(json: JSONValue): Comment | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -126,9 +129,9 @@ export function CommentFromJSONTyped(json: JSONValue): Comment {
     };
 }
 
-export function CommentToJSON(value?: Comment | null): JSONValue {
+export function CommentToJSON(value?: Comment): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
@@ -135,13 +135,13 @@ export interface InvoiceRequest {
     payments?: Array<string>;
 }
 
-export function InvoiceRequestFromJSON(json: JSONValue): InvoiceRequest {
+export function InvoiceRequestFromJSON(json: JSONValue): InvoiceRequest | null {
     return InvoiceRequestFromJSONTyped(json);
 }
 
-export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest {
+export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -165,9 +165,9 @@ export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest {
     };
 }
 
-export function InvoiceRequestToJSON(value?: InvoiceRequest | null): JSONValue {
+export function InvoiceRequestToJSON(value?: InvoiceRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

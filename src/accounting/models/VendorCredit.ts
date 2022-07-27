@@ -12,22 +12,25 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     CurrencyEnum,
     CurrencyEnumFromJSON,
     CurrencyEnumFromJSONTyped,
     CurrencyEnumToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
     VendorCreditLine,
     VendorCreditLineFromJSON,
     VendorCreditLineFromJSONTyped,
     VendorCreditLineToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -103,13 +106,13 @@ export interface VendorCredit {
     readonly remote_was_deleted?: boolean;
 }
 
-export function VendorCreditFromJSON(json: JSONValue): VendorCredit {
+export function VendorCreditFromJSON(json: JSONValue): VendorCredit | null {
     return VendorCreditFromJSONTyped(json);
 }
 
-export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit {
+export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -127,9 +130,9 @@ export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit {
     };
 }
 
-export function VendorCreditToJSON(value?: VendorCredit | null): JSONValue {
+export function VendorCreditToJSON(value?: VendorCredit): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

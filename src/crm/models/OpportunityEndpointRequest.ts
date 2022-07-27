@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     OpportunityRequest,
     OpportunityRequestFromJSON,
@@ -36,13 +36,13 @@ export interface OpportunityEndpointRequest {
     model: OpportunityRequest;
 }
 
-export function OpportunityEndpointRequestFromJSON(json: JSONValue): OpportunityEndpointRequest {
+export function OpportunityEndpointRequestFromJSON(json: JSONValue): OpportunityEndpointRequest | null {
     return OpportunityEndpointRequestFromJSONTyped(json);
 }
 
-export function OpportunityEndpointRequestFromJSONTyped(json: JSONValue): OpportunityEndpointRequest {
+export function OpportunityEndpointRequestFromJSONTyped(json: JSONValue): OpportunityEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function OpportunityEndpointRequestFromJSONTyped(json: JSONValue): Opport
     };
 }
 
-export function OpportunityEndpointRequestToJSON(value?: OpportunityEndpointRequest | null): JSONValue {
+export function OpportunityEndpointRequestToJSON(value?: OpportunityEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

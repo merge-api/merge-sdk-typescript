@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
     Activity,
     ActivityFromJSON,
     ActivityToJSON,
-    PaginatedActivityList,
-    PaginatedActivityListFromJSON,
-    PaginatedActivityListToJSON,
+    
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface ActivitiesListRequest {
     xAccountToken: string;
@@ -53,7 +56,7 @@ export class ActivitiesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Activity` objects.
      */
-    async activitiesListRaw(requestParameters: ActivitiesListRequest): Promise<runtime.ApiResponse<PaginatedActivityList>> {
+    async activitiesListRaw(requestParameters: ActivitiesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Activity>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesList.');
         }
@@ -110,8 +113,15 @@ export class ActivitiesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -121,13 +131,13 @@ export class ActivitiesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedActivityListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `Activity` objects.
      */
-    async activitiesList(requestParameters: ActivitiesListRequest): Promise<PaginatedActivityList> {
+    async activitiesList(requestParameters: ActivitiesListRequest): Promise<MergePaginatedResponse<Activity>> {
         const response = await this.activitiesListRaw(requestParameters);
         return await response.value();
     }
@@ -160,8 +170,15 @@ export class ActivitiesApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

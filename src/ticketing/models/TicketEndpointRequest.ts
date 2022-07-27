@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     TicketRequest,
     TicketRequestFromJSON,
@@ -36,13 +36,13 @@ export interface TicketEndpointRequest {
     model: TicketRequest;
 }
 
-export function TicketEndpointRequestFromJSON(json: JSONValue): TicketEndpointRequest {
+export function TicketEndpointRequestFromJSON(json: JSONValue): TicketEndpointRequest | null {
     return TicketEndpointRequestFromJSONTyped(json);
 }
 
-export function TicketEndpointRequestFromJSONTyped(json: JSONValue): TicketEndpointRequest {
+export function TicketEndpointRequestFromJSONTyped(json: JSONValue): TicketEndpointRequest | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -51,9 +51,9 @@ export function TicketEndpointRequestFromJSONTyped(json: JSONValue): TicketEndpo
     };
 }
 
-export function TicketEndpointRequestToJSON(value?: TicketEndpointRequest | null): JSONValue {
+export function TicketEndpointRequestToJSON(value?: TicketEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

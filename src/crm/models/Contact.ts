@@ -12,8 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
     Address,
     AddressFromJSON,
@@ -27,11 +27,14 @@ import {
     PhoneNumberFromJSON,
     PhoneNumberFromJSONTyped,
     PhoneNumberToJSON,
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -118,13 +121,13 @@ export interface Contact {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ContactFromJSON(json: JSONValue): Contact {
+export function ContactFromJSON(json: JSONValue): Contact | null {
     return ContactFromJSONTyped(json);
 }
 
-export function ContactFromJSONTyped(json: JSONValue): Contact {
+export function ContactFromJSONTyped(json: JSONValue): Contact | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -144,9 +147,9 @@ export function ContactFromJSONTyped(json: JSONValue): Contact {
     };
 }
 
-export function ContactToJSON(value?: Contact | null): JSONValue {
+export function ContactToJSON(value?: Contact): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -89,13 +92,13 @@ export interface Payment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PaymentFromJSON(json: JSONValue): Payment {
+export function PaymentFromJSON(json: JSONValue): Payment | null {
     return PaymentFromJSONTyped(json);
 }
 
-export function PaymentFromJSONTyped(json: JSONValue): Payment {
+export function PaymentFromJSONTyped(json: JSONValue): Payment | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -112,9 +115,9 @@ export function PaymentFromJSONTyped(json: JSONValue): Payment {
     };
 }
 
-export function PaymentToJSON(value?: Payment | null): JSONValue {
+export function PaymentToJSON(value?: Payment): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {

@@ -13,15 +13,18 @@
  */
 
 
-import * as runtime from '../runtime';
+import * as runtime from '../../runtime';
 import {
-    PaginatedRejectReasonList,
-    PaginatedRejectReasonListFromJSON,
-    PaginatedRejectReasonListToJSON,
+    
     RejectReason,
     RejectReasonFromJSON,
     RejectReasonToJSON,
 } from '../models';
+import {
+	MergePaginatedResponse,
+	MergePaginatedResponseFromJSON,
+	MergePaginatedResponseToJSON,
+} from '../../merge_paginated_response';
 
 export interface RejectReasonsListRequest {
     xAccountToken: string;
@@ -50,7 +53,7 @@ export class RejectReasonsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `RejectReason` objects.
      */
-    async rejectReasonsListRaw(requestParameters: RejectReasonsListRequest): Promise<runtime.ApiResponse<PaginatedRejectReasonList>> {
+    async rejectReasonsListRaw(requestParameters: RejectReasonsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RejectReason>>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling rejectReasonsList.');
         }
@@ -99,8 +102,15 @@ export class RejectReasonsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
@@ -110,13 +120,13 @@ export class RejectReasonsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => PaginatedRejectReasonListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns a list of `RejectReason` objects.
      */
-    async rejectReasonsList(requestParameters: RejectReasonsListRequest): Promise<PaginatedRejectReasonList> {
+    async rejectReasonsList(requestParameters: RejectReasonsListRequest): Promise<MergePaginatedResponse<RejectReason>> {
         const response = await this.rejectReasonsListRaw(requestParameters);
         return await response.value();
     }
@@ -145,8 +155,15 @@ export class RejectReasonsApi extends runtime.BaseAPI {
             headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
 
+
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
+        }
+
         if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // tokenAuth authentication
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({

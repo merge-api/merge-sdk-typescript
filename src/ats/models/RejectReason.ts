@@ -12,14 +12,17 @@
  * Do not edit the class manually.
  */
 
-import { exists, mapValues } from '../runtime';
-import { JSONValue } from '../../merge_json'
+import { exists, mapValues } from '../../runtime';
+import { JSONValue } from '../../merge_json';
 import {
-    RemoteData,
-    RemoteDataFromJSON,
-    RemoteDataFromJSONTyped,
-    RemoteDataToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -64,13 +67,13 @@ export interface RejectReason {
     readonly remote_was_deleted?: boolean;
 }
 
-export function RejectReasonFromJSON(json: JSONValue): RejectReason {
+export function RejectReasonFromJSON(json: JSONValue): RejectReason | null {
     return RejectReasonFromJSONTyped(json);
 }
 
-export function RejectReasonFromJSONTyped(json: JSONValue): RejectReason {
+export function RejectReasonFromJSONTyped(json: JSONValue): RejectReason | null {
     if ((json === undefined) || (json === null)) {
-        return json;
+        return null;
     }
 
     return {
@@ -83,9 +86,9 @@ export function RejectReasonFromJSONTyped(json: JSONValue): RejectReason {
     };
 }
 
-export function RejectReasonToJSON(value?: RejectReason | null): JSONValue {
+export function RejectReasonToJSON(value?: RejectReason): JSONValue {
     if (value === undefined || value === null) {
-        return value;
+        return null;
     }
 
     return {
