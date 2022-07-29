@@ -25,9 +25,11 @@ npm install
 npm run build
 ```
 
-### Publishing
+### Tests
 
-First build the package then run ```npm publish```
+There is a single rough test for the SDK which calls one api from each category. To run it, you must set 
+configuration variables with the relevant api key and access token for each category. Additionally, the HRIS
+section of the test checks an optional filtering query parameter.
 
 ### Consuming
 
