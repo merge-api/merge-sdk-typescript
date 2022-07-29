@@ -1,11 +1,7 @@
 ## @mergeapi/merge-sdk-typescript@2.0.0
 
-This generator creates TypeScript/JavaScript client that utilizes [Fetch API](https://fetch.spec.whatwg.org/). The generated Node module can be used in the following environments:
-
-Environment
-* Node.js
-* Webpack
-* Browserify
+This is the Merge API, Inc. SDK client for Typescript. It utilizes [Fetch API](https://fetch.spec.whatwg.org/) to
+make requests to Merge on behalf of customers. We recommend only using this module in NodeJS server environments.
 
 Language level
 * ES5 - you must have a Promises/A+ library installed
@@ -16,6 +12,16 @@ Module system
 * ES6 module system
 
 It can be used in both TypeScript and JavaScript. In TypeScript, the definition should be automatically resolved via `package.json`. ([Reference](http://www.typescriptlang.org/docs/handbook/typings-for-npm-packages.html))
+
+## Documentation
+
+The documentation for various Merge category API's can be found here:
+
+* [Accounting](https://www.merge.dev/docs/accounting/overview/)
+* [ATS](https://www.merge.dev/docs/ats/overview/) (Applicant Tracking Systems)
+* [CRM](https://www.merge.dev/docs/crm/overview/) (Customer Relationship Management)
+* [HRIS](https://www.merge.dev/docs/hris/overview/) (Human Resource Information Systems)
+* [Ticketing](https://www.merge.dev/docs/ticketing/overview/)
 
 ### Building
 
