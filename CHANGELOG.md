@@ -7,6 +7,7 @@
 - Instead of each category having duplicates of base api classes, pagination and remote_data we now share them
 - Remove `Paginated___List` models in favor of using generics (`MergePaginatedResponse<T>`)
 - Remove uses of `any` in favor of `JSONValue`, a type which matches the json language spec (albeit with `undefined` and `null` as possible values)
+- add an example simple-test which calls an api from each category. Redact sensitive values.
 
 ---
 
