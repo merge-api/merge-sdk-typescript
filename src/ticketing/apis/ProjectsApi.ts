@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface ProjectsListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -40,13 +39,11 @@ export interface ProjectsListRequest {
 }
 
 export interface ProjectsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
 
 export interface ProjectsUsersListRequest {
-    xAccountToken: string;
     id: string;
     cursor?: string;
     includeRemoteData?: boolean;
@@ -62,10 +59,6 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Returns a list of `Project` objects.
      */
     async projectsListRaw(requestParameters: ProjectsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Project> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -106,18 +99,17 @@ export class ProjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/projects`,
+            path: `/ticketing/v1/projects`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -138,10 +130,6 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Returns a `Project` object with the given `id`.
      */
     async projectsRetrieveRaw(requestParameters: ProjectsRetrieveRequest): Promise<runtime.ApiResponse<Project | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling projectsRetrieve.');
         }
@@ -154,18 +142,17 @@ export class ProjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/projects/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ticketing/v1/projects/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -186,10 +173,6 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Returns a `User` object with the given `id`.
      */
     async projectsUsersListRaw(requestParameters: ProjectsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsUsersList.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling projectsUsersList.');
         }
@@ -210,18 +193,17 @@ export class ProjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/projects/{id}/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ticketing/v1/projects/{id}/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -42,13 +42,16 @@ export class AccountTokenApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
 
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/account-token/{public_token}`.replace(`{${"public_token"}}`, encodeURIComponent(String(requestParameters.publicToken))),
+            path: `/ats/v1/account-token/{public_token}`.replace(`{${"public_token"}}`, encodeURIComponent(String(requestParameters.publicToken))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

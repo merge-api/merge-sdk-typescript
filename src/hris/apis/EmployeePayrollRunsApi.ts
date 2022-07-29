@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface EmployeePayrollRunsListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -46,7 +45,6 @@ export interface EmployeePayrollRunsListRequest {
 }
 
 export interface EmployeePayrollRunsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -60,10 +58,6 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
      * Returns a list of `EmployeePayrollRun` objects.
      */
     async employeePayrollRunsListRaw(requestParameters: EmployeePayrollRunsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EmployeePayrollRun> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeePayrollRunsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -128,18 +122,17 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/employee-payroll-runs`,
+            path: `/hris/v1/employee-payroll-runs`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -160,10 +153,6 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
      * Returns an `EmployeePayrollRun` object with the given `id`.
      */
     async employeePayrollRunsRetrieveRaw(requestParameters: EmployeePayrollRunsRetrieveRequest): Promise<runtime.ApiResponse<EmployeePayrollRun | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeePayrollRunsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling employeePayrollRunsRetrieve.');
         }
@@ -176,18 +165,17 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/employee-payroll-runs/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/hris/v1/employee-payroll-runs/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

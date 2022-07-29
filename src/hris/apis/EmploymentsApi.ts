@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface EmploymentsListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -43,7 +42,6 @@ export interface EmploymentsListRequest {
 }
 
 export interface EmploymentsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: EmploymentsRetrieveRemoteFieldsEnum;
@@ -58,10 +56,6 @@ export class EmploymentsApi extends runtime.BaseAPI {
      * Returns a list of `Employment` objects.
      */
     async employmentsListRaw(requestParameters: EmploymentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Employment> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employmentsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -114,18 +108,17 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/employments`,
+            path: `/hris/v1/employments`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -146,10 +139,6 @@ export class EmploymentsApi extends runtime.BaseAPI {
      * Returns an `Employment` object with the given `id`.
      */
     async employmentsRetrieveRaw(requestParameters: EmploymentsRetrieveRequest): Promise<runtime.ApiResponse<Employment | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employmentsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling employmentsRetrieve.');
         }
@@ -166,18 +155,17 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/employments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/hris/v1/employments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface ScorecardsListRequest {
-    xAccountToken: string;
     applicationId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -44,7 +43,6 @@ export interface ScorecardsListRequest {
 }
 
 export interface ScorecardsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: ScorecardsRetrieveRemoteFieldsEnum;
@@ -59,10 +57,6 @@ export class ScorecardsApi extends runtime.BaseAPI {
      * Returns a list of `Scorecard` objects.
      */
     async scorecardsListRaw(requestParameters: ScorecardsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Scorecard> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling scorecardsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.applicationId !== undefined) {
@@ -119,18 +113,17 @@ export class ScorecardsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/scorecards`,
+            path: `/ats/v1/scorecards`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -151,10 +144,6 @@ export class ScorecardsApi extends runtime.BaseAPI {
      * Returns a `Scorecard` object with the given `id`.
      */
     async scorecardsRetrieveRaw(requestParameters: ScorecardsRetrieveRequest): Promise<runtime.ApiResponse<Scorecard | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling scorecardsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling scorecardsRetrieve.');
         }
@@ -171,18 +160,17 @@ export class ScorecardsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/scorecards/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ats/v1/scorecards/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

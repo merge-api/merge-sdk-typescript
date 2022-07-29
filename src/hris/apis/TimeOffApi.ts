@@ -36,14 +36,12 @@ import {
 } from '../../merge_paginated_response';
 
 export interface TimeOffCreateRequest {
-    xAccountToken: string;
     timeOffEndpointRequest: TimeOffEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface TimeOffListRequest {
-    xAccountToken: string;
     approverId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -60,12 +58,7 @@ export interface TimeOffListRequest {
     status?: TimeOffListStatusEnum;
 }
 
-export interface TimeOffMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface TimeOffRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: TimeOffRetrieveRemoteFieldsEnum;
@@ -80,10 +73,6 @@ export class TimeOffApi extends runtime.BaseAPI {
      * Creates a `TimeOff` object with the given values.
      */
     async timeOffCreateRaw(requestParameters: TimeOffCreateRequest): Promise<runtime.ApiResponse<TimeOffResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffCreate.');
-        }
-
         if (requestParameters.timeOffEndpointRequest === null || requestParameters.timeOffEndpointRequest === undefined) {
             throw new runtime.RequiredError('timeOffEndpointRequest','Required parameter requestParameters.timeOffEndpointRequest was null or undefined when calling timeOffCreate.');
         }
@@ -102,18 +91,17 @@ export class TimeOffApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/time-off`,
+            path: `/hris/v1/time-off`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -135,10 +123,6 @@ export class TimeOffApi extends runtime.BaseAPI {
      * Returns a list of `TimeOff` objects.
      */
     async timeOffListRaw(requestParameters: TimeOffListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TimeOff> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.approverId !== undefined) {
@@ -199,18 +183,17 @@ export class TimeOffApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/time-off`,
+            path: `/hris/v1/time-off`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -230,27 +213,22 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `TimeOff` POSTs.
      */
-    async timeOffMetaPostRetrieveRaw(requestParameters: TimeOffMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffMetaPostRetrieve.');
-        }
-
+    async timeOffMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/time-off/meta/post`,
+            path: `/hris/v1/time-off/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -262,8 +240,8 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `TimeOff` POSTs.
      */
-    async timeOffMetaPostRetrieve(requestParameters: TimeOffMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.timeOffMetaPostRetrieveRaw(requestParameters);
+    async timeOffMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.timeOffMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -271,10 +249,6 @@ export class TimeOffApi extends runtime.BaseAPI {
      * Returns a `TimeOff` object with the given `id`.
      */
     async timeOffRetrieveRaw(requestParameters: TimeOffRetrieveRequest): Promise<runtime.ApiResponse<TimeOff | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling timeOffRetrieve.');
         }
@@ -291,18 +265,17 @@ export class TimeOffApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/time-off/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/hris/v1/time-off/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

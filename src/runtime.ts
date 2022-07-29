@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "https://api.merge.dev/api/accounting/v1".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.merge.dev/api/".replace(/\/+$/, "");
 
 const isBlob = (value: any) => typeof Blob !== 'undefined' && value instanceof Blob;
 

@@ -36,14 +36,12 @@ import {
 } from '../../merge_paginated_response';
 
 export interface AccountsCreateRequest {
-    xAccountToken: string;
     cRMAccountEndpointRequest: CRMAccountEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface AccountsListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -56,12 +54,7 @@ export interface AccountsListRequest {
     remoteId?: string | null;
 }
 
-export interface AccountsMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface AccountsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -75,10 +68,6 @@ export class AccountsApi extends runtime.BaseAPI {
      * Creates an `Account` object with the given values.
      */
     async accountsCreateRaw(requestParameters: AccountsCreateRequest): Promise<runtime.ApiResponse<CRMAccountResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsCreate.');
-        }
-
         if (requestParameters.cRMAccountEndpointRequest === null || requestParameters.cRMAccountEndpointRequest === undefined) {
             throw new runtime.RequiredError('cRMAccountEndpointRequest','Required parameter requestParameters.cRMAccountEndpointRequest was null or undefined when calling accountsCreate.');
         }
@@ -97,18 +86,17 @@ export class AccountsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/accounts`,
+            path: `/crm/v1/accounts`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -130,10 +118,6 @@ export class AccountsApi extends runtime.BaseAPI {
      * Returns a list of `Account` objects.
      */
     async accountsListRaw(requestParameters: AccountsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Account> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -178,18 +162,17 @@ export class AccountsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/accounts`,
+            path: `/crm/v1/accounts`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -209,27 +192,22 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMAccount` POSTs.
      */
-    async accountsMetaPostRetrieveRaw(requestParameters: AccountsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsMetaPostRetrieve.');
-        }
-
+    async accountsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/accounts/meta/post`,
+            path: `/crm/v1/accounts/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -241,8 +219,8 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMAccount` POSTs.
      */
-    async accountsMetaPostRetrieve(requestParameters: AccountsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.accountsMetaPostRetrieveRaw(requestParameters);
+    async accountsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.accountsMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -250,10 +228,6 @@ export class AccountsApi extends runtime.BaseAPI {
      * Returns an `Account` object with the given `id`.
      */
     async accountsRetrieveRaw(requestParameters: AccountsRetrieveRequest): Promise<runtime.ApiResponse<Account | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling accountsRetrieve.');
         }
@@ -266,18 +240,17 @@ export class AccountsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/accounts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/crm/v1/accounts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

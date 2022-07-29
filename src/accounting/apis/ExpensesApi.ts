@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface ExpensesListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -40,7 +39,6 @@ export interface ExpensesListRequest {
 }
 
 export interface ExpensesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -54,10 +52,6 @@ export class ExpensesApi extends runtime.BaseAPI {
      * Returns a list of `Expense` objects.
      */
     async expensesListRaw(requestParameters: ExpensesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Expense> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -98,18 +92,17 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/expenses`,
+            path: `/accounting/v1/expenses`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -130,10 +123,6 @@ export class ExpensesApi extends runtime.BaseAPI {
      * Returns an `Expense` object with the given `id`.
      */
     async expensesRetrieveRaw(requestParameters: ExpensesRetrieveRequest): Promise<runtime.ApiResponse<Expense | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling expensesRetrieve.');
         }
@@ -146,18 +135,17 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/expenses/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/accounting/v1/expenses/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -47,13 +47,16 @@ export class RegenerateKeyApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
 
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/regenerate-key`,
+            path: `/ats/v1/regenerate-key`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,

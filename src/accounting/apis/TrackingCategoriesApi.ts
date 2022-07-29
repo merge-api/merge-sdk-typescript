@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface TrackingCategoriesListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -41,7 +40,6 @@ export interface TrackingCategoriesListRequest {
 }
 
 export interface TrackingCategoriesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: TrackingCategoriesRetrieveRemoteFieldsEnum;
@@ -56,10 +54,6 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
      * Returns a list of `TrackingCategory` objects.
      */
     async trackingCategoriesListRaw(requestParameters: TrackingCategoriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TrackingCategory> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling trackingCategoriesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -104,18 +98,17 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/tracking-categories`,
+            path: `/accounting/v1/tracking-categories`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -136,10 +129,6 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
      * Returns a `TrackingCategory` object with the given `id`.
      */
     async trackingCategoriesRetrieveRaw(requestParameters: TrackingCategoriesRetrieveRequest): Promise<runtime.ApiResponse<TrackingCategory | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling trackingCategoriesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling trackingCategoriesRetrieve.');
         }
@@ -156,18 +145,17 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/tracking-categories/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/accounting/v1/tracking-categories/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

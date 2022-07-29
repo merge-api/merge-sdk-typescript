@@ -20,10 +20,6 @@ import {
     AvailableActionsToJSON,
 } from '../models';
 
-export interface AvailableActionsRetrieveRequest {
-    xAccountToken: string;
-}
-
 /**
  * 
  */
@@ -32,27 +28,22 @@ export class AvailableActionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of models and actions available for an account.
      */
-    async availableActionsRetrieveRaw(requestParameters: AvailableActionsRetrieveRequest): Promise<runtime.ApiResponse<AvailableActions | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling availableActionsRetrieve.');
-        }
-
+    async availableActionsRetrieveRaw(): Promise<runtime.ApiResponse<AvailableActions | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/available-actions`,
+            path: `/crm/v1/available-actions`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -64,8 +55,8 @@ export class AvailableActionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of models and actions available for an account.
      */
-    async availableActionsRetrieve(requestParameters: AvailableActionsRetrieveRequest): Promise<AvailableActions | undefined> {
-        const response = await this.availableActionsRetrieveRaw(requestParameters);
+    async availableActionsRetrieve(): Promise<AvailableActions | undefined> {
+        const response = await this.availableActionsRetrieveRaw();
         return await response.value();
     }
 

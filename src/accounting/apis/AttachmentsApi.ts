@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface AttachmentsListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -40,7 +39,6 @@ export interface AttachmentsListRequest {
 }
 
 export interface AttachmentsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -54,10 +52,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
      * Returns a list of `AccountingAttachment` objects.
      */
     async attachmentsListRaw(requestParameters: AttachmentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<AccountingAttachment> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -98,18 +92,17 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/attachments`,
+            path: `/accounting/v1/attachments`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -130,10 +123,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
      * Returns an `AccountingAttachment` object with the given `id`.
      */
     async attachmentsRetrieveRaw(requestParameters: AttachmentsRetrieveRequest): Promise<runtime.ApiResponse<AccountingAttachment | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling attachmentsRetrieve.');
         }
@@ -146,18 +135,17 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/accounting/v1/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

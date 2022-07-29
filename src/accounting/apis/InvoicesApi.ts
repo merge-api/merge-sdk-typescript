@@ -36,14 +36,12 @@ import {
 } from '../../merge_paginated_response';
 
 export interface InvoicesCreateRequest {
-    xAccountToken: string;
     invoiceEndpointRequest: InvoiceEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface InvoicesListRequest {
-    xAccountToken: string;
     contactId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -58,12 +56,7 @@ export interface InvoicesListRequest {
     type?: InvoicesListTypeEnum;
 }
 
-export interface InvoicesMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface InvoicesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: InvoicesRetrieveRemoteFieldsEnum;
@@ -78,10 +71,6 @@ export class InvoicesApi extends runtime.BaseAPI {
      * Creates an `Invoice` object with the given values.
      */
     async invoicesCreateRaw(requestParameters: InvoicesCreateRequest): Promise<runtime.ApiResponse<InvoiceResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesCreate.');
-        }
-
         if (requestParameters.invoiceEndpointRequest === null || requestParameters.invoiceEndpointRequest === undefined) {
             throw new runtime.RequiredError('invoiceEndpointRequest','Required parameter requestParameters.invoiceEndpointRequest was null or undefined when calling invoicesCreate.');
         }
@@ -100,18 +89,17 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/invoices`,
+            path: `/accounting/v1/invoices`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -133,10 +121,6 @@ export class InvoicesApi extends runtime.BaseAPI {
      * Returns a list of `Invoice` objects.
      */
     async invoicesListRaw(requestParameters: InvoicesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Invoice> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.contactId !== undefined) {
@@ -189,18 +173,17 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/invoices`,
+            path: `/accounting/v1/invoices`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -220,27 +203,22 @@ export class InvoicesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Invoice` POSTs.
      */
-    async invoicesMetaPostRetrieveRaw(requestParameters: InvoicesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesMetaPostRetrieve.');
-        }
-
+    async invoicesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/invoices/meta/post`,
+            path: `/accounting/v1/invoices/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -252,8 +230,8 @@ export class InvoicesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Invoice` POSTs.
      */
-    async invoicesMetaPostRetrieve(requestParameters: InvoicesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.invoicesMetaPostRetrieveRaw(requestParameters);
+    async invoicesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.invoicesMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -261,10 +239,6 @@ export class InvoicesApi extends runtime.BaseAPI {
      * Returns an `Invoice` object with the given `id`.
      */
     async invoicesRetrieveRaw(requestParameters: InvoicesRetrieveRequest): Promise<runtime.ApiResponse<Invoice | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling invoicesRetrieve.');
         }
@@ -281,18 +255,17 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/invoices/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/accounting/v1/invoices/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

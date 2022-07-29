@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface InterviewsListRequest {
-    xAccountToken: string;
     applicationId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -44,7 +43,6 @@ export interface InterviewsListRequest {
 }
 
 export interface InterviewsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: InterviewsRetrieveRemoteFieldsEnum;
@@ -59,10 +57,6 @@ export class InterviewsApi extends runtime.BaseAPI {
      * Returns a list of `ScheduledInterview` objects.
      */
     async interviewsListRaw(requestParameters: InterviewsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<ScheduledInterview> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling interviewsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.applicationId !== undefined) {
@@ -119,18 +113,17 @@ export class InterviewsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/interviews`,
+            path: `/ats/v1/interviews`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -151,10 +144,6 @@ export class InterviewsApi extends runtime.BaseAPI {
      * Returns a `ScheduledInterview` object with the given `id`.
      */
     async interviewsRetrieveRaw(requestParameters: InterviewsRetrieveRequest): Promise<runtime.ApiResponse<ScheduledInterview | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling interviewsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling interviewsRetrieve.');
         }
@@ -171,18 +160,17 @@ export class InterviewsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/interviews/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ats/v1/interviews/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

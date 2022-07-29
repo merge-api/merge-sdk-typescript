@@ -36,7 +36,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface TicketsCollaboratorsListRequest {
-    xAccountToken: string;
     id: string;
     cursor?: string;
     includeRemoteData?: boolean;
@@ -44,14 +43,12 @@ export interface TicketsCollaboratorsListRequest {
 }
 
 export interface TicketsCreateRequest {
-    xAccountToken: string;
     ticketEndpointRequest: TicketEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface TicketsListRequest {
-    xAccountToken: string;
     accountId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -66,12 +63,7 @@ export interface TicketsListRequest {
     remoteId?: string | null;
 }
 
-export interface TicketsMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface TicketsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: TicketsRetrieveRemoteFieldsEnum;
@@ -86,10 +78,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Returns a `User` object with the given `id`.
      */
     async ticketsCollaboratorsListRaw(requestParameters: TicketsCollaboratorsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsCollaboratorsList.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsCollaboratorsList.');
         }
@@ -110,18 +98,17 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/tickets/{id}/collaborators`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ticketing/v1/tickets/{id}/collaborators`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -142,10 +129,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Creates a `Ticket` object with the given values.
      */
     async ticketsCreateRaw(requestParameters: TicketsCreateRequest): Promise<runtime.ApiResponse<TicketResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsCreate.');
-        }
-
         if (requestParameters.ticketEndpointRequest === null || requestParameters.ticketEndpointRequest === undefined) {
             throw new runtime.RequiredError('ticketEndpointRequest','Required parameter requestParameters.ticketEndpointRequest was null or undefined when calling ticketsCreate.');
         }
@@ -164,18 +147,17 @@ export class TicketsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/tickets`,
+            path: `/ticketing/v1/tickets`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -197,10 +179,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Returns a list of `Ticket` objects.
      */
     async ticketsListRaw(requestParameters: TicketsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Ticket> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.accountId !== undefined) {
@@ -253,18 +231,17 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/tickets`,
+            path: `/ticketing/v1/tickets`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -284,27 +261,22 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieveRaw(requestParameters: TicketsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsMetaPostRetrieve.');
-        }
-
+    async ticketsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/tickets/meta/post`,
+            path: `/ticketing/v1/tickets/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -316,8 +288,8 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieve(requestParameters: TicketsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.ticketsMetaPostRetrieveRaw(requestParameters);
+    async ticketsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.ticketsMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -325,10 +297,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Returns a `Ticket` object with the given `id`.
      */
     async ticketsRetrieveRaw(requestParameters: TicketsRetrieveRequest): Promise<runtime.ApiResponse<Ticket | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsRetrieve.');
         }
@@ -345,18 +313,17 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/tickets/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ticketing/v1/tickets/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

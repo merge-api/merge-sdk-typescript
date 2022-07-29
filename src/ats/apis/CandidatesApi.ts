@@ -42,20 +42,17 @@ import {
 } from '../../merge_paginated_response';
 
 export interface CandidatesCreateRequest {
-    xAccountToken: string;
     candidateEndpointRequest: CandidateEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface CandidatesIgnoreCreateRequest {
-    xAccountToken: string;
     modelId: string;
     ignoreCommonModelRequest: IgnoreCommonModelRequest;
 }
 
 export interface CandidatesListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -69,12 +66,7 @@ export interface CandidatesListRequest {
     remoteId?: string | null;
 }
 
-export interface CandidatesMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface CandidatesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -88,10 +80,6 @@ export class CandidatesApi extends runtime.BaseAPI {
      * Creates a `Candidate` object with the given values.
      */
     async candidatesCreateRaw(requestParameters: CandidatesCreateRequest): Promise<runtime.ApiResponse<CandidateResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesCreate.');
-        }
-
         if (requestParameters.candidateEndpointRequest === null || requestParameters.candidateEndpointRequest === undefined) {
             throw new runtime.RequiredError('candidateEndpointRequest','Required parameter requestParameters.candidateEndpointRequest was null or undefined when calling candidatesCreate.');
         }
@@ -110,18 +98,17 @@ export class CandidatesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/candidates`,
+            path: `/ats/v1/candidates`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -143,10 +130,6 @@ export class CandidatesApi extends runtime.BaseAPI {
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
     async candidatesIgnoreCreateRaw(requestParameters: CandidatesIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesIgnoreCreate.');
-        }
-
         if (requestParameters.modelId === null || requestParameters.modelId === undefined) {
             throw new runtime.RequiredError('modelId','Required parameter requestParameters.modelId was null or undefined when calling candidatesIgnoreCreate.');
         }
@@ -161,18 +144,17 @@ export class CandidatesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/candidates/ignore/{model_id}`.replace(`{${"model_id"}}`, encodeURIComponent(String(requestParameters.modelId))),
+            path: `/ats/v1/candidates/ignore/{model_id}`.replace(`{${"model_id"}}`, encodeURIComponent(String(requestParameters.modelId))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -194,10 +176,6 @@ export class CandidatesApi extends runtime.BaseAPI {
      * Returns a list of `Candidate` objects.
      */
     async candidatesListRaw(requestParameters: CandidatesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Candidate> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -246,18 +224,17 @@ export class CandidatesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/candidates`,
+            path: `/ats/v1/candidates`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -277,27 +254,22 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Candidate` POSTs.
      */
-    async candidatesMetaPostRetrieveRaw(requestParameters: CandidatesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesMetaPostRetrieve.');
-        }
-
+    async candidatesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/candidates/meta/post`,
+            path: `/ats/v1/candidates/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -309,8 +281,8 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Candidate` POSTs.
      */
-    async candidatesMetaPostRetrieve(requestParameters: CandidatesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.candidatesMetaPostRetrieveRaw(requestParameters);
+    async candidatesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.candidatesMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -318,10 +290,6 @@ export class CandidatesApi extends runtime.BaseAPI {
      * Returns a `Candidate` object with the given `id`.
      */
     async candidatesRetrieveRaw(requestParameters: CandidatesRetrieveRequest): Promise<runtime.ApiResponse<Candidate | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling candidatesRetrieve.');
         }
@@ -334,18 +302,17 @@ export class CandidatesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/candidates/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ats/v1/candidates/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

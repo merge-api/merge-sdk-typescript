@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface CashFlowStatementsListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -40,7 +39,6 @@ export interface CashFlowStatementsListRequest {
 }
 
 export interface CashFlowStatementsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -54,10 +52,6 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
      * Returns a list of `CashFlowStatement` objects.
      */
     async cashFlowStatementsListRaw(requestParameters: CashFlowStatementsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CashFlowStatement> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling cashFlowStatementsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -98,18 +92,17 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/cash-flow-statements`,
+            path: `/accounting/v1/cash-flow-statements`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -130,10 +123,6 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
      * Returns a `CashFlowStatement` object with the given `id`.
      */
     async cashFlowStatementsRetrieveRaw(requestParameters: CashFlowStatementsRetrieveRequest): Promise<runtime.ApiResponse<CashFlowStatement | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling cashFlowStatementsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling cashFlowStatementsRetrieve.');
         }
@@ -146,18 +135,17 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/cash-flow-statements/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/accounting/v1/cash-flow-statements/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

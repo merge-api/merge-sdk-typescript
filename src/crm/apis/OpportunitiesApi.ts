@@ -36,14 +36,12 @@ import {
 } from '../../merge_paginated_response';
 
 export interface OpportunitiesCreateRequest {
-    xAccountToken: string;
     opportunityEndpointRequest: OpportunityEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface OpportunitiesListRequest {
-    xAccountToken: string;
     accountId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -60,12 +58,7 @@ export interface OpportunitiesListRequest {
     status?: OpportunitiesListStatusEnum;
 }
 
-export interface OpportunitiesMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface OpportunitiesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: OpportunitiesRetrieveRemoteFieldsEnum;
@@ -80,10 +73,6 @@ export class OpportunitiesApi extends runtime.BaseAPI {
      * Creates an `Opportunity` object with the given values.
      */
     async opportunitiesCreateRaw(requestParameters: OpportunitiesCreateRequest): Promise<runtime.ApiResponse<OpportunityResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesCreate.');
-        }
-
         if (requestParameters.opportunityEndpointRequest === null || requestParameters.opportunityEndpointRequest === undefined) {
             throw new runtime.RequiredError('opportunityEndpointRequest','Required parameter requestParameters.opportunityEndpointRequest was null or undefined when calling opportunitiesCreate.');
         }
@@ -102,18 +91,17 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/opportunities`,
+            path: `/crm/v1/opportunities`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -135,10 +123,6 @@ export class OpportunitiesApi extends runtime.BaseAPI {
      * Returns a list of `Opportunity` objects.
      */
     async opportunitiesListRaw(requestParameters: OpportunitiesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Opportunity> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.accountId !== undefined) {
@@ -199,18 +183,17 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/opportunities`,
+            path: `/crm/v1/opportunities`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -230,27 +213,22 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Opportunity` POSTs.
      */
-    async opportunitiesMetaPostRetrieveRaw(requestParameters: OpportunitiesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesMetaPostRetrieve.');
-        }
-
+    async opportunitiesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/opportunities/meta/post`,
+            path: `/crm/v1/opportunities/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -262,8 +240,8 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Opportunity` POSTs.
      */
-    async opportunitiesMetaPostRetrieve(requestParameters: OpportunitiesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.opportunitiesMetaPostRetrieveRaw(requestParameters);
+    async opportunitiesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.opportunitiesMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -271,10 +249,6 @@ export class OpportunitiesApi extends runtime.BaseAPI {
      * Returns an `Opportunity` object with the given `id`.
      */
     async opportunitiesRetrieveRaw(requestParameters: OpportunitiesRetrieveRequest): Promise<runtime.ApiResponse<Opportunity | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling opportunitiesRetrieve.');
         }
@@ -291,18 +265,17 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/opportunities/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/crm/v1/opportunities/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

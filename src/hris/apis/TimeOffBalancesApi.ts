@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface TimeOffBalancesListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -43,7 +42,6 @@ export interface TimeOffBalancesListRequest {
 }
 
 export interface TimeOffBalancesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: TimeOffBalancesRetrieveRemoteFieldsEnum;
@@ -58,10 +56,6 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
      * Returns a list of `TimeOffBalance` objects.
      */
     async timeOffBalancesListRaw(requestParameters: TimeOffBalancesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TimeOffBalance> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffBalancesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -114,18 +108,17 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/time-off-balances`,
+            path: `/hris/v1/time-off-balances`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -146,10 +139,6 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
      * Returns a `TimeOffBalance` object with the given `id`.
      */
     async timeOffBalancesRetrieveRaw(requestParameters: TimeOffBalancesRetrieveRequest): Promise<runtime.ApiResponse<TimeOffBalance | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffBalancesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling timeOffBalancesRetrieve.');
         }
@@ -166,18 +155,17 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/time-off-balances/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/hris/v1/time-off-balances/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

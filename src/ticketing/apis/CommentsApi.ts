@@ -36,14 +36,12 @@ import {
 } from '../../merge_paginated_response';
 
 export interface CommentsCreateRequest {
-    xAccountToken: string;
     commentEndpointRequest: CommentEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface CommentsListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -56,12 +54,7 @@ export interface CommentsListRequest {
     ticketId?: string;
 }
 
-export interface CommentsMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface CommentsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -75,10 +68,6 @@ export class CommentsApi extends runtime.BaseAPI {
      * Creates a `Comment` object with the given values.
      */
     async commentsCreateRaw(requestParameters: CommentsCreateRequest): Promise<runtime.ApiResponse<CommentResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling commentsCreate.');
-        }
-
         if (requestParameters.commentEndpointRequest === null || requestParameters.commentEndpointRequest === undefined) {
             throw new runtime.RequiredError('commentEndpointRequest','Required parameter requestParameters.commentEndpointRequest was null or undefined when calling commentsCreate.');
         }
@@ -97,18 +86,17 @@ export class CommentsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/comments`,
+            path: `/ticketing/v1/comments`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -130,10 +118,6 @@ export class CommentsApi extends runtime.BaseAPI {
      * Returns a list of `Comment` objects.
      */
     async commentsListRaw(requestParameters: CommentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Comment> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling commentsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -178,18 +162,17 @@ export class CommentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/comments`,
+            path: `/ticketing/v1/comments`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -209,27 +192,22 @@ export class CommentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Comment` POSTs.
      */
-    async commentsMetaPostRetrieveRaw(requestParameters: CommentsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling commentsMetaPostRetrieve.');
-        }
-
+    async commentsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/comments/meta/post`,
+            path: `/ticketing/v1/comments/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -241,8 +219,8 @@ export class CommentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Comment` POSTs.
      */
-    async commentsMetaPostRetrieve(requestParameters: CommentsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.commentsMetaPostRetrieveRaw(requestParameters);
+    async commentsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.commentsMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -250,10 +228,6 @@ export class CommentsApi extends runtime.BaseAPI {
      * Returns a `Comment` object with the given `id`.
      */
     async commentsRetrieveRaw(requestParameters: CommentsRetrieveRequest): Promise<runtime.ApiResponse<Comment | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling commentsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling commentsRetrieve.');
         }
@@ -266,18 +240,17 @@ export class CommentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/comments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ticketing/v1/comments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -36,14 +36,12 @@ import {
 } from '../../merge_paginated_response';
 
 export interface AttachmentsCreateRequest {
-    xAccountToken: string;
     attachmentEndpointRequest: AttachmentEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface AttachmentsListRequest {
-    xAccountToken: string;
     candidateId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -57,12 +55,7 @@ export interface AttachmentsListRequest {
     remoteId?: string | null;
 }
 
-export interface AttachmentsMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface AttachmentsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: AttachmentsRetrieveRemoteFieldsEnum;
@@ -77,10 +70,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
      * Creates an `Attachment` object with the given values.
      */
     async attachmentsCreateRaw(requestParameters: AttachmentsCreateRequest): Promise<runtime.ApiResponse<AttachmentResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsCreate.');
-        }
-
         if (requestParameters.attachmentEndpointRequest === null || requestParameters.attachmentEndpointRequest === undefined) {
             throw new runtime.RequiredError('attachmentEndpointRequest','Required parameter requestParameters.attachmentEndpointRequest was null or undefined when calling attachmentsCreate.');
         }
@@ -99,18 +88,17 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/attachments`,
+            path: `/ats/v1/attachments`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -132,10 +120,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
      * Returns a list of `Attachment` objects.
      */
     async attachmentsListRaw(requestParameters: AttachmentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Attachment> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.candidateId !== undefined) {
@@ -184,18 +168,17 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/attachments`,
+            path: `/ats/v1/attachments`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -215,27 +198,22 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Attachment` POSTs.
      */
-    async attachmentsMetaPostRetrieveRaw(requestParameters: AttachmentsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsMetaPostRetrieve.');
-        }
-
+    async attachmentsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/attachments/meta/post`,
+            path: `/ats/v1/attachments/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -247,8 +225,8 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Attachment` POSTs.
      */
-    async attachmentsMetaPostRetrieve(requestParameters: AttachmentsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.attachmentsMetaPostRetrieveRaw(requestParameters);
+    async attachmentsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.attachmentsMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -256,10 +234,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
      * Returns an `Attachment` object with the given `id`.
      */
     async attachmentsRetrieveRaw(requestParameters: AttachmentsRetrieveRequest): Promise<runtime.ApiResponse<Attachment | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling attachmentsRetrieve.');
         }
@@ -276,18 +250,17 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ats/v1/attachments/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

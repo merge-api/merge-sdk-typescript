@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface JobInterviewStagesListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -41,7 +40,6 @@ export interface JobInterviewStagesListRequest {
 }
 
 export interface JobInterviewStagesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -55,10 +53,6 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
      * Returns a list of `JobInterviewStage` objects.
      */
     async jobInterviewStagesListRaw(requestParameters: JobInterviewStagesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<JobInterviewStage> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling jobInterviewStagesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -103,18 +97,17 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/job-interview-stages`,
+            path: `/ats/v1/job-interview-stages`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -135,10 +128,6 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
      * Returns a `JobInterviewStage` object with the given `id`.
      */
     async jobInterviewStagesRetrieveRaw(requestParameters: JobInterviewStagesRetrieveRequest): Promise<runtime.ApiResponse<JobInterviewStage | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling jobInterviewStagesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling jobInterviewStagesRetrieve.');
         }
@@ -151,18 +140,17 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/job-interview-stages/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ats/v1/job-interview-stages/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

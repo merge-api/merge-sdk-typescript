@@ -20,10 +20,6 @@ import {
     AccountDetailsToJSON,
 } from '../models';
 
-export interface AccountDetailsRetrieveRequest {
-    xAccountToken: string;
-}
-
 /**
  * 
  */
@@ -32,27 +28,22 @@ export class AccountDetailsApi extends runtime.BaseAPI {
     /**
      * Get details for a linked account.
      */
-    async accountDetailsRetrieveRaw(requestParameters: AccountDetailsRetrieveRequest): Promise<runtime.ApiResponse<AccountDetails | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountDetailsRetrieve.');
-        }
-
+    async accountDetailsRetrieveRaw(): Promise<runtime.ApiResponse<AccountDetails | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/account-details`,
+            path: `/ticketing/v1/account-details`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -64,8 +55,8 @@ export class AccountDetailsApi extends runtime.BaseAPI {
     /**
      * Get details for a linked account.
      */
-    async accountDetailsRetrieve(requestParameters: AccountDetailsRetrieveRequest): Promise<AccountDetails | undefined> {
-        const response = await this.accountDetailsRetrieveRaw(requestParameters);
+    async accountDetailsRetrieve(): Promise<AccountDetails | undefined> {
+        const response = await this.accountDetailsRetrieveRaw();
         return await response.value();
     }
 

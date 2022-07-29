@@ -112,13 +112,16 @@ export class IssuesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
 
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/issues`,
+            path: `/hris/v1/issues`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -148,13 +151,16 @@ export class IssuesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
 
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/issues/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/hris/v1/issues/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

@@ -27,7 +27,6 @@ import {
 } from '../../merge_paginated_response';
 
 export interface PurchaseOrdersListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -41,7 +40,6 @@ export interface PurchaseOrdersListRequest {
 }
 
 export interface PurchaseOrdersRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: PurchaseOrdersRetrieveRemoteFieldsEnum;
@@ -56,10 +54,6 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
      * Returns a list of `PurchaseOrder` objects.
      */
     async purchaseOrdersListRaw(requestParameters: PurchaseOrdersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<PurchaseOrder> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling purchaseOrdersList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -104,18 +98,17 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/purchase-orders`,
+            path: `/accounting/v1/purchase-orders`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -136,10 +129,6 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
      * Returns a `PurchaseOrder` object with the given `id`.
      */
     async purchaseOrdersRetrieveRaw(requestParameters: PurchaseOrdersRetrieveRequest): Promise<runtime.ApiResponse<PurchaseOrder | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling purchaseOrdersRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling purchaseOrdersRetrieve.');
         }
@@ -156,18 +145,17 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/purchase-orders/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/accounting/v1/purchase-orders/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

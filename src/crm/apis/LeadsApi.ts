@@ -36,14 +36,12 @@ import {
 } from '../../merge_paginated_response';
 
 export interface LeadsCreateRequest {
-    xAccountToken: string;
     leadEndpointRequest: LeadEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface LeadsListRequest {
-    xAccountToken: string;
     convertedAccountId?: string;
     convertedContactId?: string;
     createdAfter?: Date;
@@ -58,12 +56,7 @@ export interface LeadsListRequest {
     remoteId?: string | null;
 }
 
-export interface LeadsMetaPostRetrieveRequest {
-    xAccountToken: string;
-}
-
 export interface LeadsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -77,10 +70,6 @@ export class LeadsApi extends runtime.BaseAPI {
      * Creates a `Lead` object with the given values.
      */
     async leadsCreateRaw(requestParameters: LeadsCreateRequest): Promise<runtime.ApiResponse<LeadResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsCreate.');
-        }
-
         if (requestParameters.leadEndpointRequest === null || requestParameters.leadEndpointRequest === undefined) {
             throw new runtime.RequiredError('leadEndpointRequest','Required parameter requestParameters.leadEndpointRequest was null or undefined when calling leadsCreate.');
         }
@@ -99,18 +88,17 @@ export class LeadsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/leads`,
+            path: `/crm/v1/leads`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -132,10 +120,6 @@ export class LeadsApi extends runtime.BaseAPI {
      * Returns a list of `Lead` objects.
      */
     async leadsListRaw(requestParameters: LeadsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Lead> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.convertedAccountId !== undefined) {
@@ -188,18 +172,17 @@ export class LeadsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/leads`,
+            path: `/crm/v1/leads`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -219,27 +202,22 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Lead` POSTs.
      */
-    async leadsMetaPostRetrieveRaw(requestParameters: LeadsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsMetaPostRetrieve.');
-        }
-
+    async leadsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/leads/meta/post`,
+            path: `/crm/v1/leads/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -251,8 +229,8 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Lead` POSTs.
      */
-    async leadsMetaPostRetrieve(requestParameters: LeadsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.leadsMetaPostRetrieveRaw(requestParameters);
+    async leadsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.leadsMetaPostRetrieveRaw();
         return await response.value();
     }
 
@@ -260,10 +238,6 @@ export class LeadsApi extends runtime.BaseAPI {
      * Returns a `Lead` object with the given `id`.
      */
     async leadsRetrieveRaw(requestParameters: LeadsRetrieveRequest): Promise<runtime.ApiResponse<Lead | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling leadsRetrieve.');
         }
@@ -276,18 +250,17 @@ export class LeadsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
 
         const response = await this.request({
-            path: `/leads/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/crm/v1/leads/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
