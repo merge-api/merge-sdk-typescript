@@ -41,13 +41,13 @@ export interface DebugModelLogSummary {
     status_code: number;
 }
 
-export function DebugModelLogSummaryFromJSON(json: JSONValue): DebugModelLogSummary | null {
+export function DebugModelLogSummaryFromJSON(json: JSONValue): DebugModelLogSummary | undefined {
     return DebugModelLogSummaryFromJSONTyped(json);
 }
 
-export function DebugModelLogSummaryFromJSONTyped(json: JSONValue): DebugModelLogSummary | null {
+export function DebugModelLogSummaryFromJSONTyped(json: JSONValue): DebugModelLogSummary | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -60,7 +60,7 @@ export function DebugModelLogSummaryFromJSONTyped(json: JSONValue): DebugModelLo
 
 export function DebugModelLogSummaryToJSON(value?: DebugModelLogSummary): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

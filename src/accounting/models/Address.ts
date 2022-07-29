@@ -85,30 +85,30 @@ export interface Address {
     zip_code?: string | null;
 }
 
-export function AddressFromJSON(json: JSONValue): Address | null {
+export function AddressFromJSON(json: JSONValue): Address | undefined {
     return AddressFromJSONTyped(json);
 }
 
-export function AddressFromJSONTyped(json: JSONValue): Address | null {
+export function AddressFromJSONTyped(json: JSONValue): Address | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'type': !exists(json, 'type') ? undefined : AddressTypeEnumFromJSON(json['type']),
+        'type': !exists(json, 'type') ? undefined : AddressTypeEnumFromJSON(json['type']) as AddressTypeEnum,
         'street_1': !exists(json, 'street_1') ? undefined : json['street_1'],
         'street_2': !exists(json, 'street_2') ? undefined : json['street_2'],
         'city': !exists(json, 'city') ? undefined : json['city'],
-        'state': !exists(json, 'state') ? undefined : StateEnumFromJSON(json['state']),
-        'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']),
+        'state': !exists(json, 'state') ? undefined : StateEnumFromJSON(json['state']) as StateEnum,
+        'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']) as CountryEnum,
         'zip_code': !exists(json, 'zip_code') ? undefined : json['zip_code'],
     };
 }
 
 export function AddressToJSON(value?: Address): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

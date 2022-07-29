@@ -76,7 +76,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Creates a `Lead` object with the given values.
      */
-    async leadsCreateRaw(requestParameters: LeadsCreateRequest): Promise<runtime.ApiResponse<LeadResponse>> {
+    async leadsCreateRaw(requestParameters: LeadsCreateRequest): Promise<runtime.ApiResponse<LeadResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsCreate.');
         }
@@ -105,11 +105,6 @@ export class LeadsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -128,7 +123,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Creates a `Lead` object with the given values.
      */
-    async leadsCreate(requestParameters: LeadsCreateRequest): Promise<LeadResponse> {
+    async leadsCreate(requestParameters: LeadsCreateRequest): Promise<LeadResponse | undefined> {
         const response = await this.leadsCreateRaw(requestParameters);
         return await response.value();
     }
@@ -136,7 +131,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Lead` objects.
      */
-    async leadsListRaw(requestParameters: LeadsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Lead>>> {
+    async leadsListRaw(requestParameters: LeadsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Lead> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsList.');
         }
@@ -199,11 +194,6 @@ export class LeadsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -221,7 +211,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Lead` objects.
      */
-    async leadsList(requestParameters: LeadsListRequest): Promise<MergePaginatedResponse<Lead>> {
+    async leadsList(requestParameters: LeadsListRequest): Promise<MergePaginatedResponse<Lead> | undefined> {
         const response = await this.leadsListRaw(requestParameters);
         return await response.value();
     }
@@ -229,7 +219,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Lead` POSTs.
      */
-    async leadsMetaPostRetrieveRaw(requestParameters: LeadsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async leadsMetaPostRetrieveRaw(requestParameters: LeadsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsMetaPostRetrieve.');
         }
@@ -243,11 +233,6 @@ export class LeadsApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -266,7 +251,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Lead` POSTs.
      */
-    async leadsMetaPostRetrieve(requestParameters: LeadsMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async leadsMetaPostRetrieve(requestParameters: LeadsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.leadsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -274,7 +259,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns a `Lead` object with the given `id`.
      */
-    async leadsRetrieveRaw(requestParameters: LeadsRetrieveRequest): Promise<runtime.ApiResponse<Lead>> {
+    async leadsRetrieveRaw(requestParameters: LeadsRetrieveRequest): Promise<runtime.ApiResponse<Lead | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling leadsRetrieve.');
         }
@@ -297,11 +282,6 @@ export class LeadsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -319,7 +299,7 @@ export class LeadsApi extends runtime.BaseAPI {
     /**
      * Returns a `Lead` object with the given `id`.
      */
-    async leadsRetrieve(requestParameters: LeadsRetrieveRequest): Promise<Lead> {
+    async leadsRetrieve(requestParameters: LeadsRetrieveRequest): Promise<Lead | undefined> {
         const response = await this.leadsRetrieveRaw(requestParameters);
         return await response.value();
     }

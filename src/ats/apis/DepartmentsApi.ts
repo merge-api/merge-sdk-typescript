@@ -53,7 +53,7 @@ export class DepartmentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Department` objects.
      */
-    async departmentsListRaw(requestParameters: DepartmentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Department>>> {
+    async departmentsListRaw(requestParameters: DepartmentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Department> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling departmentsList.');
         }
@@ -104,11 +104,6 @@ export class DepartmentsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class DepartmentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Department` objects.
      */
-    async departmentsList(requestParameters: DepartmentsListRequest): Promise<MergePaginatedResponse<Department>> {
+    async departmentsList(requestParameters: DepartmentsListRequest): Promise<MergePaginatedResponse<Department> | undefined> {
         const response = await this.departmentsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class DepartmentsApi extends runtime.BaseAPI {
     /**
      * Returns a `Department` object with the given `id`.
      */
-    async departmentsRetrieveRaw(requestParameters: DepartmentsRetrieveRequest): Promise<runtime.ApiResponse<Department>> {
+    async departmentsRetrieveRaw(requestParameters: DepartmentsRetrieveRequest): Promise<runtime.ApiResponse<Department | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling departmentsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class DepartmentsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class DepartmentsApi extends runtime.BaseAPI {
     /**
      * Returns a `Department` object with the given `id`.
      */
-    async departmentsRetrieve(requestParameters: DepartmentsRetrieveRequest): Promise<Department> {
+    async departmentsRetrieve(requestParameters: DepartmentsRetrieveRequest): Promise<Department | undefined> {
         const response = await this.departmentsRetrieveRaw(requestParameters);
         return await response.value();
     }

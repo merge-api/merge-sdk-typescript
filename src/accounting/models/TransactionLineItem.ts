@@ -77,13 +77,13 @@ export interface TransactionLineItem {
     remote_id?: string | null;
 }
 
-export function TransactionLineItemFromJSON(json: JSONValue): TransactionLineItem | null {
+export function TransactionLineItemFromJSON(json: JSONValue): TransactionLineItem | undefined {
     return TransactionLineItemFromJSONTyped(json);
 }
 
-export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLineItem | null {
+export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLineItem | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -102,7 +102,7 @@ export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLi
 
 export function TransactionLineItemToJSON(value?: TransactionLineItem): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

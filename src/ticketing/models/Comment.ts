@@ -104,13 +104,13 @@ export interface Comment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CommentFromJSON(json: JSONValue): Comment | null {
+export function CommentFromJSON(json: JSONValue): Comment | undefined {
     return CommentFromJSONTyped(json);
 }
 
-export function CommentFromJSONTyped(json: JSONValue): Comment | null {
+export function CommentFromJSONTyped(json: JSONValue): Comment | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -124,14 +124,14 @@ export function CommentFromJSONTyped(json: JSONValue): Comment | null {
         'ticket': !exists(json, 'ticket') ? undefined : json['ticket'],
         'is_private': !exists(json, 'is_private') ? undefined : json['is_private'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function CommentToJSON(value?: Comment): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -92,20 +92,20 @@ export interface Payment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PaymentFromJSON(json: JSONValue): Payment | null {
+export function PaymentFromJSON(json: JSONValue): Payment | undefined {
     return PaymentFromJSONTyped(json);
 }
 
-export function PaymentFromJSONTyped(json: JSONValue): Payment | null {
+export function PaymentFromJSONTyped(json: JSONValue): Payment | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'account': !exists(json, 'account') ? undefined : json['account'],
@@ -117,7 +117,7 @@ export function PaymentFromJSONTyped(json: JSONValue): Payment | null {
 
 export function PaymentToJSON(value?: Payment): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

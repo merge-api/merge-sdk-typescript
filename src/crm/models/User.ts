@@ -79,13 +79,13 @@ export interface User {
     readonly remote_was_deleted?: boolean;
 }
 
-export function UserFromJSON(json: JSONValue): User | null {
+export function UserFromJSON(json: JSONValue): User | undefined {
     return UserFromJSONTyped(json);
 }
 
-export function UserFromJSONTyped(json: JSONValue): User | null {
+export function UserFromJSONTyped(json: JSONValue): User | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -95,14 +95,14 @@ export function UserFromJSONTyped(json: JSONValue): User | null {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'email': !exists(json, 'email') ? undefined : json['email'],
         'is_active': !exists(json, 'is_active') ? undefined : json['is_active'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function UserToJSON(value?: User): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

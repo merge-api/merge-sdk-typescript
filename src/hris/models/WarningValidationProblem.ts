@@ -54,18 +54,18 @@ export interface WarningValidationProblem {
     problem_type: string;
 }
 
-export function WarningValidationProblemFromJSON(json: JSONValue): WarningValidationProblem | null {
+export function WarningValidationProblemFromJSON(json: JSONValue): WarningValidationProblem | undefined {
     return WarningValidationProblemFromJSONTyped(json);
 }
 
-export function WarningValidationProblemFromJSONTyped(json: JSONValue): WarningValidationProblem | null {
+export function WarningValidationProblemFromJSONTyped(json: JSONValue): WarningValidationProblem | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'source': !exists(json, 'source') ? undefined : ValidationProblemSourceFromJSON(json['source']),
+        'source': !exists(json, 'source') ? undefined : ValidationProblemSourceFromJSON(json['source']) as ValidationProblemSource,
         'title': json['title'],
         'detail': json['detail'],
         'problem_type': json['problem_type'],
@@ -74,7 +74,7 @@ export function WarningValidationProblemFromJSONTyped(json: JSONValue): WarningV
 
 export function WarningValidationProblemToJSON(value?: WarningValidationProblem): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -66,27 +66,27 @@ export interface ApplicationResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function ApplicationResponseFromJSON(json: JSONValue): ApplicationResponse | null {
+export function ApplicationResponseFromJSON(json: JSONValue): ApplicationResponse | undefined {
     return ApplicationResponseFromJSONTyped(json);
 }
 
-export function ApplicationResponseFromJSONTyped(json: JSONValue): ApplicationResponse | null {
+export function ApplicationResponseFromJSONTyped(json: JSONValue): ApplicationResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': ApplicationFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': ApplicationFromJSON(json['model']) as Application,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function ApplicationResponseToJSON(value?: ApplicationResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

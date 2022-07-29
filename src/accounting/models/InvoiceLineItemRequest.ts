@@ -76,13 +76,13 @@ export interface InvoiceLineItemRequest {
     tracking_category?: string | null;
 }
 
-export function InvoiceLineItemRequestFromJSON(json: JSONValue): InvoiceLineItemRequest | null {
+export function InvoiceLineItemRequestFromJSON(json: JSONValue): InvoiceLineItemRequest | undefined {
     return InvoiceLineItemRequestFromJSONTyped(json);
 }
 
-export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLineItemRequest | null {
+export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLineItemRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -100,7 +100,7 @@ export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLin
 
 export function InvoiceLineItemRequestToJSON(value?: InvoiceLineItemRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -120,28 +120,28 @@ export interface CashFlowStatement {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CashFlowStatementFromJSON(json: JSONValue): CashFlowStatement | null {
+export function CashFlowStatementFromJSON(json: JSONValue): CashFlowStatement | undefined {
     return CashFlowStatementFromJSONTyped(json);
 }
 
-export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStatement | null {
+export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStatement | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'start_period': !exists(json, 'start_period') ? undefined : (json['start_period'] === null ? null : new Date(json['start_period'])),
         'end_period': !exists(json, 'end_period') ? undefined : (json['end_period'] === null ? null : new Date(json['end_period'])),
         'cash_at_beginning_of_period': !exists(json, 'cash_at_beginning_of_period') ? undefined : json['cash_at_beginning_of_period'],
         'cash_at_end_of_period': !exists(json, 'cash_at_end_of_period') ? undefined : json['cash_at_end_of_period'],
-        'operating_activities': !exists(json, 'operating_activities') ? undefined : ((json['operating_activities'] as Array<any>).map(ReportItemFromJSON)),
-        'investing_activities': !exists(json, 'investing_activities') ? undefined : ((json['investing_activities'] as Array<any>).map(ReportItemFromJSON)),
-        'financing_activities': !exists(json, 'financing_activities') ? undefined : ((json['financing_activities'] as Array<any>).map(ReportItemFromJSON)),
+        'operating_activities': !exists(json, 'operating_activities') ? undefined : ((json['operating_activities'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
+        'investing_activities': !exists(json, 'investing_activities') ? undefined : ((json['investing_activities'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
+        'financing_activities': !exists(json, 'financing_activities') ? undefined : ((json['financing_activities'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'remote_generated_at': !exists(json, 'remote_generated_at') ? undefined : (json['remote_generated_at'] === null ? null : new Date(json['remote_generated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -149,7 +149,7 @@ export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStateme
 
 export function CashFlowStatementToJSON(value?: CashFlowStatement): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

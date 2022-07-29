@@ -128,13 +128,13 @@ export interface TimeOff {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TimeOffFromJSON(json: JSONValue): TimeOff | null {
+export function TimeOffFromJSON(json: JSONValue): TimeOff | undefined {
     return TimeOffFromJSONTyped(json);
 }
 
-export function TimeOffFromJSONTyped(json: JSONValue): TimeOff | null {
+export function TimeOffFromJSONTyped(json: JSONValue): TimeOff | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -143,21 +143,21 @@ export function TimeOffFromJSONTyped(json: JSONValue): TimeOff | null {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'employee': !exists(json, 'employee') ? undefined : json['employee'],
         'approver': !exists(json, 'approver') ? undefined : json['approver'],
-        'status': !exists(json, 'status') ? undefined : TimeOffStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : TimeOffStatusEnumFromJSON(json['status']) as TimeOffStatusEnum,
         'employee_note': !exists(json, 'employee_note') ? undefined : json['employee_note'],
-        'units': !exists(json, 'units') ? undefined : UnitsEnumFromJSON(json['units']),
+        'units': !exists(json, 'units') ? undefined : UnitsEnumFromJSON(json['units']) as UnitsEnum,
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'request_type': !exists(json, 'request_type') ? undefined : RequestTypeEnumFromJSON(json['request_type']),
+        'request_type': !exists(json, 'request_type') ? undefined : RequestTypeEnumFromJSON(json['request_type']) as RequestTypeEnum,
         'start_time': !exists(json, 'start_time') ? undefined : (json['start_time'] === null ? null : new Date(json['start_time'])),
         'end_time': !exists(json, 'end_time') ? undefined : (json['end_time'] === null ? null : new Date(json['end_time'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function TimeOffToJSON(value?: TimeOff): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

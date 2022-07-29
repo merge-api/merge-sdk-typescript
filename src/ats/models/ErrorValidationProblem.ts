@@ -54,18 +54,18 @@ export interface ErrorValidationProblem {
     problem_type: string;
 }
 
-export function ErrorValidationProblemFromJSON(json: JSONValue): ErrorValidationProblem | null {
+export function ErrorValidationProblemFromJSON(json: JSONValue): ErrorValidationProblem | undefined {
     return ErrorValidationProblemFromJSONTyped(json);
 }
 
-export function ErrorValidationProblemFromJSONTyped(json: JSONValue): ErrorValidationProblem | null {
+export function ErrorValidationProblemFromJSONTyped(json: JSONValue): ErrorValidationProblem | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'source': !exists(json, 'source') ? undefined : ValidationProblemSourceFromJSON(json['source']),
+        'source': !exists(json, 'source') ? undefined : ValidationProblemSourceFromJSON(json['source']) as ValidationProblemSource,
         'title': json['title'],
         'detail': json['detail'],
         'problem_type': json['problem_type'],
@@ -74,7 +74,7 @@ export function ErrorValidationProblemFromJSONTyped(json: JSONValue): ErrorValid
 
 export function ErrorValidationProblemToJSON(value?: ErrorValidationProblem): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

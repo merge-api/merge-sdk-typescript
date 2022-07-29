@@ -91,31 +91,31 @@ export interface DataPassthroughRequest {
     normalize_response?: boolean;
 }
 
-export function DataPassthroughRequestFromJSON(json: JSONValue): DataPassthroughRequest | null {
+export function DataPassthroughRequestFromJSON(json: JSONValue): DataPassthroughRequest | undefined {
     return DataPassthroughRequestFromJSONTyped(json);
 }
 
-export function DataPassthroughRequestFromJSONTyped(json: JSONValue): DataPassthroughRequest | null {
+export function DataPassthroughRequestFromJSONTyped(json: JSONValue): DataPassthroughRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'method': MethodEnumFromJSON(json['method']),
+        'method': MethodEnumFromJSON(json['method']) as MethodEnum,
         'path': json['path'],
         'base_url_override': !exists(json, 'base_url_override') ? undefined : json['base_url_override'],
         'data': !exists(json, 'data') ? undefined : json['data'],
-        'multipart_form_data': !exists(json, 'multipart_form_data') ? undefined : (json['multipart_form_data'] === null ? null : (json['multipart_form_data'] as Array<any>).map(MultipartFormFieldRequestFromJSON)),
+        'multipart_form_data': !exists(json, 'multipart_form_data') ? undefined : (json['multipart_form_data'] === null ? null : (json['multipart_form_data'] as Array<JSONValue>).map(MultipartFormFieldRequestFromJSON)) as Array<MultipartFormFieldRequest>,
         'headers': !exists(json, 'headers') ? undefined : json['headers'],
-        'request_format': !exists(json, 'request_format') ? undefined : RequestFormatEnumFromJSON(json['request_format']),
+        'request_format': !exists(json, 'request_format') ? undefined : RequestFormatEnumFromJSON(json['request_format']) as RequestFormatEnum,
         'normalize_response': !exists(json, 'normalize_response') ? undefined : json['normalize_response'],
     };
 }
 
 export function DataPassthroughRequestToJSON(value?: DataPassthroughRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

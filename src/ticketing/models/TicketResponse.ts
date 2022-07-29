@@ -66,27 +66,27 @@ export interface TicketResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function TicketResponseFromJSON(json: JSONValue): TicketResponse | null {
+export function TicketResponseFromJSON(json: JSONValue): TicketResponse | undefined {
     return TicketResponseFromJSONTyped(json);
 }
 
-export function TicketResponseFromJSONTyped(json: JSONValue): TicketResponse | null {
+export function TicketResponseFromJSONTyped(json: JSONValue): TicketResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': TicketFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': TicketFromJSON(json['model']) as Ticket,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function TicketResponseToJSON(value?: TicketResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

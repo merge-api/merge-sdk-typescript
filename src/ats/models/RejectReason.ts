@@ -67,13 +67,13 @@ export interface RejectReason {
     readonly remote_was_deleted?: boolean;
 }
 
-export function RejectReasonFromJSON(json: JSONValue): RejectReason | null {
+export function RejectReasonFromJSON(json: JSONValue): RejectReason | undefined {
     return RejectReasonFromJSONTyped(json);
 }
 
-export function RejectReasonFromJSONTyped(json: JSONValue): RejectReason | null {
+export function RejectReasonFromJSONTyped(json: JSONValue): RejectReason | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -81,14 +81,14 @@ export function RejectReasonFromJSONTyped(json: JSONValue): RejectReason | null 
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function RejectReasonToJSON(value?: RejectReason): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

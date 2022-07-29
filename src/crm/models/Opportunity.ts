@@ -125,13 +125,13 @@ export interface Opportunity {
     readonly remote_was_deleted?: boolean;
 }
 
-export function OpportunityFromJSON(json: JSONValue): Opportunity | null {
+export function OpportunityFromJSON(json: JSONValue): Opportunity | undefined {
     return OpportunityFromJSONTyped(json);
 }
 
-export function OpportunityFromJSONTyped(json: JSONValue): Opportunity | null {
+export function OpportunityFromJSONTyped(json: JSONValue): Opportunity | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -144,18 +144,18 @@ export function OpportunityFromJSONTyped(json: JSONValue): Opportunity | null {
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'stage': !exists(json, 'stage') ? undefined : json['stage'],
-        'status': !exists(json, 'status') ? undefined : OpportunityStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : OpportunityStatusEnumFromJSON(json['status']) as OpportunityStatusEnum,
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'close_date': !exists(json, 'close_date') ? undefined : (json['close_date'] === null ? null : new Date(json['close_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function OpportunityToJSON(value?: Opportunity): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

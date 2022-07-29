@@ -35,7 +35,7 @@ export class LinkTokenApi extends runtime.BaseAPI {
     /**
      * Creates a link token to be used when linking a new end user.
      */
-    async linkTokenCreateRaw(requestParameters: LinkTokenCreateRequest): Promise<runtime.ApiResponse<LinkToken>> {
+    async linkTokenCreateRaw(requestParameters: LinkTokenCreateRequest): Promise<runtime.ApiResponse<LinkToken | undefined>> {
         if (requestParameters.endUserDetailsRequest === null || requestParameters.endUserDetailsRequest === undefined) {
             throw new runtime.RequiredError('endUserDetailsRequest','Required parameter requestParameters.endUserDetailsRequest was null or undefined when calling linkTokenCreate.');
         }
@@ -47,11 +47,6 @@ export class LinkTokenApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -71,7 +66,7 @@ export class LinkTokenApi extends runtime.BaseAPI {
     /**
      * Creates a link token to be used when linking a new end user.
      */
-    async linkTokenCreate(requestParameters: LinkTokenCreateRequest): Promise<LinkToken> {
+    async linkTokenCreate(requestParameters: LinkTokenCreateRequest): Promise<LinkToken | undefined> {
         const response = await this.linkTokenCreateRaw(requestParameters);
         return await response.value();
     }

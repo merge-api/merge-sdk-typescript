@@ -35,7 +35,7 @@ export class AddressesApi extends runtime.BaseAPI {
     /**
      * Returns an `Address` object with the given `id`.
      */
-    async addressesRetrieveRaw(requestParameters: AddressesRetrieveRequest): Promise<runtime.ApiResponse<Address>> {
+    async addressesRetrieveRaw(requestParameters: AddressesRetrieveRequest): Promise<runtime.ApiResponse<Address | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling addressesRetrieve.');
         }
@@ -62,11 +62,6 @@ export class AddressesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -84,7 +79,7 @@ export class AddressesApi extends runtime.BaseAPI {
     /**
      * Returns an `Address` object with the given `id`.
      */
-    async addressesRetrieve(requestParameters: AddressesRetrieveRequest): Promise<Address> {
+    async addressesRetrieve(requestParameters: AddressesRetrieveRequest): Promise<Address | undefined> {
         const response = await this.addressesRetrieveRaw(requestParameters);
         return await response.value();
     }

@@ -59,7 +59,7 @@ export class BankInfoApi extends runtime.BaseAPI {
     /**
      * Returns a list of `BankInfo` objects.
      */
-    async bankInfoListRaw(requestParameters: BankInfoListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<BankInfo>>> {
+    async bankInfoListRaw(requestParameters: BankInfoListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<BankInfo> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling bankInfoList.');
         }
@@ -130,11 +130,6 @@ export class BankInfoApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -152,7 +147,7 @@ export class BankInfoApi extends runtime.BaseAPI {
     /**
      * Returns a list of `BankInfo` objects.
      */
-    async bankInfoList(requestParameters: BankInfoListRequest): Promise<MergePaginatedResponse<BankInfo>> {
+    async bankInfoList(requestParameters: BankInfoListRequest): Promise<MergePaginatedResponse<BankInfo> | undefined> {
         const response = await this.bankInfoListRaw(requestParameters);
         return await response.value();
     }
@@ -160,7 +155,7 @@ export class BankInfoApi extends runtime.BaseAPI {
     /**
      * Returns a `BankInfo` object with the given `id`.
      */
-    async bankInfoRetrieveRaw(requestParameters: BankInfoRetrieveRequest): Promise<runtime.ApiResponse<BankInfo>> {
+    async bankInfoRetrieveRaw(requestParameters: BankInfoRetrieveRequest): Promise<runtime.ApiResponse<BankInfo | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling bankInfoRetrieve.');
         }
@@ -187,11 +182,6 @@ export class BankInfoApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -209,7 +199,7 @@ export class BankInfoApi extends runtime.BaseAPI {
     /**
      * Returns a `BankInfo` object with the given `id`.
      */
-    async bankInfoRetrieve(requestParameters: BankInfoRetrieveRequest): Promise<BankInfo> {
+    async bankInfoRetrieve(requestParameters: BankInfoRetrieveRequest): Promise<BankInfo | undefined> {
         const response = await this.bankInfoRetrieveRaw(requestParameters);
         return await response.value();
     }

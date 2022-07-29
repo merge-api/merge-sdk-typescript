@@ -55,7 +55,7 @@ export class ItemsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Item` objects.
      */
-    async itemsListRaw(requestParameters: ItemsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Item>>> {
+    async itemsListRaw(requestParameters: ItemsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Item> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling itemsList.');
         }
@@ -110,11 +110,6 @@ export class ItemsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -132,7 +127,7 @@ export class ItemsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Item` objects.
      */
-    async itemsList(requestParameters: ItemsListRequest): Promise<MergePaginatedResponse<Item>> {
+    async itemsList(requestParameters: ItemsListRequest): Promise<MergePaginatedResponse<Item> | undefined> {
         const response = await this.itemsListRaw(requestParameters);
         return await response.value();
     }
@@ -140,7 +135,7 @@ export class ItemsApi extends runtime.BaseAPI {
     /**
      * Returns an `Item` object with the given `id`.
      */
-    async itemsRetrieveRaw(requestParameters: ItemsRetrieveRequest): Promise<runtime.ApiResponse<Item>> {
+    async itemsRetrieveRaw(requestParameters: ItemsRetrieveRequest): Promise<runtime.ApiResponse<Item | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling itemsRetrieve.');
         }
@@ -167,11 +162,6 @@ export class ItemsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -189,7 +179,7 @@ export class ItemsApi extends runtime.BaseAPI {
     /**
      * Returns an `Item` object with the given `id`.
      */
-    async itemsRetrieve(requestParameters: ItemsRetrieveRequest): Promise<Item> {
+    async itemsRetrieve(requestParameters: ItemsRetrieveRequest): Promise<Item | undefined> {
         const response = await this.itemsRetrieveRaw(requestParameters);
         return await response.value();
     }

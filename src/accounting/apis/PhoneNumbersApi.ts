@@ -34,7 +34,7 @@ export class PhoneNumbersApi extends runtime.BaseAPI {
     /**
      * Returns an `AccountingPhoneNumber` object with the given `id`.
      */
-    async phoneNumbersRetrieveRaw(requestParameters: PhoneNumbersRetrieveRequest): Promise<runtime.ApiResponse<AccountingPhoneNumber>> {
+    async phoneNumbersRetrieveRaw(requestParameters: PhoneNumbersRetrieveRequest): Promise<runtime.ApiResponse<AccountingPhoneNumber | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling phoneNumbersRetrieve.');
         }
@@ -57,11 +57,6 @@ export class PhoneNumbersApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -79,7 +74,7 @@ export class PhoneNumbersApi extends runtime.BaseAPI {
     /**
      * Returns an `AccountingPhoneNumber` object with the given `id`.
      */
-    async phoneNumbersRetrieve(requestParameters: PhoneNumbersRetrieveRequest): Promise<AccountingPhoneNumber> {
+    async phoneNumbersRetrieve(requestParameters: PhoneNumbersRetrieveRequest): Promise<AccountingPhoneNumber | undefined> {
         const response = await this.phoneNumbersRetrieveRaw(requestParameters);
         return await response.value();
     }

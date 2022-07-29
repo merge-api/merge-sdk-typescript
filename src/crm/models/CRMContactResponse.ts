@@ -66,27 +66,27 @@ export interface CRMContactResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function CRMContactResponseFromJSON(json: JSONValue): CRMContactResponse | null {
+export function CRMContactResponseFromJSON(json: JSONValue): CRMContactResponse | undefined {
     return CRMContactResponseFromJSONTyped(json);
 }
 
-export function CRMContactResponseFromJSONTyped(json: JSONValue): CRMContactResponse | null {
+export function CRMContactResponseFromJSONTyped(json: JSONValue): CRMContactResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': ContactFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': ContactFromJSON(json['model']) as Contact,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function CRMContactResponseToJSON(value?: CRMContactResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

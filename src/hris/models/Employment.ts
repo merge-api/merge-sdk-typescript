@@ -144,13 +144,13 @@ export interface Employment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function EmploymentFromJSON(json: JSONValue): Employment | null {
+export function EmploymentFromJSON(json: JSONValue): Employment | undefined {
     return EmploymentFromJSONTyped(json);
 }
 
-export function EmploymentFromJSONTyped(json: JSONValue): Employment | null {
+export function EmploymentFromJSONTyped(json: JSONValue): Employment | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -160,21 +160,21 @@ export function EmploymentFromJSONTyped(json: JSONValue): Employment | null {
         'employee': !exists(json, 'employee') ? undefined : json['employee'],
         'job_title': !exists(json, 'job_title') ? undefined : json['job_title'],
         'pay_rate': !exists(json, 'pay_rate') ? undefined : json['pay_rate'],
-        'pay_period': !exists(json, 'pay_period') ? undefined : PayPeriodEnumFromJSON(json['pay_period']),
-        'pay_frequency': !exists(json, 'pay_frequency') ? undefined : PayFrequencyEnumFromJSON(json['pay_frequency']),
-        'pay_currency': !exists(json, 'pay_currency') ? undefined : PayCurrencyEnumFromJSON(json['pay_currency']),
+        'pay_period': !exists(json, 'pay_period') ? undefined : PayPeriodEnumFromJSON(json['pay_period']) as PayPeriodEnum,
+        'pay_frequency': !exists(json, 'pay_frequency') ? undefined : PayFrequencyEnumFromJSON(json['pay_frequency']) as PayFrequencyEnum,
+        'pay_currency': !exists(json, 'pay_currency') ? undefined : PayCurrencyEnumFromJSON(json['pay_currency']) as PayCurrencyEnum,
         'pay_group': !exists(json, 'pay_group') ? undefined : json['pay_group'],
-        'flsa_status': !exists(json, 'flsa_status') ? undefined : FlsaStatusEnumFromJSON(json['flsa_status']),
+        'flsa_status': !exists(json, 'flsa_status') ? undefined : FlsaStatusEnumFromJSON(json['flsa_status']) as FlsaStatusEnum,
         'effective_date': !exists(json, 'effective_date') ? undefined : (json['effective_date'] === null ? null : new Date(json['effective_date'])),
-        'employment_type': !exists(json, 'employment_type') ? undefined : EmploymentTypeEnumFromJSON(json['employment_type']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'employment_type': !exists(json, 'employment_type') ? undefined : EmploymentTypeEnumFromJSON(json['employment_type']) as EmploymentTypeEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function EmploymentToJSON(value?: Employment): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

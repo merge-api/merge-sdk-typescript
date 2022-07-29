@@ -42,25 +42,25 @@ export interface AccountToken {
     integration: AccountIntegration;
 }
 
-export function AccountTokenFromJSON(json: JSONValue): AccountToken | null {
+export function AccountTokenFromJSON(json: JSONValue): AccountToken | undefined {
     return AccountTokenFromJSONTyped(json);
 }
 
-export function AccountTokenFromJSONTyped(json: JSONValue): AccountToken | null {
+export function AccountTokenFromJSONTyped(json: JSONValue): AccountToken | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'account_token': json['account_token'],
-        'integration': AccountIntegrationFromJSON(json['integration']),
+        'integration': AccountIntegrationFromJSON(json['integration']) as AccountIntegration,
     };
 }
 
 export function AccountTokenToJSON(value?: AccountToken): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

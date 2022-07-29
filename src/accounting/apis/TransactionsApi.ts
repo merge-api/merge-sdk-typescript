@@ -53,7 +53,7 @@ export class TransactionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Transaction` objects.
      */
-    async transactionsListRaw(requestParameters: TransactionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Transaction>>> {
+    async transactionsListRaw(requestParameters: TransactionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Transaction> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling transactionsList.');
         }
@@ -104,11 +104,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class TransactionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Transaction` objects.
      */
-    async transactionsList(requestParameters: TransactionsListRequest): Promise<MergePaginatedResponse<Transaction>> {
+    async transactionsList(requestParameters: TransactionsListRequest): Promise<MergePaginatedResponse<Transaction> | undefined> {
         const response = await this.transactionsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class TransactionsApi extends runtime.BaseAPI {
     /**
      * Returns a `Transaction` object with the given `id`.
      */
-    async transactionsRetrieveRaw(requestParameters: TransactionsRetrieveRequest): Promise<runtime.ApiResponse<Transaction>> {
+    async transactionsRetrieveRaw(requestParameters: TransactionsRetrieveRequest): Promise<runtime.ApiResponse<Transaction | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling transactionsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class TransactionsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class TransactionsApi extends runtime.BaseAPI {
     /**
      * Returns a `Transaction` object with the given `id`.
      */
-    async transactionsRetrieve(requestParameters: TransactionsRetrieveRequest): Promise<Transaction> {
+    async transactionsRetrieve(requestParameters: TransactionsRetrieveRequest): Promise<Transaction | undefined> {
         const response = await this.transactionsRetrieveRaw(requestParameters);
         return await response.value();
     }

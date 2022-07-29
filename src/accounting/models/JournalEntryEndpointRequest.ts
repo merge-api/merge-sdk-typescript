@@ -36,24 +36,24 @@ export interface JournalEntryEndpointRequest {
     model: JournalEntryRequest;
 }
 
-export function JournalEntryEndpointRequestFromJSON(json: JSONValue): JournalEntryEndpointRequest | null {
+export function JournalEntryEndpointRequestFromJSON(json: JSONValue): JournalEntryEndpointRequest | undefined {
     return JournalEntryEndpointRequestFromJSONTyped(json);
 }
 
-export function JournalEntryEndpointRequestFromJSONTyped(json: JSONValue): JournalEntryEndpointRequest | null {
+export function JournalEntryEndpointRequestFromJSONTyped(json: JSONValue): JournalEntryEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': JournalEntryRequestFromJSON(json['model']),
+        'model': JournalEntryRequestFromJSON(json['model']) as JournalEntryRequest,
     };
 }
 
 export function JournalEntryEndpointRequestToJSON(value?: JournalEntryEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

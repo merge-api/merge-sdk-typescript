@@ -97,32 +97,32 @@ export interface AccountDetailsAndActions {
     integration?: AccountDetailsAndActionsIntegration;
 }
 
-export function AccountDetailsAndActionsFromJSON(json: JSONValue): AccountDetailsAndActions | null {
+export function AccountDetailsAndActionsFromJSON(json: JSONValue): AccountDetailsAndActions | undefined {
     return AccountDetailsAndActionsFromJSONTyped(json);
 }
 
-export function AccountDetailsAndActionsFromJSONTyped(json: JSONValue): AccountDetailsAndActions | null {
+export function AccountDetailsAndActionsFromJSONTyped(json: JSONValue): AccountDetailsAndActions | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': json['id'],
-        'category': !exists(json, 'category') ? undefined : CategoryEnumFromJSON(json['category']),
-        'status': AccountDetailsAndActionsStatusEnumFromJSON(json['status']),
+        'category': !exists(json, 'category') ? undefined : CategoryEnumFromJSON(json['category']) as CategoryEnum,
+        'status': AccountDetailsAndActionsStatusEnumFromJSON(json['status']) as AccountDetailsAndActionsStatusEnum,
         'status_detail': !exists(json, 'status_detail') ? undefined : json['status_detail'],
         'end_user_origin_id': !exists(json, 'end_user_origin_id') ? undefined : json['end_user_origin_id'],
         'end_user_organization_name': json['end_user_organization_name'],
         'end_user_email_address': json['end_user_email_address'],
         'webhook_listener_url': json['webhook_listener_url'],
-        'integration': !exists(json, 'integration') ? undefined : AccountDetailsAndActionsIntegrationFromJSON(json['integration']),
+        'integration': !exists(json, 'integration') ? undefined : AccountDetailsAndActionsIntegrationFromJSON(json['integration']) as AccountDetailsAndActionsIntegration,
     };
 }
 
 export function AccountDetailsAndActionsToJSON(value?: AccountDetailsAndActions): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

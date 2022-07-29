@@ -40,7 +40,7 @@ export class WebhookReceiversApi extends runtime.BaseAPI {
     /**
      * Creates a `WebhookReceiver` object with the given values.
      */
-    async webhookReceiversCreateRaw(requestParameters: WebhookReceiversCreateRequest): Promise<runtime.ApiResponse<WebhookReceiver>> {
+    async webhookReceiversCreateRaw(requestParameters: WebhookReceiversCreateRequest): Promise<runtime.ApiResponse<WebhookReceiver | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling webhookReceiversCreate.');
         }
@@ -61,11 +61,6 @@ export class WebhookReceiversApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -84,7 +79,7 @@ export class WebhookReceiversApi extends runtime.BaseAPI {
     /**
      * Creates a `WebhookReceiver` object with the given values.
      */
-    async webhookReceiversCreate(requestParameters: WebhookReceiversCreateRequest): Promise<WebhookReceiver> {
+    async webhookReceiversCreate(requestParameters: WebhookReceiversCreateRequest): Promise<WebhookReceiver | undefined> {
         const response = await this.webhookReceiversCreateRaw(requestParameters);
         return await response.value();
     }
@@ -92,7 +87,7 @@ export class WebhookReceiversApi extends runtime.BaseAPI {
     /**
      * Returns a list of `WebhookReceiver` objects.
      */
-    async webhookReceiversListRaw(requestParameters: WebhookReceiversListRequest): Promise<runtime.ApiResponse<Array<WebhookReceiver>>> {
+    async webhookReceiversListRaw(requestParameters: WebhookReceiversListRequest): Promise<runtime.ApiResponse<Array<WebhookReceiver> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling webhookReceiversList.');
         }
@@ -106,11 +101,6 @@ export class WebhookReceiversApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -129,7 +119,7 @@ export class WebhookReceiversApi extends runtime.BaseAPI {
     /**
      * Returns a list of `WebhookReceiver` objects.
      */
-    async webhookReceiversList(requestParameters: WebhookReceiversListRequest): Promise<Array<WebhookReceiver>> {
+    async webhookReceiversList(requestParameters: WebhookReceiversListRequest): Promise<Array<WebhookReceiver> | undefined> {
         const response = await this.webhookReceiversListRaw(requestParameters);
         return await response.value();
     }

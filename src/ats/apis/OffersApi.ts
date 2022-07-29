@@ -57,7 +57,7 @@ export class OffersApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Offer` objects.
      */
-    async offersListRaw(requestParameters: OffersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Offer>>> {
+    async offersListRaw(requestParameters: OffersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Offer> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling offersList.');
         }
@@ -120,11 +120,6 @@ export class OffersApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -142,7 +137,7 @@ export class OffersApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Offer` objects.
      */
-    async offersList(requestParameters: OffersListRequest): Promise<MergePaginatedResponse<Offer>> {
+    async offersList(requestParameters: OffersListRequest): Promise<MergePaginatedResponse<Offer> | undefined> {
         const response = await this.offersListRaw(requestParameters);
         return await response.value();
     }
@@ -150,7 +145,7 @@ export class OffersApi extends runtime.BaseAPI {
     /**
      * Returns an `Offer` object with the given `id`.
      */
-    async offersRetrieveRaw(requestParameters: OffersRetrieveRequest): Promise<runtime.ApiResponse<Offer>> {
+    async offersRetrieveRaw(requestParameters: OffersRetrieveRequest): Promise<runtime.ApiResponse<Offer | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling offersRetrieve.');
         }
@@ -177,11 +172,6 @@ export class OffersApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -199,7 +189,7 @@ export class OffersApi extends runtime.BaseAPI {
     /**
      * Returns an `Offer` object with the given `id`.
      */
-    async offersRetrieve(requestParameters: OffersRetrieveRequest): Promise<Offer> {
+    async offersRetrieve(requestParameters: OffersRetrieveRequest): Promise<Offer | undefined> {
         const response = await this.offersRetrieveRaw(requestParameters);
         return await response.value();
     }

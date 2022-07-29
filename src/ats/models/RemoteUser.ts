@@ -101,13 +101,13 @@ export interface RemoteUser {
     readonly remote_was_deleted?: boolean;
 }
 
-export function RemoteUserFromJSON(json: JSONValue): RemoteUser | null {
+export function RemoteUserFromJSON(json: JSONValue): RemoteUser | undefined {
     return RemoteUserFromJSONTyped(json);
 }
 
-export function RemoteUserFromJSONTyped(json: JSONValue): RemoteUser | null {
+export function RemoteUserFromJSONTyped(json: JSONValue): RemoteUser | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -119,15 +119,15 @@ export function RemoteUserFromJSONTyped(json: JSONValue): RemoteUser | null {
         'email': !exists(json, 'email') ? undefined : json['email'],
         'disabled': !exists(json, 'disabled') ? undefined : json['disabled'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'access_role': !exists(json, 'access_role') ? undefined : AccessRoleEnumFromJSON(json['access_role']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'access_role': !exists(json, 'access_role') ? undefined : AccessRoleEnumFromJSON(json['access_role']) as AccessRoleEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function RemoteUserToJSON(value?: RemoteUser): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -54,7 +54,7 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `JobInterviewStage` objects.
      */
-    async jobInterviewStagesListRaw(requestParameters: JobInterviewStagesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<JobInterviewStage>>> {
+    async jobInterviewStagesListRaw(requestParameters: JobInterviewStagesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<JobInterviewStage> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling jobInterviewStagesList.');
         }
@@ -109,11 +109,6 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -131,7 +126,7 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `JobInterviewStage` objects.
      */
-    async jobInterviewStagesList(requestParameters: JobInterviewStagesListRequest): Promise<MergePaginatedResponse<JobInterviewStage>> {
+    async jobInterviewStagesList(requestParameters: JobInterviewStagesListRequest): Promise<MergePaginatedResponse<JobInterviewStage> | undefined> {
         const response = await this.jobInterviewStagesListRaw(requestParameters);
         return await response.value();
     }
@@ -139,7 +134,7 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
     /**
      * Returns a `JobInterviewStage` object with the given `id`.
      */
-    async jobInterviewStagesRetrieveRaw(requestParameters: JobInterviewStagesRetrieveRequest): Promise<runtime.ApiResponse<JobInterviewStage>> {
+    async jobInterviewStagesRetrieveRaw(requestParameters: JobInterviewStagesRetrieveRequest): Promise<runtime.ApiResponse<JobInterviewStage | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling jobInterviewStagesRetrieve.');
         }
@@ -162,11 +157,6 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -184,7 +174,7 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
     /**
      * Returns a `JobInterviewStage` object with the given `id`.
      */
-    async jobInterviewStagesRetrieve(requestParameters: JobInterviewStagesRetrieveRequest): Promise<JobInterviewStage> {
+    async jobInterviewStagesRetrieve(requestParameters: JobInterviewStagesRetrieveRequest): Promise<JobInterviewStage | undefined> {
         const response = await this.jobInterviewStagesRetrieveRaw(requestParameters);
         return await response.value();
     }

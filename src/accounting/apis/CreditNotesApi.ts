@@ -55,7 +55,7 @@ export class CreditNotesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `CreditNote` objects.
      */
-    async creditNotesListRaw(requestParameters: CreditNotesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CreditNote>>> {
+    async creditNotesListRaw(requestParameters: CreditNotesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CreditNote> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling creditNotesList.');
         }
@@ -110,11 +110,6 @@ export class CreditNotesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -132,7 +127,7 @@ export class CreditNotesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `CreditNote` objects.
      */
-    async creditNotesList(requestParameters: CreditNotesListRequest): Promise<MergePaginatedResponse<CreditNote>> {
+    async creditNotesList(requestParameters: CreditNotesListRequest): Promise<MergePaginatedResponse<CreditNote> | undefined> {
         const response = await this.creditNotesListRaw(requestParameters);
         return await response.value();
     }
@@ -140,7 +135,7 @@ export class CreditNotesApi extends runtime.BaseAPI {
     /**
      * Returns a `CreditNote` object with the given `id`.
      */
-    async creditNotesRetrieveRaw(requestParameters: CreditNotesRetrieveRequest): Promise<runtime.ApiResponse<CreditNote>> {
+    async creditNotesRetrieveRaw(requestParameters: CreditNotesRetrieveRequest): Promise<runtime.ApiResponse<CreditNote | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling creditNotesRetrieve.');
         }
@@ -167,11 +162,6 @@ export class CreditNotesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -189,7 +179,7 @@ export class CreditNotesApi extends runtime.BaseAPI {
     /**
      * Returns a `CreditNote` object with the given `id`.
      */
-    async creditNotesRetrieve(requestParameters: CreditNotesRetrieveRequest): Promise<CreditNote> {
+    async creditNotesRetrieve(requestParameters: CreditNotesRetrieveRequest): Promise<CreditNote | undefined> {
         const response = await this.creditNotesRetrieveRaw(requestParameters);
         return await response.value();
     }

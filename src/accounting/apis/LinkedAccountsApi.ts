@@ -46,7 +46,7 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
     /**
      * List linked accounts for your organization.
      */
-    async linkedAccountsListRaw(requestParameters: LinkedAccountsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<AccountDetailsAndActions>>> {
+    async linkedAccountsListRaw(requestParameters: LinkedAccountsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<AccountDetailsAndActions> | undefined>> {
         const queryParameters: any = {};
 
         if (requestParameters.category !== undefined) {
@@ -101,11 +101,6 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -123,7 +118,7 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
     /**
      * List linked accounts for your organization.
      */
-    async linkedAccountsList(requestParameters: LinkedAccountsListRequest): Promise<MergePaginatedResponse<AccountDetailsAndActions>> {
+    async linkedAccountsList(requestParameters: LinkedAccountsListRequest): Promise<MergePaginatedResponse<AccountDetailsAndActions> | undefined> {
         const response = await this.linkedAccountsListRaw(requestParameters);
         return await response.value();
     }

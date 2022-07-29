@@ -54,19 +54,19 @@ export interface MetaResponse {
     has_required_linked_account_params: boolean;
 }
 
-export function MetaResponseFromJSON(json: JSONValue): MetaResponse | null {
+export function MetaResponseFromJSON(json: JSONValue): MetaResponse | undefined {
     return MetaResponseFromJSONTyped(json);
 }
 
-export function MetaResponseFromJSONTyped(json: JSONValue): MetaResponse | null {
+export function MetaResponseFromJSONTyped(json: JSONValue): MetaResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'request_schema': json['request_schema'],
-        'status': !exists(json, 'status') ? undefined : LinkedAccountStatusFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : LinkedAccountStatusFromJSON(json['status']) as LinkedAccountStatus,
         'has_conditional_params': json['has_conditional_params'],
         'has_required_linked_account_params': json['has_required_linked_account_params'],
     };
@@ -74,7 +74,7 @@ export function MetaResponseFromJSONTyped(json: JSONValue): MetaResponse | null 
 
 export function MetaResponseToJSON(value?: MetaResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

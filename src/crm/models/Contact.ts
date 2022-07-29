@@ -121,13 +121,13 @@ export interface Contact {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ContactFromJSON(json: JSONValue): Contact | null {
+export function ContactFromJSON(json: JSONValue): Contact | undefined {
     return ContactFromJSONTyped(json);
 }
 
-export function ContactFromJSONTyped(json: JSONValue): Contact | null {
+export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -137,19 +137,19 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | null {
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
         'last_name': !exists(json, 'last_name') ? undefined : json['last_name'],
         'account': !exists(json, 'account') ? undefined : json['account'],
-        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<any>).map(AddressFromJSON)),
-        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<any>).map(EmailAddressFromJSON)),
-        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<any>).map(PhoneNumberFromJSON)),
+        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<JSONValue>).map(AddressFromJSON)) as Array<Address>,
+        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<JSONValue>).map(EmailAddressFromJSON)) as Array<EmailAddress>,
+        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(PhoneNumberFromJSON)) as Array<PhoneNumber>,
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function ContactToJSON(value?: Contact): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

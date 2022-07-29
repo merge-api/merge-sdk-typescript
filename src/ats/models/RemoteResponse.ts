@@ -64,13 +64,13 @@ export interface RemoteResponse {
     headers?: { [key: string]: any; };
 }
 
-export function RemoteResponseFromJSON(json: JSONValue): RemoteResponse | null {
+export function RemoteResponseFromJSON(json: JSONValue): RemoteResponse | undefined {
     return RemoteResponseFromJSONTyped(json);
 }
 
-export function RemoteResponseFromJSONTyped(json: JSONValue): RemoteResponse | null {
+export function RemoteResponseFromJSONTyped(json: JSONValue): RemoteResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -86,7 +86,7 @@ export function RemoteResponseFromJSONTyped(json: JSONValue): RemoteResponse | n
 
 export function RemoteResponseToJSON(value?: RemoteResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

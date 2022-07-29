@@ -89,13 +89,13 @@ export interface CreditNoteLineItem {
     remote_id?: string | null;
 }
 
-export function CreditNoteLineItemFromJSON(json: JSONValue): CreditNoteLineItem | null {
+export function CreditNoteLineItemFromJSON(json: JSONValue): CreditNoteLineItem | undefined {
     return CreditNoteLineItemFromJSONTyped(json);
 }
 
-export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLineItem | null {
+export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLineItem | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -116,7 +116,7 @@ export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLine
 
 export function CreditNoteLineItemToJSON(value?: CreditNoteLineItem): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -53,7 +53,7 @@ export class TaxRatesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TaxRate` objects.
      */
-    async taxRatesListRaw(requestParameters: TaxRatesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TaxRate>>> {
+    async taxRatesListRaw(requestParameters: TaxRatesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TaxRate> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling taxRatesList.');
         }
@@ -104,11 +104,6 @@ export class TaxRatesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class TaxRatesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TaxRate` objects.
      */
-    async taxRatesList(requestParameters: TaxRatesListRequest): Promise<MergePaginatedResponse<TaxRate>> {
+    async taxRatesList(requestParameters: TaxRatesListRequest): Promise<MergePaginatedResponse<TaxRate> | undefined> {
         const response = await this.taxRatesListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class TaxRatesApi extends runtime.BaseAPI {
     /**
      * Returns a `TaxRate` object with the given `id`.
      */
-    async taxRatesRetrieveRaw(requestParameters: TaxRatesRetrieveRequest): Promise<runtime.ApiResponse<TaxRate>> {
+    async taxRatesRetrieveRaw(requestParameters: TaxRatesRetrieveRequest): Promise<runtime.ApiResponse<TaxRate | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling taxRatesRetrieve.');
         }
@@ -157,11 +152,6 @@ export class TaxRatesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class TaxRatesApi extends runtime.BaseAPI {
     /**
      * Returns a `TaxRate` object with the given `id`.
      */
-    async taxRatesRetrieve(requestParameters: TaxRatesRetrieveRequest): Promise<TaxRate> {
+    async taxRatesRetrieve(requestParameters: TaxRatesRetrieveRequest): Promise<TaxRate | undefined> {
         const response = await this.taxRatesRetrieveRaw(requestParameters);
         return await response.value();
     }

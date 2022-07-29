@@ -87,13 +87,13 @@ export interface NoteRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function NoteRequestFromJSON(json: JSONValue): NoteRequest | null {
+export function NoteRequestFromJSON(json: JSONValue): NoteRequest | undefined {
     return NoteRequestFromJSONTyped(json);
 }
 
-export function NoteRequestFromJSONTyped(json: JSONValue): NoteRequest | null {
+export function NoteRequestFromJSONTyped(json: JSONValue): NoteRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -113,7 +113,7 @@ export function NoteRequestFromJSONTyped(json: JSONValue): NoteRequest | null {
 
 export function NoteRequestToJSON(value?: NoteRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

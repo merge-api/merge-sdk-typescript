@@ -32,7 +32,7 @@ export class ForceResyncApi extends runtime.BaseAPI {
     /**
      * Force re-sync of all models. This is only available for organizations on Merge\'s Grow and Expand plans.
      */
-    async syncStatusResyncCreateRaw(requestParameters: SyncStatusResyncCreateRequest): Promise<runtime.ApiResponse<Array<SyncStatus>>> {
+    async syncStatusResyncCreateRaw(requestParameters: SyncStatusResyncCreateRequest): Promise<runtime.ApiResponse<Array<SyncStatus> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling syncStatusResyncCreate.');
         }
@@ -46,11 +46,6 @@ export class ForceResyncApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -69,7 +64,7 @@ export class ForceResyncApi extends runtime.BaseAPI {
     /**
      * Force re-sync of all models. This is only available for organizations on Merge\'s Grow and Expand plans.
      */
-    async syncStatusResyncCreate(requestParameters: SyncStatusResyncCreateRequest): Promise<Array<SyncStatus>> {
+    async syncStatusResyncCreate(requestParameters: SyncStatusResyncCreateRequest): Promise<Array<SyncStatus> | undefined> {
         const response = await this.syncStatusResyncCreateRaw(requestParameters);
         return await response.value();
     }

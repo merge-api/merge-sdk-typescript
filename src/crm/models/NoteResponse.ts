@@ -66,27 +66,27 @@ export interface NoteResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function NoteResponseFromJSON(json: JSONValue): NoteResponse | null {
+export function NoteResponseFromJSON(json: JSONValue): NoteResponse | undefined {
     return NoteResponseFromJSONTyped(json);
 }
 
-export function NoteResponseFromJSONTyped(json: JSONValue): NoteResponse | null {
+export function NoteResponseFromJSONTyped(json: JSONValue): NoteResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': NoteFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': NoteFromJSON(json['model']) as Note,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function NoteResponseToJSON(value?: NoteResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

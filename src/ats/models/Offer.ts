@@ -107,13 +107,13 @@ export interface Offer {
     readonly remote_was_deleted?: boolean;
 }
 
-export function OfferFromJSON(json: JSONValue): Offer | null {
+export function OfferFromJSON(json: JSONValue): Offer | undefined {
     return OfferFromJSONTyped(json);
 }
 
-export function OfferFromJSONTyped(json: JSONValue): Offer | null {
+export function OfferFromJSONTyped(json: JSONValue): Offer | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -126,15 +126,15 @@ export function OfferFromJSONTyped(json: JSONValue): Offer | null {
         'closed_at': !exists(json, 'closed_at') ? undefined : (json['closed_at'] === null ? null : new Date(json['closed_at'])),
         'sent_at': !exists(json, 'sent_at') ? undefined : (json['sent_at'] === null ? null : new Date(json['sent_at'])),
         'start_date': !exists(json, 'start_date') ? undefined : (json['start_date'] === null ? null : new Date(json['start_date'])),
-        'status': !exists(json, 'status') ? undefined : OfferStatusEnumFromJSON(json['status']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'status': !exists(json, 'status') ? undefined : OfferStatusEnumFromJSON(json['status']) as OfferStatusEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function OfferToJSON(value?: Offer): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

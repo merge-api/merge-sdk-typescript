@@ -92,13 +92,13 @@ export interface Contact {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ContactFromJSON(json: JSONValue): Contact | null {
+export function ContactFromJSON(json: JSONValue): Contact | undefined {
     return ContactFromJSONTyped(json);
 }
 
-export function ContactFromJSONTyped(json: JSONValue): Contact | null {
+export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -110,14 +110,14 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | null {
         'phone_number': !exists(json, 'phone_number') ? undefined : json['phone_number'],
         'details': !exists(json, 'details') ? undefined : json['details'],
         'account': !exists(json, 'account') ? undefined : json['account'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function ContactToJSON(value?: Contact): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -125,13 +125,13 @@ export interface TicketRequest {
     remote_updated_at?: Date | null;
 }
 
-export function TicketRequestFromJSON(json: JSONValue): TicketRequest | null {
+export function TicketRequestFromJSON(json: JSONValue): TicketRequest | undefined {
     return TicketRequestFromJSONTyped(json);
 }
 
-export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | null {
+export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -140,7 +140,7 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | nul
         'name': !exists(json, 'name') ? undefined : json['name'],
         'assignees': !exists(json, 'assignees') ? undefined : json['assignees'],
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
-        'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
         'project': !exists(json, 'project') ? undefined : json['project'],
         'ticket_type': !exists(json, 'ticket_type') ? undefined : json['ticket_type'],
@@ -156,7 +156,7 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | nul
 
 export function TicketRequestToJSON(value?: TicketRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

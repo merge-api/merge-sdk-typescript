@@ -55,7 +55,7 @@ export class LocationsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Location` objects.
      */
-    async locationsListRaw(requestParameters: LocationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Location>>> {
+    async locationsListRaw(requestParameters: LocationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Location> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling locationsList.');
         }
@@ -110,11 +110,6 @@ export class LocationsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -132,7 +127,7 @@ export class LocationsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Location` objects.
      */
-    async locationsList(requestParameters: LocationsListRequest): Promise<MergePaginatedResponse<Location>> {
+    async locationsList(requestParameters: LocationsListRequest): Promise<MergePaginatedResponse<Location> | undefined> {
         const response = await this.locationsListRaw(requestParameters);
         return await response.value();
     }
@@ -140,7 +135,7 @@ export class LocationsApi extends runtime.BaseAPI {
     /**
      * Returns a `Location` object with the given `id`.
      */
-    async locationsRetrieveRaw(requestParameters: LocationsRetrieveRequest): Promise<runtime.ApiResponse<Location>> {
+    async locationsRetrieveRaw(requestParameters: LocationsRetrieveRequest): Promise<runtime.ApiResponse<Location | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling locationsRetrieve.');
         }
@@ -167,11 +162,6 @@ export class LocationsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -189,7 +179,7 @@ export class LocationsApi extends runtime.BaseAPI {
     /**
      * Returns a `Location` object with the given `id`.
      */
-    async locationsRetrieve(requestParameters: LocationsRetrieveRequest): Promise<Location> {
+    async locationsRetrieve(requestParameters: LocationsRetrieveRequest): Promise<Location | undefined> {
         const response = await this.locationsRetrieveRaw(requestParameters);
         return await response.value();
     }

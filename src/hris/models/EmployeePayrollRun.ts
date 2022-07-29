@@ -134,13 +134,13 @@ export interface EmployeePayrollRun {
     readonly remote_was_deleted?: boolean;
 }
 
-export function EmployeePayrollRunFromJSON(json: JSONValue): EmployeePayrollRun | null {
+export function EmployeePayrollRunFromJSON(json: JSONValue): EmployeePayrollRun | undefined {
     return EmployeePayrollRunFromJSONTyped(json);
 }
 
-export function EmployeePayrollRunFromJSONTyped(json: JSONValue): EmployeePayrollRun | null {
+export function EmployeePayrollRunFromJSONTyped(json: JSONValue): EmployeePayrollRun | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -154,17 +154,17 @@ export function EmployeePayrollRunFromJSONTyped(json: JSONValue): EmployeePayrol
         'start_date': !exists(json, 'start_date') ? undefined : (json['start_date'] === null ? null : new Date(json['start_date'])),
         'end_date': !exists(json, 'end_date') ? undefined : (json['end_date'] === null ? null : new Date(json['end_date'])),
         'check_date': !exists(json, 'check_date') ? undefined : (json['check_date'] === null ? null : new Date(json['check_date'])),
-        'earnings': !exists(json, 'earnings') ? undefined : ((json['earnings'] as Array<any>).map(EarningFromJSON)),
-        'deductions': !exists(json, 'deductions') ? undefined : ((json['deductions'] as Array<any>).map(DeductionFromJSON)),
-        'taxes': !exists(json, 'taxes') ? undefined : ((json['taxes'] as Array<any>).map(TaxFromJSON)),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'earnings': !exists(json, 'earnings') ? undefined : ((json['earnings'] as Array<JSONValue>).map(EarningFromJSON)) as Array<Earning>,
+        'deductions': !exists(json, 'deductions') ? undefined : ((json['deductions'] as Array<JSONValue>).map(DeductionFromJSON)) as Array<Deduction>,
+        'taxes': !exists(json, 'taxes') ? undefined : ((json['taxes'] as Array<JSONValue>).map(TaxFromJSON)) as Array<Tax>,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function EmployeePayrollRunToJSON(value?: EmployeePayrollRun): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

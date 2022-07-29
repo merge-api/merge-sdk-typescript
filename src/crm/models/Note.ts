@@ -103,13 +103,13 @@ export interface Note {
     readonly remote_was_deleted?: boolean;
 }
 
-export function NoteFromJSON(json: JSONValue): Note | null {
+export function NoteFromJSON(json: JSONValue): Note | undefined {
     return NoteFromJSONTyped(json);
 }
 
-export function NoteFromJSONTyped(json: JSONValue): Note | null {
+export function NoteFromJSONTyped(json: JSONValue): Note | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -123,14 +123,14 @@ export function NoteFromJSONTyped(json: JSONValue): Note | null {
         'opportunity': !exists(json, 'opportunity') ? undefined : json['opportunity'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function NoteToJSON(value?: Note): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

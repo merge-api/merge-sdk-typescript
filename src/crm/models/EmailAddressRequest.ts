@@ -39,13 +39,13 @@ export interface EmailAddressRequest {
     email_address_type?: string | null;
 }
 
-export function EmailAddressRequestFromJSON(json: JSONValue): EmailAddressRequest | null {
+export function EmailAddressRequestFromJSON(json: JSONValue): EmailAddressRequest | undefined {
     return EmailAddressRequestFromJSONTyped(json);
 }
 
-export function EmailAddressRequestFromJSONTyped(json: JSONValue): EmailAddressRequest | null {
+export function EmailAddressRequestFromJSONTyped(json: JSONValue): EmailAddressRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -57,7 +57,7 @@ export function EmailAddressRequestFromJSONTyped(json: JSONValue): EmailAddressR
 
 export function EmailAddressRequestToJSON(value?: EmailAddressRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

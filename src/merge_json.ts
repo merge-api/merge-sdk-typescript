@@ -4,6 +4,7 @@ export type JSONValue =
     | boolean
     | JSONObject
     | JSONArray
+    | undefined
     | null;
 
 export interface JSONObject {

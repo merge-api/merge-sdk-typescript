@@ -59,7 +59,7 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `EmployeePayrollRun` objects.
      */
-    async employeePayrollRunsListRaw(requestParameters: EmployeePayrollRunsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EmployeePayrollRun>>> {
+    async employeePayrollRunsListRaw(requestParameters: EmployeePayrollRunsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EmployeePayrollRun> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeePayrollRunsList.');
         }
@@ -134,11 +134,6 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -156,7 +151,7 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `EmployeePayrollRun` objects.
      */
-    async employeePayrollRunsList(requestParameters: EmployeePayrollRunsListRequest): Promise<MergePaginatedResponse<EmployeePayrollRun>> {
+    async employeePayrollRunsList(requestParameters: EmployeePayrollRunsListRequest): Promise<MergePaginatedResponse<EmployeePayrollRun> | undefined> {
         const response = await this.employeePayrollRunsListRaw(requestParameters);
         return await response.value();
     }
@@ -164,7 +159,7 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
     /**
      * Returns an `EmployeePayrollRun` object with the given `id`.
      */
-    async employeePayrollRunsRetrieveRaw(requestParameters: EmployeePayrollRunsRetrieveRequest): Promise<runtime.ApiResponse<EmployeePayrollRun>> {
+    async employeePayrollRunsRetrieveRaw(requestParameters: EmployeePayrollRunsRetrieveRequest): Promise<runtime.ApiResponse<EmployeePayrollRun | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeePayrollRunsRetrieve.');
         }
@@ -187,11 +182,6 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -209,7 +199,7 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
     /**
      * Returns an `EmployeePayrollRun` object with the given `id`.
      */
-    async employeePayrollRunsRetrieve(requestParameters: EmployeePayrollRunsRetrieveRequest): Promise<EmployeePayrollRun> {
+    async employeePayrollRunsRetrieve(requestParameters: EmployeePayrollRunsRetrieveRequest): Promise<EmployeePayrollRun | undefined> {
         const response = await this.employeePayrollRunsRetrieveRaw(requestParameters);
         return await response.value();
     }

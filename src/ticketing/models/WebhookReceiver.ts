@@ -41,13 +41,13 @@ export interface WebhookReceiver {
     key?: string;
 }
 
-export function WebhookReceiverFromJSON(json: JSONValue): WebhookReceiver | null {
+export function WebhookReceiverFromJSON(json: JSONValue): WebhookReceiver | undefined {
     return WebhookReceiverFromJSONTyped(json);
 }
 
-export function WebhookReceiverFromJSONTyped(json: JSONValue): WebhookReceiver | null {
+export function WebhookReceiverFromJSONTyped(json: JSONValue): WebhookReceiver | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -60,7 +60,7 @@ export function WebhookReceiverFromJSONTyped(json: JSONValue): WebhookReceiver |
 
 export function WebhookReceiverToJSON(value?: WebhookReceiver): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

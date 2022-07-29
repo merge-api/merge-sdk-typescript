@@ -28,8 +28,6 @@ import {
     TicketResponseFromJSON,
     TicketResponseToJSON,
     User,
-    UserFromJSON,
-    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -87,7 +85,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async ticketsCollaboratorsListRaw(requestParameters: TicketsCollaboratorsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User>>> {
+    async ticketsCollaboratorsListRaw(requestParameters: TicketsCollaboratorsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsCollaboratorsList.');
         }
@@ -118,11 +116,6 @@ export class TicketsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -140,7 +133,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async ticketsCollaboratorsList(requestParameters: TicketsCollaboratorsListRequest): Promise<MergePaginatedResponse<User>> {
+    async ticketsCollaboratorsList(requestParameters: TicketsCollaboratorsListRequest): Promise<MergePaginatedResponse<User> | undefined> {
         const response = await this.ticketsCollaboratorsListRaw(requestParameters);
         return await response.value();
     }
@@ -148,7 +141,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Creates a `Ticket` object with the given values.
      */
-    async ticketsCreateRaw(requestParameters: TicketsCreateRequest): Promise<runtime.ApiResponse<TicketResponse>> {
+    async ticketsCreateRaw(requestParameters: TicketsCreateRequest): Promise<runtime.ApiResponse<TicketResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsCreate.');
         }
@@ -177,11 +170,6 @@ export class TicketsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -200,7 +188,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Creates a `Ticket` object with the given values.
      */
-    async ticketsCreate(requestParameters: TicketsCreateRequest): Promise<TicketResponse> {
+    async ticketsCreate(requestParameters: TicketsCreateRequest): Promise<TicketResponse | undefined> {
         const response = await this.ticketsCreateRaw(requestParameters);
         return await response.value();
     }
@@ -208,7 +196,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Ticket` objects.
      */
-    async ticketsListRaw(requestParameters: TicketsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Ticket>>> {
+    async ticketsListRaw(requestParameters: TicketsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Ticket> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsList.');
         }
@@ -271,11 +259,6 @@ export class TicketsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -293,7 +276,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Ticket` objects.
      */
-    async ticketsList(requestParameters: TicketsListRequest): Promise<MergePaginatedResponse<Ticket>> {
+    async ticketsList(requestParameters: TicketsListRequest): Promise<MergePaginatedResponse<Ticket> | undefined> {
         const response = await this.ticketsListRaw(requestParameters);
         return await response.value();
     }
@@ -301,7 +284,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieveRaw(requestParameters: TicketsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async ticketsMetaPostRetrieveRaw(requestParameters: TicketsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsMetaPostRetrieve.');
         }
@@ -315,11 +298,6 @@ export class TicketsApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -338,7 +316,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieve(requestParameters: TicketsMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async ticketsMetaPostRetrieve(requestParameters: TicketsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.ticketsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -346,7 +324,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a `Ticket` object with the given `id`.
      */
-    async ticketsRetrieveRaw(requestParameters: TicketsRetrieveRequest): Promise<runtime.ApiResponse<Ticket>> {
+    async ticketsRetrieveRaw(requestParameters: TicketsRetrieveRequest): Promise<runtime.ApiResponse<Ticket | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsRetrieve.');
         }
@@ -373,11 +351,6 @@ export class TicketsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -395,7 +368,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns a `Ticket` object with the given `id`.
      */
-    async ticketsRetrieve(requestParameters: TicketsRetrieveRequest): Promise<Ticket> {
+    async ticketsRetrieve(requestParameters: TicketsRetrieveRequest): Promise<Ticket | undefined> {
         const response = await this.ticketsRetrieveRaw(requestParameters);
         return await response.value();
     }

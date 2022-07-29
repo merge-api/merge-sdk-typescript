@@ -122,27 +122,27 @@ export interface Account {
     readonly remote_was_deleted?: boolean;
 }
 
-export function AccountFromJSON(json: JSONValue): Account | null {
+export function AccountFromJSON(json: JSONValue): Account | undefined {
     return AccountFromJSONTyped(json);
 }
 
-export function AccountFromJSONTyped(json: JSONValue): Account | null {
+export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'classification': !exists(json, 'classification') ? undefined : ClassificationEnumFromJSON(json['classification']),
+        'classification': !exists(json, 'classification') ? undefined : ClassificationEnumFromJSON(json['classification']) as ClassificationEnum,
         'type': !exists(json, 'type') ? undefined : json['type'],
-        'status': !exists(json, 'status') ? undefined : AccountStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : AccountStatusEnumFromJSON(json['status']) as AccountStatusEnum,
         'current_balance': !exists(json, 'current_balance') ? undefined : json['current_balance'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'account_number': !exists(json, 'account_number') ? undefined : json['account_number'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -150,7 +150,7 @@ export function AccountFromJSONTyped(json: JSONValue): Account | null {
 
 export function AccountToJSON(value?: Account): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

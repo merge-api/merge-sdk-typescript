@@ -146,21 +146,21 @@ export interface PurchaseOrder {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PurchaseOrderFromJSON(json: JSONValue): PurchaseOrder | null {
+export function PurchaseOrderFromJSON(json: JSONValue): PurchaseOrder | undefined {
     return PurchaseOrderFromJSONTyped(json);
 }
 
-export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | null {
+export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
-        'status': !exists(json, 'status') ? undefined : PurchaseOrderStatusEnumFromJSON(json['status']),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
+        'status': !exists(json, 'status') ? undefined : PurchaseOrderStatusEnumFromJSON(json['status']) as PurchaseOrderStatusEnum,
         'issue_date': !exists(json, 'issue_date') ? undefined : (json['issue_date'] === null ? null : new Date(json['issue_date'])),
         'delivery_date': !exists(json, 'delivery_date') ? undefined : (json['delivery_date'] === null ? null : new Date(json['delivery_date'])),
         'delivery_address': !exists(json, 'delivery_address') ? undefined : json['delivery_address'],
@@ -168,8 +168,8 @@ export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | nul
         'vendor': !exists(json, 'vendor') ? undefined : json['vendor'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
-        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(PurchaseOrderLineItemFromJSON)),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(PurchaseOrderLineItemFromJSON)) as Array<PurchaseOrderLineItem>,
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
@@ -178,7 +178,7 @@ export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | nul
 
 export function PurchaseOrderToJSON(value?: PurchaseOrder): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

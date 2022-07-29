@@ -34,13 +34,13 @@ export interface RemoteKeyForRegenerationRequest {
     name: string;
 }
 
-export function RemoteKeyForRegenerationRequestFromJSON(json: JSONValue): RemoteKeyForRegenerationRequest | null {
+export function RemoteKeyForRegenerationRequestFromJSON(json: JSONValue): RemoteKeyForRegenerationRequest | undefined {
     return RemoteKeyForRegenerationRequestFromJSONTyped(json);
 }
 
-export function RemoteKeyForRegenerationRequestFromJSONTyped(json: JSONValue): RemoteKeyForRegenerationRequest | null {
+export function RemoteKeyForRegenerationRequestFromJSONTyped(json: JSONValue): RemoteKeyForRegenerationRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -51,7 +51,7 @@ export function RemoteKeyForRegenerationRequestFromJSONTyped(json: JSONValue): R
 
 export function RemoteKeyForRegenerationRequestToJSON(value?: RemoteKeyForRegenerationRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

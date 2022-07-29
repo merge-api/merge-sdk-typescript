@@ -34,13 +34,13 @@ export interface GenerateRemoteKeyRequest {
     name: string;
 }
 
-export function GenerateRemoteKeyRequestFromJSON(json: JSONValue): GenerateRemoteKeyRequest | null {
+export function GenerateRemoteKeyRequestFromJSON(json: JSONValue): GenerateRemoteKeyRequest | undefined {
     return GenerateRemoteKeyRequestFromJSONTyped(json);
 }
 
-export function GenerateRemoteKeyRequestFromJSONTyped(json: JSONValue): GenerateRemoteKeyRequest | null {
+export function GenerateRemoteKeyRequestFromJSONTyped(json: JSONValue): GenerateRemoteKeyRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -51,7 +51,7 @@ export function GenerateRemoteKeyRequestFromJSONTyped(json: JSONValue): Generate
 
 export function GenerateRemoteKeyRequestToJSON(value?: GenerateRemoteKeyRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

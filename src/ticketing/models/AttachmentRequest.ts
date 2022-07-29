@@ -70,13 +70,13 @@ export interface AttachmentRequest {
     remote_created_at?: Date | null;
 }
 
-export function AttachmentRequestFromJSON(json: JSONValue): AttachmentRequest | null {
+export function AttachmentRequestFromJSON(json: JSONValue): AttachmentRequest | undefined {
     return AttachmentRequestFromJSONTyped(json);
 }
 
-export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentRequest | null {
+export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -93,7 +93,7 @@ export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentReque
 
 export function AttachmentRequestToJSON(value?: AttachmentRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

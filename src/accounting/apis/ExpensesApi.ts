@@ -53,7 +53,7 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Expense` objects.
      */
-    async expensesListRaw(requestParameters: ExpensesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Expense>>> {
+    async expensesListRaw(requestParameters: ExpensesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Expense> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesList.');
         }
@@ -104,11 +104,6 @@ export class ExpensesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Expense` objects.
      */
-    async expensesList(requestParameters: ExpensesListRequest): Promise<MergePaginatedResponse<Expense>> {
+    async expensesList(requestParameters: ExpensesListRequest): Promise<MergePaginatedResponse<Expense> | undefined> {
         const response = await this.expensesListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns an `Expense` object with the given `id`.
      */
-    async expensesRetrieveRaw(requestParameters: ExpensesRetrieveRequest): Promise<runtime.ApiResponse<Expense>> {
+    async expensesRetrieveRaw(requestParameters: ExpensesRetrieveRequest): Promise<runtime.ApiResponse<Expense | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesRetrieve.');
         }
@@ -157,11 +152,6 @@ export class ExpensesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns an `Expense` object with the given `id`.
      */
-    async expensesRetrieve(requestParameters: ExpensesRetrieveRequest): Promise<Expense> {
+    async expensesRetrieve(requestParameters: ExpensesRetrieveRequest): Promise<Expense | undefined> {
         const response = await this.expensesRetrieveRaw(requestParameters);
         return await response.value();
     }

@@ -89,13 +89,13 @@ export interface Attachment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function AttachmentFromJSON(json: JSONValue): Attachment | null {
+export function AttachmentFromJSON(json: JSONValue): Attachment | undefined {
     return AttachmentFromJSONTyped(json);
 }
 
-export function AttachmentFromJSONTyped(json: JSONValue): Attachment | null {
+export function AttachmentFromJSONTyped(json: JSONValue): Attachment | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -105,15 +105,15 @@ export function AttachmentFromJSONTyped(json: JSONValue): Attachment | null {
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
-        'attachment_type': !exists(json, 'attachment_type') ? undefined : AttachmentTypeEnumFromJSON(json['attachment_type']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'attachment_type': !exists(json, 'attachment_type') ? undefined : AttachmentTypeEnumFromJSON(json['attachment_type']) as AttachmentTypeEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function AttachmentToJSON(value?: Attachment): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -118,35 +118,35 @@ export interface Expense {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ExpenseFromJSON(json: JSONValue): Expense | null {
+export function ExpenseFromJSON(json: JSONValue): Expense | undefined {
     return ExpenseFromJSONTyped(json);
 }
 
-export function ExpenseFromJSONTyped(json: JSONValue): Expense | null {
+export function ExpenseFromJSONTyped(json: JSONValue): Expense | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'account': !exists(json, 'account') ? undefined : json['account'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
-        'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<any>).map(ExpenseLineFromJSON)),
+        'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(ExpenseLineFromJSON)) as Array<ExpenseLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function ExpenseToJSON(value?: Expense): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

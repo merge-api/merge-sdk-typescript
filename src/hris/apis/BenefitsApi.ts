@@ -54,7 +54,7 @@ export class BenefitsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Benefit` objects.
      */
-    async benefitsListRaw(requestParameters: BenefitsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Benefit>>> {
+    async benefitsListRaw(requestParameters: BenefitsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Benefit> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling benefitsList.');
         }
@@ -109,11 +109,6 @@ export class BenefitsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -131,7 +126,7 @@ export class BenefitsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Benefit` objects.
      */
-    async benefitsList(requestParameters: BenefitsListRequest): Promise<MergePaginatedResponse<Benefit>> {
+    async benefitsList(requestParameters: BenefitsListRequest): Promise<MergePaginatedResponse<Benefit> | undefined> {
         const response = await this.benefitsListRaw(requestParameters);
         return await response.value();
     }
@@ -139,7 +134,7 @@ export class BenefitsApi extends runtime.BaseAPI {
     /**
      * Returns a `Benefit` object with the given `id`.
      */
-    async benefitsRetrieveRaw(requestParameters: BenefitsRetrieveRequest): Promise<runtime.ApiResponse<Benefit>> {
+    async benefitsRetrieveRaw(requestParameters: BenefitsRetrieveRequest): Promise<runtime.ApiResponse<Benefit | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling benefitsRetrieve.');
         }
@@ -162,11 +157,6 @@ export class BenefitsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -184,7 +174,7 @@ export class BenefitsApi extends runtime.BaseAPI {
     /**
      * Returns a `Benefit` object with the given `id`.
      */
-    async benefitsRetrieve(requestParameters: BenefitsRetrieveRequest): Promise<Benefit> {
+    async benefitsRetrieve(requestParameters: BenefitsRetrieveRequest): Promise<Benefit | undefined> {
         const response = await this.benefitsRetrieveRaw(requestParameters);
         return await response.value();
     }

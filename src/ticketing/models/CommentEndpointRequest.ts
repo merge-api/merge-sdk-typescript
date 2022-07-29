@@ -36,24 +36,24 @@ export interface CommentEndpointRequest {
     model: CommentRequest;
 }
 
-export function CommentEndpointRequestFromJSON(json: JSONValue): CommentEndpointRequest | null {
+export function CommentEndpointRequestFromJSON(json: JSONValue): CommentEndpointRequest | undefined {
     return CommentEndpointRequestFromJSONTyped(json);
 }
 
-export function CommentEndpointRequestFromJSONTyped(json: JSONValue): CommentEndpointRequest | null {
+export function CommentEndpointRequestFromJSONTyped(json: JSONValue): CommentEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': CommentRequestFromJSON(json['model']),
+        'model': CommentRequestFromJSON(json['model']) as CommentRequest,
     };
 }
 
 export function CommentEndpointRequestToJSON(value?: CommentEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

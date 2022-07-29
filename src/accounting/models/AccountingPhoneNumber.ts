@@ -40,13 +40,13 @@ export interface AccountingPhoneNumber {
     type?: string | null;
 }
 
-export function AccountingPhoneNumberFromJSON(json: JSONValue): AccountingPhoneNumber | null {
+export function AccountingPhoneNumberFromJSON(json: JSONValue): AccountingPhoneNumber | undefined {
     return AccountingPhoneNumberFromJSONTyped(json);
 }
 
-export function AccountingPhoneNumberFromJSONTyped(json: JSONValue): AccountingPhoneNumber | null {
+export function AccountingPhoneNumberFromJSONTyped(json: JSONValue): AccountingPhoneNumber | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -58,7 +58,7 @@ export function AccountingPhoneNumberFromJSONTyped(json: JSONValue): AccountingP
 
 export function AccountingPhoneNumberToJSON(value?: AccountingPhoneNumber): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

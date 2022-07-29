@@ -36,24 +36,24 @@ export interface InvoiceEndpointRequest {
     model: InvoiceRequest;
 }
 
-export function InvoiceEndpointRequestFromJSON(json: JSONValue): InvoiceEndpointRequest | null {
+export function InvoiceEndpointRequestFromJSON(json: JSONValue): InvoiceEndpointRequest | undefined {
     return InvoiceEndpointRequestFromJSONTyped(json);
 }
 
-export function InvoiceEndpointRequestFromJSONTyped(json: JSONValue): InvoiceEndpointRequest | null {
+export function InvoiceEndpointRequestFromJSONTyped(json: JSONValue): InvoiceEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': InvoiceRequestFromJSON(json['model']),
+        'model': InvoiceRequestFromJSON(json['model']) as InvoiceRequest,
     };
 }
 
 export function InvoiceEndpointRequestToJSON(value?: InvoiceEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

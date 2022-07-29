@@ -76,7 +76,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Creates an `Attachment` object with the given values.
      */
-    async attachmentsCreateRaw(requestParameters: AttachmentsCreateRequest): Promise<runtime.ApiResponse<AttachmentResponse>> {
+    async attachmentsCreateRaw(requestParameters: AttachmentsCreateRequest): Promise<runtime.ApiResponse<AttachmentResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsCreate.');
         }
@@ -105,11 +105,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -128,7 +123,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Creates an `Attachment` object with the given values.
      */
-    async attachmentsCreate(requestParameters: AttachmentsCreateRequest): Promise<AttachmentResponse> {
+    async attachmentsCreate(requestParameters: AttachmentsCreateRequest): Promise<AttachmentResponse | undefined> {
         const response = await this.attachmentsCreateRaw(requestParameters);
         return await response.value();
     }
@@ -136,7 +131,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Attachment` objects.
      */
-    async attachmentsListRaw(requestParameters: AttachmentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Attachment>>> {
+    async attachmentsListRaw(requestParameters: AttachmentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Attachment> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsList.');
         }
@@ -195,11 +190,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -217,7 +207,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Attachment` objects.
      */
-    async attachmentsList(requestParameters: AttachmentsListRequest): Promise<MergePaginatedResponse<Attachment>> {
+    async attachmentsList(requestParameters: AttachmentsListRequest): Promise<MergePaginatedResponse<Attachment> | undefined> {
         const response = await this.attachmentsListRaw(requestParameters);
         return await response.value();
     }
@@ -225,7 +215,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Attachment` POSTs.
      */
-    async attachmentsMetaPostRetrieveRaw(requestParameters: AttachmentsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async attachmentsMetaPostRetrieveRaw(requestParameters: AttachmentsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsMetaPostRetrieve.');
         }
@@ -239,11 +229,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -262,7 +247,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Attachment` POSTs.
      */
-    async attachmentsMetaPostRetrieve(requestParameters: AttachmentsMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async attachmentsMetaPostRetrieve(requestParameters: AttachmentsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.attachmentsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -270,7 +255,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns an `Attachment` object with the given `id`.
      */
-    async attachmentsRetrieveRaw(requestParameters: AttachmentsRetrieveRequest): Promise<runtime.ApiResponse<Attachment>> {
+    async attachmentsRetrieveRaw(requestParameters: AttachmentsRetrieveRequest): Promise<runtime.ApiResponse<Attachment | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling attachmentsRetrieve.');
         }
@@ -297,11 +282,6 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -319,7 +299,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns an `Attachment` object with the given `id`.
      */
-    async attachmentsRetrieve(requestParameters: AttachmentsRetrieveRequest): Promise<Attachment> {
+    async attachmentsRetrieve(requestParameters: AttachmentsRetrieveRequest): Promise<Attachment | undefined> {
         const response = await this.attachmentsRetrieveRaw(requestParameters);
         return await response.value();
     }

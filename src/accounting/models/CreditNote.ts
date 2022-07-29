@@ -140,28 +140,28 @@ export interface CreditNote {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CreditNoteFromJSON(json: JSONValue): CreditNote | null {
+export function CreditNoteFromJSON(json: JSONValue): CreditNote | undefined {
     return CreditNoteFromJSONTyped(json);
 }
 
-export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | null {
+export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
-        'status': !exists(json, 'status') ? undefined : CreditNoteStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : CreditNoteStatusEnumFromJSON(json['status']) as CreditNoteStatusEnum,
         'number': !exists(json, 'number') ? undefined : json['number'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'remaining_credit': !exists(json, 'remaining_credit') ? undefined : json['remaining_credit'],
-        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(CreditNoteLineItemFromJSON)),
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
+        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(CreditNoteLineItemFromJSON)) as Array<CreditNoteLineItem>,
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
@@ -171,7 +171,7 @@ export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | null {
 
 export function CreditNoteToJSON(value?: CreditNote): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

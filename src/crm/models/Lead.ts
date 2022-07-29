@@ -157,13 +157,13 @@ export interface Lead {
     readonly remote_was_deleted?: boolean;
 }
 
-export function LeadFromJSON(json: JSONValue): Lead | null {
+export function LeadFromJSON(json: JSONValue): Lead | undefined {
     return LeadFromJSONTyped(json);
 }
 
-export function LeadFromJSONTyped(json: JSONValue): Lead | null {
+export function LeadFromJSONTyped(json: JSONValue): Lead | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -176,22 +176,22 @@ export function LeadFromJSONTyped(json: JSONValue): Lead | null {
         'company': !exists(json, 'company') ? undefined : json['company'],
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
         'last_name': !exists(json, 'last_name') ? undefined : json['last_name'],
-        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<any>).map(AddressFromJSON)),
-        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<any>).map(EmailAddressFromJSON)),
-        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<any>).map(PhoneNumberFromJSON)),
+        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<JSONValue>).map(AddressFromJSON)) as Array<Address>,
+        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<JSONValue>).map(EmailAddressFromJSON)) as Array<EmailAddress>,
+        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(PhoneNumberFromJSON)) as Array<PhoneNumber>,
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'converted_date': !exists(json, 'converted_date') ? undefined : (json['converted_date'] === null ? null : new Date(json['converted_date'])),
         'converted_contact': !exists(json, 'converted_contact') ? undefined : json['converted_contact'],
         'converted_account': !exists(json, 'converted_account') ? undefined : json['converted_account'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function LeadToJSON(value?: Lead): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -98,13 +98,13 @@ export interface Attachment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function AttachmentFromJSON(json: JSONValue): Attachment | null {
+export function AttachmentFromJSON(json: JSONValue): Attachment | undefined {
     return AttachmentFromJSONTyped(json);
 }
 
-export function AttachmentFromJSONTyped(json: JSONValue): Attachment | null {
+export function AttachmentFromJSONTyped(json: JSONValue): Attachment | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -117,14 +117,14 @@ export function AttachmentFromJSONTyped(json: JSONValue): Attachment | null {
         'content_type': !exists(json, 'content_type') ? undefined : json['content_type'],
         'uploaded_by': !exists(json, 'uploaded_by') ? undefined : json['uploaded_by'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function AttachmentToJSON(value?: Attachment): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

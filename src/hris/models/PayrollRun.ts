@@ -100,32 +100,32 @@ export interface PayrollRun {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PayrollRunFromJSON(json: JSONValue): PayrollRun | null {
+export function PayrollRunFromJSON(json: JSONValue): PayrollRun | undefined {
     return PayrollRunFromJSONTyped(json);
 }
 
-export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun | null {
+export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'run_state': !exists(json, 'run_state') ? undefined : RunStateEnumFromJSON(json['run_state']),
-        'run_type': !exists(json, 'run_type') ? undefined : RunTypeEnumFromJSON(json['run_type']),
+        'run_state': !exists(json, 'run_state') ? undefined : RunStateEnumFromJSON(json['run_state']) as RunStateEnum,
+        'run_type': !exists(json, 'run_type') ? undefined : RunTypeEnumFromJSON(json['run_type']) as RunTypeEnum,
         'start_date': !exists(json, 'start_date') ? undefined : (json['start_date'] === null ? null : new Date(json['start_date'])),
         'end_date': !exists(json, 'end_date') ? undefined : (json['end_date'] === null ? null : new Date(json['end_date'])),
         'check_date': !exists(json, 'check_date') ? undefined : (json['check_date'] === null ? null : new Date(json['check_date'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function PayrollRunToJSON(value?: PayrollRun): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

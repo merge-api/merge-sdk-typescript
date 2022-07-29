@@ -126,29 +126,29 @@ export interface IncomeStatement {
     readonly remote_was_deleted?: boolean;
 }
 
-export function IncomeStatementFromJSON(json: JSONValue): IncomeStatement | null {
+export function IncomeStatementFromJSON(json: JSONValue): IncomeStatement | undefined {
     return IncomeStatementFromJSONTyped(json);
 }
 
-export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement | null {
+export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'start_period': !exists(json, 'start_period') ? undefined : (json['start_period'] === null ? null : new Date(json['start_period'])),
         'end_period': !exists(json, 'end_period') ? undefined : (json['end_period'] === null ? null : new Date(json['end_period'])),
-        'income': !exists(json, 'income') ? undefined : ((json['income'] as Array<any>).map(ReportItemFromJSON)),
-        'cost_of_sales': !exists(json, 'cost_of_sales') ? undefined : ((json['cost_of_sales'] as Array<any>).map(ReportItemFromJSON)),
+        'income': !exists(json, 'income') ? undefined : ((json['income'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
+        'cost_of_sales': !exists(json, 'cost_of_sales') ? undefined : ((json['cost_of_sales'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'gross_profit': !exists(json, 'gross_profit') ? undefined : json['gross_profit'],
-        'operating_expenses': !exists(json, 'operating_expenses') ? undefined : ((json['operating_expenses'] as Array<any>).map(ReportItemFromJSON)),
+        'operating_expenses': !exists(json, 'operating_expenses') ? undefined : ((json['operating_expenses'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'net_operating_income': !exists(json, 'net_operating_income') ? undefined : json['net_operating_income'],
-        'non_operating_expenses': !exists(json, 'non_operating_expenses') ? undefined : ((json['non_operating_expenses'] as Array<any>).map(ReportItemFromJSON)),
+        'non_operating_expenses': !exists(json, 'non_operating_expenses') ? undefined : ((json['non_operating_expenses'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'net_income': !exists(json, 'net_income') ? undefined : json['net_income'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -156,7 +156,7 @@ export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement |
 
 export function IncomeStatementToJSON(value?: IncomeStatement): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

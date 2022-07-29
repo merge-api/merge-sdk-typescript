@@ -103,13 +103,13 @@ export interface TimeOffRequest {
     end_time?: Date | null;
 }
 
-export function TimeOffRequestFromJSON(json: JSONValue): TimeOffRequest | null {
+export function TimeOffRequestFromJSON(json: JSONValue): TimeOffRequest | undefined {
     return TimeOffRequestFromJSONTyped(json);
 }
 
-export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest | null {
+export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -117,11 +117,11 @@ export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest | n
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'employee': !exists(json, 'employee') ? undefined : json['employee'],
         'approver': !exists(json, 'approver') ? undefined : json['approver'],
-        'status': !exists(json, 'status') ? undefined : TimeOffStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : TimeOffStatusEnumFromJSON(json['status']) as TimeOffStatusEnum,
         'employee_note': !exists(json, 'employee_note') ? undefined : json['employee_note'],
-        'units': !exists(json, 'units') ? undefined : UnitsEnumFromJSON(json['units']),
+        'units': !exists(json, 'units') ? undefined : UnitsEnumFromJSON(json['units']) as UnitsEnum,
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'request_type': !exists(json, 'request_type') ? undefined : RequestTypeEnumFromJSON(json['request_type']),
+        'request_type': !exists(json, 'request_type') ? undefined : RequestTypeEnumFromJSON(json['request_type']) as RequestTypeEnum,
         'start_time': !exists(json, 'start_time') ? undefined : (json['start_time'] === null ? null : new Date(json['start_time'])),
         'end_time': !exists(json, 'end_time') ? undefined : (json['end_time'] === null ? null : new Date(json['end_time'])),
     };
@@ -129,7 +129,7 @@ export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest | n
 
 export function TimeOffRequestToJSON(value?: TimeOffRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

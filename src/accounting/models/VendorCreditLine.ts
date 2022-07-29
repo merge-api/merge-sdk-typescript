@@ -58,13 +58,13 @@ export interface VendorCreditLine {
     account?: string | null;
 }
 
-export function VendorCreditLineFromJSON(json: JSONValue): VendorCreditLine | null {
+export function VendorCreditLineFromJSON(json: JSONValue): VendorCreditLine | undefined {
     return VendorCreditLineFromJSONTyped(json);
 }
 
-export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine | null {
+export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -79,7 +79,7 @@ export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine
 
 export function VendorCreditLineToJSON(value?: VendorCreditLine): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

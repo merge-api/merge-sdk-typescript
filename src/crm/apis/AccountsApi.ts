@@ -74,7 +74,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Creates an `Account` object with the given values.
      */
-    async accountsCreateRaw(requestParameters: AccountsCreateRequest): Promise<runtime.ApiResponse<CRMAccountResponse>> {
+    async accountsCreateRaw(requestParameters: AccountsCreateRequest): Promise<runtime.ApiResponse<CRMAccountResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsCreate.');
         }
@@ -103,11 +103,6 @@ export class AccountsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Creates an `Account` object with the given values.
      */
-    async accountsCreate(requestParameters: AccountsCreateRequest): Promise<CRMAccountResponse> {
+    async accountsCreate(requestParameters: AccountsCreateRequest): Promise<CRMAccountResponse | undefined> {
         const response = await this.accountsCreateRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Account` objects.
      */
-    async accountsListRaw(requestParameters: AccountsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Account>>> {
+    async accountsListRaw(requestParameters: AccountsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Account> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsList.');
         }
@@ -189,11 +184,6 @@ export class AccountsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -211,7 +201,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Account` objects.
      */
-    async accountsList(requestParameters: AccountsListRequest): Promise<MergePaginatedResponse<Account>> {
+    async accountsList(requestParameters: AccountsListRequest): Promise<MergePaginatedResponse<Account> | undefined> {
         const response = await this.accountsListRaw(requestParameters);
         return await response.value();
     }
@@ -219,7 +209,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMAccount` POSTs.
      */
-    async accountsMetaPostRetrieveRaw(requestParameters: AccountsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async accountsMetaPostRetrieveRaw(requestParameters: AccountsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsMetaPostRetrieve.');
         }
@@ -233,11 +223,6 @@ export class AccountsApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -256,7 +241,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMAccount` POSTs.
      */
-    async accountsMetaPostRetrieve(requestParameters: AccountsMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async accountsMetaPostRetrieve(requestParameters: AccountsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.accountsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -264,7 +249,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns an `Account` object with the given `id`.
      */
-    async accountsRetrieveRaw(requestParameters: AccountsRetrieveRequest): Promise<runtime.ApiResponse<Account>> {
+    async accountsRetrieveRaw(requestParameters: AccountsRetrieveRequest): Promise<runtime.ApiResponse<Account | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountsRetrieve.');
         }
@@ -287,11 +272,6 @@ export class AccountsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -309,7 +289,7 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns an `Account` object with the given `id`.
      */
-    async accountsRetrieve(requestParameters: AccountsRetrieveRequest): Promise<Account> {
+    async accountsRetrieve(requestParameters: AccountsRetrieveRequest): Promise<Account | undefined> {
         const response = await this.accountsRetrieveRaw(requestParameters);
         return await response.value();
     }

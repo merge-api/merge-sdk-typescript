@@ -65,13 +65,13 @@ export interface Earning {
     remote_was_deleted?: boolean;
 }
 
-export function EarningFromJSON(json: JSONValue): Earning | null {
+export function EarningFromJSON(json: JSONValue): Earning | undefined {
     return EarningFromJSONTyped(json);
 }
 
-export function EarningFromJSONTyped(json: JSONValue): Earning | null {
+export function EarningFromJSONTyped(json: JSONValue): Earning | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -79,14 +79,14 @@ export function EarningFromJSONTyped(json: JSONValue): Earning | null {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'employee_payroll_run': !exists(json, 'employee_payroll_run') ? undefined : json['employee_payroll_run'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
-        'type': !exists(json, 'type') ? undefined : EarningTypeEnumFromJSON(json['type']),
+        'type': !exists(json, 'type') ? undefined : EarningTypeEnumFromJSON(json['type']) as EarningTypeEnum,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function EarningToJSON(value?: Earning): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

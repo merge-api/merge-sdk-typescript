@@ -35,7 +35,7 @@ export class GenerateKeyApi extends runtime.BaseAPI {
     /**
      * Create a remote key.
      */
-    async generateKeyCreateRaw(requestParameters: GenerateKeyCreateRequest): Promise<runtime.ApiResponse<RemoteKey>> {
+    async generateKeyCreateRaw(requestParameters: GenerateKeyCreateRequest): Promise<runtime.ApiResponse<RemoteKey | undefined>> {
         if (requestParameters.generateRemoteKeyRequest === null || requestParameters.generateRemoteKeyRequest === undefined) {
             throw new runtime.RequiredError('generateRemoteKeyRequest','Required parameter requestParameters.generateRemoteKeyRequest was null or undefined when calling generateKeyCreate.');
         }
@@ -47,11 +47,6 @@ export class GenerateKeyApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -71,7 +66,7 @@ export class GenerateKeyApi extends runtime.BaseAPI {
     /**
      * Create a remote key.
      */
-    async generateKeyCreate(requestParameters: GenerateKeyCreateRequest): Promise<RemoteKey> {
+    async generateKeyCreate(requestParameters: GenerateKeyCreateRequest): Promise<RemoteKey | undefined> {
         const response = await this.generateKeyCreateRaw(requestParameters);
         return await response.value();
     }

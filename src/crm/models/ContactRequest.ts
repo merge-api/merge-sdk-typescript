@@ -75,13 +75,13 @@ export interface ContactRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function ContactRequestFromJSON(json: JSONValue): ContactRequest | null {
+export function ContactRequestFromJSON(json: JSONValue): ContactRequest | undefined {
     return ContactRequestFromJSONTyped(json);
 }
 
-export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | null {
+export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -99,7 +99,7 @@ export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | n
 
 export function ContactRequestToJSON(value?: ContactRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

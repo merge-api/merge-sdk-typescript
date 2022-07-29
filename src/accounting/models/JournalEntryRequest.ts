@@ -71,13 +71,13 @@ export interface JournalEntryRequest {
     currency?: CurrencyEnum | null;
 }
 
-export function JournalEntryRequestFromJSON(json: JSONValue): JournalEntryRequest | null {
+export function JournalEntryRequestFromJSON(json: JSONValue): JournalEntryRequest | undefined {
     return JournalEntryRequestFromJSONTyped(json);
 }
 
-export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryRequest | null {
+export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -87,13 +87,13 @@ export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryR
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
     };
 }
 
 export function JournalEntryRequestToJSON(value?: JournalEntryRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

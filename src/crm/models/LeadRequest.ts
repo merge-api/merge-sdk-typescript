@@ -111,13 +111,13 @@ export interface LeadRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function LeadRequestFromJSON(json: JSONValue): LeadRequest | null {
+export function LeadRequestFromJSON(json: JSONValue): LeadRequest | undefined {
     return LeadRequestFromJSONTyped(json);
 }
 
-export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest | null {
+export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -141,7 +141,7 @@ export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest | null {
 
 export function LeadRequestToJSON(value?: LeadRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

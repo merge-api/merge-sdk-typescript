@@ -57,7 +57,7 @@ export class EmploymentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Employment` objects.
      */
-    async employmentsListRaw(requestParameters: EmploymentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Employment>>> {
+    async employmentsListRaw(requestParameters: EmploymentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Employment> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employmentsList.');
         }
@@ -120,11 +120,6 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -142,7 +137,7 @@ export class EmploymentsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Employment` objects.
      */
-    async employmentsList(requestParameters: EmploymentsListRequest): Promise<MergePaginatedResponse<Employment>> {
+    async employmentsList(requestParameters: EmploymentsListRequest): Promise<MergePaginatedResponse<Employment> | undefined> {
         const response = await this.employmentsListRaw(requestParameters);
         return await response.value();
     }
@@ -150,7 +145,7 @@ export class EmploymentsApi extends runtime.BaseAPI {
     /**
      * Returns an `Employment` object with the given `id`.
      */
-    async employmentsRetrieveRaw(requestParameters: EmploymentsRetrieveRequest): Promise<runtime.ApiResponse<Employment>> {
+    async employmentsRetrieveRaw(requestParameters: EmploymentsRetrieveRequest): Promise<runtime.ApiResponse<Employment | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employmentsRetrieve.');
         }
@@ -177,11 +172,6 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -199,7 +189,7 @@ export class EmploymentsApi extends runtime.BaseAPI {
     /**
      * Returns an `Employment` object with the given `id`.
      */
-    async employmentsRetrieve(requestParameters: EmploymentsRetrieveRequest): Promise<Employment> {
+    async employmentsRetrieve(requestParameters: EmploymentsRetrieveRequest): Promise<Employment | undefined> {
         const response = await this.employmentsRetrieveRaw(requestParameters);
         return await response.value();
     }

@@ -101,13 +101,13 @@ export interface Scorecard {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ScorecardFromJSON(json: JSONValue): Scorecard | null {
+export function ScorecardFromJSON(json: JSONValue): Scorecard | undefined {
     return ScorecardFromJSONTyped(json);
 }
 
-export function ScorecardFromJSONTyped(json: JSONValue): Scorecard | null {
+export function ScorecardFromJSONTyped(json: JSONValue): Scorecard | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -119,15 +119,15 @@ export function ScorecardFromJSONTyped(json: JSONValue): Scorecard | null {
         'interviewer': !exists(json, 'interviewer') ? undefined : json['interviewer'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'submitted_at': !exists(json, 'submitted_at') ? undefined : (json['submitted_at'] === null ? null : new Date(json['submitted_at'])),
-        'overall_recommendation': !exists(json, 'overall_recommendation') ? undefined : OverallRecommendationEnumFromJSON(json['overall_recommendation']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'overall_recommendation': !exists(json, 'overall_recommendation') ? undefined : OverallRecommendationEnumFromJSON(json['overall_recommendation']) as OverallRecommendationEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function ScorecardToJSON(value?: Scorecard): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

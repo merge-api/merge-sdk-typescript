@@ -71,13 +71,13 @@ export interface SyncStatus {
     is_initial_sync: boolean;
 }
 
-export function SyncStatusFromJSON(json: JSONValue): SyncStatus | null {
+export function SyncStatusFromJSON(json: JSONValue): SyncStatus | undefined {
     return SyncStatusFromJSONTyped(json);
 }
 
-export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus | null {
+export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -86,14 +86,14 @@ export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus | null {
         'model_id': json['model_id'],
         'last_sync_start': (new Date(json['last_sync_start'])),
         'next_sync_start': (new Date(json['next_sync_start'])),
-        'status': SyncStatusStatusEnumFromJSON(json['status']),
+        'status': SyncStatusStatusEnumFromJSON(json['status']) as SyncStatusStatusEnum,
         'is_initial_sync': json['is_initial_sync'],
     };
 }
 
 export function SyncStatusToJSON(value?: SyncStatus): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

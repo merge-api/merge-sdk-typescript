@@ -46,25 +46,25 @@ export interface EmailAddress {
     email_address_type?: EmailAddressTypeEnum | null;
 }
 
-export function EmailAddressFromJSON(json: JSONValue): EmailAddress | null {
+export function EmailAddressFromJSON(json: JSONValue): EmailAddress | undefined {
     return EmailAddressFromJSONTyped(json);
 }
 
-export function EmailAddressFromJSONTyped(json: JSONValue): EmailAddress | null {
+export function EmailAddressFromJSONTyped(json: JSONValue): EmailAddress | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'value': !exists(json, 'value') ? undefined : json['value'],
-        'email_address_type': !exists(json, 'email_address_type') ? undefined : EmailAddressTypeEnumFromJSON(json['email_address_type']),
+        'email_address_type': !exists(json, 'email_address_type') ? undefined : EmailAddressTypeEnumFromJSON(json['email_address_type']) as EmailAddressTypeEnum,
     };
 }
 
 export function EmailAddressToJSON(value?: EmailAddress): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -53,7 +53,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `VendorCredit` objects.
      */
-    async vendorCreditsListRaw(requestParameters: VendorCreditsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<VendorCredit>>> {
+    async vendorCreditsListRaw(requestParameters: VendorCreditsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<VendorCredit> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling vendorCreditsList.');
         }
@@ -104,11 +104,6 @@ export class VendorCreditsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `VendorCredit` objects.
      */
-    async vendorCreditsList(requestParameters: VendorCreditsListRequest): Promise<MergePaginatedResponse<VendorCredit>> {
+    async vendorCreditsList(requestParameters: VendorCreditsListRequest): Promise<MergePaginatedResponse<VendorCredit> | undefined> {
         const response = await this.vendorCreditsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
     /**
      * Returns a `VendorCredit` object with the given `id`.
      */
-    async vendorCreditsRetrieveRaw(requestParameters: VendorCreditsRetrieveRequest): Promise<runtime.ApiResponse<VendorCredit>> {
+    async vendorCreditsRetrieveRaw(requestParameters: VendorCreditsRetrieveRequest): Promise<runtime.ApiResponse<VendorCredit | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling vendorCreditsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class VendorCreditsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
     /**
      * Returns a `VendorCredit` object with the given `id`.
      */
-    async vendorCreditsRetrieve(requestParameters: VendorCreditsRetrieveRequest): Promise<VendorCredit> {
+    async vendorCreditsRetrieve(requestParameters: VendorCreditsRetrieveRequest): Promise<VendorCredit | undefined> {
         const response = await this.vendorCreditsRetrieveRaw(requestParameters);
         return await response.value();
     }

@@ -170,28 +170,28 @@ export interface Invoice {
     readonly remote_was_deleted?: boolean;
 }
 
-export function InvoiceFromJSON(json: JSONValue): Invoice | null {
+export function InvoiceFromJSON(json: JSONValue): Invoice | undefined {
     return InvoiceFromJSONTyped(json);
 }
 
-export function InvoiceFromJSONTyped(json: JSONValue): Invoice | null {
+export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
-        'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
+        'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']) as InvoiceTypeEnum,
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'number': !exists(json, 'number') ? undefined : json['number'],
         'issue_date': !exists(json, 'issue_date') ? undefined : (json['issue_date'] === null ? null : new Date(json['issue_date'])),
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'paid_on_date': !exists(json, 'paid_on_date') ? undefined : (json['paid_on_date'] === null ? null : new Date(json['paid_on_date'])),
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'total_discount': !exists(json, 'total_discount') ? undefined : json['total_discount'],
         'sub_total': !exists(json, 'sub_total') ? undefined : json['sub_total'],
         'total_tax_amount': !exists(json, 'total_tax_amount') ? undefined : json['total_tax_amount'],
@@ -199,14 +199,14 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | null {
         'balance': !exists(json, 'balance') ? undefined : json['balance'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
-        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(InvoiceLineItemFromJSON)),
+        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(InvoiceLineItemFromJSON)) as Array<InvoiceLineItem>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function InvoiceToJSON(value?: Invoice): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

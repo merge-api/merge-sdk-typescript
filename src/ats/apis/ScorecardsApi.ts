@@ -58,7 +58,7 @@ export class ScorecardsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Scorecard` objects.
      */
-    async scorecardsListRaw(requestParameters: ScorecardsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Scorecard>>> {
+    async scorecardsListRaw(requestParameters: ScorecardsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Scorecard> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling scorecardsList.');
         }
@@ -125,11 +125,6 @@ export class ScorecardsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -147,7 +142,7 @@ export class ScorecardsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Scorecard` objects.
      */
-    async scorecardsList(requestParameters: ScorecardsListRequest): Promise<MergePaginatedResponse<Scorecard>> {
+    async scorecardsList(requestParameters: ScorecardsListRequest): Promise<MergePaginatedResponse<Scorecard> | undefined> {
         const response = await this.scorecardsListRaw(requestParameters);
         return await response.value();
     }
@@ -155,7 +150,7 @@ export class ScorecardsApi extends runtime.BaseAPI {
     /**
      * Returns a `Scorecard` object with the given `id`.
      */
-    async scorecardsRetrieveRaw(requestParameters: ScorecardsRetrieveRequest): Promise<runtime.ApiResponse<Scorecard>> {
+    async scorecardsRetrieveRaw(requestParameters: ScorecardsRetrieveRequest): Promise<runtime.ApiResponse<Scorecard | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling scorecardsRetrieve.');
         }
@@ -182,11 +177,6 @@ export class ScorecardsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -204,7 +194,7 @@ export class ScorecardsApi extends runtime.BaseAPI {
     /**
      * Returns a `Scorecard` object with the given `id`.
      */
-    async scorecardsRetrieve(requestParameters: ScorecardsRetrieveRequest): Promise<Scorecard> {
+    async scorecardsRetrieve(requestParameters: ScorecardsRetrieveRequest): Promise<Scorecard | undefined> {
         const response = await this.scorecardsRetrieveRaw(requestParameters);
         return await response.value();
     }

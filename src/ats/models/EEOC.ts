@@ -113,13 +113,13 @@ export interface EEOC {
     readonly remote_was_deleted?: boolean;
 }
 
-export function EEOCFromJSON(json: JSONValue): EEOC | null {
+export function EEOCFromJSON(json: JSONValue): EEOC | undefined {
     return EEOCFromJSONTyped(json);
 }
 
-export function EEOCFromJSONTyped(json: JSONValue): EEOC | null {
+export function EEOCFromJSONTyped(json: JSONValue): EEOC | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -128,18 +128,18 @@ export function EEOCFromJSONTyped(json: JSONValue): EEOC | null {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
         'submitted_at': !exists(json, 'submitted_at') ? undefined : (json['submitted_at'] === null ? null : new Date(json['submitted_at'])),
-        'race': !exists(json, 'race') ? undefined : RaceEnumFromJSON(json['race']),
-        'gender': !exists(json, 'gender') ? undefined : GenderEnumFromJSON(json['gender']),
-        'veteran_status': !exists(json, 'veteran_status') ? undefined : VeteranStatusEnumFromJSON(json['veteran_status']),
-        'disability_status': !exists(json, 'disability_status') ? undefined : DisabilityStatusEnumFromJSON(json['disability_status']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'race': !exists(json, 'race') ? undefined : RaceEnumFromJSON(json['race']) as RaceEnum,
+        'gender': !exists(json, 'gender') ? undefined : GenderEnumFromJSON(json['gender']) as GenderEnum,
+        'veteran_status': !exists(json, 'veteran_status') ? undefined : VeteranStatusEnumFromJSON(json['veteran_status']) as VeteranStatusEnum,
+        'disability_status': !exists(json, 'disability_status') ? undefined : DisabilityStatusEnumFromJSON(json['disability_status']) as DisabilityStatusEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function EEOCToJSON(value?: EEOC): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

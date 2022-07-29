@@ -90,13 +90,13 @@ export interface TimeOffBalance {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TimeOffBalanceFromJSON(json: JSONValue): TimeOffBalance | null {
+export function TimeOffBalanceFromJSON(json: JSONValue): TimeOffBalance | undefined {
     return TimeOffBalanceFromJSONTyped(json);
 }
 
-export function TimeOffBalanceFromJSONTyped(json: JSONValue): TimeOffBalance | null {
+export function TimeOffBalanceFromJSONTyped(json: JSONValue): TimeOffBalance | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -106,15 +106,15 @@ export function TimeOffBalanceFromJSONTyped(json: JSONValue): TimeOffBalance | n
         'employee': !exists(json, 'employee') ? undefined : json['employee'],
         'balance': !exists(json, 'balance') ? undefined : json['balance'],
         'used': !exists(json, 'used') ? undefined : json['used'],
-        'policy_type': !exists(json, 'policy_type') ? undefined : PolicyTypeEnumFromJSON(json['policy_type']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'policy_type': !exists(json, 'policy_type') ? undefined : PolicyTypeEnumFromJSON(json['policy_type']) as PolicyTypeEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function TimeOffBalanceToJSON(value?: TimeOffBalance): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

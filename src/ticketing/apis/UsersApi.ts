@@ -53,7 +53,7 @@ export class UsersApi extends runtime.BaseAPI {
     /**
      * Returns a list of `User` objects.
      */
-    async usersListRaw(requestParameters: UsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User>>> {
+    async usersListRaw(requestParameters: UsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling usersList.');
         }
@@ -104,11 +104,6 @@ export class UsersApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class UsersApi extends runtime.BaseAPI {
     /**
      * Returns a list of `User` objects.
      */
-    async usersList(requestParameters: UsersListRequest): Promise<MergePaginatedResponse<User>> {
+    async usersList(requestParameters: UsersListRequest): Promise<MergePaginatedResponse<User> | undefined> {
         const response = await this.usersListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class UsersApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async usersRetrieveRaw(requestParameters: UsersRetrieveRequest): Promise<runtime.ApiResponse<User>> {
+    async usersRetrieveRaw(requestParameters: UsersRetrieveRequest): Promise<runtime.ApiResponse<User | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling usersRetrieve.');
         }
@@ -157,11 +152,6 @@ export class UsersApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class UsersApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async usersRetrieve(requestParameters: UsersRetrieveRequest): Promise<User> {
+    async usersRetrieve(requestParameters: UsersRetrieveRequest): Promise<User | undefined> {
         const response = await this.usersRetrieveRaw(requestParameters);
         return await response.value();
     }

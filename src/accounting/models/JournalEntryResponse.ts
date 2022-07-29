@@ -66,27 +66,27 @@ export interface JournalEntryResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function JournalEntryResponseFromJSON(json: JSONValue): JournalEntryResponse | null {
+export function JournalEntryResponseFromJSON(json: JSONValue): JournalEntryResponse | undefined {
     return JournalEntryResponseFromJSONTyped(json);
 }
 
-export function JournalEntryResponseFromJSONTyped(json: JSONValue): JournalEntryResponse | null {
+export function JournalEntryResponseFromJSONTyped(json: JSONValue): JournalEntryResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': JournalEntryFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': JournalEntryFromJSON(json['model']) as JournalEntry,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function JournalEntryResponseToJSON(value?: JournalEntryResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

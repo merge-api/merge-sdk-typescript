@@ -64,13 +64,13 @@ export interface JournalLine {
     description?: string | null;
 }
 
-export function JournalLineFromJSON(json: JSONValue): JournalLine | null {
+export function JournalLineFromJSON(json: JSONValue): JournalLine | undefined {
     return JournalLineFromJSONTyped(json);
 }
 
-export function JournalLineFromJSONTyped(json: JSONValue): JournalLine | null {
+export function JournalLineFromJSONTyped(json: JSONValue): JournalLine | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -86,7 +86,7 @@ export function JournalLineFromJSONTyped(json: JSONValue): JournalLine | null {
 
 export function JournalLineToJSON(value?: JournalLine): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

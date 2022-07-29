@@ -99,13 +99,13 @@ export interface AccountRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function AccountRequestFromJSON(json: JSONValue): AccountRequest | null {
+export function AccountRequestFromJSON(json: JSONValue): AccountRequest | undefined {
     return AccountRequestFromJSONTyped(json);
 }
 
-export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | null {
+export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -127,7 +127,7 @@ export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | n
 
 export function AccountRequestToJSON(value?: AccountRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

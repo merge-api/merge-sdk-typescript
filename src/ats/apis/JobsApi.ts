@@ -57,7 +57,7 @@ export class JobsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Job` objects.
      */
-    async jobsListRaw(requestParameters: JobsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Job>>> {
+    async jobsListRaw(requestParameters: JobsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Job> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling jobsList.');
         }
@@ -120,11 +120,6 @@ export class JobsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -142,7 +137,7 @@ export class JobsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Job` objects.
      */
-    async jobsList(requestParameters: JobsListRequest): Promise<MergePaginatedResponse<Job>> {
+    async jobsList(requestParameters: JobsListRequest): Promise<MergePaginatedResponse<Job> | undefined> {
         const response = await this.jobsListRaw(requestParameters);
         return await response.value();
     }
@@ -150,7 +145,7 @@ export class JobsApi extends runtime.BaseAPI {
     /**
      * Returns a `Job` object with the given `id`.
      */
-    async jobsRetrieveRaw(requestParameters: JobsRetrieveRequest): Promise<runtime.ApiResponse<Job>> {
+    async jobsRetrieveRaw(requestParameters: JobsRetrieveRequest): Promise<runtime.ApiResponse<Job | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling jobsRetrieve.');
         }
@@ -177,11 +172,6 @@ export class JobsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -199,7 +189,7 @@ export class JobsApi extends runtime.BaseAPI {
     /**
      * Returns a `Job` object with the given `id`.
      */
-    async jobsRetrieve(requestParameters: JobsRetrieveRequest): Promise<Job> {
+    async jobsRetrieve(requestParameters: JobsRetrieveRequest): Promise<Job | undefined> {
         const response = await this.jobsRetrieveRaw(requestParameters);
         return await response.value();
     }

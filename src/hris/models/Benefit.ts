@@ -92,13 +92,13 @@ export interface Benefit {
     readonly remote_was_deleted?: boolean;
 }
 
-export function BenefitFromJSON(json: JSONValue): Benefit | null {
+export function BenefitFromJSON(json: JSONValue): Benefit | undefined {
     return BenefitFromJSONTyped(json);
 }
 
-export function BenefitFromJSONTyped(json: JSONValue): Benefit | null {
+export function BenefitFromJSONTyped(json: JSONValue): Benefit | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -110,14 +110,14 @@ export function BenefitFromJSONTyped(json: JSONValue): Benefit | null {
         'benefit_plan_type': !exists(json, 'benefit_plan_type') ? undefined : json['benefit_plan_type'],
         'employee_contribution': !exists(json, 'employee_contribution') ? undefined : json['employee_contribution'],
         'company_contribution': !exists(json, 'company_contribution') ? undefined : json['company_contribution'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function BenefitToJSON(value?: Benefit): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

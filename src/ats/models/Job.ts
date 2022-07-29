@@ -131,13 +131,13 @@ export interface Job {
     readonly remote_was_deleted?: boolean;
 }
 
-export function JobFromJSON(json: JSONValue): Job | null {
+export function JobFromJSON(json: JSONValue): Job | undefined {
     return JobFromJSONTyped(json);
 }
 
-export function JobFromJSONTyped(json: JSONValue): Job | null {
+export function JobFromJSONTyped(json: JSONValue): Job | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -147,7 +147,7 @@ export function JobFromJSONTyped(json: JSONValue): Job | null {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'code': !exists(json, 'code') ? undefined : json['code'],
-        'status': !exists(json, 'status') ? undefined : JobStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : JobStatusEnumFromJSON(json['status']) as JobStatusEnum,
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'confidential': !exists(json, 'confidential') ? undefined : json['confidential'],
@@ -155,14 +155,14 @@ export function JobFromJSONTyped(json: JSONValue): Job | null {
         'offices': !exists(json, 'offices') ? undefined : json['offices'],
         'hiring_managers': !exists(json, 'hiring_managers') ? undefined : json['hiring_managers'],
         'recruiters': !exists(json, 'recruiters') ? undefined : json['recruiters'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function JobToJSON(value?: Job): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

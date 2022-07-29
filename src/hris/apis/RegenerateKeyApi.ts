@@ -35,7 +35,7 @@ export class RegenerateKeyApi extends runtime.BaseAPI {
     /**
      * Exchange remote keys.
      */
-    async regenerateKeyCreateRaw(requestParameters: RegenerateKeyCreateRequest): Promise<runtime.ApiResponse<RemoteKey>> {
+    async regenerateKeyCreateRaw(requestParameters: RegenerateKeyCreateRequest): Promise<runtime.ApiResponse<RemoteKey | undefined>> {
         if (requestParameters.remoteKeyForRegenerationRequest === null || requestParameters.remoteKeyForRegenerationRequest === undefined) {
             throw new runtime.RequiredError('remoteKeyForRegenerationRequest','Required parameter requestParameters.remoteKeyForRegenerationRequest was null or undefined when calling regenerateKeyCreate.');
         }
@@ -47,11 +47,6 @@ export class RegenerateKeyApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -71,7 +66,7 @@ export class RegenerateKeyApi extends runtime.BaseAPI {
     /**
      * Exchange remote keys.
      */
-    async regenerateKeyCreate(requestParameters: RegenerateKeyCreateRequest): Promise<RemoteKey> {
+    async regenerateKeyCreate(requestParameters: RegenerateKeyCreateRequest): Promise<RemoteKey | undefined> {
         const response = await this.regenerateKeyCreateRaw(requestParameters);
         return await response.value();
     }

@@ -53,7 +53,7 @@ export class BalanceSheetsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `BalanceSheet` objects.
      */
-    async balanceSheetsListRaw(requestParameters: BalanceSheetsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<BalanceSheet>>> {
+    async balanceSheetsListRaw(requestParameters: BalanceSheetsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<BalanceSheet> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling balanceSheetsList.');
         }
@@ -104,11 +104,6 @@ export class BalanceSheetsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class BalanceSheetsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `BalanceSheet` objects.
      */
-    async balanceSheetsList(requestParameters: BalanceSheetsListRequest): Promise<MergePaginatedResponse<BalanceSheet>> {
+    async balanceSheetsList(requestParameters: BalanceSheetsListRequest): Promise<MergePaginatedResponse<BalanceSheet> | undefined> {
         const response = await this.balanceSheetsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class BalanceSheetsApi extends runtime.BaseAPI {
     /**
      * Returns a `BalanceSheet` object with the given `id`.
      */
-    async balanceSheetsRetrieveRaw(requestParameters: BalanceSheetsRetrieveRequest): Promise<runtime.ApiResponse<BalanceSheet>> {
+    async balanceSheetsRetrieveRaw(requestParameters: BalanceSheetsRetrieveRequest): Promise<runtime.ApiResponse<BalanceSheet | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling balanceSheetsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class BalanceSheetsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class BalanceSheetsApi extends runtime.BaseAPI {
     /**
      * Returns a `BalanceSheet` object with the given `id`.
      */
-    async balanceSheetsRetrieve(requestParameters: BalanceSheetsRetrieveRequest): Promise<BalanceSheet> {
+    async balanceSheetsRetrieve(requestParameters: BalanceSheetsRetrieveRequest): Promise<BalanceSheet | undefined> {
         const response = await this.balanceSheetsRetrieveRaw(requestParameters);
         return await response.value();
     }

@@ -105,13 +105,13 @@ export interface Activity {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ActivityFromJSON(json: JSONValue): Activity | null {
+export function ActivityFromJSON(json: JSONValue): Activity | undefined {
     return ActivityFromJSONTyped(json);
 }
 
-export function ActivityFromJSONTyped(json: JSONValue): Activity | null {
+export function ActivityFromJSONTyped(json: JSONValue): Activity | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -120,18 +120,18 @@ export function ActivityFromJSONTyped(json: JSONValue): Activity | null {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'user': !exists(json, 'user') ? undefined : json['user'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'activity_type': !exists(json, 'activity_type') ? undefined : ActivityTypeEnumFromJSON(json['activity_type']),
+        'activity_type': !exists(json, 'activity_type') ? undefined : ActivityTypeEnumFromJSON(json['activity_type']) as ActivityTypeEnum,
         'subject': !exists(json, 'subject') ? undefined : json['subject'],
         'body': !exists(json, 'body') ? undefined : json['body'],
-        'visibility': !exists(json, 'visibility') ? undefined : VisibilityEnumFromJSON(json['visibility']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'visibility': !exists(json, 'visibility') ? undefined : VisibilityEnumFromJSON(json['visibility']) as VisibilityEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function ActivityToJSON(value?: Activity): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -44,7 +44,7 @@ export class TagsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Tag` objects.
      */
-    async tagsListRaw(requestParameters: TagsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Tag>>> {
+    async tagsListRaw(requestParameters: TagsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Tag> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tagsList.');
         }
@@ -95,11 +95,6 @@ export class TagsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -117,7 +112,7 @@ export class TagsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Tag` objects.
      */
-    async tagsList(requestParameters: TagsListRequest): Promise<MergePaginatedResponse<Tag>> {
+    async tagsList(requestParameters: TagsListRequest): Promise<MergePaginatedResponse<Tag> | undefined> {
         const response = await this.tagsListRaw(requestParameters);
         return await response.value();
     }

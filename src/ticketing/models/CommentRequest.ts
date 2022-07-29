@@ -76,13 +76,13 @@ export interface CommentRequest {
     remote_created_at?: Date | null;
 }
 
-export function CommentRequestFromJSON(json: JSONValue): CommentRequest | null {
+export function CommentRequestFromJSON(json: JSONValue): CommentRequest | undefined {
     return CommentRequestFromJSONTyped(json);
 }
 
-export function CommentRequestFromJSONTyped(json: JSONValue): CommentRequest | null {
+export function CommentRequestFromJSONTyped(json: JSONValue): CommentRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -100,7 +100,7 @@ export function CommentRequestFromJSONTyped(json: JSONValue): CommentRequest | n
 
 export function CommentRequestToJSON(value?: CommentRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

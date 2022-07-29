@@ -42,25 +42,25 @@ export interface IgnoreCommonModelRequest {
     message?: string;
 }
 
-export function IgnoreCommonModelRequestFromJSON(json: JSONValue): IgnoreCommonModelRequest | null {
+export function IgnoreCommonModelRequestFromJSON(json: JSONValue): IgnoreCommonModelRequest | undefined {
     return IgnoreCommonModelRequestFromJSONTyped(json);
 }
 
-export function IgnoreCommonModelRequestFromJSONTyped(json: JSONValue): IgnoreCommonModelRequest | null {
+export function IgnoreCommonModelRequestFromJSONTyped(json: JSONValue): IgnoreCommonModelRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'reason': ReasonEnumFromJSON(json['reason']),
+        'reason': ReasonEnumFromJSON(json['reason']) as ReasonEnum,
         'message': !exists(json, 'message') ? undefined : json['message'],
     };
 }
 
 export function IgnoreCommonModelRequestToJSON(value?: IgnoreCommonModelRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

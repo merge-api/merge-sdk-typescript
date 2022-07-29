@@ -246,13 +246,13 @@ export interface Employee {
     readonly remote_was_deleted?: boolean;
 }
 
-export function EmployeeFromJSON(json: JSONValue): Employee | null {
+export function EmployeeFromJSON(json: JSONValue): Employee | undefined {
     return EmployeeFromJSONTyped(json);
 }
 
-export function EmployeeFromJSONTyped(json: JSONValue): Employee | null {
+export function EmployeeFromJSONTyped(json: JSONValue): Employee | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -276,17 +276,17 @@ export function EmployeeFromJSONTyped(json: JSONValue): Employee | null {
         'team': !exists(json, 'team') ? undefined : json['team'],
         'pay_group': !exists(json, 'pay_group') ? undefined : json['pay_group'],
         'ssn': !exists(json, 'ssn') ? undefined : json['ssn'],
-        'gender': !exists(json, 'gender') ? undefined : GenderEnumFromJSON(json['gender']),
-        'ethnicity': !exists(json, 'ethnicity') ? undefined : EthnicityEnumFromJSON(json['ethnicity']),
-        'marital_status': !exists(json, 'marital_status') ? undefined : MaritalStatusEnumFromJSON(json['marital_status']),
+        'gender': !exists(json, 'gender') ? undefined : GenderEnumFromJSON(json['gender']) as GenderEnum,
+        'ethnicity': !exists(json, 'ethnicity') ? undefined : EthnicityEnumFromJSON(json['ethnicity']) as EthnicityEnum,
+        'marital_status': !exists(json, 'marital_status') ? undefined : MaritalStatusEnumFromJSON(json['marital_status']) as MaritalStatusEnum,
         'date_of_birth': !exists(json, 'date_of_birth') ? undefined : (json['date_of_birth'] === null ? null : new Date(json['date_of_birth'])),
         'hire_date': !exists(json, 'hire_date') ? undefined : (json['hire_date'] === null ? null : new Date(json['hire_date'])),
         'start_date': !exists(json, 'start_date') ? undefined : (json['start_date'] === null ? null : new Date(json['start_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'employment_status': !exists(json, 'employment_status') ? undefined : EmploymentStatusEnumFromJSON(json['employment_status']),
+        'employment_status': !exists(json, 'employment_status') ? undefined : EmploymentStatusEnumFromJSON(json['employment_status']) as EmploymentStatusEnum,
         'termination_date': !exists(json, 'termination_date') ? undefined : (json['termination_date'] === null ? null : new Date(json['termination_date'])),
         'avatar': !exists(json, 'avatar') ? undefined : json['avatar'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -294,7 +294,7 @@ export function EmployeeFromJSONTyped(json: JSONValue): Employee | null {
 
 export function EmployeeToJSON(value?: Employee): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

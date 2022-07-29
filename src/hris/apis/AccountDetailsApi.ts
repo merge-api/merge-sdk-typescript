@@ -32,7 +32,7 @@ export class AccountDetailsApi extends runtime.BaseAPI {
     /**
      * Get details for a linked account.
      */
-    async accountDetailsRetrieveRaw(requestParameters: AccountDetailsRetrieveRequest): Promise<runtime.ApiResponse<AccountDetails>> {
+    async accountDetailsRetrieveRaw(requestParameters: AccountDetailsRetrieveRequest): Promise<runtime.ApiResponse<AccountDetails | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling accountDetailsRetrieve.');
         }
@@ -46,11 +46,6 @@ export class AccountDetailsApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -69,7 +64,7 @@ export class AccountDetailsApi extends runtime.BaseAPI {
     /**
      * Get details for a linked account.
      */
-    async accountDetailsRetrieve(requestParameters: AccountDetailsRetrieveRequest): Promise<AccountDetails> {
+    async accountDetailsRetrieve(requestParameters: AccountDetailsRetrieveRequest): Promise<AccountDetails | undefined> {
         const response = await this.accountDetailsRetrieveRaw(requestParameters);
         return await response.value();
     }

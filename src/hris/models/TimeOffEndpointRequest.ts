@@ -36,24 +36,24 @@ export interface TimeOffEndpointRequest {
     model: TimeOffRequest;
 }
 
-export function TimeOffEndpointRequestFromJSON(json: JSONValue): TimeOffEndpointRequest | null {
+export function TimeOffEndpointRequestFromJSON(json: JSONValue): TimeOffEndpointRequest | undefined {
     return TimeOffEndpointRequestFromJSONTyped(json);
 }
 
-export function TimeOffEndpointRequestFromJSONTyped(json: JSONValue): TimeOffEndpointRequest | null {
+export function TimeOffEndpointRequestFromJSONTyped(json: JSONValue): TimeOffEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': TimeOffRequestFromJSON(json['model']),
+        'model': TimeOffRequestFromJSON(json['model']) as TimeOffRequest,
     };
 }
 
 export function TimeOffEndpointRequestToJSON(value?: TimeOffEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

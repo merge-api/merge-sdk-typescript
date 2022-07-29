@@ -36,24 +36,24 @@ export interface CRMContactEndpointRequest {
     model: ContactRequest;
 }
 
-export function CRMContactEndpointRequestFromJSON(json: JSONValue): CRMContactEndpointRequest | null {
+export function CRMContactEndpointRequestFromJSON(json: JSONValue): CRMContactEndpointRequest | undefined {
     return CRMContactEndpointRequestFromJSONTyped(json);
 }
 
-export function CRMContactEndpointRequestFromJSONTyped(json: JSONValue): CRMContactEndpointRequest | null {
+export function CRMContactEndpointRequestFromJSONTyped(json: JSONValue): CRMContactEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': ContactRequestFromJSON(json['model']),
+        'model': ContactRequestFromJSON(json['model']) as ContactRequest,
     };
 }
 
 export function CRMContactEndpointRequestToJSON(value?: CRMContactEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -135,13 +135,13 @@ export interface Account {
     readonly remote_was_deleted?: boolean;
 }
 
-export function AccountFromJSON(json: JSONValue): Account | null {
+export function AccountFromJSON(json: JSONValue): Account | undefined {
     return AccountFromJSONTyped(json);
 }
 
-export function AccountFromJSONTyped(json: JSONValue): Account | null {
+export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -154,19 +154,19 @@ export function AccountFromJSONTyped(json: JSONValue): Account | null {
         'industry': !exists(json, 'industry') ? undefined : json['industry'],
         'website': !exists(json, 'website') ? undefined : json['website'],
         'number_of_employees': !exists(json, 'number_of_employees') ? undefined : json['number_of_employees'],
-        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<any>).map(AddressFromJSON)),
-        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<any>).map(PhoneNumberFromJSON)),
+        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<JSONValue>).map(AddressFromJSON)) as Array<Address>,
+        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(PhoneNumberFromJSON)) as Array<PhoneNumber>,
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function AccountToJSON(value?: Account): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

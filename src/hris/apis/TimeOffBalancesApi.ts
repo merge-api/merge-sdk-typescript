@@ -57,7 +57,7 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TimeOffBalance` objects.
      */
-    async timeOffBalancesListRaw(requestParameters: TimeOffBalancesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TimeOffBalance>>> {
+    async timeOffBalancesListRaw(requestParameters: TimeOffBalancesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TimeOffBalance> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffBalancesList.');
         }
@@ -120,11 +120,6 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -142,7 +137,7 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TimeOffBalance` objects.
      */
-    async timeOffBalancesList(requestParameters: TimeOffBalancesListRequest): Promise<MergePaginatedResponse<TimeOffBalance>> {
+    async timeOffBalancesList(requestParameters: TimeOffBalancesListRequest): Promise<MergePaginatedResponse<TimeOffBalance> | undefined> {
         const response = await this.timeOffBalancesListRaw(requestParameters);
         return await response.value();
     }
@@ -150,7 +145,7 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
     /**
      * Returns a `TimeOffBalance` object with the given `id`.
      */
-    async timeOffBalancesRetrieveRaw(requestParameters: TimeOffBalancesRetrieveRequest): Promise<runtime.ApiResponse<TimeOffBalance>> {
+    async timeOffBalancesRetrieveRaw(requestParameters: TimeOffBalancesRetrieveRequest): Promise<runtime.ApiResponse<TimeOffBalance | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffBalancesRetrieve.');
         }
@@ -177,11 +172,6 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -199,7 +189,7 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
     /**
      * Returns a `TimeOffBalance` object with the given `id`.
      */
-    async timeOffBalancesRetrieve(requestParameters: TimeOffBalancesRetrieveRequest): Promise<TimeOffBalance> {
+    async timeOffBalancesRetrieve(requestParameters: TimeOffBalancesRetrieveRequest): Promise<TimeOffBalance | undefined> {
         const response = await this.timeOffBalancesRetrieveRaw(requestParameters);
         return await response.value();
     }

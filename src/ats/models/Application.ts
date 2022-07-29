@@ -118,13 +118,13 @@ export interface Application {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ApplicationFromJSON(json: JSONValue): Application | null {
+export function ApplicationFromJSON(json: JSONValue): Application | undefined {
     return ApplicationFromJSONTyped(json);
 }
 
-export function ApplicationFromJSONTyped(json: JSONValue): Application | null {
+export function ApplicationFromJSONTyped(json: JSONValue): Application | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -139,7 +139,7 @@ export function ApplicationFromJSONTyped(json: JSONValue): Application | null {
         'credited_to': !exists(json, 'credited_to') ? undefined : json['credited_to'],
         'current_stage': !exists(json, 'current_stage') ? undefined : json['current_stage'],
         'reject_reason': !exists(json, 'reject_reason') ? undefined : json['reject_reason'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -147,7 +147,7 @@ export function ApplicationFromJSONTyped(json: JSONValue): Application | null {
 
 export function ApplicationToJSON(value?: Application): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

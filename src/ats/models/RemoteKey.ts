@@ -40,13 +40,13 @@ export interface RemoteKey {
     key: string;
 }
 
-export function RemoteKeyFromJSON(json: JSONValue): RemoteKey | null {
+export function RemoteKeyFromJSON(json: JSONValue): RemoteKey | undefined {
     return RemoteKeyFromJSONTyped(json);
 }
 
-export function RemoteKeyFromJSONTyped(json: JSONValue): RemoteKey | null {
+export function RemoteKeyFromJSONTyped(json: JSONValue): RemoteKey | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -58,7 +58,7 @@ export function RemoteKeyFromJSONTyped(json: JSONValue): RemoteKey | null {
 
 export function RemoteKeyToJSON(value?: RemoteKey): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

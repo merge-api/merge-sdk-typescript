@@ -150,13 +150,13 @@ export interface Ticket {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TicketFromJSON(json: JSONValue): Ticket | null {
+export function TicketFromJSON(json: JSONValue): Ticket | undefined {
     return TicketFromJSONTyped(json);
 }
 
-export function TicketFromJSONTyped(json: JSONValue): Ticket | null {
+export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -166,7 +166,7 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | null {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'assignees': !exists(json, 'assignees') ? undefined : json['assignees'],
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
-        'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
         'project': !exists(json, 'project') ? undefined : json['project'],
         'ticket_type': !exists(json, 'ticket_type') ? undefined : json['ticket_type'],
@@ -177,14 +177,14 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | null {
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function TicketToJSON(value?: Ticket): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

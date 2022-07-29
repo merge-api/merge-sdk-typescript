@@ -108,26 +108,26 @@ export interface BalanceSheet {
     readonly remote_was_deleted?: boolean;
 }
 
-export function BalanceSheetFromJSON(json: JSONValue): BalanceSheet | null {
+export function BalanceSheetFromJSON(json: JSONValue): BalanceSheet | undefined {
     return BalanceSheetFromJSONTyped(json);
 }
 
-export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | null {
+export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'date': !exists(json, 'date') ? undefined : (json['date'] === null ? null : new Date(json['date'])),
         'net_assets': !exists(json, 'net_assets') ? undefined : json['net_assets'],
-        'assets': !exists(json, 'assets') ? undefined : ((json['assets'] as Array<any>).map(ReportItemFromJSON)),
-        'liabilities': !exists(json, 'liabilities') ? undefined : ((json['liabilities'] as Array<any>).map(ReportItemFromJSON)),
-        'equity': !exists(json, 'equity') ? undefined : ((json['equity'] as Array<any>).map(ReportItemFromJSON)),
+        'assets': !exists(json, 'assets') ? undefined : ((json['assets'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
+        'liabilities': !exists(json, 'liabilities') ? undefined : ((json['liabilities'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
+        'equity': !exists(json, 'equity') ? undefined : ((json['equity'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'remote_generated_at': !exists(json, 'remote_generated_at') ? undefined : (json['remote_generated_at'] === null ? null : new Date(json['remote_generated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -135,7 +135,7 @@ export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | null 
 
 export function BalanceSheetToJSON(value?: BalanceSheet): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

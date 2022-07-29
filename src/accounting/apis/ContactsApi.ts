@@ -55,7 +55,7 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Contact` objects.
      */
-    async contactsListRaw(requestParameters: ContactsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact>>> {
+    async contactsListRaw(requestParameters: ContactsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling contactsList.');
         }
@@ -110,11 +110,6 @@ export class ContactsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -132,7 +127,7 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Contact` objects.
      */
-    async contactsList(requestParameters: ContactsListRequest): Promise<MergePaginatedResponse<Contact>> {
+    async contactsList(requestParameters: ContactsListRequest): Promise<MergePaginatedResponse<Contact> | undefined> {
         const response = await this.contactsListRaw(requestParameters);
         return await response.value();
     }
@@ -140,7 +135,7 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns a `Contact` object with the given `id`.
      */
-    async contactsRetrieveRaw(requestParameters: ContactsRetrieveRequest): Promise<runtime.ApiResponse<Contact>> {
+    async contactsRetrieveRaw(requestParameters: ContactsRetrieveRequest): Promise<runtime.ApiResponse<Contact | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling contactsRetrieve.');
         }
@@ -167,11 +162,6 @@ export class ContactsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -189,7 +179,7 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns a `Contact` object with the given `id`.
      */
-    async contactsRetrieve(requestParameters: ContactsRetrieveRequest): Promise<Contact> {
+    async contactsRetrieve(requestParameters: ContactsRetrieveRequest): Promise<Contact | undefined> {
         const response = await this.contactsRetrieveRaw(requestParameters);
         return await response.value();
     }

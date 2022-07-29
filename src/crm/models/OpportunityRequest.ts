@@ -112,13 +112,13 @@ export interface OpportunityRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function OpportunityRequestFromJSON(json: JSONValue): OpportunityRequest | null {
+export function OpportunityRequestFromJSON(json: JSONValue): OpportunityRequest | undefined {
     return OpportunityRequestFromJSONTyped(json);
 }
 
-export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityRequest | null {
+export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -130,7 +130,7 @@ export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityReq
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'stage': !exists(json, 'stage') ? undefined : json['stage'],
-        'status': !exists(json, 'status') ? undefined : OpportunityStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : OpportunityStatusEnumFromJSON(json['status']) as OpportunityStatusEnum,
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'close_date': !exists(json, 'close_date') ? undefined : (json['close_date'] === null ? null : new Date(json['close_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
@@ -141,7 +141,7 @@ export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityReq
 
 export function OpportunityRequestToJSON(value?: OpportunityRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

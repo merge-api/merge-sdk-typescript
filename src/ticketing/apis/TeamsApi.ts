@@ -53,7 +53,7 @@ export class TeamsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Team` objects.
      */
-    async teamsListRaw(requestParameters: TeamsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Team>>> {
+    async teamsListRaw(requestParameters: TeamsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Team> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling teamsList.');
         }
@@ -104,11 +104,6 @@ export class TeamsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class TeamsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Team` objects.
      */
-    async teamsList(requestParameters: TeamsListRequest): Promise<MergePaginatedResponse<Team>> {
+    async teamsList(requestParameters: TeamsListRequest): Promise<MergePaginatedResponse<Team> | undefined> {
         const response = await this.teamsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class TeamsApi extends runtime.BaseAPI {
     /**
      * Returns a `Team` object with the given `id`.
      */
-    async teamsRetrieveRaw(requestParameters: TeamsRetrieveRequest): Promise<runtime.ApiResponse<Team>> {
+    async teamsRetrieveRaw(requestParameters: TeamsRetrieveRequest): Promise<runtime.ApiResponse<Team | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling teamsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class TeamsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class TeamsApi extends runtime.BaseAPI {
     /**
      * Returns a `Team` object with the given `id`.
      */
-    async teamsRetrieve(requestParameters: TeamsRetrieveRequest): Promise<Team> {
+    async teamsRetrieve(requestParameters: TeamsRetrieveRequest): Promise<Team | undefined> {
         const response = await this.teamsRetrieveRaw(requestParameters);
         return await response.value();
     }

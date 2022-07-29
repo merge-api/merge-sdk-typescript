@@ -74,20 +74,20 @@ export interface AccountingAttachment {
     readonly remote_was_deleted?: boolean;
 }
 
-export function AccountingAttachmentFromJSON(json: JSONValue): AccountingAttachment | null {
+export function AccountingAttachmentFromJSON(json: JSONValue): AccountingAttachment | undefined {
     return AccountingAttachmentFromJSONTyped(json);
 }
 
-export function AccountingAttachmentFromJSONTyped(json: JSONValue): AccountingAttachment | null {
+export function AccountingAttachmentFromJSONTyped(json: JSONValue): AccountingAttachment | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
@@ -96,7 +96,7 @@ export function AccountingAttachmentFromJSONTyped(json: JSONValue): AccountingAt
 
 export function AccountingAttachmentToJSON(value?: AccountingAttachment): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

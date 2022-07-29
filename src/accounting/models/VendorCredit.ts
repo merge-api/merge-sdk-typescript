@@ -106,33 +106,33 @@ export interface VendorCredit {
     readonly remote_was_deleted?: boolean;
 }
 
-export function VendorCreditFromJSON(json: JSONValue): VendorCredit | null {
+export function VendorCreditFromJSON(json: JSONValue): VendorCredit | undefined {
     return VendorCreditFromJSONTyped(json);
 }
 
-export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit | null {
+export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'number': !exists(json, 'number') ? undefined : json['number'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'vendor': !exists(json, 'vendor') ? undefined : json['vendor'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
-        'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<any>).map(VendorCreditLineFromJSON)),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(VendorCreditLineFromJSON)) as Array<VendorCreditLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function VendorCreditToJSON(value?: VendorCredit): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

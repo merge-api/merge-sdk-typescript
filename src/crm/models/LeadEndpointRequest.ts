@@ -36,24 +36,24 @@ export interface LeadEndpointRequest {
     model: LeadRequest;
 }
 
-export function LeadEndpointRequestFromJSON(json: JSONValue): LeadEndpointRequest | null {
+export function LeadEndpointRequestFromJSON(json: JSONValue): LeadEndpointRequest | undefined {
     return LeadEndpointRequestFromJSONTyped(json);
 }
 
-export function LeadEndpointRequestFromJSONTyped(json: JSONValue): LeadEndpointRequest | null {
+export function LeadEndpointRequestFromJSONTyped(json: JSONValue): LeadEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': LeadRequestFromJSON(json['model']),
+        'model': LeadRequestFromJSON(json['model']) as LeadRequest,
     };
 }
 
 export function LeadEndpointRequestToJSON(value?: LeadEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

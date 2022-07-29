@@ -41,13 +41,13 @@ export interface LinkToken {
     magic_link_url?: string;
 }
 
-export function LinkTokenFromJSON(json: JSONValue): LinkToken | null {
+export function LinkTokenFromJSON(json: JSONValue): LinkToken | undefined {
     return LinkTokenFromJSONTyped(json);
 }
 
-export function LinkTokenFromJSONTyped(json: JSONValue): LinkToken | null {
+export function LinkTokenFromJSONTyped(json: JSONValue): LinkToken | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -60,7 +60,7 @@ export function LinkTokenFromJSONTyped(json: JSONValue): LinkToken | null {
 
 export function LinkTokenToJSON(value?: LinkToken): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

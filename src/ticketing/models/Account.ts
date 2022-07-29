@@ -76,13 +76,13 @@ export interface Account {
     remote_was_deleted?: boolean;
 }
 
-export function AccountFromJSON(json: JSONValue): Account | null {
+export function AccountFromJSON(json: JSONValue): Account | undefined {
     return AccountFromJSONTyped(json);
 }
 
-export function AccountFromJSONTyped(json: JSONValue): Account | null {
+export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -91,14 +91,14 @@ export function AccountFromJSONTyped(json: JSONValue): Account | null {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'domains': !exists(json, 'domains') ? undefined : json['domains'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function AccountToJSON(value?: Account): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -36,24 +36,24 @@ export interface EmployeeEndpointRequest {
     model: EmployeeRequest;
 }
 
-export function EmployeeEndpointRequestFromJSON(json: JSONValue): EmployeeEndpointRequest | null {
+export function EmployeeEndpointRequestFromJSON(json: JSONValue): EmployeeEndpointRequest | undefined {
     return EmployeeEndpointRequestFromJSONTyped(json);
 }
 
-export function EmployeeEndpointRequestFromJSONTyped(json: JSONValue): EmployeeEndpointRequest | null {
+export function EmployeeEndpointRequestFromJSONTyped(json: JSONValue): EmployeeEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': EmployeeRequestFromJSON(json['model']),
+        'model': EmployeeRequestFromJSON(json['model']) as EmployeeRequest,
     };
 }
 
 export function EmployeeEndpointRequestToJSON(value?: EmployeeEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

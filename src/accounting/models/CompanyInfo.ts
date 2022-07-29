@@ -134,37 +134,37 @@ export interface CompanyInfo {
     readonly remote_was_deleted?: boolean;
 }
 
-export function CompanyInfoFromJSON(json: JSONValue): CompanyInfo | null {
+export function CompanyInfoFromJSON(json: JSONValue): CompanyInfo | undefined {
     return CompanyInfoFromJSONTyped(json);
 }
 
-export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo | null {
+export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'legal_name': !exists(json, 'legal_name') ? undefined : json['legal_name'],
         'tax_number': !exists(json, 'tax_number') ? undefined : json['tax_number'],
         'fiscal_year_end_month': !exists(json, 'fiscal_year_end_month') ? undefined : json['fiscal_year_end_month'],
         'fiscal_year_end_day': !exists(json, 'fiscal_year_end_day') ? undefined : json['fiscal_year_end_day'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'urls': !exists(json, 'urls') ? undefined : json['urls'],
-        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<any>).map(AddressFromJSON)),
-        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<any>).map(AccountingPhoneNumberFromJSON)),
+        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<JSONValue>).map(AddressFromJSON)) as Array<Address>,
+        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(AccountingPhoneNumberFromJSON)) as Array<AccountingPhoneNumber>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function CompanyInfoToJSON(value?: CompanyInfo): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

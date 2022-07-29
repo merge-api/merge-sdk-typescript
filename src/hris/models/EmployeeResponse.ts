@@ -66,27 +66,27 @@ export interface EmployeeResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function EmployeeResponseFromJSON(json: JSONValue): EmployeeResponse | null {
+export function EmployeeResponseFromJSON(json: JSONValue): EmployeeResponse | undefined {
     return EmployeeResponseFromJSONTyped(json);
 }
 
-export function EmployeeResponseFromJSONTyped(json: JSONValue): EmployeeResponse | null {
+export function EmployeeResponseFromJSONTyped(json: JSONValue): EmployeeResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': EmployeeFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': EmployeeFromJSON(json['model']) as Employee,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function EmployeeResponseToJSON(value?: EmployeeResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

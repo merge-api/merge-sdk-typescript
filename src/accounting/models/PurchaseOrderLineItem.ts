@@ -76,13 +76,13 @@ export interface PurchaseOrderLineItem {
     total_line_amount?: string | null;
 }
 
-export function PurchaseOrderLineItemFromJSON(json: JSONValue): PurchaseOrderLineItem | null {
+export function PurchaseOrderLineItemFromJSON(json: JSONValue): PurchaseOrderLineItem | undefined {
     return PurchaseOrderLineItemFromJSONTyped(json);
 }
 
-export function PurchaseOrderLineItemFromJSONTyped(json: JSONValue): PurchaseOrderLineItem | null {
+export function PurchaseOrderLineItemFromJSONTyped(json: JSONValue): PurchaseOrderLineItem | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -100,7 +100,7 @@ export function PurchaseOrderLineItemFromJSONTyped(json: JSONValue): PurchaseOrd
 
 export function PurchaseOrderLineItemToJSON(value?: PurchaseOrderLineItem): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

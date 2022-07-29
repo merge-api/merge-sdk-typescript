@@ -54,7 +54,7 @@ export class IssuesApi extends runtime.BaseAPI {
     /**
      * Gets issues.
      */
-    async issuesListRaw(requestParameters: IssuesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Issue>>> {
+    async issuesListRaw(requestParameters: IssuesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Issue> | undefined>> {
         const queryParameters: any = {};
 
         if (requestParameters.accountToken !== undefined) {
@@ -113,11 +113,6 @@ export class IssuesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -135,7 +130,7 @@ export class IssuesApi extends runtime.BaseAPI {
     /**
      * Gets issues.
      */
-    async issuesList(requestParameters: IssuesListRequest): Promise<MergePaginatedResponse<Issue>> {
+    async issuesList(requestParameters: IssuesListRequest): Promise<MergePaginatedResponse<Issue> | undefined> {
         const response = await this.issuesListRaw(requestParameters);
         return await response.value();
     }
@@ -143,7 +138,7 @@ export class IssuesApi extends runtime.BaseAPI {
     /**
      * Get a specific issue.
      */
-    async issuesRetrieveRaw(requestParameters: IssuesRetrieveRequest): Promise<runtime.ApiResponse<Issue>> {
+    async issuesRetrieveRaw(requestParameters: IssuesRetrieveRequest): Promise<runtime.ApiResponse<Issue | undefined>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling issuesRetrieve.');
         }
@@ -153,11 +148,6 @@ export class IssuesApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -176,7 +166,7 @@ export class IssuesApi extends runtime.BaseAPI {
     /**
      * Get a specific issue.
      */
-    async issuesRetrieve(requestParameters: IssuesRetrieveRequest): Promise<Issue> {
+    async issuesRetrieve(requestParameters: IssuesRetrieveRequest): Promise<Issue | undefined> {
         const response = await this.issuesRetrieveRaw(requestParameters);
         return await response.value();
     }

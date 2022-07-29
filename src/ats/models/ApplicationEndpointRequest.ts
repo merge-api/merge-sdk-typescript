@@ -42,25 +42,25 @@ export interface ApplicationEndpointRequest {
     remote_user_id: string;
 }
 
-export function ApplicationEndpointRequestFromJSON(json: JSONValue): ApplicationEndpointRequest | null {
+export function ApplicationEndpointRequestFromJSON(json: JSONValue): ApplicationEndpointRequest | undefined {
     return ApplicationEndpointRequestFromJSONTyped(json);
 }
 
-export function ApplicationEndpointRequestFromJSONTyped(json: JSONValue): ApplicationEndpointRequest | null {
+export function ApplicationEndpointRequestFromJSONTyped(json: JSONValue): ApplicationEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': ApplicationRequestFromJSON(json['model']),
+        'model': ApplicationRequestFromJSON(json['model']) as ApplicationRequest,
         'remote_user_id': json['remote_user_id'],
     };
 }
 
 export function ApplicationEndpointRequestToJSON(value?: ApplicationEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

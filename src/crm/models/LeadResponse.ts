@@ -66,27 +66,27 @@ export interface LeadResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function LeadResponseFromJSON(json: JSONValue): LeadResponse | null {
+export function LeadResponseFromJSON(json: JSONValue): LeadResponse | undefined {
     return LeadResponseFromJSONTyped(json);
 }
 
-export function LeadResponseFromJSONTyped(json: JSONValue): LeadResponse | null {
+export function LeadResponseFromJSONTyped(json: JSONValue): LeadResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': LeadFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': LeadFromJSON(json['model']) as Lead,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function LeadResponseToJSON(value?: LeadResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

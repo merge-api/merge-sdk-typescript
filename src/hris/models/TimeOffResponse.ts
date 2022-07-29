@@ -66,27 +66,27 @@ export interface TimeOffResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function TimeOffResponseFromJSON(json: JSONValue): TimeOffResponse | null {
+export function TimeOffResponseFromJSON(json: JSONValue): TimeOffResponse | undefined {
     return TimeOffResponseFromJSONTyped(json);
 }
 
-export function TimeOffResponseFromJSONTyped(json: JSONValue): TimeOffResponse | null {
+export function TimeOffResponseFromJSONTyped(json: JSONValue): TimeOffResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': TimeOffFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': TimeOffFromJSON(json['model']) as TimeOff,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function TimeOffResponseToJSON(value?: TimeOffResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

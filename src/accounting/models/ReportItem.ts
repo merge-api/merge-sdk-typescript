@@ -52,13 +52,13 @@ export interface ReportItem {
     readonly sub_items?: { [key: string]: any; };
 }
 
-export function ReportItemFromJSON(json: JSONValue): ReportItem | null {
+export function ReportItemFromJSON(json: JSONValue): ReportItem | undefined {
     return ReportItemFromJSONTyped(json);
 }
 
-export function ReportItemFromJSONTyped(json: JSONValue): ReportItem | null {
+export function ReportItemFromJSONTyped(json: JSONValue): ReportItem | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -72,7 +72,7 @@ export function ReportItemFromJSONTyped(json: JSONValue): ReportItem | null {
 
 export function ReportItemToJSON(value?: ReportItem): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

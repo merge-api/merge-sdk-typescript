@@ -80,13 +80,13 @@ export interface AddressRequest {
     address_type?: AddressTypeEnum | null;
 }
 
-export function AddressRequestFromJSON(json: JSONValue): AddressRequest | null {
+export function AddressRequestFromJSON(json: JSONValue): AddressRequest | undefined {
     return AddressRequestFromJSONTyped(json);
 }
 
-export function AddressRequestFromJSONTyped(json: JSONValue): AddressRequest | null {
+export function AddressRequestFromJSONTyped(json: JSONValue): AddressRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -96,14 +96,14 @@ export function AddressRequestFromJSONTyped(json: JSONValue): AddressRequest | n
         'city': !exists(json, 'city') ? undefined : json['city'],
         'state': !exists(json, 'state') ? undefined : json['state'],
         'postal_code': !exists(json, 'postal_code') ? undefined : json['postal_code'],
-        'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']),
-        'address_type': !exists(json, 'address_type') ? undefined : AddressTypeEnumFromJSON(json['address_type']),
+        'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']) as CountryEnum,
+        'address_type': !exists(json, 'address_type') ? undefined : AddressTypeEnumFromJSON(json['address_type']) as AddressTypeEnum,
     };
 }
 
 export function AddressRequestToJSON(value?: AddressRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

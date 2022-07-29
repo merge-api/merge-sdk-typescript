@@ -79,7 +79,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Creates a `TimeOff` object with the given values.
      */
-    async timeOffCreateRaw(requestParameters: TimeOffCreateRequest): Promise<runtime.ApiResponse<TimeOffResponse>> {
+    async timeOffCreateRaw(requestParameters: TimeOffCreateRequest): Promise<runtime.ApiResponse<TimeOffResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffCreate.');
         }
@@ -108,11 +108,6 @@ export class TimeOffApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -131,7 +126,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Creates a `TimeOff` object with the given values.
      */
-    async timeOffCreate(requestParameters: TimeOffCreateRequest): Promise<TimeOffResponse> {
+    async timeOffCreate(requestParameters: TimeOffCreateRequest): Promise<TimeOffResponse | undefined> {
         const response = await this.timeOffCreateRaw(requestParameters);
         return await response.value();
     }
@@ -139,7 +134,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TimeOff` objects.
      */
-    async timeOffListRaw(requestParameters: TimeOffListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TimeOff>>> {
+    async timeOffListRaw(requestParameters: TimeOffListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TimeOff> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffList.');
         }
@@ -210,11 +205,6 @@ export class TimeOffApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -232,7 +222,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TimeOff` objects.
      */
-    async timeOffList(requestParameters: TimeOffListRequest): Promise<MergePaginatedResponse<TimeOff>> {
+    async timeOffList(requestParameters: TimeOffListRequest): Promise<MergePaginatedResponse<TimeOff> | undefined> {
         const response = await this.timeOffListRaw(requestParameters);
         return await response.value();
     }
@@ -240,7 +230,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `TimeOff` POSTs.
      */
-    async timeOffMetaPostRetrieveRaw(requestParameters: TimeOffMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async timeOffMetaPostRetrieveRaw(requestParameters: TimeOffMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffMetaPostRetrieve.');
         }
@@ -254,11 +244,6 @@ export class TimeOffApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -277,7 +262,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `TimeOff` POSTs.
      */
-    async timeOffMetaPostRetrieve(requestParameters: TimeOffMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async timeOffMetaPostRetrieve(requestParameters: TimeOffMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.timeOffMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -285,7 +270,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns a `TimeOff` object with the given `id`.
      */
-    async timeOffRetrieveRaw(requestParameters: TimeOffRetrieveRequest): Promise<runtime.ApiResponse<TimeOff>> {
+    async timeOffRetrieveRaw(requestParameters: TimeOffRetrieveRequest): Promise<runtime.ApiResponse<TimeOff | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling timeOffRetrieve.');
         }
@@ -312,11 +297,6 @@ export class TimeOffApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -334,7 +314,7 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns a `TimeOff` object with the given `id`.
      */
-    async timeOffRetrieve(requestParameters: TimeOffRetrieveRequest): Promise<TimeOff> {
+    async timeOffRetrieve(requestParameters: TimeOffRetrieveRequest): Promise<TimeOff | undefined> {
         const response = await this.timeOffRetrieveRaw(requestParameters);
         return await response.value();
     }

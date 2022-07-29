@@ -80,20 +80,20 @@ export interface TaxRate {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TaxRateFromJSON(json: JSONValue): TaxRate | null {
+export function TaxRateFromJSON(json: JSONValue): TaxRate | undefined {
     return TaxRateFromJSONTyped(json);
 }
 
-export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | null {
+export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'description': !exists(json, 'description') ? undefined : json['description'],
         'total_tax_rate': !exists(json, 'total_tax_rate') ? undefined : json['total_tax_rate'],
         'effective_tax_rate': !exists(json, 'effective_tax_rate') ? undefined : json['effective_tax_rate'],
@@ -103,7 +103,7 @@ export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | null {
 
 export function TaxRateToJSON(value?: TaxRate): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

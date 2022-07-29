@@ -113,13 +113,13 @@ export interface Transaction {
     readonly remote_was_deleted?: boolean;
 }
 
-export function TransactionFromJSON(json: JSONValue): Transaction | null {
+export function TransactionFromJSON(json: JSONValue): Transaction | undefined {
     return TransactionFromJSONTyped(json);
 }
 
-export function TransactionFromJSONTyped(json: JSONValue): Transaction | null {
+export function TransactionFromJSONTyped(json: JSONValue): Transaction | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -127,21 +127,21 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction | null {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'transaction_type': !exists(json, 'transaction_type') ? undefined : json['transaction_type'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'number': !exists(json, 'number') ? undefined : json['number'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'account': !exists(json, 'account') ? undefined : json['account'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
-        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<any>).map(TransactionLineItemFromJSON)),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(TransactionLineItemFromJSON)) as Array<TransactionLineItem>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function TransactionToJSON(value?: Transaction): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

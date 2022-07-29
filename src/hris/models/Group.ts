@@ -86,13 +86,13 @@ export interface Group {
     readonly remote_was_deleted?: boolean;
 }
 
-export function GroupFromJSON(json: JSONValue): Group | null {
+export function GroupFromJSON(json: JSONValue): Group | undefined {
     return GroupFromJSONTyped(json);
 }
 
-export function GroupFromJSONTyped(json: JSONValue): Group | null {
+export function GroupFromJSONTyped(json: JSONValue): Group | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -101,15 +101,15 @@ export function GroupFromJSONTyped(json: JSONValue): Group | null {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'parent_group': !exists(json, 'parent_group') ? undefined : json['parent_group'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'type': !exists(json, 'type') ? undefined : GroupTypeEnumFromJSON(json['type']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'type': !exists(json, 'type') ? undefined : GroupTypeEnumFromJSON(json['type']) as GroupTypeEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function GroupToJSON(value?: Group): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

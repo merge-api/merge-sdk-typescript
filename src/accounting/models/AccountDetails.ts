@@ -84,13 +84,13 @@ export interface AccountDetails {
     readonly webhook_listener_url?: string;
 }
 
-export function AccountDetailsFromJSON(json: JSONValue): AccountDetails | null {
+export function AccountDetailsFromJSON(json: JSONValue): AccountDetails | undefined {
     return AccountDetailsFromJSONTyped(json);
 }
 
-export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails | null {
+export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -98,7 +98,7 @@ export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails | n
         'id': !exists(json, 'id') ? undefined : json['id'],
         'integration': !exists(json, 'integration') ? undefined : json['integration'],
         'integration_slug': !exists(json, 'integration_slug') ? undefined : json['integration_slug'],
-        'category': !exists(json, 'category') ? undefined : CategoryEnumFromJSON(json['category']),
+        'category': !exists(json, 'category') ? undefined : CategoryEnumFromJSON(json['category']) as CategoryEnum,
         'end_user_origin_id': !exists(json, 'end_user_origin_id') ? undefined : json['end_user_origin_id'],
         'end_user_organization_name': !exists(json, 'end_user_organization_name') ? undefined : json['end_user_organization_name'],
         'end_user_email_address': !exists(json, 'end_user_email_address') ? undefined : json['end_user_email_address'],
@@ -109,7 +109,7 @@ export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails | n
 
 export function AccountDetailsToJSON(value?: AccountDetails): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

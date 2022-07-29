@@ -82,31 +82,31 @@ export interface AccountDetailsAndActionsIntegration {
     available_model_operations?: Array<ModelOperation>;
 }
 
-export function AccountDetailsAndActionsIntegrationFromJSON(json: JSONValue): AccountDetailsAndActionsIntegration | null {
+export function AccountDetailsAndActionsIntegrationFromJSON(json: JSONValue): AccountDetailsAndActionsIntegration | undefined {
     return AccountDetailsAndActionsIntegrationFromJSONTyped(json);
 }
 
-export function AccountDetailsAndActionsIntegrationFromJSONTyped(json: JSONValue): AccountDetailsAndActionsIntegration | null {
+export function AccountDetailsAndActionsIntegrationFromJSONTyped(json: JSONValue): AccountDetailsAndActionsIntegration | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'name': json['name'],
-        'categories': ((json['categories'] as Array<any>).map(CategoriesEnumFromJSON)),
+        'categories': ((json['categories'] as Array<JSONValue>).map(CategoriesEnumFromJSON)) as Array<CategoriesEnum>,
         'image': !exists(json, 'image') ? undefined : json['image'],
         'square_image': !exists(json, 'square_image') ? undefined : json['square_image'],
         'color': json['color'],
         'slug': json['slug'],
         'passthrough_available': json['passthrough_available'],
-        'available_model_operations': !exists(json, 'available_model_operations') ? undefined : ((json['available_model_operations'] as Array<any>).map(ModelOperationFromJSON)),
+        'available_model_operations': !exists(json, 'available_model_operations') ? undefined : ((json['available_model_operations'] as Array<JSONValue>).map(ModelOperationFromJSON)) as Array<ModelOperation>,
     };
 }
 
 export function AccountDetailsAndActionsIntegrationToJSON(value?: AccountDetailsAndActionsIntegration): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

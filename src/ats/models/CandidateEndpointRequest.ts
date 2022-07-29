@@ -42,25 +42,25 @@ export interface CandidateEndpointRequest {
     remote_user_id: string;
 }
 
-export function CandidateEndpointRequestFromJSON(json: JSONValue): CandidateEndpointRequest | null {
+export function CandidateEndpointRequestFromJSON(json: JSONValue): CandidateEndpointRequest | undefined {
     return CandidateEndpointRequestFromJSONTyped(json);
 }
 
-export function CandidateEndpointRequestFromJSONTyped(json: JSONValue): CandidateEndpointRequest | null {
+export function CandidateEndpointRequestFromJSONTyped(json: JSONValue): CandidateEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': CandidateRequestFromJSON(json['model']),
+        'model': CandidateRequestFromJSON(json['model']) as CandidateRequest,
         'remote_user_id': json['remote_user_id'],
     };
 }
 
 export function CandidateEndpointRequestToJSON(value?: CandidateEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

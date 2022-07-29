@@ -42,25 +42,25 @@ export interface AttachmentEndpointRequest {
     remote_user_id: string;
 }
 
-export function AttachmentEndpointRequestFromJSON(json: JSONValue): AttachmentEndpointRequest | null {
+export function AttachmentEndpointRequestFromJSON(json: JSONValue): AttachmentEndpointRequest | undefined {
     return AttachmentEndpointRequestFromJSONTyped(json);
 }
 
-export function AttachmentEndpointRequestFromJSONTyped(json: JSONValue): AttachmentEndpointRequest | null {
+export function AttachmentEndpointRequestFromJSONTyped(json: JSONValue): AttachmentEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': AttachmentRequestFromJSON(json['model']),
+        'model': AttachmentRequestFromJSON(json['model']) as AttachmentRequest,
         'remote_user_id': json['remote_user_id'],
     };
 }
 
 export function AttachmentEndpointRequestToJSON(value?: AttachmentEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

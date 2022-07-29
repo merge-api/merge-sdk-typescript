@@ -55,7 +55,7 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TrackingCategory` objects.
      */
-    async trackingCategoriesListRaw(requestParameters: TrackingCategoriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TrackingCategory>>> {
+    async trackingCategoriesListRaw(requestParameters: TrackingCategoriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TrackingCategory> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling trackingCategoriesList.');
         }
@@ -110,11 +110,6 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -132,7 +127,7 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `TrackingCategory` objects.
      */
-    async trackingCategoriesList(requestParameters: TrackingCategoriesListRequest): Promise<MergePaginatedResponse<TrackingCategory>> {
+    async trackingCategoriesList(requestParameters: TrackingCategoriesListRequest): Promise<MergePaginatedResponse<TrackingCategory> | undefined> {
         const response = await this.trackingCategoriesListRaw(requestParameters);
         return await response.value();
     }
@@ -140,7 +135,7 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
     /**
      * Returns a `TrackingCategory` object with the given `id`.
      */
-    async trackingCategoriesRetrieveRaw(requestParameters: TrackingCategoriesRetrieveRequest): Promise<runtime.ApiResponse<TrackingCategory>> {
+    async trackingCategoriesRetrieveRaw(requestParameters: TrackingCategoriesRetrieveRequest): Promise<runtime.ApiResponse<TrackingCategory | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling trackingCategoriesRetrieve.');
         }
@@ -167,11 +162,6 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -189,7 +179,7 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
     /**
      * Returns a `TrackingCategory` object with the given `id`.
      */
-    async trackingCategoriesRetrieve(requestParameters: TrackingCategoriesRetrieveRequest): Promise<TrackingCategory> {
+    async trackingCategoriesRetrieve(requestParameters: TrackingCategoriesRetrieveRequest): Promise<TrackingCategory | undefined> {
         const response = await this.trackingCategoriesRetrieveRaw(requestParameters);
         return await response.value();
     }

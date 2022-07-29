@@ -53,7 +53,7 @@ export class OfficesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Office` objects.
      */
-    async officesListRaw(requestParameters: OfficesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Office>>> {
+    async officesListRaw(requestParameters: OfficesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Office> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling officesList.');
         }
@@ -104,11 +104,6 @@ export class OfficesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class OfficesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Office` objects.
      */
-    async officesList(requestParameters: OfficesListRequest): Promise<MergePaginatedResponse<Office>> {
+    async officesList(requestParameters: OfficesListRequest): Promise<MergePaginatedResponse<Office> | undefined> {
         const response = await this.officesListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class OfficesApi extends runtime.BaseAPI {
     /**
      * Returns an `Office` object with the given `id`.
      */
-    async officesRetrieveRaw(requestParameters: OfficesRetrieveRequest): Promise<runtime.ApiResponse<Office>> {
+    async officesRetrieveRaw(requestParameters: OfficesRetrieveRequest): Promise<runtime.ApiResponse<Office | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling officesRetrieve.');
         }
@@ -157,11 +152,6 @@ export class OfficesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class OfficesApi extends runtime.BaseAPI {
     /**
      * Returns an `Office` object with the given `id`.
      */
-    async officesRetrieve(requestParameters: OfficesRetrieveRequest): Promise<Office> {
+    async officesRetrieve(requestParameters: OfficesRetrieveRequest): Promise<Office | undefined> {
         const response = await this.officesRetrieveRaw(requestParameters);
         return await response.value();
     }

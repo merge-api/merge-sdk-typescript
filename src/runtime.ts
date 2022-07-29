@@ -75,8 +75,8 @@ export class BaseAPI {
         return { url, init };
     }
 
-    private fetchApi = async (url: string, init: RequestInit) => {
-        let fetchParams = { url, init };
+    private fetchApi = async (input: RequestInfo, init?: RequestInit) => {
+        let fetchParams = { input, init } as FetchParams;
         for (const middleware of this.middleware) {
             if (middleware.pre) {
                 fetchParams = await middleware.pre({
@@ -85,12 +85,12 @@ export class BaseAPI {
                 }) || fetchParams;
             }
         }
-        let response = await this.configuration.fetchApi(fetchParams.url, fetchParams.init);
+        let response = await (this.configuration.fetchApi || fetch)(fetchParams.input, fetchParams.init);
         for (const middleware of this.middleware) {
             if (middleware.post) {
                 response = await middleware.post({
                     fetch: this.fetchApi,
-                    url,
+                    input,
                     init,
                     response: response.clone(),
                 }) || response;
@@ -125,7 +125,7 @@ export const COLLECTION_FORMATS = {
     pipes: "|",
 };
 
-export type FetchAPI = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+export type FetchAPI = (input: RequestInfo, init?: RequestInit) => Promise<Response>;
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path
@@ -147,8 +147,8 @@ export class Configuration {
         return this.configuration.basePath != null ? this.configuration.basePath : BASE_PATH;
     }
 
-    get fetchApi(): FetchAPI {
-        return this.configuration.fetchApi || window.fetch.bind(window);
+    get fetchApi(): FetchAPI | undefined {
+        return this.configuration.fetchApi;
     }
 
     get middleware(): Middleware[] {
@@ -200,8 +200,8 @@ export type HTTPBody = Json | FormData | URLSearchParams;
 export type ModelPropertyNaming = 'camelCase' | 'snake_case' | 'PascalCase' | 'original';
 
 export interface FetchParams {
-    url: string;
-    init: RequestInit;
+    input: RequestInfo;
+    init?: RequestInit;
 }
 
 export interface RequestOpts {
@@ -261,14 +261,14 @@ export interface Consume {
 
 export interface RequestContext {
     fetch: FetchAPI;
-    url: string;
-    init: RequestInit;
+    input: RequestInfo;
+    init?: RequestInit;
 }
 
 export interface ResponseContext {
     fetch: FetchAPI;
-    url: string;
-    init: RequestInit;
+    input: RequestInfo;
+    init?: RequestInit;
     response: Response;
 }
 

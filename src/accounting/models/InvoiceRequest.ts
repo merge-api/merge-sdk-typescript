@@ -135,26 +135,26 @@ export interface InvoiceRequest {
     payments?: Array<string>;
 }
 
-export function InvoiceRequestFromJSON(json: JSONValue): InvoiceRequest | null {
+export function InvoiceRequestFromJSON(json: JSONValue): InvoiceRequest | undefined {
     return InvoiceRequestFromJSONTyped(json);
 }
 
-export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | null {
+export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']),
+        'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']) as InvoiceTypeEnum,
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'number': !exists(json, 'number') ? undefined : json['number'],
         'issue_date': !exists(json, 'issue_date') ? undefined : (json['issue_date'] === null ? null : new Date(json['issue_date'])),
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'paid_on_date': !exists(json, 'paid_on_date') ? undefined : (json['paid_on_date'] === null ? null : new Date(json['paid_on_date'])),
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
-        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']),
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'total_discount': !exists(json, 'total_discount') ? undefined : json['total_discount'],
         'sub_total': !exists(json, 'sub_total') ? undefined : json['sub_total'],
         'total_tax_amount': !exists(json, 'total_tax_amount') ? undefined : json['total_tax_amount'],
@@ -167,7 +167,7 @@ export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | n
 
 export function InvoiceRequestToJSON(value?: InvoiceRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

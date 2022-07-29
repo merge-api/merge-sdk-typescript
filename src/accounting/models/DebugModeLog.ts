@@ -48,26 +48,26 @@ export interface DebugModeLog {
     log_summary: DebugModelLogSummary;
 }
 
-export function DebugModeLogFromJSON(json: JSONValue): DebugModeLog | null {
+export function DebugModeLogFromJSON(json: JSONValue): DebugModeLog | undefined {
     return DebugModeLogFromJSONTyped(json);
 }
 
-export function DebugModeLogFromJSONTyped(json: JSONValue): DebugModeLog | null {
+export function DebugModeLogFromJSONTyped(json: JSONValue): DebugModeLog | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'log_id': json['log_id'],
         'dashboard_view': json['dashboard_view'],
-        'log_summary': DebugModelLogSummaryFromJSON(json['log_summary']),
+        'log_summary': DebugModelLogSummaryFromJSON(json['log_summary']) as DebugModelLogSummary,
     };
 }
 
 export function DebugModeLogToJSON(value?: DebugModeLog): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

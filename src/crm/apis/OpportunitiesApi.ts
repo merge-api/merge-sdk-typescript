@@ -79,7 +79,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Creates an `Opportunity` object with the given values.
      */
-    async opportunitiesCreateRaw(requestParameters: OpportunitiesCreateRequest): Promise<runtime.ApiResponse<OpportunityResponse>> {
+    async opportunitiesCreateRaw(requestParameters: OpportunitiesCreateRequest): Promise<runtime.ApiResponse<OpportunityResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesCreate.');
         }
@@ -108,11 +108,6 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -131,7 +126,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Creates an `Opportunity` object with the given values.
      */
-    async opportunitiesCreate(requestParameters: OpportunitiesCreateRequest): Promise<OpportunityResponse> {
+    async opportunitiesCreate(requestParameters: OpportunitiesCreateRequest): Promise<OpportunityResponse | undefined> {
         const response = await this.opportunitiesCreateRaw(requestParameters);
         return await response.value();
     }
@@ -139,7 +134,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Opportunity` objects.
      */
-    async opportunitiesListRaw(requestParameters: OpportunitiesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Opportunity>>> {
+    async opportunitiesListRaw(requestParameters: OpportunitiesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Opportunity> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesList.');
         }
@@ -210,11 +205,6 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -232,7 +222,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Opportunity` objects.
      */
-    async opportunitiesList(requestParameters: OpportunitiesListRequest): Promise<MergePaginatedResponse<Opportunity>> {
+    async opportunitiesList(requestParameters: OpportunitiesListRequest): Promise<MergePaginatedResponse<Opportunity> | undefined> {
         const response = await this.opportunitiesListRaw(requestParameters);
         return await response.value();
     }
@@ -240,7 +230,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Opportunity` POSTs.
      */
-    async opportunitiesMetaPostRetrieveRaw(requestParameters: OpportunitiesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async opportunitiesMetaPostRetrieveRaw(requestParameters: OpportunitiesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesMetaPostRetrieve.');
         }
@@ -254,11 +244,6 @@ export class OpportunitiesApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -277,7 +262,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Opportunity` POSTs.
      */
-    async opportunitiesMetaPostRetrieve(requestParameters: OpportunitiesMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async opportunitiesMetaPostRetrieve(requestParameters: OpportunitiesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.opportunitiesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -285,7 +270,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns an `Opportunity` object with the given `id`.
      */
-    async opportunitiesRetrieveRaw(requestParameters: OpportunitiesRetrieveRequest): Promise<runtime.ApiResponse<Opportunity>> {
+    async opportunitiesRetrieveRaw(requestParameters: OpportunitiesRetrieveRequest): Promise<runtime.ApiResponse<Opportunity | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling opportunitiesRetrieve.');
         }
@@ -312,11 +297,6 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -334,7 +314,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns an `Opportunity` object with the given `id`.
      */
-    async opportunitiesRetrieve(requestParameters: OpportunitiesRetrieveRequest): Promise<Opportunity> {
+    async opportunitiesRetrieve(requestParameters: OpportunitiesRetrieveRequest): Promise<Opportunity | undefined> {
         const response = await this.opportunitiesRetrieveRaw(requestParameters);
         return await response.value();
     }

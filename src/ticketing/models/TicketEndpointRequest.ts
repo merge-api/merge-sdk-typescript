@@ -36,24 +36,24 @@ export interface TicketEndpointRequest {
     model: TicketRequest;
 }
 
-export function TicketEndpointRequestFromJSON(json: JSONValue): TicketEndpointRequest | null {
+export function TicketEndpointRequestFromJSON(json: JSONValue): TicketEndpointRequest | undefined {
     return TicketEndpointRequestFromJSONTyped(json);
 }
 
-export function TicketEndpointRequestFromJSONTyped(json: JSONValue): TicketEndpointRequest | null {
+export function TicketEndpointRequestFromJSONTyped(json: JSONValue): TicketEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': TicketRequestFromJSON(json['model']),
+        'model': TicketRequestFromJSON(json['model']) as TicketRequest,
     };
 }
 
 export function TicketEndpointRequestToJSON(value?: TicketEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

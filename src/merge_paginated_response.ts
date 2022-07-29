@@ -41,13 +41,13 @@ export interface MergePaginatedResponse<T> {
     results?: Array<T>;
 }
 
-export function MergePaginatedResponseFromJSON<T>(json: JSONValue): MergePaginatedResponse<T> | null {
+export function MergePaginatedResponseFromJSON<T>(json: JSONValue): MergePaginatedResponse<T> | undefined {
     return MergePaginatedResponseFromJSONTyped(json);
 }
 
-export function MergePaginatedResponseFromJSONTyped<T>(json: JSONValue): MergePaginatedResponse<T> | null {
+export function MergePaginatedResponseFromJSONTyped<T>(json: JSONValue): MergePaginatedResponse<T> | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -60,7 +60,7 @@ export function MergePaginatedResponseFromJSONTyped<T>(json: JSONValue): MergePa
 
 export function MergePaginatedResponseToJSON<T extends JSONValue>(value?: MergePaginatedResponse<T>): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -74,13 +74,13 @@ export interface Project {
     remote_was_deleted?: boolean;
 }
 
-export function ProjectFromJSON(json: JSONValue): Project | null {
+export function ProjectFromJSON(json: JSONValue): Project | undefined {
     return ProjectFromJSONTyped(json);
 }
 
-export function ProjectFromJSONTyped(json: JSONValue): Project | null {
+export function ProjectFromJSONTyped(json: JSONValue): Project | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -89,14 +89,14 @@ export function ProjectFromJSONTyped(json: JSONValue): Project | null {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function ProjectToJSON(value?: Project): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -56,7 +56,7 @@ export class EeocsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `EEOC` objects.
      */
-    async eeocsListRaw(requestParameters: EeocsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EEOC>>> {
+    async eeocsListRaw(requestParameters: EeocsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EEOC> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling eeocsList.');
         }
@@ -115,11 +115,6 @@ export class EeocsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -137,7 +132,7 @@ export class EeocsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `EEOC` objects.
      */
-    async eeocsList(requestParameters: EeocsListRequest): Promise<MergePaginatedResponse<EEOC>> {
+    async eeocsList(requestParameters: EeocsListRequest): Promise<MergePaginatedResponse<EEOC> | undefined> {
         const response = await this.eeocsListRaw(requestParameters);
         return await response.value();
     }
@@ -145,7 +140,7 @@ export class EeocsApi extends runtime.BaseAPI {
     /**
      * Returns an `EEOC` object with the given `id`.
      */
-    async eeocsRetrieveRaw(requestParameters: EeocsRetrieveRequest): Promise<runtime.ApiResponse<EEOC>> {
+    async eeocsRetrieveRaw(requestParameters: EeocsRetrieveRequest): Promise<runtime.ApiResponse<EEOC | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling eeocsRetrieve.');
         }
@@ -172,11 +167,6 @@ export class EeocsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -194,7 +184,7 @@ export class EeocsApi extends runtime.BaseAPI {
     /**
      * Returns an `EEOC` object with the given `id`.
      */
-    async eeocsRetrieve(requestParameters: EeocsRetrieveRequest): Promise<EEOC> {
+    async eeocsRetrieve(requestParameters: EeocsRetrieveRequest): Promise<EEOC | undefined> {
         const response = await this.eeocsRetrieveRaw(requestParameters);
         return await response.value();
     }

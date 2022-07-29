@@ -64,13 +64,13 @@ export interface ExpenseLine {
     description?: string | null;
 }
 
-export function ExpenseLineFromJSON(json: JSONValue): ExpenseLine | null {
+export function ExpenseLineFromJSON(json: JSONValue): ExpenseLine | undefined {
     return ExpenseLineFromJSONTyped(json);
 }
 
-export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | null {
+export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -86,7 +86,7 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | null {
 
 export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

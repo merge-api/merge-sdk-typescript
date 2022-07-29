@@ -100,7 +100,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Creates an `Employee` object with the given values.
      */
-    async employeesCreateRaw(requestParameters: EmployeesCreateRequest): Promise<runtime.ApiResponse<EmployeeResponse>> {
+    async employeesCreateRaw(requestParameters: EmployeesCreateRequest): Promise<runtime.ApiResponse<EmployeeResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeesCreate.');
         }
@@ -129,11 +129,6 @@ export class EmployeesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -152,7 +147,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Creates an `Employee` object with the given values.
      */
-    async employeesCreate(requestParameters: EmployeesCreateRequest): Promise<EmployeeResponse> {
+    async employeesCreate(requestParameters: EmployeesCreateRequest): Promise<EmployeeResponse | undefined> {
         const response = await this.employeesCreateRaw(requestParameters);
         return await response.value();
     }
@@ -160,7 +155,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async employeesIgnoreCreateRaw(requestParameters: EmployeesIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel>> {
+    async employeesIgnoreCreateRaw(requestParameters: EmployeesIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeesIgnoreCreate.');
         }
@@ -185,11 +180,6 @@ export class EmployeesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -208,7 +198,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async employeesIgnoreCreate(requestParameters: EmployeesIgnoreCreateRequest): Promise<IgnoreCommonModel> {
+    async employeesIgnoreCreate(requestParameters: EmployeesIgnoreCreateRequest): Promise<IgnoreCommonModel | undefined> {
         const response = await this.employeesIgnoreCreateRaw(requestParameters);
         return await response.value();
     }
@@ -216,7 +206,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Employee` objects.
      */
-    async employeesListRaw(requestParameters: EmployeesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Employee>>> {
+    async employeesListRaw(requestParameters: EmployeesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Employee> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeesList.');
         }
@@ -319,11 +309,6 @@ export class EmployeesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -341,7 +326,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Employee` objects.
      */
-    async employeesList(requestParameters: EmployeesListRequest): Promise<MergePaginatedResponse<Employee>> {
+    async employeesList(requestParameters: EmployeesListRequest): Promise<MergePaginatedResponse<Employee> | undefined> {
         const response = await this.employeesListRaw(requestParameters);
         return await response.value();
     }
@@ -349,7 +334,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Employee` POSTs.
      */
-    async employeesMetaPostRetrieveRaw(requestParameters: EmployeesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async employeesMetaPostRetrieveRaw(requestParameters: EmployeesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeesMetaPostRetrieve.');
         }
@@ -363,11 +348,6 @@ export class EmployeesApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -386,7 +366,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Employee` POSTs.
      */
-    async employeesMetaPostRetrieve(requestParameters: EmployeesMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async employeesMetaPostRetrieve(requestParameters: EmployeesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.employeesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -394,7 +374,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns an `Employee` object with the given `id`.
      */
-    async employeesRetrieveRaw(requestParameters: EmployeesRetrieveRequest): Promise<runtime.ApiResponse<Employee>> {
+    async employeesRetrieveRaw(requestParameters: EmployeesRetrieveRequest): Promise<runtime.ApiResponse<Employee | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employeesRetrieve.');
         }
@@ -425,11 +405,6 @@ export class EmployeesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -447,7 +422,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns an `Employee` object with the given `id`.
      */
-    async employeesRetrieve(requestParameters: EmployeesRetrieveRequest): Promise<Employee> {
+    async employeesRetrieve(requestParameters: EmployeesRetrieveRequest): Promise<Employee | undefined> {
         const response = await this.employeesRetrieveRaw(requestParameters);
         return await response.value();
     }

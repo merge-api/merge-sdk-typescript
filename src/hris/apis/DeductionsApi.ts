@@ -54,7 +54,7 @@ export class DeductionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Deduction` objects.
      */
-    async deductionsListRaw(requestParameters: DeductionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Deduction>>> {
+    async deductionsListRaw(requestParameters: DeductionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Deduction> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling deductionsList.');
         }
@@ -109,11 +109,6 @@ export class DeductionsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -131,7 +126,7 @@ export class DeductionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Deduction` objects.
      */
-    async deductionsList(requestParameters: DeductionsListRequest): Promise<MergePaginatedResponse<Deduction>> {
+    async deductionsList(requestParameters: DeductionsListRequest): Promise<MergePaginatedResponse<Deduction> | undefined> {
         const response = await this.deductionsListRaw(requestParameters);
         return await response.value();
     }
@@ -139,7 +134,7 @@ export class DeductionsApi extends runtime.BaseAPI {
     /**
      * Returns a `Deduction` object with the given `id`.
      */
-    async deductionsRetrieveRaw(requestParameters: DeductionsRetrieveRequest): Promise<runtime.ApiResponse<Deduction>> {
+    async deductionsRetrieveRaw(requestParameters: DeductionsRetrieveRequest): Promise<runtime.ApiResponse<Deduction | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling deductionsRetrieve.');
         }
@@ -162,11 +157,6 @@ export class DeductionsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -184,7 +174,7 @@ export class DeductionsApi extends runtime.BaseAPI {
     /**
      * Returns a `Deduction` object with the given `id`.
      */
-    async deductionsRetrieve(requestParameters: DeductionsRetrieveRequest): Promise<Deduction> {
+    async deductionsRetrieve(requestParameters: DeductionsRetrieveRequest): Promise<Deduction | undefined> {
         const response = await this.deductionsRetrieveRaw(requestParameters);
         return await response.value();
     }

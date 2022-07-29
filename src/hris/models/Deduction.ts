@@ -80,13 +80,13 @@ export interface Deduction {
     remote_was_deleted?: boolean;
 }
 
-export function DeductionFromJSON(json: JSONValue): Deduction | null {
+export function DeductionFromJSON(json: JSONValue): Deduction | undefined {
     return DeductionFromJSONTyped(json);
 }
 
-export function DeductionFromJSONTyped(json: JSONValue): Deduction | null {
+export function DeductionFromJSONTyped(json: JSONValue): Deduction | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -96,14 +96,14 @@ export function DeductionFromJSONTyped(json: JSONValue): Deduction | null {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'employee_deduction': !exists(json, 'employee_deduction') ? undefined : json['employee_deduction'],
         'company_deduction': !exists(json, 'company_deduction') ? undefined : json['company_deduction'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function DeductionToJSON(value?: Deduction): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

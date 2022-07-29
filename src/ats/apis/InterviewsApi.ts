@@ -58,7 +58,7 @@ export class InterviewsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `ScheduledInterview` objects.
      */
-    async interviewsListRaw(requestParameters: InterviewsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<ScheduledInterview>>> {
+    async interviewsListRaw(requestParameters: InterviewsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<ScheduledInterview> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling interviewsList.');
         }
@@ -125,11 +125,6 @@ export class InterviewsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -147,7 +142,7 @@ export class InterviewsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `ScheduledInterview` objects.
      */
-    async interviewsList(requestParameters: InterviewsListRequest): Promise<MergePaginatedResponse<ScheduledInterview>> {
+    async interviewsList(requestParameters: InterviewsListRequest): Promise<MergePaginatedResponse<ScheduledInterview> | undefined> {
         const response = await this.interviewsListRaw(requestParameters);
         return await response.value();
     }
@@ -155,7 +150,7 @@ export class InterviewsApi extends runtime.BaseAPI {
     /**
      * Returns a `ScheduledInterview` object with the given `id`.
      */
-    async interviewsRetrieveRaw(requestParameters: InterviewsRetrieveRequest): Promise<runtime.ApiResponse<ScheduledInterview>> {
+    async interviewsRetrieveRaw(requestParameters: InterviewsRetrieveRequest): Promise<runtime.ApiResponse<ScheduledInterview | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling interviewsRetrieve.');
         }
@@ -182,11 +177,6 @@ export class InterviewsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -204,7 +194,7 @@ export class InterviewsApi extends runtime.BaseAPI {
     /**
      * Returns a `ScheduledInterview` object with the given `id`.
      */
-    async interviewsRetrieve(requestParameters: InterviewsRetrieveRequest): Promise<ScheduledInterview> {
+    async interviewsRetrieve(requestParameters: InterviewsRetrieveRequest): Promise<ScheduledInterview | undefined> {
         const response = await this.interviewsRetrieveRaw(requestParameters);
         return await response.value();
     }

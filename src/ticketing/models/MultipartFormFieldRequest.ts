@@ -65,20 +65,20 @@ export interface MultipartFormFieldRequest {
     content_type?: string | null;
 }
 
-export function MultipartFormFieldRequestFromJSON(json: JSONValue): MultipartFormFieldRequest | null {
+export function MultipartFormFieldRequestFromJSON(json: JSONValue): MultipartFormFieldRequest | undefined {
     return MultipartFormFieldRequestFromJSONTyped(json);
 }
 
-export function MultipartFormFieldRequestFromJSONTyped(json: JSONValue): MultipartFormFieldRequest | null {
+export function MultipartFormFieldRequestFromJSONTyped(json: JSONValue): MultipartFormFieldRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'name': json['name'],
         'data': json['data'],
-        'encoding': !exists(json, 'encoding') ? undefined : EncodingEnumFromJSON(json['encoding']),
+        'encoding': !exists(json, 'encoding') ? undefined : EncodingEnumFromJSON(json['encoding']) as EncodingEnum,
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'content_type': !exists(json, 'content_type') ? undefined : json['content_type'],
     };
@@ -86,7 +86,7 @@ export function MultipartFormFieldRequestFromJSONTyped(json: JSONValue): Multipa
 
 export function MultipartFormFieldRequestToJSON(value?: MultipartFormFieldRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

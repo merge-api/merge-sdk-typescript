@@ -57,26 +57,26 @@ export interface AvailableActions {
     available_model_operations?: Array<ModelOperation>;
 }
 
-export function AvailableActionsFromJSON(json: JSONValue): AvailableActions | null {
+export function AvailableActionsFromJSON(json: JSONValue): AvailableActions | undefined {
     return AvailableActionsFromJSONTyped(json);
 }
 
-export function AvailableActionsFromJSONTyped(json: JSONValue): AvailableActions | null {
+export function AvailableActionsFromJSONTyped(json: JSONValue): AvailableActions | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'integration': AccountIntegrationFromJSON(json['integration']),
+        'integration': AccountIntegrationFromJSON(json['integration']) as AccountIntegration,
         'passthrough_available': json['passthrough_available'],
-        'available_model_operations': !exists(json, 'available_model_operations') ? undefined : ((json['available_model_operations'] as Array<any>).map(ModelOperationFromJSON)),
+        'available_model_operations': !exists(json, 'available_model_operations') ? undefined : ((json['available_model_operations'] as Array<JSONValue>).map(ModelOperationFromJSON)) as Array<ModelOperation>,
     };
 }
 
 export function AvailableActionsToJSON(value?: AvailableActions): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

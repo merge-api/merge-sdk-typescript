@@ -36,7 +36,7 @@ export class PassthroughApi extends runtime.BaseAPI {
     /**
      * Pull data from an endpoint not currently supported by Merge.
      */
-    async passthroughCreateRaw(requestParameters: PassthroughCreateRequest): Promise<runtime.ApiResponse<RemoteResponse>> {
+    async passthroughCreateRaw(requestParameters: PassthroughCreateRequest): Promise<runtime.ApiResponse<RemoteResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling passthroughCreate.');
         }
@@ -57,11 +57,6 @@ export class PassthroughApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -80,7 +75,7 @@ export class PassthroughApi extends runtime.BaseAPI {
     /**
      * Pull data from an endpoint not currently supported by Merge.
      */
-    async passthroughCreate(requestParameters: PassthroughCreateRequest): Promise<RemoteResponse> {
+    async passthroughCreate(requestParameters: PassthroughCreateRequest): Promise<RemoteResponse | undefined> {
         const response = await this.passthroughCreateRaw(requestParameters);
         return await response.value();
     }

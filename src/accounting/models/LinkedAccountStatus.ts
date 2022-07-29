@@ -35,13 +35,13 @@ export interface LinkedAccountStatus {
     can_make_request: boolean;
 }
 
-export function LinkedAccountStatusFromJSON(json: JSONValue): LinkedAccountStatus | null {
+export function LinkedAccountStatusFromJSON(json: JSONValue): LinkedAccountStatus | undefined {
     return LinkedAccountStatusFromJSONTyped(json);
 }
 
-export function LinkedAccountStatusFromJSONTyped(json: JSONValue): LinkedAccountStatus | null {
+export function LinkedAccountStatusFromJSONTyped(json: JSONValue): LinkedAccountStatus | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -53,7 +53,7 @@ export function LinkedAccountStatusFromJSONTyped(json: JSONValue): LinkedAccount
 
 export function LinkedAccountStatusToJSON(value?: LinkedAccountStatus): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

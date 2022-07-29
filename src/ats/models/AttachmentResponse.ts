@@ -66,27 +66,27 @@ export interface AttachmentResponse {
     logs?: Array<DebugModeLog>;
 }
 
-export function AttachmentResponseFromJSON(json: JSONValue): AttachmentResponse | null {
+export function AttachmentResponseFromJSON(json: JSONValue): AttachmentResponse | undefined {
     return AttachmentResponseFromJSONTyped(json);
 }
 
-export function AttachmentResponseFromJSONTyped(json: JSONValue): AttachmentResponse | null {
+export function AttachmentResponseFromJSONTyped(json: JSONValue): AttachmentResponse | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': AttachmentFromJSON(json['model']),
-        'warnings': ((json['warnings'] as Array<any>).map(WarningValidationProblemFromJSON)),
-        'errors': ((json['errors'] as Array<any>).map(ErrorValidationProblemFromJSON)),
-        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<any>).map(DebugModeLogFromJSON)),
+        'model': AttachmentFromJSON(json['model']) as Attachment,
+        'warnings': ((json['warnings'] as Array<JSONValue>).map(WarningValidationProblemFromJSON)) as Array<WarningValidationProblem>,
+        'errors': ((json['errors'] as Array<JSONValue>).map(ErrorValidationProblemFromJSON)) as Array<ErrorValidationProblem>,
+        'logs': !exists(json, 'logs') ? undefined : ((json['logs'] as Array<JSONValue>).map(DebugModeLogFromJSON)) as Array<DebugModeLog>,
     };
 }
 
 export function AttachmentResponseToJSON(value?: AttachmentResponse): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

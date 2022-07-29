@@ -51,13 +51,13 @@ export interface Tag {
     remote_was_deleted?: boolean;
 }
 
-export function TagFromJSON(json: JSONValue): Tag | null {
+export function TagFromJSON(json: JSONValue): Tag | undefined {
     return TagFromJSONTyped(json);
 }
 
-export function TagFromJSONTyped(json: JSONValue): Tag | null {
+export function TagFromJSONTyped(json: JSONValue): Tag | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -71,7 +71,7 @@ export function TagFromJSONTyped(json: JSONValue): Tag | null {
 
 export function TagToJSON(value?: Tag): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

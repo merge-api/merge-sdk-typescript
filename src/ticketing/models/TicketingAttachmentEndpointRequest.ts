@@ -36,24 +36,24 @@ export interface TicketingAttachmentEndpointRequest {
     model: AttachmentRequest;
 }
 
-export function TicketingAttachmentEndpointRequestFromJSON(json: JSONValue): TicketingAttachmentEndpointRequest | null {
+export function TicketingAttachmentEndpointRequestFromJSON(json: JSONValue): TicketingAttachmentEndpointRequest | undefined {
     return TicketingAttachmentEndpointRequestFromJSONTyped(json);
 }
 
-export function TicketingAttachmentEndpointRequestFromJSONTyped(json: JSONValue): TicketingAttachmentEndpointRequest | null {
+export function TicketingAttachmentEndpointRequestFromJSONTyped(json: JSONValue): TicketingAttachmentEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': AttachmentRequestFromJSON(json['model']),
+        'model': AttachmentRequestFromJSON(json['model']) as AttachmentRequest,
     };
 }
 
 export function TicketingAttachmentEndpointRequestToJSON(value?: TicketingAttachmentEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

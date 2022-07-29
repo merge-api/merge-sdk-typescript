@@ -108,13 +108,13 @@ export interface ApplicationRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function ApplicationRequestFromJSON(json: JSONValue): ApplicationRequest | null {
+export function ApplicationRequestFromJSON(json: JSONValue): ApplicationRequest | undefined {
     return ApplicationRequestFromJSONTyped(json);
 }
 
-export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationRequest | null {
+export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -137,7 +137,7 @@ export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationReq
 
 export function ApplicationRequestToJSON(value?: ApplicationRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

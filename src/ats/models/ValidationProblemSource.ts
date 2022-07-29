@@ -29,13 +29,13 @@ export interface ValidationProblemSource {
     pointer: string;
 }
 
-export function ValidationProblemSourceFromJSON(json: JSONValue): ValidationProblemSource | null {
+export function ValidationProblemSourceFromJSON(json: JSONValue): ValidationProblemSource | undefined {
     return ValidationProblemSourceFromJSONTyped(json);
 }
 
-export function ValidationProblemSourceFromJSONTyped(json: JSONValue): ValidationProblemSource | null {
+export function ValidationProblemSourceFromJSONTyped(json: JSONValue): ValidationProblemSource | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -46,7 +46,7 @@ export function ValidationProblemSourceFromJSONTyped(json: JSONValue): Validatio
 
 export function ValidationProblemSourceToJSON(value?: ValidationProblemSource): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

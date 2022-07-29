@@ -46,25 +46,25 @@ export interface Url {
     url_type?: UrlTypeEnum | null;
 }
 
-export function UrlFromJSON(json: JSONValue): Url | null {
+export function UrlFromJSON(json: JSONValue): Url | undefined {
     return UrlFromJSONTyped(json);
 }
 
-export function UrlFromJSONTyped(json: JSONValue): Url | null {
+export function UrlFromJSONTyped(json: JSONValue): Url | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'value': !exists(json, 'value') ? undefined : json['value'],
-        'url_type': !exists(json, 'url_type') ? undefined : UrlTypeEnumFromJSON(json['url_type']),
+        'url_type': !exists(json, 'url_type') ? undefined : UrlTypeEnumFromJSON(json['url_type']) as UrlTypeEnum,
     };
 }
 
 export function UrlToJSON(value?: Url): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -42,25 +42,25 @@ export interface IgnoreCommonModel {
     message?: string;
 }
 
-export function IgnoreCommonModelFromJSON(json: JSONValue): IgnoreCommonModel | null {
+export function IgnoreCommonModelFromJSON(json: JSONValue): IgnoreCommonModel | undefined {
     return IgnoreCommonModelFromJSONTyped(json);
 }
 
-export function IgnoreCommonModelFromJSONTyped(json: JSONValue): IgnoreCommonModel | null {
+export function IgnoreCommonModelFromJSONTyped(json: JSONValue): IgnoreCommonModel | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'reason': ReasonEnumFromJSON(json['reason']),
+        'reason': ReasonEnumFromJSON(json['reason']) as ReasonEnum,
         'message': !exists(json, 'message') ? undefined : json['message'],
     };
 }
 
 export function IgnoreCommonModelToJSON(value?: IgnoreCommonModel): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

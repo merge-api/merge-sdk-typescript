@@ -39,13 +39,13 @@ export interface PhoneNumberRequest {
     phone_number_type?: string | null;
 }
 
-export function PhoneNumberRequestFromJSON(json: JSONValue): PhoneNumberRequest | null {
+export function PhoneNumberRequestFromJSON(json: JSONValue): PhoneNumberRequest | undefined {
     return PhoneNumberRequestFromJSONTyped(json);
 }
 
-export function PhoneNumberRequestFromJSONTyped(json: JSONValue): PhoneNumberRequest | null {
+export function PhoneNumberRequestFromJSONTyped(json: JSONValue): PhoneNumberRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -57,7 +57,7 @@ export function PhoneNumberRequestFromJSONTyped(json: JSONValue): PhoneNumberReq
 
 export function PhoneNumberRequestToJSON(value?: PhoneNumberRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

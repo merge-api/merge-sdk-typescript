@@ -64,13 +64,13 @@ export interface Tax {
     remote_was_deleted?: boolean;
 }
 
-export function TaxFromJSON(json: JSONValue): Tax | null {
+export function TaxFromJSON(json: JSONValue): Tax | undefined {
     return TaxFromJSONTyped(json);
 }
 
-export function TaxFromJSONTyped(json: JSONValue): Tax | null {
+export function TaxFromJSONTyped(json: JSONValue): Tax | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -86,7 +86,7 @@ export function TaxFromJSONTyped(json: JSONValue): Tax | null {
 
 export function TaxToJSON(value?: Tax): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

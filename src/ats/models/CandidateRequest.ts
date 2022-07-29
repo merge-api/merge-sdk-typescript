@@ -168,13 +168,13 @@ export interface CandidateRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function CandidateRequestFromJSON(json: JSONValue): CandidateRequest | null {
+export function CandidateRequestFromJSON(json: JSONValue): CandidateRequest | undefined {
     return CandidateRequestFromJSONTyped(json);
 }
 
-export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest | null {
+export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -190,9 +190,9 @@ export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest
         'is_private': !exists(json, 'is_private') ? undefined : json['is_private'],
         'can_email': !exists(json, 'can_email') ? undefined : json['can_email'],
         'locations': !exists(json, 'locations') ? undefined : json['locations'],
-        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<any>).map(PhoneNumberRequestFromJSON)),
-        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<any>).map(EmailAddressRequestFromJSON)),
-        'urls': !exists(json, 'urls') ? undefined : ((json['urls'] as Array<any>).map(UrlRequestFromJSON)),
+        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(PhoneNumberRequestFromJSON)) as Array<PhoneNumberRequest>,
+        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<JSONValue>).map(EmailAddressRequestFromJSON)) as Array<EmailAddressRequest>,
+        'urls': !exists(json, 'urls') ? undefined : ((json['urls'] as Array<JSONValue>).map(UrlRequestFromJSON)) as Array<UrlRequest>,
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'applications': !exists(json, 'applications') ? undefined : json['applications'],
         'attachments': !exists(json, 'attachments') ? undefined : json['attachments'],
@@ -205,7 +205,7 @@ export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest
 
 export function CandidateRequestToJSON(value?: CandidateRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

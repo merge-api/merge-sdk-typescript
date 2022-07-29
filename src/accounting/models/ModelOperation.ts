@@ -52,13 +52,13 @@ export interface ModelOperation {
     supported_fields: Array<string>;
 }
 
-export function ModelOperationFromJSON(json: JSONValue): ModelOperation | null {
+export function ModelOperationFromJSON(json: JSONValue): ModelOperation | undefined {
     return ModelOperationFromJSONTyped(json);
 }
 
-export function ModelOperationFromJSONTyped(json: JSONValue): ModelOperation | null {
+export function ModelOperationFromJSONTyped(json: JSONValue): ModelOperation | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -72,7 +72,7 @@ export function ModelOperationFromJSONTyped(json: JSONValue): ModelOperation | n
 
 export function ModelOperationToJSON(value?: ModelOperation): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

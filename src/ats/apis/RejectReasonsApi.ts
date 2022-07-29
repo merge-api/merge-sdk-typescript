@@ -53,7 +53,7 @@ export class RejectReasonsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `RejectReason` objects.
      */
-    async rejectReasonsListRaw(requestParameters: RejectReasonsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RejectReason>>> {
+    async rejectReasonsListRaw(requestParameters: RejectReasonsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RejectReason> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling rejectReasonsList.');
         }
@@ -104,11 +104,6 @@ export class RejectReasonsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class RejectReasonsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `RejectReason` objects.
      */
-    async rejectReasonsList(requestParameters: RejectReasonsListRequest): Promise<MergePaginatedResponse<RejectReason>> {
+    async rejectReasonsList(requestParameters: RejectReasonsListRequest): Promise<MergePaginatedResponse<RejectReason> | undefined> {
         const response = await this.rejectReasonsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class RejectReasonsApi extends runtime.BaseAPI {
     /**
      * Returns a `RejectReason` object with the given `id`.
      */
-    async rejectReasonsRetrieveRaw(requestParameters: RejectReasonsRetrieveRequest): Promise<runtime.ApiResponse<RejectReason>> {
+    async rejectReasonsRetrieveRaw(requestParameters: RejectReasonsRetrieveRequest): Promise<runtime.ApiResponse<RejectReason | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling rejectReasonsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class RejectReasonsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class RejectReasonsApi extends runtime.BaseAPI {
     /**
      * Returns a `RejectReason` object with the given `id`.
      */
-    async rejectReasonsRetrieve(requestParameters: RejectReasonsRetrieveRequest): Promise<RejectReason> {
+    async rejectReasonsRetrieve(requestParameters: RejectReasonsRetrieveRequest): Promise<RejectReason | undefined> {
         const response = await this.rejectReasonsRetrieveRaw(requestParameters);
         return await response.value();
     }

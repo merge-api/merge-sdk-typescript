@@ -125,13 +125,13 @@ export interface ScheduledInterview {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ScheduledInterviewFromJSON(json: JSONValue): ScheduledInterview | null {
+export function ScheduledInterviewFromJSON(json: JSONValue): ScheduledInterview | undefined {
     return ScheduledInterviewFromJSONTyped(json);
 }
 
-export function ScheduledInterviewFromJSONTyped(json: JSONValue): ScheduledInterview | null {
+export function ScheduledInterviewFromJSONTyped(json: JSONValue): ScheduledInterview | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -147,15 +147,15 @@ export function ScheduledInterviewFromJSONTyped(json: JSONValue): ScheduledInter
         'end_at': !exists(json, 'end_at') ? undefined : (json['end_at'] === null ? null : new Date(json['end_at'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
-        'status': !exists(json, 'status') ? undefined : ScheduledInterviewStatusEnumFromJSON(json['status']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'status': !exists(json, 'status') ? undefined : ScheduledInterviewStatusEnumFromJSON(json['status']) as ScheduledInterviewStatusEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function ScheduledInterviewToJSON(value?: ScheduledInterview): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

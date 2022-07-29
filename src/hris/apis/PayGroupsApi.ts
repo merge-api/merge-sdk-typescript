@@ -53,7 +53,7 @@ export class PayGroupsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `PayGroup` objects.
      */
-    async payGroupsListRaw(requestParameters: PayGroupsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<PayGroup>>> {
+    async payGroupsListRaw(requestParameters: PayGroupsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<PayGroup> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling payGroupsList.');
         }
@@ -104,11 +104,6 @@ export class PayGroupsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class PayGroupsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `PayGroup` objects.
      */
-    async payGroupsList(requestParameters: PayGroupsListRequest): Promise<MergePaginatedResponse<PayGroup>> {
+    async payGroupsList(requestParameters: PayGroupsListRequest): Promise<MergePaginatedResponse<PayGroup> | undefined> {
         const response = await this.payGroupsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class PayGroupsApi extends runtime.BaseAPI {
     /**
      * Returns a `PayGroup` object with the given `id`.
      */
-    async payGroupsRetrieveRaw(requestParameters: PayGroupsRetrieveRequest): Promise<runtime.ApiResponse<PayGroup>> {
+    async payGroupsRetrieveRaw(requestParameters: PayGroupsRetrieveRequest): Promise<runtime.ApiResponse<PayGroup | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling payGroupsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class PayGroupsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class PayGroupsApi extends runtime.BaseAPI {
     /**
      * Returns a `PayGroup` object with the given `id`.
      */
-    async payGroupsRetrieve(requestParameters: PayGroupsRetrieveRequest): Promise<PayGroup> {
+    async payGroupsRetrieve(requestParameters: PayGroupsRetrieveRequest): Promise<PayGroup | undefined> {
         const response = await this.payGroupsRetrieveRaw(requestParameters);
         return await response.value();
     }

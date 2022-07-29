@@ -73,13 +73,13 @@ export interface JobInterviewStage {
     readonly remote_was_deleted?: boolean;
 }
 
-export function JobInterviewStageFromJSON(json: JSONValue): JobInterviewStage | null {
+export function JobInterviewStageFromJSON(json: JSONValue): JobInterviewStage | undefined {
     return JobInterviewStageFromJSONTyped(json);
 }
 
-export function JobInterviewStageFromJSONTyped(json: JSONValue): JobInterviewStage | null {
+export function JobInterviewStageFromJSONTyped(json: JSONValue): JobInterviewStage | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -88,14 +88,14 @@ export function JobInterviewStageFromJSONTyped(json: JSONValue): JobInterviewSta
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'job': !exists(json, 'job') ? undefined : json['job'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function JobInterviewStageToJSON(value?: JobInterviewStage): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

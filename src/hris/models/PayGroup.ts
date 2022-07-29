@@ -68,13 +68,13 @@ export interface PayGroup {
     readonly remote_was_deleted?: boolean;
 }
 
-export function PayGroupFromJSON(json: JSONValue): PayGroup | null {
+export function PayGroupFromJSON(json: JSONValue): PayGroup | undefined {
     return PayGroupFromJSONTyped(json);
 }
 
-export function PayGroupFromJSONTyped(json: JSONValue): PayGroup | null {
+export function PayGroupFromJSONTyped(json: JSONValue): PayGroup | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -82,14 +82,14 @@ export function PayGroupFromJSONTyped(json: JSONValue): PayGroup | null {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'pay_group_name': !exists(json, 'pay_group_name') ? undefined : json['pay_group_name'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function PayGroupToJSON(value?: PayGroup): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

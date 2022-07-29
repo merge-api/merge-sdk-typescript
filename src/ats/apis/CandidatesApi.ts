@@ -87,7 +87,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Creates a `Candidate` object with the given values.
      */
-    async candidatesCreateRaw(requestParameters: CandidatesCreateRequest): Promise<runtime.ApiResponse<CandidateResponse>> {
+    async candidatesCreateRaw(requestParameters: CandidatesCreateRequest): Promise<runtime.ApiResponse<CandidateResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesCreate.');
         }
@@ -116,11 +116,6 @@ export class CandidatesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -139,7 +134,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Creates a `Candidate` object with the given values.
      */
-    async candidatesCreate(requestParameters: CandidatesCreateRequest): Promise<CandidateResponse> {
+    async candidatesCreate(requestParameters: CandidatesCreateRequest): Promise<CandidateResponse | undefined> {
         const response = await this.candidatesCreateRaw(requestParameters);
         return await response.value();
     }
@@ -147,7 +142,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async candidatesIgnoreCreateRaw(requestParameters: CandidatesIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel>> {
+    async candidatesIgnoreCreateRaw(requestParameters: CandidatesIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesIgnoreCreate.');
         }
@@ -172,11 +167,6 @@ export class CandidatesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -195,7 +185,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async candidatesIgnoreCreate(requestParameters: CandidatesIgnoreCreateRequest): Promise<IgnoreCommonModel> {
+    async candidatesIgnoreCreate(requestParameters: CandidatesIgnoreCreateRequest): Promise<IgnoreCommonModel | undefined> {
         const response = await this.candidatesIgnoreCreateRaw(requestParameters);
         return await response.value();
     }
@@ -203,7 +193,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Candidate` objects.
      */
-    async candidatesListRaw(requestParameters: CandidatesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Candidate>>> {
+    async candidatesListRaw(requestParameters: CandidatesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Candidate> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesList.');
         }
@@ -262,11 +252,6 @@ export class CandidatesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -284,7 +269,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Candidate` objects.
      */
-    async candidatesList(requestParameters: CandidatesListRequest): Promise<MergePaginatedResponse<Candidate>> {
+    async candidatesList(requestParameters: CandidatesListRequest): Promise<MergePaginatedResponse<Candidate> | undefined> {
         const response = await this.candidatesListRaw(requestParameters);
         return await response.value();
     }
@@ -292,7 +277,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Candidate` POSTs.
      */
-    async candidatesMetaPostRetrieveRaw(requestParameters: CandidatesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async candidatesMetaPostRetrieveRaw(requestParameters: CandidatesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesMetaPostRetrieve.');
         }
@@ -306,11 +291,6 @@ export class CandidatesApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -329,7 +309,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Candidate` POSTs.
      */
-    async candidatesMetaPostRetrieve(requestParameters: CandidatesMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async candidatesMetaPostRetrieve(requestParameters: CandidatesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.candidatesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -337,7 +317,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns a `Candidate` object with the given `id`.
      */
-    async candidatesRetrieveRaw(requestParameters: CandidatesRetrieveRequest): Promise<runtime.ApiResponse<Candidate>> {
+    async candidatesRetrieveRaw(requestParameters: CandidatesRetrieveRequest): Promise<runtime.ApiResponse<Candidate | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling candidatesRetrieve.');
         }
@@ -360,11 +340,6 @@ export class CandidatesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -382,7 +357,7 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns a `Candidate` object with the given `id`.
      */
-    async candidatesRetrieve(requestParameters: CandidatesRetrieveRequest): Promise<Candidate> {
+    async candidatesRetrieve(requestParameters: CandidatesRetrieveRequest): Promise<Candidate | undefined> {
         const response = await this.candidatesRetrieveRaw(requestParameters);
         return await response.value();
     }

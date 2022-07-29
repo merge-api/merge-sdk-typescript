@@ -66,19 +66,19 @@ export interface AccountIntegration {
     readonly slug?: string;
 }
 
-export function AccountIntegrationFromJSON(json: JSONValue): AccountIntegration | null {
+export function AccountIntegrationFromJSON(json: JSONValue): AccountIntegration | undefined {
     return AccountIntegrationFromJSONTyped(json);
 }
 
-export function AccountIntegrationFromJSONTyped(json: JSONValue): AccountIntegration | null {
+export function AccountIntegrationFromJSONTyped(json: JSONValue): AccountIntegration | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'name': json['name'],
-        'categories': !exists(json, 'categories') ? undefined : ((json['categories'] as Array<any>).map(CategoriesEnumFromJSON)),
+        'categories': !exists(json, 'categories') ? undefined : ((json['categories'] as Array<JSONValue>).map(CategoriesEnumFromJSON)) as Array<CategoriesEnum>,
         'image': !exists(json, 'image') ? undefined : json['image'],
         'square_image': !exists(json, 'square_image') ? undefined : json['square_image'],
         'color': !exists(json, 'color') ? undefined : json['color'],
@@ -88,7 +88,7 @@ export function AccountIntegrationFromJSONTyped(json: JSONValue): AccountIntegra
 
 export function AccountIntegrationToJSON(value?: AccountIntegration): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

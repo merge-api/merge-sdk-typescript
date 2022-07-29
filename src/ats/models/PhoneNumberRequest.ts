@@ -46,25 +46,25 @@ export interface PhoneNumberRequest {
     phone_number_type?: PhoneNumberTypeEnum | null;
 }
 
-export function PhoneNumberRequestFromJSON(json: JSONValue): PhoneNumberRequest | null {
+export function PhoneNumberRequestFromJSON(json: JSONValue): PhoneNumberRequest | undefined {
     return PhoneNumberRequestFromJSONTyped(json);
 }
 
-export function PhoneNumberRequestFromJSONTyped(json: JSONValue): PhoneNumberRequest | null {
+export function PhoneNumberRequestFromJSONTyped(json: JSONValue): PhoneNumberRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'value': !exists(json, 'value') ? undefined : json['value'],
-        'phone_number_type': !exists(json, 'phone_number_type') ? undefined : PhoneNumberTypeEnumFromJSON(json['phone_number_type']),
+        'phone_number_type': !exists(json, 'phone_number_type') ? undefined : PhoneNumberTypeEnumFromJSON(json['phone_number_type']) as PhoneNumberTypeEnum,
     };
 }
 
 export function PhoneNumberRequestToJSON(value?: PhoneNumberRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

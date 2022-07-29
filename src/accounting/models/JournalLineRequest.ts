@@ -64,13 +64,13 @@ export interface JournalLineRequest {
     description?: string | null;
 }
 
-export function JournalLineRequestFromJSON(json: JSONValue): JournalLineRequest | null {
+export function JournalLineRequestFromJSON(json: JSONValue): JournalLineRequest | undefined {
     return JournalLineRequestFromJSONTyped(json);
 }
 
-export function JournalLineRequestFromJSONTyped(json: JSONValue): JournalLineRequest | null {
+export function JournalLineRequestFromJSONTyped(json: JSONValue): JournalLineRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -86,7 +86,7 @@ export function JournalLineRequestFromJSONTyped(json: JSONValue): JournalLineReq
 
 export function JournalLineRequestToJSON(value?: JournalLineRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -36,24 +36,24 @@ export interface OpportunityEndpointRequest {
     model: OpportunityRequest;
 }
 
-export function OpportunityEndpointRequestFromJSON(json: JSONValue): OpportunityEndpointRequest | null {
+export function OpportunityEndpointRequestFromJSON(json: JSONValue): OpportunityEndpointRequest | undefined {
     return OpportunityEndpointRequestFromJSONTyped(json);
 }
 
-export function OpportunityEndpointRequestFromJSONTyped(json: JSONValue): OpportunityEndpointRequest | null {
+export function OpportunityEndpointRequestFromJSONTyped(json: JSONValue): OpportunityEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': OpportunityRequestFromJSON(json['model']),
+        'model': OpportunityRequestFromJSON(json['model']) as OpportunityRequest,
     };
 }
 
 export function OpportunityEndpointRequestToJSON(value?: OpportunityEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

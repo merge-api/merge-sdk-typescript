@@ -80,7 +80,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Creates an `Application` object with the given values.
      */
-    async applicationsCreateRaw(requestParameters: ApplicationsCreateRequest): Promise<runtime.ApiResponse<ApplicationResponse>> {
+    async applicationsCreateRaw(requestParameters: ApplicationsCreateRequest): Promise<runtime.ApiResponse<ApplicationResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsCreate.');
         }
@@ -109,11 +109,6 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -132,7 +127,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Creates an `Application` object with the given values.
      */
-    async applicationsCreate(requestParameters: ApplicationsCreateRequest): Promise<ApplicationResponse> {
+    async applicationsCreate(requestParameters: ApplicationsCreateRequest): Promise<ApplicationResponse | undefined> {
         const response = await this.applicationsCreateRaw(requestParameters);
         return await response.value();
     }
@@ -140,7 +135,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Application` objects.
      */
-    async applicationsListRaw(requestParameters: ApplicationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Application>>> {
+    async applicationsListRaw(requestParameters: ApplicationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Application> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsList.');
         }
@@ -215,11 +210,6 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -237,7 +227,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Application` objects.
      */
-    async applicationsList(requestParameters: ApplicationsListRequest): Promise<MergePaginatedResponse<Application>> {
+    async applicationsList(requestParameters: ApplicationsListRequest): Promise<MergePaginatedResponse<Application> | undefined> {
         const response = await this.applicationsListRaw(requestParameters);
         return await response.value();
     }
@@ -245,7 +235,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Application` POSTs.
      */
-    async applicationsMetaPostRetrieveRaw(requestParameters: ApplicationsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async applicationsMetaPostRetrieveRaw(requestParameters: ApplicationsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsMetaPostRetrieve.');
         }
@@ -264,11 +254,6 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -286,7 +271,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Application` POSTs.
      */
-    async applicationsMetaPostRetrieve(requestParameters: ApplicationsMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async applicationsMetaPostRetrieve(requestParameters: ApplicationsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.applicationsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -294,7 +279,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Returns an `Application` object with the given `id`.
      */
-    async applicationsRetrieveRaw(requestParameters: ApplicationsRetrieveRequest): Promise<runtime.ApiResponse<Application>> {
+    async applicationsRetrieveRaw(requestParameters: ApplicationsRetrieveRequest): Promise<runtime.ApiResponse<Application | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsRetrieve.');
         }
@@ -317,11 +302,6 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -339,7 +319,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
     /**
      * Returns an `Application` object with the given `id`.
      */
-    async applicationsRetrieve(requestParameters: ApplicationsRetrieveRequest): Promise<Application> {
+    async applicationsRetrieve(requestParameters: ApplicationsRetrieveRequest): Promise<Application | undefined> {
         const response = await this.applicationsRetrieveRaw(requestParameters);
         return await response.value();
     }

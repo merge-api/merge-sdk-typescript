@@ -19,8 +19,6 @@ import {
     ProjectFromJSON,
     ProjectToJSON,
     User,
-    UserFromJSON,
-    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -63,7 +61,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Project` objects.
      */
-    async projectsListRaw(requestParameters: ProjectsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Project>>> {
+    async projectsListRaw(requestParameters: ProjectsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Project> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsList.');
         }
@@ -114,11 +112,6 @@ export class ProjectsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -136,7 +129,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Project` objects.
      */
-    async projectsList(requestParameters: ProjectsListRequest): Promise<MergePaginatedResponse<Project>> {
+    async projectsList(requestParameters: ProjectsListRequest): Promise<MergePaginatedResponse<Project> | undefined> {
         const response = await this.projectsListRaw(requestParameters);
         return await response.value();
     }
@@ -144,7 +137,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a `Project` object with the given `id`.
      */
-    async projectsRetrieveRaw(requestParameters: ProjectsRetrieveRequest): Promise<runtime.ApiResponse<Project>> {
+    async projectsRetrieveRaw(requestParameters: ProjectsRetrieveRequest): Promise<runtime.ApiResponse<Project | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsRetrieve.');
         }
@@ -167,11 +160,6 @@ export class ProjectsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -189,7 +177,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a `Project` object with the given `id`.
      */
-    async projectsRetrieve(requestParameters: ProjectsRetrieveRequest): Promise<Project> {
+    async projectsRetrieve(requestParameters: ProjectsRetrieveRequest): Promise<Project | undefined> {
         const response = await this.projectsRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -197,7 +185,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async projectsUsersListRaw(requestParameters: ProjectsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User>>> {
+    async projectsUsersListRaw(requestParameters: ProjectsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsUsersList.');
         }
@@ -228,11 +216,6 @@ export class ProjectsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -250,7 +233,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     /**
      * Returns a `User` object with the given `id`.
      */
-    async projectsUsersList(requestParameters: ProjectsUsersListRequest): Promise<MergePaginatedResponse<User>> {
+    async projectsUsersList(requestParameters: ProjectsUsersListRequest): Promise<MergePaginatedResponse<User> | undefined> {
         const response = await this.projectsUsersListRaw(requestParameters);
         return await response.value();
     }

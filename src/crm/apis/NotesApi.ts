@@ -77,7 +77,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Creates a `Note` object with the given values.
      */
-    async notesCreateRaw(requestParameters: NotesCreateRequest): Promise<runtime.ApiResponse<NoteResponse>> {
+    async notesCreateRaw(requestParameters: NotesCreateRequest): Promise<runtime.ApiResponse<NoteResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesCreate.');
         }
@@ -106,11 +106,6 @@ export class NotesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -129,7 +124,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Creates a `Note` object with the given values.
      */
-    async notesCreate(requestParameters: NotesCreateRequest): Promise<NoteResponse> {
+    async notesCreate(requestParameters: NotesCreateRequest): Promise<NoteResponse | undefined> {
         const response = await this.notesCreateRaw(requestParameters);
         return await response.value();
     }
@@ -137,7 +132,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Note` objects.
      */
-    async notesListRaw(requestParameters: NotesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Note>>> {
+    async notesListRaw(requestParameters: NotesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Note> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesList.');
         }
@@ -204,11 +199,6 @@ export class NotesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -226,7 +216,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Note` objects.
      */
-    async notesList(requestParameters: NotesListRequest): Promise<MergePaginatedResponse<Note>> {
+    async notesList(requestParameters: NotesListRequest): Promise<MergePaginatedResponse<Note> | undefined> {
         const response = await this.notesListRaw(requestParameters);
         return await response.value();
     }
@@ -234,7 +224,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Note` POSTs.
      */
-    async notesMetaPostRetrieveRaw(requestParameters: NotesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse>> {
+    async notesMetaPostRetrieveRaw(requestParameters: NotesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesMetaPostRetrieve.');
         }
@@ -248,11 +238,6 @@ export class NotesApi extends runtime.BaseAPI {
         }
 
 
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -271,7 +256,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Note` POSTs.
      */
-    async notesMetaPostRetrieve(requestParameters: NotesMetaPostRetrieveRequest): Promise<MetaResponse> {
+    async notesMetaPostRetrieve(requestParameters: NotesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.notesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -279,7 +264,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns a `Note` object with the given `id`.
      */
-    async notesRetrieveRaw(requestParameters: NotesRetrieveRequest): Promise<runtime.ApiResponse<Note>> {
+    async notesRetrieveRaw(requestParameters: NotesRetrieveRequest): Promise<runtime.ApiResponse<Note | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesRetrieve.');
         }
@@ -302,11 +287,6 @@ export class NotesApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -324,7 +304,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns a `Note` object with the given `id`.
      */
-    async notesRetrieve(requestParameters: NotesRetrieveRequest): Promise<Note> {
+    async notesRetrieve(requestParameters: NotesRetrieveRequest): Promise<Note | undefined> {
         const response = await this.notesRetrieveRaw(requestParameters);
         return await response.value();
     }

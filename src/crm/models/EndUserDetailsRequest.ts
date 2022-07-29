@@ -72,13 +72,13 @@ export interface EndUserDetailsRequest {
     should_create_magic_link_url?: boolean | null;
 }
 
-export function EndUserDetailsRequestFromJSON(json: JSONValue): EndUserDetailsRequest | null {
+export function EndUserDetailsRequestFromJSON(json: JSONValue): EndUserDetailsRequest | undefined {
     return EndUserDetailsRequestFromJSONTyped(json);
 }
 
-export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDetailsRequest | null {
+export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDetailsRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -86,7 +86,7 @@ export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDeta
         'end_user_email_address': json['end_user_email_address'],
         'end_user_organization_name': json['end_user_organization_name'],
         'end_user_origin_id': json['end_user_origin_id'],
-        'categories': ((json['categories'] as Array<any>).map(CategoriesEnumFromJSON)),
+        'categories': ((json['categories'] as Array<JSONValue>).map(CategoriesEnumFromJSON)) as Array<CategoriesEnum>,
         'integration': !exists(json, 'integration') ? undefined : json['integration'],
         'link_expiry_mins': !exists(json, 'link_expiry_mins') ? undefined : json['link_expiry_mins'],
         'should_create_magic_link_url': !exists(json, 'should_create_magic_link_url') ? undefined : json['should_create_magic_link_url'],
@@ -95,7 +95,7 @@ export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDeta
 
 export function EndUserDetailsRequestToJSON(value?: EndUserDetailsRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -55,7 +55,7 @@ export class GroupsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Group` objects.
      */
-    async groupsListRaw(requestParameters: GroupsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Group>>> {
+    async groupsListRaw(requestParameters: GroupsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Group> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling groupsList.');
         }
@@ -110,11 +110,6 @@ export class GroupsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -132,7 +127,7 @@ export class GroupsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `Group` objects.
      */
-    async groupsList(requestParameters: GroupsListRequest): Promise<MergePaginatedResponse<Group>> {
+    async groupsList(requestParameters: GroupsListRequest): Promise<MergePaginatedResponse<Group> | undefined> {
         const response = await this.groupsListRaw(requestParameters);
         return await response.value();
     }
@@ -140,7 +135,7 @@ export class GroupsApi extends runtime.BaseAPI {
     /**
      * Returns a `Group` object with the given `id`.
      */
-    async groupsRetrieveRaw(requestParameters: GroupsRetrieveRequest): Promise<runtime.ApiResponse<Group>> {
+    async groupsRetrieveRaw(requestParameters: GroupsRetrieveRequest): Promise<runtime.ApiResponse<Group | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling groupsRetrieve.');
         }
@@ -167,11 +162,6 @@ export class GroupsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -189,7 +179,7 @@ export class GroupsApi extends runtime.BaseAPI {
     /**
      * Returns a `Group` object with the given `id`.
      */
-    async groupsRetrieve(requestParameters: GroupsRetrieveRequest): Promise<Group> {
+    async groupsRetrieve(requestParameters: GroupsRetrieveRequest): Promise<Group | undefined> {
         const response = await this.groupsRetrieveRaw(requestParameters);
         return await response.value();
     }

@@ -53,7 +53,7 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `CashFlowStatement` objects.
      */
-    async cashFlowStatementsListRaw(requestParameters: CashFlowStatementsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CashFlowStatement>>> {
+    async cashFlowStatementsListRaw(requestParameters: CashFlowStatementsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CashFlowStatement> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling cashFlowStatementsList.');
         }
@@ -104,11 +104,6 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
     /**
      * Returns a list of `CashFlowStatement` objects.
      */
-    async cashFlowStatementsList(requestParameters: CashFlowStatementsListRequest): Promise<MergePaginatedResponse<CashFlowStatement>> {
+    async cashFlowStatementsList(requestParameters: CashFlowStatementsListRequest): Promise<MergePaginatedResponse<CashFlowStatement> | undefined> {
         const response = await this.cashFlowStatementsListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
     /**
      * Returns a `CashFlowStatement` object with the given `id`.
      */
-    async cashFlowStatementsRetrieveRaw(requestParameters: CashFlowStatementsRetrieveRequest): Promise<runtime.ApiResponse<CashFlowStatement>> {
+    async cashFlowStatementsRetrieveRaw(requestParameters: CashFlowStatementsRetrieveRequest): Promise<runtime.ApiResponse<CashFlowStatement | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling cashFlowStatementsRetrieve.');
         }
@@ -157,11 +152,6 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class CashFlowStatementsApi extends runtime.BaseAPI {
     /**
      * Returns a `CashFlowStatement` object with the given `id`.
      */
-    async cashFlowStatementsRetrieve(requestParameters: CashFlowStatementsRetrieveRequest): Promise<CashFlowStatement> {
+    async cashFlowStatementsRetrieve(requestParameters: CashFlowStatementsRetrieveRequest): Promise<CashFlowStatement | undefined> {
         const response = await this.cashFlowStatementsRetrieveRaw(requestParameters);
         return await response.value();
     }

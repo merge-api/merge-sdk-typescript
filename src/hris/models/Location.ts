@@ -124,13 +124,13 @@ export interface Location {
     readonly remote_was_deleted?: boolean;
 }
 
-export function LocationFromJSON(json: JSONValue): Location | null {
+export function LocationFromJSON(json: JSONValue): Location | undefined {
     return LocationFromJSONTyped(json);
 }
 
-export function LocationFromJSONTyped(json: JSONValue): Location | null {
+export function LocationFromJSONTyped(json: JSONValue): Location | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -144,16 +144,16 @@ export function LocationFromJSONTyped(json: JSONValue): Location | null {
         'city': !exists(json, 'city') ? undefined : json['city'],
         'state': !exists(json, 'state') ? undefined : json['state'],
         'zip_code': !exists(json, 'zip_code') ? undefined : json['zip_code'],
-        'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']),
-        'location_type': !exists(json, 'location_type') ? undefined : LocationTypeEnumFromJSON(json['location_type']),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']) as CountryEnum,
+        'location_type': !exists(json, 'location_type') ? undefined : LocationTypeEnumFromJSON(json['location_type']) as LocationTypeEnum,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
 
 export function LocationToJSON(value?: Location): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

@@ -37,7 +37,7 @@ export class SyncStatusApi extends runtime.BaseAPI {
     /**
      * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
      */
-    async syncStatusListRaw(requestParameters: SyncStatusListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<SyncStatus>>> {
+    async syncStatusListRaw(requestParameters: SyncStatusListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<SyncStatus> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling syncStatusList.');
         }
@@ -60,11 +60,6 @@ export class SyncStatusApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -82,7 +77,7 @@ export class SyncStatusApi extends runtime.BaseAPI {
     /**
      * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
      */
-    async syncStatusList(requestParameters: SyncStatusListRequest): Promise<MergePaginatedResponse<SyncStatus>> {
+    async syncStatusList(requestParameters: SyncStatusListRequest): Promise<MergePaginatedResponse<SyncStatus> | undefined> {
         const response = await this.syncStatusListRaw(requestParameters);
         return await response.value();
     }

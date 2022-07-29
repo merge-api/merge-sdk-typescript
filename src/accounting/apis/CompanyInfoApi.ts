@@ -53,7 +53,7 @@ export class CompanyInfoApi extends runtime.BaseAPI {
     /**
      * Returns a list of `CompanyInfo` objects.
      */
-    async companyInfoListRaw(requestParameters: CompanyInfoListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CompanyInfo>>> {
+    async companyInfoListRaw(requestParameters: CompanyInfoListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CompanyInfo> | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling companyInfoList.');
         }
@@ -104,11 +104,6 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -126,7 +121,7 @@ export class CompanyInfoApi extends runtime.BaseAPI {
     /**
      * Returns a list of `CompanyInfo` objects.
      */
-    async companyInfoList(requestParameters: CompanyInfoListRequest): Promise<MergePaginatedResponse<CompanyInfo>> {
+    async companyInfoList(requestParameters: CompanyInfoListRequest): Promise<MergePaginatedResponse<CompanyInfo> | undefined> {
         const response = await this.companyInfoListRaw(requestParameters);
         return await response.value();
     }
@@ -134,7 +129,7 @@ export class CompanyInfoApi extends runtime.BaseAPI {
     /**
      * Returns a `CompanyInfo` object with the given `id`.
      */
-    async companyInfoRetrieveRaw(requestParameters: CompanyInfoRetrieveRequest): Promise<runtime.ApiResponse<CompanyInfo>> {
+    async companyInfoRetrieveRaw(requestParameters: CompanyInfoRetrieveRequest): Promise<runtime.ApiResponse<CompanyInfo | undefined>> {
         if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
             throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling companyInfoRetrieve.');
         }
@@ -157,11 +152,6 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 
 
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; //  authentication
-        }
-
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
         }
@@ -179,7 +169,7 @@ export class CompanyInfoApi extends runtime.BaseAPI {
     /**
      * Returns a `CompanyInfo` object with the given `id`.
      */
-    async companyInfoRetrieve(requestParameters: CompanyInfoRetrieveRequest): Promise<CompanyInfo> {
+    async companyInfoRetrieve(requestParameters: CompanyInfoRetrieveRequest): Promise<CompanyInfo | undefined> {
         const response = await this.companyInfoRetrieveRaw(requestParameters);
         return await response.value();
     }

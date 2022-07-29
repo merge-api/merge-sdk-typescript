@@ -76,13 +76,13 @@ export interface AttachmentRequest {
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function AttachmentRequestFromJSON(json: JSONValue): AttachmentRequest | null {
+export function AttachmentRequestFromJSON(json: JSONValue): AttachmentRequest | undefined {
     return AttachmentRequestFromJSONTyped(json);
 }
 
-export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentRequest | null {
+export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
@@ -91,7 +91,7 @@ export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentReque
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
-        'attachment_type': !exists(json, 'attachment_type') ? undefined : AttachmentTypeEnumFromJSON(json['attachment_type']),
+        'attachment_type': !exists(json, 'attachment_type') ? undefined : AttachmentTypeEnumFromJSON(json['attachment_type']) as AttachmentTypeEnum,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -99,7 +99,7 @@ export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentReque
 
 export function AttachmentRequestToJSON(value?: AttachmentRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

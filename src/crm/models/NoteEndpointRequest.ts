@@ -36,24 +36,24 @@ export interface NoteEndpointRequest {
     model: NoteRequest;
 }
 
-export function NoteEndpointRequestFromJSON(json: JSONValue): NoteEndpointRequest | null {
+export function NoteEndpointRequestFromJSON(json: JSONValue): NoteEndpointRequest | undefined {
     return NoteEndpointRequestFromJSONTyped(json);
 }
 
-export function NoteEndpointRequestFromJSONTyped(json: JSONValue): NoteEndpointRequest | null {
+export function NoteEndpointRequestFromJSONTyped(json: JSONValue): NoteEndpointRequest | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
-        'model': NoteRequestFromJSON(json['model']),
+        'model': NoteRequestFromJSON(json['model']) as NoteRequest,
     };
 }
 
 export function NoteEndpointRequestToJSON(value?: NoteEndpointRequest): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

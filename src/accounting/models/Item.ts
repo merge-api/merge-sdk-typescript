@@ -108,22 +108,22 @@ export interface Item {
     readonly remote_was_deleted?: boolean;
 }
 
-export function ItemFromJSON(json: JSONValue): Item | null {
+export function ItemFromJSON(json: JSONValue): Item | undefined {
     return ItemFromJSONTyped(json);
 }
 
-export function ItemFromJSONTyped(json: JSONValue): Item | null {
+export function ItemFromJSONTyped(json: JSONValue): Item | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<any>).map(RemoteDataFromJSON)),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
         'unit_price': !exists(json, 'unit_price') ? undefined : json['unit_price'],
         'purchase_price': !exists(json, 'purchase_price') ? undefined : json['purchase_price'],
         'purchase_account': !exists(json, 'purchase_account') ? undefined : json['purchase_account'],
@@ -135,7 +135,7 @@ export function ItemFromJSONTyped(json: JSONValue): Item | null {
 
 export function ItemToJSON(value?: Item): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {

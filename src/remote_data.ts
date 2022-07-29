@@ -18,9 +18,9 @@ import { JSONValue } from './merge_json'
 /**
  * 
  * @export
- * @interface RemoteData
+ * @interface RemoteDataValue
  */
-export interface RemoteData {
+export interface RemoteDataValue {
     /**
      * 
      * @type {string}
@@ -35,11 +35,13 @@ export interface RemoteData {
     data?: JSONValue;
 }
 
-export function RemoteDataFromJSON(json: JSONValue): RemoteData | null {
+export type RemoteData = RemoteDataValue | null | undefined;
+
+export function RemoteDataFromJSON(json: JSONValue): RemoteData {
     return RemoteDataFromJSONTyped(json);
 }
 
-export function RemoteDataFromJSONTyped(json: JSONValue): RemoteData | null {
+export function RemoteDataFromJSONTyped(json: JSONValue): RemoteData {
     if ((json === undefined) || (json === null)) {
         return null;
     }

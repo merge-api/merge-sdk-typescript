@@ -72,19 +72,19 @@ export interface Issue {
     readonly is_muted?: boolean;
 }
 
-export function IssueFromJSON(json: JSONValue): Issue | null {
+export function IssueFromJSON(json: JSONValue): Issue | undefined {
     return IssueFromJSONTyped(json);
 }
 
-export function IssueFromJSONTyped(json: JSONValue): Issue | null {
+export function IssueFromJSONTyped(json: JSONValue): Issue | undefined {
     if ((json === undefined) || (json === null)) {
-        return null;
+        return undefined;
     }
 
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'status': !exists(json, 'status') ? undefined : IssueStatusEnumFromJSON(json['status']),
+        'status': !exists(json, 'status') ? undefined : IssueStatusEnumFromJSON(json['status']) as IssueStatusEnum,
         'error_description': json['error_description'],
         'end_user': !exists(json, 'end_user') ? undefined : json['end_user'],
         'first_incident_time': !exists(json, 'first_incident_time') ? undefined : (json['first_incident_time'] === null ? null : new Date(json['first_incident_time'])),
@@ -95,7 +95,7 @@ export function IssueFromJSONTyped(json: JSONValue): Issue | null {
 
 export function IssueToJSON(value?: Issue): JSONValue {
     if (value === undefined || value === null) {
-        return null;
+        return undefined;
     }
 
     return {
