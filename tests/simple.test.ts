@@ -1,14 +1,28 @@
 import * as merge_sdk from '../src/index'
+import { Configuration } from '../src/index';
 
-test("can call account details api", async () => {
+// note this is skipped for CI, just here for reference
+test.skip("can call account details api", async () => {
     /*
     REDACTED TEST CONFS
     */
 
-    let test_conf = undefined;
-    let test_conf_crm = undefined;
-    let test_conf_hris = undefined;
-    let test_conf_ticketing = undefined;
+    let test_conf = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED"
+    });
+    let test_conf_crm = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED"
+    });
+    let test_conf_hris = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED"
+    });
+    let test_conf_ticketing = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED"
+    });
 
     // accounting utility call
     let acct_api = new merge_sdk.ATS.AccountDetailsApi(test_conf)
