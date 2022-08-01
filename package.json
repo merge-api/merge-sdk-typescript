@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
-    "prepare": "npm run build",
+    "prepublishOnly": "npm ci --ignore-scripts && npm run build",
     "test": "jest"
   },
   "devDependencies": {
