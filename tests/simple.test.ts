@@ -5,6 +5,11 @@ test("can call account details api", async () => {
     REDACTED TEST CONFS
     */
 
+    let test_conf = undefined;
+    let test_conf_crm = undefined;
+    let test_conf_hris = undefined;
+    let test_conf_ticketing = undefined;
+
     // accounting utility call
     let acct_api = new merge_sdk.ATS.AccountDetailsApi(test_conf)
 
