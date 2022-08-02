@@ -39,10 +39,10 @@ const confAccounting = new Configuration({
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-const acctApi = new merge_sdk.Accounting.AccountsApi(confAccounting);
+const accountsApi = new merge_sdk.Accounting.AccountsApi(confAccounting);
 
 // lists the accounting accounts for customer 1
-let response = await acctApi.accountsList({}).catch((reason) => {
+let response = await accountsApi.accountsList({}).catch((reason) => {
     console.log(reason);
 });
 console.log(response);
@@ -56,10 +56,10 @@ const confAts = new Configuration({
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-const candApi = new merge_sdk.ATS.CandidatesApi(confAts);
+const candidatesApi = new merge_sdk.ATS.CandidatesApi(confAts);
 
 // lists ats candidates for customer 1
-let response = await candApi.candidatesList({}).catch((reason) => {
+let response = await candidatesApi.candidatesList({}).catch((reason) => {
     console.log(reason);
 });
 console.log(response);
@@ -73,10 +73,10 @@ const confCrm = new Configuration({
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-const conApi = new merge_sdk.CRM.ContactsApi(confCrm);
+const contactsApi = new merge_sdk.CRM.ContactsApi(confCrm);
 
 // lists crm contacts for customer 1
-let response = await conApi.contactsList({});
+let response = await contactsApi.contactsList({});
 console.log(response);
 ```
 
@@ -88,10 +88,10 @@ const confHris = new Configuration({
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-const empApi = new merge_sdk.HRIS.EmployeesApi(confHris);
+const employeesApi = new merge_sdk.HRIS.EmployeesApi(confHris);
 
 // list all employess reporting to managerId: x for customer 1
-let response = await empApi.employeesList({
+let response = await employeesApi.employeesList({
     managerId: "REDACTED"
 });
 console.log(response);
@@ -105,10 +105,10 @@ const confTicketing = new Configuration({
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-const tickApi = new merge_sdk.Ticketing.TicketsApi(confTicketing);
+const ticketsApi = new merge_sdk.Ticketing.TicketsApi(confTicketing);
 
 // list all ticketing tickets for customer 1
-let response = await tickApi.ticketsList({});
+let response = await ticketsApi.ticketsList({});
 console.log(response);
 ```
 
