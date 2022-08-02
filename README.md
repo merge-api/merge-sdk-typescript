@@ -34,12 +34,12 @@ examples for calling various category API's:
 #### Accounting
 
 ```
-let confAccounting = new Configuration({
+const confAccounting = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let acctApi = new merge_sdk.Accounting.AccountsApi(confAccounting);
+const acctApi = new merge_sdk.Accounting.AccountsApi(confAccounting);
 
 // lists the accounting accounts for customer 1
 let response = await acctApi.accountsList({}).catch((reason) => {
@@ -51,12 +51,12 @@ console.log(response);
 #### ATS
 
 ```
-let confAts = new Configuration({
+const confAts = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let candApi = new merge_sdk.ATS.CandidatesApi(confAts);
+const candApi = new merge_sdk.ATS.CandidatesApi(confAts);
 
 // lists ats candidates for customer 1
 let response = await candApi.candidatesList({}).catch((reason) => {
@@ -68,12 +68,12 @@ console.log(response);
 #### CRM
 
 ```
-let confCrm = new Configuration({
+const confCrm = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let conApi = new merge_sdk.CRM.ContactsApi(confCrm);
+const conApi = new merge_sdk.CRM.ContactsApi(confCrm);
 
 // lists crm contacts for customer 1
 let response = await conApi.contactsList({});
@@ -83,12 +83,12 @@ console.log(response);
 #### HRIS
 
 ```
-let confHris = new Configuration({
+const confHris = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let empApi = new merge_sdk.HRIS.EmployeesApi(confHris);
+const empApi = new merge_sdk.HRIS.EmployeesApi(confHris);
 
 // list all employess reporting to managerId: x for customer 1
 let response = await empApi.employeesList({
@@ -100,12 +100,12 @@ console.log(response);
 #### Ticketing
 
 ```
-let confTicketing = new Configuration({
+const confTicketing = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let tickApi = new merge_sdk.Ticketing.TicketsApi(confTicketing);
+const tickApi = new merge_sdk.Ticketing.TicketsApi(confTicketing);
 
 // list all ticketing tickets for customer 1
 let response = await tickApi.ticketsList({});
