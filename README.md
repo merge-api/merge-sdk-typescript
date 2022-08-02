@@ -25,24 +25,24 @@ The documentation for various Merge category API's can be found here:
 
 ### Basic Usage
 
-Common to all categories is the Merge sdk `Configuration` object, which defines the authentication properties of 
-your requests. The `apiKey` property is the api key of your Merge account, which can be administered in the 
+Common to all categories is the Merge SDK `Configuration` object, which defines the authentication properties of 
+your requests. The `apiKey` property is the API Key of your Merge account, which can be administered in the 
 [Merge dashboard](https://app.merge.dev/configuration/keys). The `accessToken` property will be the 
 `X-Account-Token` header which identifies which of your customers' data you are requesting. See the following
-examples for calling various category api's:
+examples for calling various category API's:
 
 #### Accounting
 
 ```
-let conf_accounting = new Configuration({
-    apiKey: "REDACTED-YourApiKeyWithMerge",
+let confAccounting = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let acct_api = new merge_sdk.Accounting.AccountsApi(conf_accounting);
+let acctApi = new merge_sdk.Accounting.AccountsApi(confAccounting);
 
 // lists the accounting accounts for customer 1
-let response = await acct_api.accountsList({}).catch((reason) => {
+let response = await acctApi.accountsList({}).catch((reason) => {
     console.log(reason);
 });
 console.log(response);
@@ -51,15 +51,15 @@ console.log(response);
 #### ATS
 
 ```
-let conf_ats = new Configuration({
-    apiKey: "REDACTED-YourApiKeyWithMerge",
+let confAts = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let cand_api = new merge_sdk.ATS.CandidatesApi(conf_ats);
+let candApi = new merge_sdk.ATS.CandidatesApi(confAts);
 
 // lists ats candidates for customer 1
-let response = await cand_api.candidatesList({}).catch((reason) => {
+let response = await candApi.candidatesList({}).catch((reason) => {
     console.log(reason);
 });
 console.log(response);
@@ -68,30 +68,30 @@ console.log(response);
 #### CRM
 
 ```
-let conf_crm = new Configuration({
-    apiKey: "REDACTED-YourApiKeyWithMerge",
+let confCrm = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let con_api = new merge_sdk.CRM.ContactsApi(conf_crm);
+let conApi = new merge_sdk.CRM.ContactsApi(confCrm);
 
 // lists crm contacts for customer 1
-let response = await con_api.contactsList({});
+let response = await conApi.contactsList({});
 console.log(response);
 ```
 
 #### HRIS
 
 ```
-let conf_hris = new Configuration({
-    apiKey: "REDACTED-YourApiKeyWithMerge",
+let confHris = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let emp_api = new merge_sdk.HRIS.EmployeesApi(conf_hris);
+let empApi = new merge_sdk.HRIS.EmployeesApi(confHris);
 
 // list all employess reporting to managerId: x for customer 1
-let response = await emp_api.employeesList({
+let response = await empApi.employeesList({
     managerId: "REDACTED"
 });
 console.log(response);
@@ -100,15 +100,15 @@ console.log(response);
 #### Ticketing
 
 ```
-let conf_ticketing = new Configuration({
-    apiKey: "REDACTED-YourApiKeyWithMerge",
+let confTicketing = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
 });
 
-let tick_api = new merge_sdk.Ticketing.TicketsApi(conf_ticketing);
+let tickApi = new merge_sdk.Ticketing.TicketsApi(confTicketing);
 
 // list all ticketing tickets for customer 1
-let response = await tick_api.ticketsList({});
+let response = await tickApi.ticketsList({});
 console.log(response);
 ```
 
@@ -122,8 +122,8 @@ npm run build
 
 ### Tests
 
-There is a single rough test for the SDK which calls one api from each category. To run it, you must set 
-configuration variables with the relevant api key and access token for each category. Additionally, the HRIS
+There is a single rough test for the SDK which calls one API from each category. To run it, you must set 
+configuration variables with the relevant API key and access token for each category. Additionally, the HRIS
 section of the test checks an optional filtering query parameter.
 
 ### Consuming
