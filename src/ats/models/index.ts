@@ -71,6 +71,7 @@ export * from './Scorecard';
 export * from './SyncStatus';
 export * from './SyncStatusStatusEnum';
 export * from './Tag';
+export * from './UpdateApplicationStageRequest';
 export * from './Url';
 export * from './UrlRequest';
 export * from './UrlTypeEnum';

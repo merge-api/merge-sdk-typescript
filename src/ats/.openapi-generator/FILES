@@ -101,6 +101,7 @@ src/models/Scorecard.ts
 src/models/SyncStatus.ts
 src/models/SyncStatusStatusEnum.ts
 src/models/Tag.ts
+src/models/UpdateApplicationStageRequest.ts
 src/models/Url.ts
 src/models/UrlRequest.ts
 src/models/UrlTypeEnum.ts
