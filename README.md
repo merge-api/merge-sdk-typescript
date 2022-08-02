@@ -23,6 +23,95 @@ The documentation for various Merge category API's can be found here:
 * [HRIS](https://www.merge.dev/docs/hris/overview/) (Human Resource Information Systems)
 * [Ticketing](https://www.merge.dev/docs/ticketing/overview/)
 
+### Basic Usage
+
+Common to all categories is the Merge SDK `Configuration` object, which defines the authentication properties of 
+your requests. The `apiKey` property is the API Key of your Merge account, which can be administered in the 
+[Merge dashboard](https://app.merge.dev/configuration/keys). The `accessToken` property will be the 
+`X-Account-Token` header which identifies which of your customers' data you are requesting. See the following
+examples for calling various category API's:
+
+#### Accounting
+
+```
+const confAccounting = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
+    accessToken: "REDACTED-YourCustomer1Key"
+});
+
+const accountsApi = new merge_sdk.Accounting.AccountsApi(confAccounting);
+
+// lists the accounting accounts for customer 1
+let response = await accountsApi.accountsList({}).catch((reason) => {
+    console.log(reason);
+});
+console.log(response);
+```
+
+#### ATS
+
+```
+const confAts = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
+    accessToken: "REDACTED-YourCustomer1Key"
+});
+
+const candidatesApi = new merge_sdk.ATS.CandidatesApi(confAts);
+
+// lists ats candidates for customer 1
+let response = await candidatesApi.candidatesList({}).catch((reason) => {
+    console.log(reason);
+});
+console.log(response);
+```
+
+#### CRM
+
+```
+const confCrm = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
+    accessToken: "REDACTED-YourCustomer1Key"
+});
+
+const contactsApi = new merge_sdk.CRM.ContactsApi(confCrm);
+
+// lists crm contacts for customer 1
+let response = await contactsApi.contactsList({});
+console.log(response);
+```
+
+#### HRIS
+
+```
+const confHris = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
+    accessToken: "REDACTED-YourCustomer1Key"
+});
+
+const employeesApi = new merge_sdk.HRIS.EmployeesApi(confHris);
+
+// list all employess reporting to managerId: x for customer 1
+let response = await employeesApi.employeesList({
+    managerId: "REDACTED"
+});
+console.log(response);
+```
+
+#### Ticketing
+
+```
+const confTicketing = new Configuration({
+    apiKey: "REDACTED-YourAPIKeyWithMerge",
+    accessToken: "REDACTED-YourCustomer1Key"
+});
+
+const ticketsApi = new merge_sdk.Ticketing.TicketsApi(confTicketing);
+
+// list all ticketing tickets for customer 1
+let response = await ticketsApi.ticketsList({});
+console.log(response);
+```
+
 ### Building
 
 To build and compile the typescript sources to javascript use:
@@ -33,8 +122,8 @@ npm run build
 
 ### Tests
 
-There is a single rough test for the SDK which calls one api from each category. To run it, you must set 
-configuration variables with the relevant api key and access token for each category. Additionally, the HRIS
+There is a single rough test for the SDK which calls one API from each category. To run it, you must set 
+configuration variables with the relevant API key and access token for each category. Additionally, the HRIS
 section of the test checks an optional filtering query parameter.
 
 ### Consuming

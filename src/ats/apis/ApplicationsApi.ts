@@ -28,12 +28,22 @@ import {
     MetaResponseFromJSON,
     MetaResponseToJSON,
     
+    UpdateApplicationStageRequest,
+    UpdateApplicationStageRequestFromJSON,
+    UpdateApplicationStageRequestToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
+
+export interface ApplicationsChangeStageCreateRequest {
+    id: string;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+    updateApplicationStageRequest?: UpdateApplicationStageRequest;
+}
 
 export interface ApplicationsCreateRequest {
     applicationEndpointRequest: ApplicationEndpointRequest;
@@ -72,6 +82,56 @@ export interface ApplicationsRetrieveRequest {
  * 
  */
 export class ApplicationsApi extends runtime.BaseAPI {
+
+    /**
+     * Updates the `current_stage` field of an `Application` object
+     */
+    async applicationsChangeStageCreateRaw(requestParameters: ApplicationsChangeStageCreateRequest): Promise<runtime.ApiResponse<ApplicationResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling applicationsChangeStageCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/applications/{id}/change-stage`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateApplicationStageRequestToJSON(requestParameters.updateApplicationStageRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ApplicationResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates the `current_stage` field of an `Application` object
+     */
+    async applicationsChangeStageCreate(requestParameters: ApplicationsChangeStageCreateRequest): Promise<ApplicationResponse | undefined> {
+        const response = await this.applicationsChangeStageCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Creates an `Application` object with the given values.

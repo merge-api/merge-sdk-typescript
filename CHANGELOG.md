@@ -1,3 +1,10 @@
+# Version 2.0.1
+
+## Date: 2022-08-02
+
+- Update README with examples of usage for each of the categories in this sdk
+- Add ATS.ApplicationsApi `applicationsChangeStageCreate` method, which updates a candidate's application from one stage to another (i.e. phone screen -> onsite)
+
 # Version 2.0.0
 
 ## Date: 2022-07-29
