@@ -1,6 +1,6 @@
 {
   "name": "@mergeapi/merge-sdk-typescript",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "NodeJS client for Merge API, Inc's unified API's.",
   "author": "hello@merge.dev",
   "main": "./dist/index.js",
@@ -8,6 +8,7 @@
   "files": [
     "dist"
   ],
+  "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "prepublishOnly": "npm ci --ignore-scripts && npm run build",
