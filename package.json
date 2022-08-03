@@ -8,6 +8,7 @@
   "files": [
     "dist"
   ],
+  "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
     "prepublishOnly": "npm ci --ignore-scripts && npm run build",
