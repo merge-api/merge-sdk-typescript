@@ -1,3 +1,8 @@
+# Version 2.0.2
+
+- Build issues discovered by a customer that were patched, thank you @james-langille
+- Fix readme version
+
 # Version 2.0.1
 
 ## Date: 2022-08-02
