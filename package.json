@@ -10,9 +10,10 @@
   ],
   "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
-    "build": "tsc -p ./tsconfig.json",
+    "build": "rm -rf dist && tsc -p ./tsconfig.json",
     "prepublishOnly": "npm ci --ignore-scripts && npm run build",
-    "test": "jest"
+    "test": "jest",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",
