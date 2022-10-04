@@ -59,7 +59,7 @@ export interface Attachment {
      * @type {string}
      * @memberof Attachment
      */
-    ticket?: string | null;
+    ticket?: string | JSONValue | null;
     /**
      * The attachment's url.
      * @type {string}

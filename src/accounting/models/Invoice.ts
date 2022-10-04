@@ -77,7 +77,7 @@ export interface Invoice {
      * @type {string}
      * @memberof Invoice
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * The invoice's number.
      * @type {string}
@@ -155,13 +155,13 @@ export interface Invoice {
      * @type {Array<string>}
      * @memberof Invoice
      */
-    payments?: Array<string>;
+    payments?: Array<string> | JSONValue;
     /**
      * 
      * @type {Array<InvoiceLineItem>}
      * @memberof Invoice
      */
-    readonly line_items?: Array<InvoiceLineItem>;
+    readonly line_items?: Array<InvoiceLineItem> | JSONValue;
     /**
      * 
      * @type {boolean}

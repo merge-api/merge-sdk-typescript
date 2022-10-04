@@ -47,6 +47,7 @@ export interface LeadsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: LeadsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -58,6 +59,7 @@ export interface LeadsListRequest {
 
 export interface LeadsRetrieveRequest {
     id: string;
+    expand?: LeadsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -140,6 +142,10 @@ export class LeadsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -244,6 +250,10 @@ export class LeadsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -277,4 +287,31 @@ export class LeadsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum LeadsListExpandEnum {
+    ConvertedAccount = 'converted_account',
+    ConvertedContact = 'converted_contact',
+    ConvertedContactconvertedAccount = 'converted_contact,converted_account',
+    Owner = 'owner',
+    OwnerconvertedAccount = 'owner,converted_account',
+    OwnerconvertedContact = 'owner,converted_contact',
+    OwnerconvertedContactconvertedAccount = 'owner,converted_contact,converted_account'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum LeadsRetrieveExpandEnum {
+    ConvertedAccount = 'converted_account',
+    ConvertedContact = 'converted_contact',
+    ConvertedContactconvertedAccount = 'converted_contact,converted_account',
+    Owner = 'owner',
+    OwnerconvertedAccount = 'owner,converted_account',
+    OwnerconvertedContact = 'owner,converted_contact',
+    OwnerconvertedContactconvertedAccount = 'owner,converted_contact,converted_account'
 }

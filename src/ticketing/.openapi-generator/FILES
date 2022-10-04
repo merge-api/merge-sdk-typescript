@@ -54,11 +54,15 @@ src/models/MetaResponse.ts
 src/models/MethodEnum.ts
 src/models/ModelOperation.ts
 src/models/MultipartFormFieldRequest.ts
+src/models/PatchedTicketEndpointRequest.ts
+src/models/PatchedTicketRequest.ts
+src/models/PriorityEnum.ts
 src/models/Project.ts
 src/models/RemoteKey.ts
 src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts
 src/models/RequestFormatEnum.ts
+src/models/ResponseTypeEnum.ts
 src/models/SyncStatus.ts
 src/models/SyncStatusStatusEnum.ts
 src/models/Tag.ts

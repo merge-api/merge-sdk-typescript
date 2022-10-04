@@ -30,6 +30,7 @@ export interface TeamsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: TeamsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -41,6 +42,7 @@ export interface TeamsListRequest {
 
 export interface TeamsRetrieveRequest {
     id: string;
+    expand?: TeamsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -65,6 +67,10 @@ export class TeamsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -134,6 +140,10 @@ export class TeamsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -167,4 +177,19 @@ export class TeamsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum TeamsListExpandEnum {
+    ParentTeam = 'parent_team'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum TeamsRetrieveExpandEnum {
+    ParentTeam = 'parent_team'
 }

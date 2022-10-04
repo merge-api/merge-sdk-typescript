@@ -30,6 +30,7 @@ export interface ExpensesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: ExpensesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -40,6 +41,7 @@ export interface ExpensesListRequest {
 
 export interface ExpensesRetrieveRequest {
     id: string;
+    expand?: ExpensesRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -64,6 +66,10 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -129,6 +135,10 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -162,4 +172,23 @@ export class ExpensesApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum ExpensesListExpandEnum {
+    Account = 'account',
+    Accountcontact = 'account,contact',
+    Contact = 'contact'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum ExpensesRetrieveExpandEnum {
+    Account = 'account',
+    Accountcontact = 'account,contact',
+    Contact = 'contact'
 }

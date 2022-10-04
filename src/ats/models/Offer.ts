@@ -56,13 +56,13 @@ export interface Offer {
      * @type {string}
      * @memberof Offer
      */
-    application?: string | null;
+    application?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Offer
      */
-    creator?: string | null;
+    creator?: string | JSONValue | null;
     /**
      * When the third party's offer was created.
      * @type {Date}

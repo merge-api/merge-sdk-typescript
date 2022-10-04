@@ -119,13 +119,13 @@ export interface CompanyInfo {
      * @type {Array<Address>}
      * @memberof CompanyInfo
      */
-    addresses?: Array<Address>;
+    addresses?: Array<Address> | JSONValue;
     /**
      * 
      * @type {Array<AccountingPhoneNumber>}
      * @memberof CompanyInfo
      */
-    phone_numbers?: Array<AccountingPhoneNumber>;
+    phone_numbers?: Array<AccountingPhoneNumber> | JSONValue;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}

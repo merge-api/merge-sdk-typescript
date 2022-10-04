@@ -115,6 +115,12 @@ export interface Account {
      */
     account_number?: string | null;
     /**
+     * 
+     * @type {string}
+     * @memberof Account
+     */
+    parent_account?: string | null;
+    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Account
@@ -144,6 +150,7 @@ export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
         'current_balance': !exists(json, 'current_balance') ? undefined : json['current_balance'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'account_number': !exists(json, 'account_number') ? undefined : json['account_number'],
+        'parent_account': !exists(json, 'parent_account') ? undefined : json['parent_account'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
@@ -164,6 +171,7 @@ export function AccountToJSON(value?: Account): JSONValue {
         'current_balance': value.current_balance,
         'currency': CurrencyEnumToJSON(value.currency),
         'account_number': value.account_number,
+        'parent_account': value.parent_account,
     };
 }
 

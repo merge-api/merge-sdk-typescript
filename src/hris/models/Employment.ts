@@ -75,7 +75,7 @@ export interface Employment {
      * @type {string}
      * @memberof Employment
      */
-    employee?: string | null;
+    employee?: string | JSONValue | null;
     /**
      * The position's title.
      * @type {string}
@@ -111,7 +111,7 @@ export interface Employment {
      * @type {string}
      * @memberof Employment
      */
-    pay_group?: string | null;
+    pay_group?: string | JSONValue | null;
     /**
      * The position's FLSA status.
      * @type {FlsaStatusEnum}

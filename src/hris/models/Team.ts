@@ -59,7 +59,7 @@ export interface Team {
      * @type {string}
      * @memberof Team
      */
-    parent_team?: string | null;
+    parent_team?: string | JSONValue | null;
     /**
      * 
      * @type {Array<RemoteData>}

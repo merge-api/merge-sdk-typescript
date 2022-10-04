@@ -81,9 +81,9 @@ export class AddressesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum AddressesRetrieveRemoteFieldsEnum {
     Type = 'type'
 }

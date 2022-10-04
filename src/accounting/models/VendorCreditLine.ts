@@ -55,7 +55,7 @@ export interface VendorCreditLine {
      * @type {string}
      * @memberof VendorCreditLine
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
 }
 
 export function VendorCreditLineFromJSON(json: JSONValue): VendorCreditLine | undefined {

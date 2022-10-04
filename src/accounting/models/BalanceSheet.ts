@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    CurrencyEnum,
+    CurrencyEnumFromJSON,
+    CurrencyEnumFromJSONTyped,
+    CurrencyEnumToJSON,
     
     ReportItem,
     ReportItemFromJSON,
@@ -64,6 +68,12 @@ export interface BalanceSheet {
      * @memberof BalanceSheet
      */
     name?: string | null;
+    /**
+     * The balance sheet's currency.
+     * @type {CurrencyEnum}
+     * @memberof BalanceSheet
+     */
+    currency?: CurrencyEnum | null;
     /**
      * The balance sheet's date. The balance sheet data will reflect the company's financial position this point in time.
      * @type {Date}
@@ -123,6 +133,7 @@ export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | undef
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'date': !exists(json, 'date') ? undefined : (json['date'] === null ? null : new Date(json['date'])),
         'net_assets': !exists(json, 'net_assets') ? undefined : json['net_assets'],
         'assets': !exists(json, 'assets') ? undefined : ((json['assets'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
@@ -142,6 +153,7 @@ export function BalanceSheetToJSON(value?: BalanceSheet): JSONValue {
         
         'remote_id': value.remote_id,
         'name': value.name,
+        'currency': CurrencyEnumToJSON(value.currency),
         'date': value.date === undefined ? undefined : (value.date === null ? null : value.date.toISOString()),
         'net_assets': value.net_assets,
         'remote_generated_at': value.remote_generated_at === undefined ? undefined : (value.remote_generated_at === null ? null : value.remote_generated_at.toISOString()),

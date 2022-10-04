@@ -175,16 +175,16 @@ export class LocationsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum LocationsListRemoteFieldsEnum {
     LocationType = 'location_type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum LocationsRetrieveRemoteFieldsEnum {
     LocationType = 'location_type'
 }

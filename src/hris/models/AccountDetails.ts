@@ -82,6 +82,12 @@ export interface AccountDetails {
      * @memberof AccountDetails
      */
     readonly webhook_listener_url?: string;
+    /**
+     * Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.
+     * @type {boolean}
+     * @memberof AccountDetails
+     */
+    readonly is_duplicate?: boolean | null;
 }
 
 export function AccountDetailsFromJSON(json: JSONValue): AccountDetails | undefined {
@@ -104,6 +110,7 @@ export function AccountDetailsFromJSONTyped(json: JSONValue): AccountDetails | u
         'end_user_email_address': !exists(json, 'end_user_email_address') ? undefined : json['end_user_email_address'],
         'status': !exists(json, 'status') ? undefined : json['status'],
         'webhook_listener_url': !exists(json, 'webhook_listener_url') ? undefined : json['webhook_listener_url'],
+        'is_duplicate': !exists(json, 'is_duplicate') ? undefined : json['is_duplicate'],
     };
 }
 

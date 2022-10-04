@@ -79,13 +79,13 @@ export interface Expense {
      * @type {string}
      * @memberof Expense
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Expense
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * The expense's total amount.
      * @type {number}

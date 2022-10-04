@@ -200,18 +200,18 @@ export class PayrollRunsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum PayrollRunsListRemoteFieldsEnum {
     State = 'run_state',
     StaterunType = 'run_state,run_type',
     Type = 'run_type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum PayrollRunsListRunTypeEnum {
     Correction = 'CORRECTION',
     OffCycle = 'OFF_CYCLE',
@@ -220,9 +220,9 @@ export enum PayrollRunsListRunTypeEnum {
     Termination = 'TERMINATION'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum PayrollRunsRetrieveRemoteFieldsEnum {
     State = 'run_state',
     StaterunType = 'run_state,run_type',

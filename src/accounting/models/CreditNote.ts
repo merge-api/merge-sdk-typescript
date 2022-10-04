@@ -131,7 +131,7 @@ export interface CreditNote {
      * @type {Array<string>}
      * @memberof CreditNote
      */
-    payments?: Array<string>;
+    payments?: Array<string> | JSONValue;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}

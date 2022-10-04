@@ -56,19 +56,19 @@ export interface Scorecard {
      * @type {string}
      * @memberof Scorecard
      */
-    application?: string | null;
+    application?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Scorecard
      */
-    interview?: string | null;
+    interview?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Scorecard
      */
-    interviewer?: string | null;
+    interviewer?: string | JSONValue | null;
     /**
      * When the third party's scorecard was created.
      * @type {Date}

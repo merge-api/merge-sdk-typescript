@@ -77,7 +77,7 @@ export interface Contact {
      * @type {string}
      * @memberof Contact
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {Array<RemoteData>}

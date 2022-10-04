@@ -90,6 +90,12 @@ export interface AccountDetailsAndActions {
      */
     webhook_listener_url: string;
     /**
+     * Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is `null` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.
+     * @type {boolean}
+     * @memberof AccountDetailsAndActions
+     */
+    is_duplicate?: boolean | null;
+    /**
      * 
      * @type {AccountDetailsAndActionsIntegration}
      * @memberof AccountDetailsAndActions
@@ -116,6 +122,7 @@ export function AccountDetailsAndActionsFromJSONTyped(json: JSONValue): AccountD
         'end_user_organization_name': json['end_user_organization_name'],
         'end_user_email_address': json['end_user_email_address'],
         'webhook_listener_url': json['webhook_listener_url'],
+        'is_duplicate': !exists(json, 'is_duplicate') ? undefined : json['is_duplicate'],
         'integration': !exists(json, 'integration') ? undefined : AccountDetailsAndActionsIntegrationFromJSON(json['integration']) as AccountDetailsAndActionsIntegration,
     };
 }
@@ -135,6 +142,7 @@ export function AccountDetailsAndActionsToJSON(value?: AccountDetailsAndActions)
         'end_user_organization_name': value.end_user_organization_name,
         'end_user_email_address': value.end_user_email_address,
         'webhook_listener_url': value.webhook_listener_url,
+        'is_duplicate': value.is_duplicate,
         'integration': AccountDetailsAndActionsIntegrationToJSON(value.integration),
     };
 }

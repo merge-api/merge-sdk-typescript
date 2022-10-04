@@ -71,7 +71,13 @@ export interface User {
      * @type {Array<string>}
      * @memberof User
      */
-    teams?: Array<string>;
+    teams?: Array<string> | JSONValue;
+    /**
+     * The user's avatar picture.
+     * @type {string}
+     * @memberof User
+     */
+    avatar?: string | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -103,6 +109,7 @@ export function UserFromJSONTyped(json: JSONValue): User | undefined {
         'email_address': !exists(json, 'email_address') ? undefined : json['email_address'],
         'is_active': !exists(json, 'is_active') ? undefined : json['is_active'],
         'teams': !exists(json, 'teams') ? undefined : json['teams'],
+        'avatar': !exists(json, 'avatar') ? undefined : json['avatar'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -120,6 +127,7 @@ export function UserToJSON(value?: User): JSONValue {
         'email_address': value.email_address,
         'is_active': value.is_active,
         'teams': value.teams,
+        'avatar': value.avatar,
     };
 }
 

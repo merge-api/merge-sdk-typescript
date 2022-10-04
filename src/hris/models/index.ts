@@ -60,6 +60,7 @@ export * from './RemoteKeyForRegenerationRequest';
 export * from './RemoteResponse';
 export * from './RequestFormatEnum';
 export * from './RequestTypeEnum';
+export * from './ResponseTypeEnum';
 export * from './RunStateEnum';
 export * from './RunTypeEnum';
 export * from './SyncStatus';

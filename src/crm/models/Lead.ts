@@ -64,7 +64,7 @@ export interface Lead {
      * @type {string}
      * @memberof Lead
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
      * The lead's source.
      * @type {string}
@@ -136,13 +136,13 @@ export interface Lead {
      * @type {string}
      * @memberof Lead
      */
-    converted_contact?: string | null;
+    converted_contact?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Lead
      */
-    converted_account?: string | null;
+    converted_account?: string | JSONValue | null;
     /**
      * 
      * @type {Array<RemoteData>}

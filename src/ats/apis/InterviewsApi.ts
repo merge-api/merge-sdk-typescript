@@ -31,6 +31,7 @@ export interface InterviewsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: InterviewsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     jobInterviewStageId?: string;
@@ -44,6 +45,7 @@ export interface InterviewsListRequest {
 
 export interface InterviewsRetrieveRequest {
     id: string;
+    expand?: InterviewsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: InterviewsRetrieveRemoteFieldsEnum;
 }
@@ -73,6 +75,10 @@ export class InterviewsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -150,6 +156,10 @@ export class InterviewsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -190,16 +200,58 @@ export class InterviewsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum InterviewsListExpandEnum {
+    Application = 'application',
+    ApplicationjobInterviewStage = 'application,job_interview_stage',
+    Interviewers = 'interviewers',
+    Interviewersapplication = 'interviewers,application',
+    InterviewersapplicationjobInterviewStage = 'interviewers,application,job_interview_stage',
+    InterviewersjobInterviewStage = 'interviewers,job_interview_stage',
+    Interviewersorganizer = 'interviewers,organizer',
+    Interviewersorganizerapplication = 'interviewers,organizer,application',
+    InterviewersorganizerapplicationjobInterviewStage = 'interviewers,organizer,application,job_interview_stage',
+    InterviewersorganizerjobInterviewStage = 'interviewers,organizer,job_interview_stage',
+    JobInterviewStage = 'job_interview_stage',
+    Organizer = 'organizer',
+    Organizerapplication = 'organizer,application',
+    OrganizerapplicationjobInterviewStage = 'organizer,application,job_interview_stage',
+    OrganizerjobInterviewStage = 'organizer,job_interview_stage'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum InterviewsListRemoteFieldsEnum {
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum InterviewsRetrieveExpandEnum {
+    Application = 'application',
+    ApplicationjobInterviewStage = 'application,job_interview_stage',
+    Interviewers = 'interviewers',
+    Interviewersapplication = 'interviewers,application',
+    InterviewersapplicationjobInterviewStage = 'interviewers,application,job_interview_stage',
+    InterviewersjobInterviewStage = 'interviewers,job_interview_stage',
+    Interviewersorganizer = 'interviewers,organizer',
+    Interviewersorganizerapplication = 'interviewers,organizer,application',
+    InterviewersorganizerapplicationjobInterviewStage = 'interviewers,organizer,application,job_interview_stage',
+    InterviewersorganizerjobInterviewStage = 'interviewers,organizer,job_interview_stage',
+    JobInterviewStage = 'job_interview_stage',
+    Organizer = 'organizer',
+    Organizerapplication = 'organizer,application',
+    OrganizerapplicationjobInterviewStage = 'organizer,application,job_interview_stage',
+    OrganizerjobInterviewStage = 'organizer,job_interview_stage'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum InterviewsRetrieveRemoteFieldsEnum {
     Status = 'status'
 }

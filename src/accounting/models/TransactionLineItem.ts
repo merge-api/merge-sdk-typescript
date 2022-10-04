@@ -16,7 +16,12 @@ import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 
 /**
+ * # The TransactionLineItem Object
+ * ### Description
+ * The `TransactionLineItem` object is used to represent a transaction's line items.
  * 
+ * ### Usage Example
+ * Fetch from the `GET TransactionLineItem` endpoint and view the transaction's line items.
  * @export
  * @interface TransactionLineItem
  */
@@ -44,7 +49,7 @@ export interface TransactionLineItem {
      * @type {string}
      * @memberof TransactionLineItem
      */
-    item?: string | null;
+    item?: string | JSONValue | null;
     /**
      * The line item's account.
      * @type {string}

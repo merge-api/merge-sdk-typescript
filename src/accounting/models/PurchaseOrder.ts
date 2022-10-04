@@ -89,7 +89,7 @@ export interface PurchaseOrder {
      * @type {string}
      * @memberof PurchaseOrder
      */
-    delivery_address?: string | null;
+    delivery_address?: string | JSONValue | null;
     /**
      * The purchase order's customer.
      * @type {string}
@@ -125,7 +125,7 @@ export interface PurchaseOrder {
      * @type {Array<PurchaseOrderLineItem>}
      * @memberof PurchaseOrder
      */
-    readonly line_items?: Array<PurchaseOrderLineItem>;
+    readonly line_items?: Array<PurchaseOrderLineItem> | JSONValue;
     /**
      * When the third party's purchase order note was created.
      * @type {Date}

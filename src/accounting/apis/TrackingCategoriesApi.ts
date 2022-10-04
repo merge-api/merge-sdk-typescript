@@ -175,16 +175,16 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum TrackingCategoriesListRemoteFieldsEnum {
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum TrackingCategoriesRetrieveRemoteFieldsEnum {
     Status = 'status'
 }

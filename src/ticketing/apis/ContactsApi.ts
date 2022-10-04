@@ -30,6 +30,7 @@ export interface ContactsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: ContactsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -40,6 +41,7 @@ export interface ContactsListRequest {
 
 export interface ContactsRetrieveRequest {
     id: string;
+    expand?: ContactsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -64,6 +66,10 @@ export class ContactsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -129,6 +135,10 @@ export class ContactsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -162,4 +172,19 @@ export class ContactsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum ContactsListExpandEnum {
+    Account = 'account'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum ContactsRetrieveExpandEnum {
+    Account = 'account'
 }

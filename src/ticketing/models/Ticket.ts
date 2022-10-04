@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    PriorityEnum,
+    PriorityEnumFromJSON,
+    PriorityEnumFromJSONTyped,
+    PriorityEnumToJSON,
     
     TicketStatusEnum,
     TicketStatusEnumFromJSON,
@@ -63,7 +67,7 @@ export interface Ticket {
      * @type {Array<string>}
      * @memberof Ticket
      */
-    assignees?: Array<string>;
+    assignees?: Array<string> | JSONValue;
     /**
      * The ticket's due date.
      * @type {Date}
@@ -87,7 +91,7 @@ export interface Ticket {
      * @type {string}
      * @memberof Ticket
      */
-    project?: string | null;
+    project?: string | JSONValue | null;
     /**
      * The ticket's type.
      * @type {string}
@@ -99,25 +103,25 @@ export interface Ticket {
      * @type {string}
      * @memberof Ticket
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Ticket
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Ticket
      */
-    parent_ticket?: string | null;
+    parent_ticket?: string | JSONValue | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof Ticket
      */
-    attachments?: Array<string>;
+    attachments?: Array<string> | JSONValue;
     /**
      * 
      * @type {Array<string>}
@@ -137,6 +141,12 @@ export interface Ticket {
      */
     remote_updated_at?: Date | null;
     /**
+     * When the ticket was completed.
+     * @type {Date}
+     * @memberof Ticket
+     */
+    completed_at?: Date | null;
+    /**
      * 
      * @type {Array<RemoteData>}
      * @memberof Ticket
@@ -148,6 +158,18 @@ export interface Ticket {
      * @memberof Ticket
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * The 3rd party url of the Ticket.
+     * @type {string}
+     * @memberof Ticket
+     */
+    ticket_url?: string | null;
+    /**
+     * The priority or urgency of the Ticket. Possible values include: URGENT, HIGH, NORMAL, LOW - in cases where there is no clear mapping - the original value passed through.
+     * @type {PriorityEnum}
+     * @memberof Ticket
+     */
+    priority?: PriorityEnum | null;
 }
 
 export function TicketFromJSON(json: JSONValue): Ticket | undefined {
@@ -177,8 +199,11 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
+        'completed_at': !exists(json, 'completed_at') ? undefined : (json['completed_at'] === null ? null : new Date(json['completed_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
+        'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
     };
 }
 
@@ -204,6 +229,9 @@ export function TicketToJSON(value?: Ticket): JSONValue {
         'tags': value.tags,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
+        'completed_at': value.completed_at === undefined ? undefined : (value.completed_at === null ? null : value.completed_at.toISOString()),
+        'ticket_url': value.ticket_url,
+        'priority': PriorityEnumToJSON(value.priority),
     };
 }
 

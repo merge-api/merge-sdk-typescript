@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    CurrencyEnum,
+    CurrencyEnumFromJSON,
+    CurrencyEnumFromJSONTyped,
+    CurrencyEnumToJSON,
     
     ReportItem,
     ReportItemFromJSON,
@@ -64,6 +68,12 @@ export interface CashFlowStatement {
      * @memberof CashFlowStatement
      */
     name?: string | null;
+    /**
+     * The cash flow statement's currency.
+     * @type {CurrencyEnum}
+     * @memberof CashFlowStatement
+     */
+    currency?: CurrencyEnum | null;
     /**
      * The cash flow statement's start period.
      * @type {Date}
@@ -135,6 +145,7 @@ export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStateme
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'start_period': !exists(json, 'start_period') ? undefined : (json['start_period'] === null ? null : new Date(json['start_period'])),
         'end_period': !exists(json, 'end_period') ? undefined : (json['end_period'] === null ? null : new Date(json['end_period'])),
         'cash_at_beginning_of_period': !exists(json, 'cash_at_beginning_of_period') ? undefined : json['cash_at_beginning_of_period'],
@@ -156,6 +167,7 @@ export function CashFlowStatementToJSON(value?: CashFlowStatement): JSONValue {
         
         'remote_id': value.remote_id,
         'name': value.name,
+        'currency': CurrencyEnumToJSON(value.currency),
         'start_period': value.start_period === undefined ? undefined : (value.start_period === null ? null : value.start_period.toISOString()),
         'end_period': value.end_period === undefined ? undefined : (value.end_period === null ? null : value.end_period.toISOString()),
         'cash_at_beginning_of_period': value.cash_at_beginning_of_period,

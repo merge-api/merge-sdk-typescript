@@ -60,7 +60,7 @@ export interface Account {
      * @type {string}
      * @memberof Account
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
      * The account's name.
      * @type {string}

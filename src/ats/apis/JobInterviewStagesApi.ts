@@ -30,6 +30,7 @@ export interface JobInterviewStagesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: JobInterviewStagesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     jobId?: string;
@@ -41,6 +42,7 @@ export interface JobInterviewStagesListRequest {
 
 export interface JobInterviewStagesRetrieveRequest {
     id: string;
+    expand?: JobInterviewStagesRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -65,6 +67,10 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -134,6 +140,10 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -167,4 +177,19 @@ export class JobInterviewStagesApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum JobInterviewStagesListExpandEnum {
+    Job = 'job'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum JobInterviewStagesRetrieveExpandEnum {
+    Job = 'job'
 }

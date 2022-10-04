@@ -19,6 +19,8 @@ import {
     ProjectFromJSON,
     ProjectToJSON,
     User,
+    UserFromJSON,
+    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -46,6 +48,7 @@ export interface ProjectsRetrieveRequest {
 export interface ProjectsUsersListRequest {
     id: string;
     cursor?: string;
+    expand?: ProjectsUsersListExpandEnum;
     includeRemoteData?: boolean;
     pageSize?: number;
 }
@@ -183,6 +186,10 @@ export class ProjectsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -220,4 +227,12 @@ export class ProjectsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum ProjectsUsersListExpandEnum {
+    Teams = 'teams'
 }

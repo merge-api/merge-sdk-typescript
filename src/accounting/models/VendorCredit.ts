@@ -79,7 +79,7 @@ export interface VendorCredit {
      * @type {string}
      * @memberof VendorCredit
      */
-    vendor?: string | null;
+    vendor?: string | JSONValue | null;
     /**
      * The vendor credit's total amount.
      * @type {number}
@@ -97,7 +97,7 @@ export interface VendorCredit {
      * @type {Array<VendorCreditLine>}
      * @memberof VendorCredit
      */
-    readonly lines?: Array<VendorCreditLine>;
+    readonly lines?: Array<VendorCreditLine> | JSONValue;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}

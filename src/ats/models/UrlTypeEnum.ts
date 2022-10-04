@@ -23,7 +23,8 @@ export enum UrlTypeEnum {
     Portfolio = 'PORTFOLIO',
     Blog = 'BLOG',
     SocialMedia = 'SOCIAL_MEDIA',
-    Other = 'OTHER'
+    Other = 'OTHER',
+    JobPosting = 'JOB_POSTING'
 }
 
 export function UrlTypeEnumFromJSON(json: any): UrlTypeEnum {

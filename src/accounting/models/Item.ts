@@ -87,13 +87,13 @@ export interface Item {
      * @type {string}
      * @memberof Item
      */
-    purchase_account?: string | null;
+    purchase_account?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Item
      */
-    sales_account?: string | null;
+    sales_account?: string | JSONValue | null;
     /**
      * When the third party's item note was updated.
      * @type {Date}

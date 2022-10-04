@@ -58,7 +58,7 @@ export interface JobInterviewStage {
      * @type {string}
      * @memberof JobInterviewStage
      */
-    job?: string | null;
+    job?: string | JSONValue | null;
     /**
      * 
      * @type {Array<RemoteData>}

@@ -53,13 +53,13 @@ export interface Comment {
      * @type {string}
      * @memberof Comment
      */
-    user?: string | null;
+    user?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Comment
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * The comment's text body.
      * @type {string}
@@ -77,7 +77,7 @@ export interface Comment {
      * @type {string}
      * @memberof Comment
      */
-    ticket?: string | null;
+    ticket?: string | JSONValue | null;
     /**
      * Whether or not the comment is internal.
      * @type {boolean}

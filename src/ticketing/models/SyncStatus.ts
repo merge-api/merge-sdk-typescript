@@ -50,13 +50,13 @@ export interface SyncStatus {
      * @type {Date}
      * @memberof SyncStatus
      */
-    last_sync_start: Date;
+    last_sync_start?: Date;
     /**
      * 
      * @type {Date}
      * @memberof SyncStatus
      */
-    next_sync_start: Date;
+    next_sync_start?: Date;
     /**
      * 
      * @type {SyncStatusStatusEnum}
@@ -84,8 +84,8 @@ export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus | undefined
         
         'model_name': json['model_name'],
         'model_id': json['model_id'],
-        'last_sync_start': (new Date(json['last_sync_start'])),
-        'next_sync_start': (new Date(json['next_sync_start'])),
+        'last_sync_start': !exists(json, 'last_sync_start') ? undefined : (new Date(json['last_sync_start'])),
+        'next_sync_start': !exists(json, 'next_sync_start') ? undefined : (new Date(json['next_sync_start'])),
         'status': SyncStatusStatusEnumFromJSON(json['status']) as SyncStatusStatusEnum,
         'is_initial_sync': json['is_initial_sync'],
     };
@@ -100,8 +100,8 @@ export function SyncStatusToJSON(value?: SyncStatus): JSONValue {
         
         'model_name': value.model_name,
         'model_id': value.model_id,
-        'last_sync_start': (value.last_sync_start.toISOString()),
-        'next_sync_start': (value.next_sync_start.toISOString()),
+        'last_sync_start': value.last_sync_start === undefined ? undefined : (value.last_sync_start.toISOString()),
+        'next_sync_start': value.next_sync_start === undefined ? undefined : (value.next_sync_start.toISOString()),
         'status': SyncStatusStatusEnumToJSON(value.status),
         'is_initial_sync': value.is_initial_sync,
     };

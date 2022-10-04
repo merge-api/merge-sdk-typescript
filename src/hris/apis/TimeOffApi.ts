@@ -47,6 +47,7 @@ export interface TimeOffListRequest {
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
+    expand?: TimeOffListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -60,6 +61,7 @@ export interface TimeOffListRequest {
 
 export interface TimeOffRetrieveRequest {
     id: string;
+    expand?: TimeOffRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: TimeOffRetrieveRemoteFieldsEnum;
 }
@@ -143,6 +145,10 @@ export class TimeOffApi extends runtime.BaseAPI {
 
         if (requestParameters.employeeId !== undefined) {
             queryParameters['employee_id'] = requestParameters.employeeId;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -255,6 +261,10 @@ export class TimeOffApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -295,9 +305,18 @@ export class TimeOffApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum TimeOffListExpandEnum {
+    Approver = 'approver',
+    Employee = 'employee',
+    Employeeapprover = 'employee,approver'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TimeOffListRemoteFieldsEnum {
     RequestType = 'request_type',
     RequestTypestatus = 'request_type,status',
@@ -308,9 +327,9 @@ export enum TimeOffListRemoteFieldsEnum {
     Units = 'units'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum TimeOffListRequestTypeEnum {
     Bereavement = 'BEREAVEMENT',
     JuryDuty = 'JURY_DUTY',
@@ -320,9 +339,9 @@ export enum TimeOffListRequestTypeEnum {
     Volunteer = 'VOLUNTEER'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum TimeOffListStatusEnum {
     Approved = 'APPROVED',
     Cancelled = 'CANCELLED',
@@ -331,9 +350,18 @@ export enum TimeOffListStatusEnum {
     Requested = 'REQUESTED'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum TimeOffRetrieveExpandEnum {
+    Approver = 'approver',
+    Employee = 'employee',
+    Employeeapprover = 'employee,approver'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TimeOffRetrieveRemoteFieldsEnum {
     RequestType = 'request_type',
     RequestTypestatus = 'request_type,status',

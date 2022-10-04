@@ -18,6 +18,9 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    PatchedTicketEndpointRequest,
+    PatchedTicketEndpointRequestFromJSON,
+    PatchedTicketEndpointRequestToJSON,
     Ticket,
     TicketFromJSON,
     TicketToJSON,
@@ -28,6 +31,8 @@ import {
     TicketResponseFromJSON,
     TicketResponseToJSON,
     User,
+    UserFromJSON,
+    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -38,6 +43,7 @@ import {
 export interface TicketsCollaboratorsListRequest {
     id: string;
     cursor?: string;
+    expand?: TicketsCollaboratorsListExpandEnum;
     includeRemoteData?: boolean;
     pageSize?: number;
 }
@@ -53,6 +59,7 @@ export interface TicketsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: TicketsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -63,8 +70,20 @@ export interface TicketsListRequest {
     remoteId?: string | null;
 }
 
+export interface TicketsMetaPatchRetrieveRequest {
+    id: string;
+}
+
+export interface TicketsPartialUpdateRequest {
+    id: string;
+    patchedTicketEndpointRequest: PatchedTicketEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
+
 export interface TicketsRetrieveRequest {
     id: string;
+    expand?: TicketsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: TicketsRetrieveRemoteFieldsEnum;
 }
@@ -86,6 +105,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
@@ -197,6 +220,10 @@ export class TicketsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeDeletedData !== undefined) {
             queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
         }
@@ -259,6 +286,45 @@ export class TicketsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns metadata for `Ticket` PATCHs.
+     */
+    async ticketsMetaPatchRetrieveRaw(requestParameters: TicketsMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsMetaPatchRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ticketing/v1/tickets/meta/patch/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Ticket` PATCHs.
+     */
+    async ticketsMetaPatchRetrieve(requestParameters: TicketsMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.ticketsMetaPatchRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns metadata for `Ticket` POSTs.
      */
     async ticketsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
@@ -294,6 +360,58 @@ export class TicketsApi extends runtime.BaseAPI {
     }
 
     /**
+     */
+    async ticketsPartialUpdateRaw(requestParameters: TicketsPartialUpdateRequest): Promise<runtime.ApiResponse<TicketResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsPartialUpdate.');
+        }
+
+        if (requestParameters.patchedTicketEndpointRequest === null || requestParameters.patchedTicketEndpointRequest === undefined) {
+            throw new runtime.RequiredError('patchedTicketEndpointRequest','Required parameter requestParameters.patchedTicketEndpointRequest was null or undefined when calling ticketsPartialUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ticketing/v1/tickets/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchedTicketEndpointRequestToJSON(requestParameters.patchedTicketEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TicketResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async ticketsPartialUpdate(requestParameters: TicketsPartialUpdateRequest): Promise<TicketResponse | undefined> {
+        const response = await this.ticketsPartialUpdateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns a `Ticket` object with the given `id`.
      */
     async ticketsRetrieveRaw(requestParameters: TicketsRetrieveRequest): Promise<runtime.ApiResponse<Ticket | undefined>> {
@@ -302,6 +420,10 @@ export class TicketsApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
@@ -343,16 +465,161 @@ export class TicketsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum TicketsCollaboratorsListExpandEnum {
+    Teams = 'teams'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum TicketsListExpandEnum {
+    Account = 'account',
+    Accountcontact = 'account,contact',
+    AccountcontactparentTicket = 'account,contact,parent_ticket',
+    AccountparentTicket = 'account,parent_ticket',
+    Assignees = 'assignees',
+    Assigneesaccount = 'assignees,account',
+    Assigneesaccountcontact = 'assignees,account,contact',
+    AssigneesaccountcontactparentTicket = 'assignees,account,contact,parent_ticket',
+    AssigneesaccountparentTicket = 'assignees,account,parent_ticket',
+    Assigneescontact = 'assignees,contact',
+    AssigneescontactparentTicket = 'assignees,contact,parent_ticket',
+    AssigneesparentTicket = 'assignees,parent_ticket',
+    Assigneesproject = 'assignees,project',
+    Assigneesprojectaccount = 'assignees,project,account',
+    Assigneesprojectaccountcontact = 'assignees,project,account,contact',
+    AssigneesprojectaccountcontactparentTicket = 'assignees,project,account,contact,parent_ticket',
+    AssigneesprojectaccountparentTicket = 'assignees,project,account,parent_ticket',
+    Assigneesprojectcontact = 'assignees,project,contact',
+    AssigneesprojectcontactparentTicket = 'assignees,project,contact,parent_ticket',
+    AssigneesprojectparentTicket = 'assignees,project,parent_ticket',
+    Attachments = 'attachments',
+    Attachmentsaccount = 'attachments,account',
+    Attachmentsaccountcontact = 'attachments,account,contact',
+    AttachmentsaccountcontactparentTicket = 'attachments,account,contact,parent_ticket',
+    AttachmentsaccountparentTicket = 'attachments,account,parent_ticket',
+    Attachmentsassignees = 'attachments,assignees',
+    Attachmentsassigneesaccount = 'attachments,assignees,account',
+    Attachmentsassigneesaccountcontact = 'attachments,assignees,account,contact',
+    AttachmentsassigneesaccountcontactparentTicket = 'attachments,assignees,account,contact,parent_ticket',
+    AttachmentsassigneesaccountparentTicket = 'attachments,assignees,account,parent_ticket',
+    Attachmentsassigneescontact = 'attachments,assignees,contact',
+    AttachmentsassigneescontactparentTicket = 'attachments,assignees,contact,parent_ticket',
+    AttachmentsassigneesparentTicket = 'attachments,assignees,parent_ticket',
+    Attachmentsassigneesproject = 'attachments,assignees,project',
+    Attachmentsassigneesprojectaccount = 'attachments,assignees,project,account',
+    Attachmentsassigneesprojectaccountcontact = 'attachments,assignees,project,account,contact',
+    AttachmentsassigneesprojectaccountcontactparentTicket = 'attachments,assignees,project,account,contact,parent_ticket',
+    AttachmentsassigneesprojectaccountparentTicket = 'attachments,assignees,project,account,parent_ticket',
+    Attachmentsassigneesprojectcontact = 'attachments,assignees,project,contact',
+    AttachmentsassigneesprojectcontactparentTicket = 'attachments,assignees,project,contact,parent_ticket',
+    AttachmentsassigneesprojectparentTicket = 'attachments,assignees,project,parent_ticket',
+    Attachmentscontact = 'attachments,contact',
+    AttachmentscontactparentTicket = 'attachments,contact,parent_ticket',
+    AttachmentsparentTicket = 'attachments,parent_ticket',
+    Attachmentsproject = 'attachments,project',
+    Attachmentsprojectaccount = 'attachments,project,account',
+    Attachmentsprojectaccountcontact = 'attachments,project,account,contact',
+    AttachmentsprojectaccountcontactparentTicket = 'attachments,project,account,contact,parent_ticket',
+    AttachmentsprojectaccountparentTicket = 'attachments,project,account,parent_ticket',
+    Attachmentsprojectcontact = 'attachments,project,contact',
+    AttachmentsprojectcontactparentTicket = 'attachments,project,contact,parent_ticket',
+    AttachmentsprojectparentTicket = 'attachments,project,parent_ticket',
+    Contact = 'contact',
+    ContactparentTicket = 'contact,parent_ticket',
+    ParentTicket = 'parent_ticket',
+    Project = 'project',
+    Projectaccount = 'project,account',
+    Projectaccountcontact = 'project,account,contact',
+    ProjectaccountcontactparentTicket = 'project,account,contact,parent_ticket',
+    ProjectaccountparentTicket = 'project,account,parent_ticket',
+    Projectcontact = 'project,contact',
+    ProjectcontactparentTicket = 'project,contact,parent_ticket',
+    ProjectparentTicket = 'project,parent_ticket'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TicketsListRemoteFieldsEnum {
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum TicketsRetrieveExpandEnum {
+    Account = 'account',
+    Accountcontact = 'account,contact',
+    AccountcontactparentTicket = 'account,contact,parent_ticket',
+    AccountparentTicket = 'account,parent_ticket',
+    Assignees = 'assignees',
+    Assigneesaccount = 'assignees,account',
+    Assigneesaccountcontact = 'assignees,account,contact',
+    AssigneesaccountcontactparentTicket = 'assignees,account,contact,parent_ticket',
+    AssigneesaccountparentTicket = 'assignees,account,parent_ticket',
+    Assigneescontact = 'assignees,contact',
+    AssigneescontactparentTicket = 'assignees,contact,parent_ticket',
+    AssigneesparentTicket = 'assignees,parent_ticket',
+    Assigneesproject = 'assignees,project',
+    Assigneesprojectaccount = 'assignees,project,account',
+    Assigneesprojectaccountcontact = 'assignees,project,account,contact',
+    AssigneesprojectaccountcontactparentTicket = 'assignees,project,account,contact,parent_ticket',
+    AssigneesprojectaccountparentTicket = 'assignees,project,account,parent_ticket',
+    Assigneesprojectcontact = 'assignees,project,contact',
+    AssigneesprojectcontactparentTicket = 'assignees,project,contact,parent_ticket',
+    AssigneesprojectparentTicket = 'assignees,project,parent_ticket',
+    Attachments = 'attachments',
+    Attachmentsaccount = 'attachments,account',
+    Attachmentsaccountcontact = 'attachments,account,contact',
+    AttachmentsaccountcontactparentTicket = 'attachments,account,contact,parent_ticket',
+    AttachmentsaccountparentTicket = 'attachments,account,parent_ticket',
+    Attachmentsassignees = 'attachments,assignees',
+    Attachmentsassigneesaccount = 'attachments,assignees,account',
+    Attachmentsassigneesaccountcontact = 'attachments,assignees,account,contact',
+    AttachmentsassigneesaccountcontactparentTicket = 'attachments,assignees,account,contact,parent_ticket',
+    AttachmentsassigneesaccountparentTicket = 'attachments,assignees,account,parent_ticket',
+    Attachmentsassigneescontact = 'attachments,assignees,contact',
+    AttachmentsassigneescontactparentTicket = 'attachments,assignees,contact,parent_ticket',
+    AttachmentsassigneesparentTicket = 'attachments,assignees,parent_ticket',
+    Attachmentsassigneesproject = 'attachments,assignees,project',
+    Attachmentsassigneesprojectaccount = 'attachments,assignees,project,account',
+    Attachmentsassigneesprojectaccountcontact = 'attachments,assignees,project,account,contact',
+    AttachmentsassigneesprojectaccountcontactparentTicket = 'attachments,assignees,project,account,contact,parent_ticket',
+    AttachmentsassigneesprojectaccountparentTicket = 'attachments,assignees,project,account,parent_ticket',
+    Attachmentsassigneesprojectcontact = 'attachments,assignees,project,contact',
+    AttachmentsassigneesprojectcontactparentTicket = 'attachments,assignees,project,contact,parent_ticket',
+    AttachmentsassigneesprojectparentTicket = 'attachments,assignees,project,parent_ticket',
+    Attachmentscontact = 'attachments,contact',
+    AttachmentscontactparentTicket = 'attachments,contact,parent_ticket',
+    AttachmentsparentTicket = 'attachments,parent_ticket',
+    Attachmentsproject = 'attachments,project',
+    Attachmentsprojectaccount = 'attachments,project,account',
+    Attachmentsprojectaccountcontact = 'attachments,project,account,contact',
+    AttachmentsprojectaccountcontactparentTicket = 'attachments,project,account,contact,parent_ticket',
+    AttachmentsprojectaccountparentTicket = 'attachments,project,account,parent_ticket',
+    Attachmentsprojectcontact = 'attachments,project,contact',
+    AttachmentsprojectcontactparentTicket = 'attachments,project,contact,parent_ticket',
+    AttachmentsprojectparentTicket = 'attachments,project,parent_ticket',
+    Contact = 'contact',
+    ContactparentTicket = 'contact,parent_ticket',
+    ParentTicket = 'parent_ticket',
+    Project = 'project',
+    Projectaccount = 'project,account',
+    Projectaccountcontact = 'project,account,contact',
+    ProjectaccountcontactparentTicket = 'project,account,contact,parent_ticket',
+    ProjectaccountparentTicket = 'project,account,parent_ticket',
+    Projectcontact = 'project,contact',
+    ProjectcontactparentTicket = 'project,contact,parent_ticket',
+    ProjectparentTicket = 'project,parent_ticket'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TicketsRetrieveRemoteFieldsEnum {
     Status = 'status'
 }

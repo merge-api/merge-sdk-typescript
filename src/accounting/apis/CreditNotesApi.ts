@@ -30,6 +30,7 @@ export interface CreditNotesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: CreditNotesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -41,6 +42,7 @@ export interface CreditNotesListRequest {
 
 export interface CreditNotesRetrieveRequest {
     id: string;
+    expand?: CreditNotesRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: CreditNotesRetrieveRemoteFieldsEnum;
 }
@@ -66,6 +68,10 @@ export class CreditNotesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -135,6 +141,10 @@ export class CreditNotesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -175,18 +185,32 @@ export class CreditNotesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum CreditNotesListExpandEnum {
+    Payments = 'payments'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum CreditNotesListRemoteFieldsEnum {
     Status = 'status',
     Statustype = 'status,type',
     Type = 'type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum CreditNotesRetrieveExpandEnum {
+    Payments = 'payments'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum CreditNotesRetrieveRemoteFieldsEnum {
     Status = 'status',
     Statustype = 'status,type',

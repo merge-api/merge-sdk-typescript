@@ -20,6 +20,10 @@ import {
     JobStatusEnumFromJSONTyped,
     JobStatusEnumToJSON,
     
+    Url,
+    UrlFromJSON,
+    UrlFromJSONTyped,
+    UrlToJSON,
 } from './';
 import {
 	RemoteData,
@@ -76,6 +80,12 @@ export interface Job {
      */
     status?: JobStatusEnum | null;
     /**
+     * 
+     * @type {Array<Url>}
+     * @memberof Job
+     */
+    job_posting_urls?: Array<Url>;
+    /**
      * When the third party's job was created.
      * @type {Date}
      * @memberof Job
@@ -98,25 +108,25 @@ export interface Job {
      * @type {Array<string>}
      * @memberof Job
      */
-    departments?: Array<string>;
+    departments?: Array<string> | JSONValue;
     /**
      * IDs of `Office` objects for this `Job`.
      * @type {Array<string>}
      * @memberof Job
      */
-    offices?: Array<string>;
+    offices?: Array<string> | JSONValue;
     /**
      * IDs of `RemoteUser` objects that serve as hiring managers for this `Job`.
      * @type {Array<string>}
      * @memberof Job
      */
-    hiring_managers?: Array<string>;
+    hiring_managers?: Array<string> | JSONValue;
     /**
      * IDs of `RemoteUser` objects that serve as recruiters for this `Job`.
      * @type {Array<string>}
      * @memberof Job
      */
-    recruiters?: Array<string>;
+    recruiters?: Array<string> | JSONValue;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -148,6 +158,7 @@ export function JobFromJSONTyped(json: JSONValue): Job | undefined {
         'description': !exists(json, 'description') ? undefined : json['description'],
         'code': !exists(json, 'code') ? undefined : json['code'],
         'status': !exists(json, 'status') ? undefined : JobStatusEnumFromJSON(json['status']) as JobStatusEnum,
+        'job_posting_urls': !exists(json, 'job_posting_urls') ? undefined : ((json['job_posting_urls'] as Array<JSONValue>).map(UrlFromJSON)) as Array<Url>,
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'confidential': !exists(json, 'confidential') ? undefined : json['confidential'],
@@ -172,6 +183,7 @@ export function JobToJSON(value?: Job): JSONValue {
         'description': value.description,
         'code': value.code,
         'status': JobStatusEnumToJSON(value.status),
+        'job_posting_urls': value.job_posting_urls === undefined ? undefined : ((value.job_posting_urls as Array<any>).map(UrlToJSON)),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'confidential': value.confidential,

@@ -45,6 +45,7 @@ export interface CommentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: CommentsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -56,6 +57,7 @@ export interface CommentsListRequest {
 
 export interface CommentsRetrieveRequest {
     id: string;
+    expand?: CommentsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -130,6 +132,10 @@ export class CommentsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -234,6 +240,10 @@ export class CommentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -267,4 +277,31 @@ export class CommentsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum CommentsListExpandEnum {
+    Contact = 'contact',
+    Contactticket = 'contact,ticket',
+    Ticket = 'ticket',
+    User = 'user',
+    Usercontact = 'user,contact',
+    Usercontactticket = 'user,contact,ticket',
+    Userticket = 'user,ticket'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum CommentsRetrieveExpandEnum {
+    Contact = 'contact',
+    Contactticket = 'contact,ticket',
+    Ticket = 'ticket',
+    User = 'user',
+    Usercontact = 'user,contact',
+    Usercontactticket = 'user,contact,ticket',
+    Userticket = 'user,ticket'
 }

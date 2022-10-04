@@ -68,7 +68,7 @@ export interface EEOC {
      * @type {string}
      * @memberof EEOC
      */
-    candidate?: string | null;
+    candidate?: string | JSONValue | null;
     /**
      * When the information was submitted.
      * @type {Date}

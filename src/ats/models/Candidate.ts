@@ -148,13 +148,13 @@ export interface Candidate {
      * @type {Array<string>}
      * @memberof Candidate
      */
-    applications?: Array<string>;
+    applications?: Array<string> | JSONValue;
     /**
      * Array of `Attachment` object IDs.
      * @type {Array<string>}
      * @memberof Candidate
      */
-    attachments?: Array<string>;
+    attachments?: Array<string> | JSONValue;
     /**
      * 
      * @type {Array<RemoteData>}

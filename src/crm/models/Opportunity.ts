@@ -74,19 +74,19 @@ export interface Opportunity {
      * @type {string}
      * @memberof Opportunity
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Opportunity
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Opportunity
      */
-    stage?: string | null;
+    stage?: string | JSONValue | null;
     /**
      * The opportunity's status.
      * @type {OpportunityStatusEnum}

@@ -46,6 +46,7 @@ export interface InvoicesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: InvoicesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -58,6 +59,7 @@ export interface InvoicesListRequest {
 
 export interface InvoicesRetrieveRequest {
     id: string;
+    expand?: InvoicesRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: InvoicesRetrieveRemoteFieldsEnum;
 }
@@ -137,6 +139,10 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -245,6 +251,10 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -285,26 +295,50 @@ export class InvoicesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum InvoicesListExpandEnum {
+    Contact = 'contact',
+    LineItems = 'line_items',
+    LineItemscontact = 'line_items,contact',
+    Payments = 'payments',
+    Paymentscontact = 'payments,contact',
+    PaymentslineItems = 'payments,line_items',
+    PaymentslineItemscontact = 'payments,line_items,contact'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum InvoicesListRemoteFieldsEnum {
     Type = 'type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum InvoicesListTypeEnum {
-    Empty = '',
-    AccountsPayable = 'ACCOUNTS_PAYABLE',
-    AccountsReceivable = 'ACCOUNTS_RECEIVABLE',
-    Null = 'null'
+    Payable = 'ACCOUNTS_PAYABLE',
+    Receivable = 'ACCOUNTS_RECEIVABLE'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum InvoicesRetrieveExpandEnum {
+    Contact = 'contact',
+    LineItems = 'line_items',
+    LineItemscontact = 'line_items,contact',
+    Payments = 'payments',
+    Paymentscontact = 'payments,contact',
+    PaymentslineItems = 'payments,line_items',
+    PaymentslineItemscontact = 'payments,line_items,contact'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum InvoicesRetrieveRemoteFieldsEnum {
     Type = 'type'
 }

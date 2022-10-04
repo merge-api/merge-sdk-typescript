@@ -53,7 +53,7 @@ export interface Benefit {
      * @type {string}
      * @memberof Benefit
      */
-    employee?: string | null;
+    employee?: string | JSONValue | null;
     /**
      * The name of the benefit provider.
      * @type {string}

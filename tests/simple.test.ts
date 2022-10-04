@@ -48,11 +48,11 @@ test.skip("can call account details api", async () => {
     let emp_api = new merge_sdk.HRIS.EmployeesApi(test_conf_hris)
 
     let response3 = await emp_api.employeesList({
-        managerId: "REDACTED"
+        expand: merge_sdk.HRIS.EmployeesListExpandEnum.Company
     })
 
-    console.log(response3)
     expect(response3).toBeDefined()
+    console.log(response3?.results?.[0]?.company)
 
     // crm call
     let con_api = new merge_sdk.CRM.ContactsApi(test_conf_crm)

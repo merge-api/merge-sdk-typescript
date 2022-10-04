@@ -33,6 +33,7 @@ export interface BankInfoListRequest {
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
+    expand?: BankInfoListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -45,6 +46,7 @@ export interface BankInfoListRequest {
 
 export interface BankInfoRetrieveRequest {
     id: string;
+    expand?: BankInfoRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: BankInfoRetrieveRemoteFieldsEnum;
 }
@@ -82,6 +84,10 @@ export class BankInfoApi extends runtime.BaseAPI {
 
         if (requestParameters.employeeId !== undefined) {
             queryParameters['employee_id'] = requestParameters.employeeId;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -155,6 +161,10 @@ export class BankInfoApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -195,32 +205,46 @@ export class BankInfoApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum BankInfoListAccountTypeEnum {
     Checking = 'CHECKING',
     Savings = 'SAVINGS'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum BankInfoListExpandEnum {
+    Employee = 'employee'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum BankInfoListOrderByEnum {
     RemoteCreatedAtDESC = '-remote_created_at',
     RemoteCreatedAtASC = 'remote_created_at'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum BankInfoListRemoteFieldsEnum {
     AccountType = 'account_type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum BankInfoRetrieveExpandEnum {
+    Employee = 'employee'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum BankInfoRetrieveRemoteFieldsEnum {
     AccountType = 'account_type'
 }

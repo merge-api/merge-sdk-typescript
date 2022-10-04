@@ -56,25 +56,25 @@ export interface ScheduledInterview {
      * @type {string}
      * @memberof ScheduledInterview
      */
-    application?: string | null;
+    application?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof ScheduledInterview
      */
-    job_interview_stage?: string | null;
+    job_interview_stage?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof ScheduledInterview
      */
-    organizer?: string | null;
+    organizer?: string | JSONValue | null;
     /**
      * Array of `RemoteUser` IDs.
      * @type {Array<string>}
      * @memberof ScheduledInterview
      */
-    interviewers?: Array<string>;
+    interviewers?: Array<string> | JSONValue;
     /**
      * The interview's location.
      * @type {string}

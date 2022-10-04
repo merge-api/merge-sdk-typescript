@@ -30,6 +30,7 @@ export interface CompanyInfoListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: CompanyInfoListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -40,6 +41,7 @@ export interface CompanyInfoListRequest {
 
 export interface CompanyInfoRetrieveRequest {
     id: string;
+    expand?: CompanyInfoRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -64,6 +66,10 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -129,6 +135,10 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -162,4 +172,23 @@ export class CompanyInfoApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum CompanyInfoListExpandEnum {
+    Addresses = 'addresses',
+    AddressesphoneNumbers = 'addresses,phone_numbers',
+    PhoneNumbers = 'phone_numbers'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum CompanyInfoRetrieveExpandEnum {
+    Addresses = 'addresses',
+    AddressesphoneNumbers = 'addresses,phone_numbers',
+    PhoneNumbers = 'phone_numbers'
 }

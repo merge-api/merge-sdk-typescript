@@ -29,7 +29,7 @@ import {
  */
 export interface EndUserDetailsRequest {
     /**
-     * Unique ID for your end user.
+     * Your end user's email address.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */
@@ -41,7 +41,7 @@ export interface EndUserDetailsRequest {
      */
     end_user_organization_name: string;
     /**
-     * Your end user's email address.
+     * Unique ID for your end user.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */
