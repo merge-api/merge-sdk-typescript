@@ -49,7 +49,7 @@ export interface PurchaseOrderLineItem {
      * @type {string}
      * @memberof PurchaseOrderLineItem
      */
-    item?: string | null;
+    item?: string | JSONValue | null;
     /**
      * The purchase order line item's account.
      * @type {string}

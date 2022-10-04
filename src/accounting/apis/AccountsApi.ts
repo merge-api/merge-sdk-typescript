@@ -175,18 +175,18 @@ export class AccountsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum AccountsListRemoteFieldsEnum {
     Classification = 'classification',
     Classificationstatus = 'classification,status',
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum AccountsRetrieveRemoteFieldsEnum {
     Classification = 'classification',
     Classificationstatus = 'classification,status',

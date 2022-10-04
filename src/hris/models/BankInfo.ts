@@ -57,7 +57,7 @@ export interface BankInfo {
      * @type {string}
      * @memberof BankInfo
      */
-    employee?: string | null;
+    employee?: string | JSONValue | null;
     /**
      * The account number.
      * @type {string}

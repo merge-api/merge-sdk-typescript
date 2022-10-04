@@ -76,25 +76,25 @@ export interface Contact {
      * @type {string}
      * @memberof Contact
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {Array<Address>}
      * @memberof Contact
      */
-    readonly addresses?: Array<Address>;
+    addresses?: Array<Address>;
     /**
      * 
      * @type {Array<EmailAddress>}
      * @memberof Contact
      */
-    readonly email_addresses?: Array<EmailAddress>;
+    email_addresses?: Array<EmailAddress>;
     /**
      * 
      * @type {Array<PhoneNumber>}
      * @memberof Contact
      */
-    readonly phone_numbers?: Array<PhoneNumber>;
+    phone_numbers?: Array<PhoneNumber>;
     /**
      * When the contact's last activity occurred.
      * @type {Date}
@@ -158,6 +158,9 @@ export function ContactToJSON(value?: Contact): JSONValue {
         'first_name': value.first_name,
         'last_name': value.last_name,
         'account': value.account,
+        'addresses': value.addresses === undefined ? undefined : ((value.addresses as Array<any>).map(AddressToJSON)),
+        'email_addresses': value.email_addresses === undefined ? undefined : ((value.email_addresses as Array<any>).map(EmailAddressToJSON)),
+        'phone_numbers': value.phone_numbers === undefined ? undefined : ((value.phone_numbers as Array<any>).map(PhoneNumberToJSON)),
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
     };

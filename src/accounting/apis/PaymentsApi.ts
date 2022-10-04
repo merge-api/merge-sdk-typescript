@@ -32,6 +32,7 @@ export interface PaymentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: PaymentsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -42,6 +43,7 @@ export interface PaymentsListRequest {
 
 export interface PaymentsRetrieveRequest {
     id: string;
+    expand?: PaymentsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -74,6 +76,10 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -139,6 +145,10 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -172,4 +182,23 @@ export class PaymentsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum PaymentsListExpandEnum {
+    Account = 'account',
+    Contact = 'contact',
+    Contactaccount = 'contact,account'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum PaymentsRetrieveExpandEnum {
+    Account = 'account',
+    Contact = 'contact',
+    Contactaccount = 'contact,account'
 }

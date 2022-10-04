@@ -67,19 +67,19 @@ export interface InvoiceLineItem {
      * @type {string}
      * @memberof InvoiceLineItem
      */
-    item?: string | null;
+    item?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof InvoiceLineItem
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof InvoiceLineItem
      */
-    tracking_category?: string | null;
+    tracking_category?: string | JSONValue | null;
 }
 
 export function InvoiceLineItemFromJSON(json: JSONValue): InvoiceLineItem | undefined {

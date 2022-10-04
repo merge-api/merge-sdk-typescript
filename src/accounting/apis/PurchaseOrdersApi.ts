@@ -30,6 +30,7 @@ export interface PurchaseOrdersListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: PurchaseOrdersListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -41,6 +42,7 @@ export interface PurchaseOrdersListRequest {
 
 export interface PurchaseOrdersRetrieveRequest {
     id: string;
+    expand?: PurchaseOrdersRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: PurchaseOrdersRetrieveRemoteFieldsEnum;
 }
@@ -66,6 +68,10 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -135,6 +141,10 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -175,16 +185,34 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum PurchaseOrdersListExpandEnum {
+    DeliveryAddress = 'delivery_address',
+    LineItems = 'line_items',
+    LineItemsdeliveryAddress = 'line_items,delivery_address'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum PurchaseOrdersListRemoteFieldsEnum {
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum PurchaseOrdersRetrieveExpandEnum {
+    DeliveryAddress = 'delivery_address',
+    LineItems = 'line_items',
+    LineItemsdeliveryAddress = 'line_items,delivery_address'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum PurchaseOrdersRetrieveRemoteFieldsEnum {
     Status = 'status'
 }

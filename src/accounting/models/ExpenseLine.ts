@@ -37,7 +37,7 @@ export interface ExpenseLine {
      * @type {string}
      * @memberof ExpenseLine
      */
-    item?: string | null;
+    item?: string | JSONValue | null;
     /**
      * The line's net amount.
      * @type {number}
@@ -49,13 +49,13 @@ export interface ExpenseLine {
      * @type {string}
      * @memberof ExpenseLine
      */
-    tracking_category?: string | null;
+    tracking_category?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof ExpenseLine
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * The line item's description.
      * @type {string}

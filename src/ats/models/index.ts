@@ -65,6 +65,7 @@ export * from './RemoteKeyForRegenerationRequest';
 export * from './RemoteResponse';
 export * from './RemoteUser';
 export * from './RequestFormatEnum';
+export * from './ResponseTypeEnum';
 export * from './ScheduledInterview';
 export * from './ScheduledInterviewStatusEnum';
 export * from './Scorecard';

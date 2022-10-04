@@ -46,6 +46,7 @@ export interface AttachmentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: AttachmentsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -57,6 +58,7 @@ export interface AttachmentsListRequest {
 
 export interface AttachmentsRetrieveRequest {
     id: string;
+    expand?: AttachmentsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: AttachmentsRetrieveRemoteFieldsEnum;
 }
@@ -136,6 +138,10 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -240,6 +246,10 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -280,16 +290,30 @@ export class AttachmentsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum AttachmentsListExpandEnum {
+    Candidate = 'candidate'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum AttachmentsListRemoteFieldsEnum {
     AttachmentType = 'attachment_type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum AttachmentsRetrieveExpandEnum {
+    Candidate = 'candidate'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum AttachmentsRetrieveRemoteFieldsEnum {
     AttachmentType = 'attachment_type'
 }

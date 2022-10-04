@@ -34,7 +34,12 @@ import {
 
 
 /**
+ * # The Transaction Object
+ * ### Description
+ * The `Transaction` object is used to represent a company's transactions.
  * 
+ * ### Usage Example
+ * Fetch from the `GET Transaction` endpoint and view a company's transactions.
  * @export
  * @interface Transaction
  */
@@ -104,7 +109,7 @@ export interface Transaction {
      * @type {Array<TransactionLineItem>}
      * @memberof Transaction
      */
-    readonly line_items?: Array<TransactionLineItem>;
+    readonly line_items?: Array<TransactionLineItem> | JSONValue;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}

@@ -50,6 +50,7 @@ src/models/BalanceSheet.ts
 src/models/CashFlowStatement.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
+src/models/CategoryTypeEnum.ts
 src/models/ClassificationEnum.ts
 src/models/CompanyInfo.ts
 src/models/Contact.ts
@@ -99,6 +100,7 @@ src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts
 src/models/ReportItem.ts
 src/models/RequestFormatEnum.ts
+src/models/ResponseTypeEnum.ts
 src/models/StateEnum.ts
 src/models/Status7d1Enum.ts
 src/models/SyncStatus.ts

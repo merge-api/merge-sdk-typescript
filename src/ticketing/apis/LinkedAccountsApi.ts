@@ -32,6 +32,7 @@ export interface LinkedAccountsListRequest {
     endUserOriginIds?: string;
     id?: string;
     ids?: string;
+    includeDuplicates?: boolean;
     integrationName?: string;
     isTestAccount?: string;
     pageSize?: number;
@@ -79,6 +80,10 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
 
         if (requestParameters.ids !== undefined) {
             queryParameters['ids'] = requestParameters.ids;
+        }
+
+        if (requestParameters.includeDuplicates !== undefined) {
+            queryParameters['include_duplicates'] = requestParameters.includeDuplicates;
         }
 
         if (requestParameters.integrationName !== undefined) {
@@ -129,9 +134,9 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum LinkedAccountsListCategoryEnum {
     Accounting = 'accounting',
     Ats = 'ats',

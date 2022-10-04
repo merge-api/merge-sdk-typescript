@@ -47,6 +47,7 @@ export interface NotesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: NotesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -59,6 +60,7 @@ export interface NotesListRequest {
 
 export interface NotesRetrieveRequest {
     id: string;
+    expand?: NotesRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -141,6 +143,10 @@ export class NotesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -249,6 +255,10 @@ export class NotesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -282,4 +292,47 @@ export class NotesApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum NotesListExpandEnum {
+    Account = 'account',
+    Accountopportunity = 'account,opportunity',
+    Contact = 'contact',
+    Contactaccount = 'contact,account',
+    Contactaccountopportunity = 'contact,account,opportunity',
+    Contactopportunity = 'contact,opportunity',
+    Opportunity = 'opportunity',
+    Owner = 'owner',
+    Owneraccount = 'owner,account',
+    Owneraccountopportunity = 'owner,account,opportunity',
+    Ownercontact = 'owner,contact',
+    Ownercontactaccount = 'owner,contact,account',
+    Ownercontactaccountopportunity = 'owner,contact,account,opportunity',
+    Ownercontactopportunity = 'owner,contact,opportunity',
+    Owneropportunity = 'owner,opportunity'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum NotesRetrieveExpandEnum {
+    Account = 'account',
+    Accountopportunity = 'account,opportunity',
+    Contact = 'contact',
+    Contactaccount = 'contact,account',
+    Contactaccountopportunity = 'contact,account,opportunity',
+    Contactopportunity = 'contact,opportunity',
+    Opportunity = 'opportunity',
+    Owner = 'owner',
+    Owneraccount = 'owner,account',
+    Owneraccountopportunity = 'owner,account,opportunity',
+    Ownercontact = 'owner,contact',
+    Ownercontactaccount = 'owner,contact,account',
+    Ownercontactaccountopportunity = 'owner,contact,account,opportunity',
+    Ownercontactopportunity = 'owner,contact,opportunity',
+    Owneropportunity = 'owner,opportunity'
 }

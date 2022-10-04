@@ -175,16 +175,16 @@ export class GroupsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum GroupsListRemoteFieldsEnum {
     Type = 'type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum GroupsRetrieveRemoteFieldsEnum {
     Type = 'type'
 }

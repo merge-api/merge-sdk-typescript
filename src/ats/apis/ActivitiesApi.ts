@@ -30,6 +30,7 @@ export interface ActivitiesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: ActivitiesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -42,6 +43,7 @@ export interface ActivitiesListRequest {
 
 export interface ActivitiesRetrieveRequest {
     id: string;
+    expand?: ActivitiesRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: ActivitiesRetrieveRemoteFieldsEnum;
 }
@@ -67,6 +69,10 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -140,6 +146,10 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -180,18 +190,32 @@ export class ActivitiesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum ActivitiesListExpandEnum {
+    User = 'user'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ActivitiesListRemoteFieldsEnum {
     ActivityType = 'activity_type',
     ActivityTypevisibility = 'activity_type,visibility',
     Visibility = 'visibility'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum ActivitiesRetrieveExpandEnum {
+    User = 'user'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ActivitiesRetrieveRemoteFieldsEnum {
     ActivityType = 'activity_type',
     ActivityTypevisibility = 'activity_type,visibility',

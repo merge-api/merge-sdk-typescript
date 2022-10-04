@@ -75,11 +75,17 @@ export interface JournalEntry {
      */
     remote_created_at?: Date | null;
     /**
+     * When the third party's journal entry was updated.
+     * @type {Date}
+     * @memberof JournalEntry
+     */
+    remote_updated_at?: Date | null;
+    /**
      * Array of `Payment` object IDs.
      * @type {Array<string>}
      * @memberof JournalEntry
      */
-    payments?: Array<string>;
+    payments?: Array<string> | JSONValue;
     /**
      * The journal entry's private note.
      * @type {string}
@@ -97,7 +103,7 @@ export interface JournalEntry {
      * @type {Array<JournalLine>}
      * @memberof JournalEntry
      */
-    readonly lines?: Array<JournalLine>;
+    readonly lines?: Array<JournalLine> | JSONValue;
     /**
      * 
      * @type {boolean}
@@ -122,6 +128,7 @@ export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry | undef
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
+        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
@@ -140,6 +147,7 @@ export function JournalEntryToJSON(value?: JournalEntry): JSONValue {
         'remote_id': value.remote_id,
         'transaction_date': value.transaction_date === undefined ? undefined : (value.transaction_date === null ? null : value.transaction_date.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'payments': value.payments,
         'memo': value.memo,
         'currency': CurrencyEnumToJSON(value.currency),

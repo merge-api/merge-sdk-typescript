@@ -52,6 +52,12 @@ export interface JournalEntryRequest {
      */
     remote_created_at?: Date | null;
     /**
+     * When the third party's journal entry was updated.
+     * @type {Date}
+     * @memberof JournalEntryRequest
+     */
+    remote_updated_at?: Date | null;
+    /**
      * Array of `Payment` object IDs.
      * @type {Array<string>}
      * @memberof JournalEntryRequest
@@ -85,6 +91,7 @@ export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryR
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
+        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
@@ -101,6 +108,7 @@ export function JournalEntryRequestToJSON(value?: JournalEntryRequest): JSONValu
         'remote_id': value.remote_id,
         'transaction_date': value.transaction_date === undefined ? undefined : (value.transaction_date === null ? null : value.transaction_date.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'payments': value.payments,
         'memo': value.memo,
         'currency': CurrencyEnumToJSON(value.currency),

@@ -19,7 +19,9 @@
  */
 export enum TicketStatusEnum {
     Open = 'OPEN',
-    Closed = 'CLOSED'
+    Closed = 'CLOSED',
+    InProgress = 'IN_PROGRESS',
+    OnHold = 'ON_HOLD'
 }
 
 export function TicketStatusEnumFromJSON(json: any): TicketStatusEnum {

@@ -1,3 +1,8 @@
+# Version 2.0.3
+
+- Adds the expands functionality, for certain API calls (refer to docs.merge.dev), you can add `expand: ENUM_VALUE` to change a flat id to a full sub object
+- Fields that are expanded are returned as merge_sdk.JSONValue type, if you wish to deserialize it to that type you can use the `MODEL_NAMEFromJSON(raw_json_value)` methods, i.e. `CandidateFromJSON` or `EmployeeFromJSON`
+
 # Version 2.0.2
 
 - Build issues discovered by a customer that were patched, thank you @james-langille

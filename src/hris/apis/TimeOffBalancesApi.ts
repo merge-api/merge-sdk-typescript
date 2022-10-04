@@ -31,6 +31,7 @@ export interface TimeOffBalancesListRequest {
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
+    expand?: TimeOffBalancesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -43,6 +44,7 @@ export interface TimeOffBalancesListRequest {
 
 export interface TimeOffBalancesRetrieveRequest {
     id: string;
+    expand?: TimeOffBalancesRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: TimeOffBalancesRetrieveRemoteFieldsEnum;
 }
@@ -72,6 +74,10 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 
         if (requestParameters.employeeId !== undefined) {
             queryParameters['employee_id'] = requestParameters.employeeId;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -145,6 +151,10 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -185,9 +195,16 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum TimeOffBalancesListExpandEnum {
+    Employee = 'employee'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TimeOffBalancesListPolicyTypeEnum {
     Bereavement = 'BEREAVEMENT',
     JuryDuty = 'JURY_DUTY',
@@ -197,16 +214,23 @@ export enum TimeOffBalancesListPolicyTypeEnum {
     Volunteer = 'VOLUNTEER'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum TimeOffBalancesListRemoteFieldsEnum {
     PolicyType = 'policy_type'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum TimeOffBalancesRetrieveExpandEnum {
+    Employee = 'employee'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TimeOffBalancesRetrieveRemoteFieldsEnum {
     PolicyType = 'policy_type'
 }

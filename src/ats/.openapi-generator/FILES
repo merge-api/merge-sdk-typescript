@@ -95,6 +95,7 @@ src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts
 src/models/RemoteUser.ts
 src/models/RequestFormatEnum.ts
+src/models/ResponseTypeEnum.ts
 src/models/ScheduledInterview.ts
 src/models/ScheduledInterviewStatusEnum.ts
 src/models/Scorecard.ts

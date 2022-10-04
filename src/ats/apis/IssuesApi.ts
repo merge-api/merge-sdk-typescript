@@ -180,9 +180,9 @@ export class IssuesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum IssuesListStatusEnum {
     Ongoing = 'ONGOING',
     Resolved = 'RESOLVED'

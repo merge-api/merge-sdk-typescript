@@ -45,6 +45,7 @@ export interface AccountsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: AccountsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -56,6 +57,7 @@ export interface AccountsListRequest {
 
 export interface AccountsRetrieveRequest {
     id: string;
+    expand?: AccountsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -130,6 +132,10 @@ export class AccountsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -234,6 +240,10 @@ export class AccountsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -267,4 +277,19 @@ export class AccountsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum AccountsListExpandEnum {
+    Owner = 'owner'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum AccountsRetrieveExpandEnum {
+    Owner = 'owner'
 }

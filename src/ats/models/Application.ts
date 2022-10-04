@@ -55,13 +55,13 @@ export interface Application {
      * @type {string}
      * @memberof Application
      */
-    candidate?: string | null;
+    candidate?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Application
      */
-    job?: string | null;
+    job?: string | JSONValue | null;
     /**
      * When the application was submitted.
      * @type {Date}
@@ -85,19 +85,19 @@ export interface Application {
      * @type {string}
      * @memberof Application
      */
-    credited_to?: string | null;
+    credited_to?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Application
      */
-    current_stage?: string | null;
+    current_stage?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Application
      */
-    reject_reason?: string | null;
+    reject_reason?: string | JSONValue | null;
     /**
      * 
      * @type {Array<RemoteData>}

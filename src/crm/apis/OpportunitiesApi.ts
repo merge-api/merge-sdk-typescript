@@ -28,6 +28,9 @@ import {
     OpportunityResponseFromJSON,
     OpportunityResponseToJSON,
     
+    PatchedOpportunityEndpointRequest,
+    PatchedOpportunityEndpointRequestFromJSON,
+    PatchedOpportunityEndpointRequestToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -46,6 +49,7 @@ export interface OpportunitiesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: OpportunitiesListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -58,8 +62,20 @@ export interface OpportunitiesListRequest {
     status?: OpportunitiesListStatusEnum;
 }
 
+export interface OpportunitiesMetaPatchRetrieveRequest {
+    id: string;
+}
+
+export interface OpportunitiesPartialUpdateRequest {
+    id: string;
+    patchedOpportunityEndpointRequest: PatchedOpportunityEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
+
 export interface OpportunitiesRetrieveRequest {
     id: string;
+    expand?: OpportunitiesRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: OpportunitiesRetrieveRemoteFieldsEnum;
 }
@@ -141,6 +157,10 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeDeletedData !== undefined) {
             queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
         }
@@ -211,6 +231,45 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns metadata for `Opportunity` PATCHs.
+     */
+    async opportunitiesMetaPatchRetrieveRaw(requestParameters: OpportunitiesMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling opportunitiesMetaPatchRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/opportunities/meta/patch/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Opportunity` PATCHs.
+     */
+    async opportunitiesMetaPatchRetrieve(requestParameters: OpportunitiesMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.opportunitiesMetaPatchRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns metadata for `Opportunity` POSTs.
      */
     async opportunitiesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
@@ -246,6 +305,58 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     }
 
     /**
+     */
+    async opportunitiesPartialUpdateRaw(requestParameters: OpportunitiesPartialUpdateRequest): Promise<runtime.ApiResponse<OpportunityResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling opportunitiesPartialUpdate.');
+        }
+
+        if (requestParameters.patchedOpportunityEndpointRequest === null || requestParameters.patchedOpportunityEndpointRequest === undefined) {
+            throw new runtime.RequiredError('patchedOpportunityEndpointRequest','Required parameter requestParameters.patchedOpportunityEndpointRequest was null or undefined when calling opportunitiesPartialUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/opportunities/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchedOpportunityEndpointRequestToJSON(requestParameters.patchedOpportunityEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpportunityResponseFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async opportunitiesPartialUpdate(requestParameters: OpportunitiesPartialUpdateRequest): Promise<OpportunityResponse | undefined> {
+        const response = await this.opportunitiesPartialUpdateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns an `Opportunity` object with the given `id`.
      */
     async opportunitiesRetrieveRaw(requestParameters: OpportunitiesRetrieveRequest): Promise<runtime.ApiResponse<Opportunity | undefined>> {
@@ -254,6 +365,10 @@ export class OpportunitiesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
@@ -295,25 +410,51 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum OpportunitiesListExpandEnum {
+    Account = 'account',
+    Owner = 'owner',
+    Owneraccount = 'owner,account',
+    Ownerstage = 'owner,stage',
+    Ownerstageaccount = 'owner,stage,account',
+    Stage = 'stage',
+    Stageaccount = 'stage,account'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum OpportunitiesListRemoteFieldsEnum {
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum OpportunitiesListStatusEnum {
     Lost = 'LOST',
     Open = 'OPEN',
     Won = 'WON'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum OpportunitiesRetrieveExpandEnum {
+    Account = 'account',
+    Owner = 'owner',
+    Owneraccount = 'owner,account',
+    Ownerstage = 'owner,stage',
+    Ownerstageaccount = 'owner,stage,account',
+    Stage = 'stage',
+    Stageaccount = 'stage,account'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum OpportunitiesRetrieveRemoteFieldsEnum {
     Status = 'status'
 }

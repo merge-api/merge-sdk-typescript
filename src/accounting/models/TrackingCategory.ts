@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    CategoryTypeEnum,
+    CategoryTypeEnumFromJSON,
+    CategoryTypeEnumFromJSONTyped,
+    CategoryTypeEnumToJSON,
     
     Status7d1Enum,
     Status7d1EnumFromJSON,
@@ -71,6 +75,18 @@ export interface TrackingCategory {
      */
     status?: Status7d1Enum | null;
     /**
+     * The tracking category’s type.
+     * @type {CategoryTypeEnum}
+     * @memberof TrackingCategory
+     */
+    category_type?: CategoryTypeEnum | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof TrackingCategory
+     */
+    parent_category?: string | null;
+    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof TrackingCategory
@@ -94,6 +110,8 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
+        'category_type': !exists(json, 'category_type') ? undefined : CategoryTypeEnumFromJSON(json['category_type']) as CategoryTypeEnum,
+        'parent_category': !exists(json, 'parent_category') ? undefined : json['parent_category'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
@@ -108,6 +126,8 @@ export function TrackingCategoryToJSON(value?: TrackingCategory): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'status': Status7d1EnumToJSON(value.status),
+        'category_type': CategoryTypeEnumToJSON(value.category_type),
+        'parent_category': value.parent_category,
     };
 }
 

@@ -30,6 +30,7 @@ export interface ItemsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: ItemsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -41,6 +42,7 @@ export interface ItemsListRequest {
 
 export interface ItemsRetrieveRequest {
     id: string;
+    expand?: ItemsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: ItemsRetrieveRemoteFieldsEnum;
 }
@@ -66,6 +68,10 @@ export class ItemsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -135,6 +141,10 @@ export class ItemsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -175,16 +185,34 @@ export class ItemsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum ItemsListExpandEnum {
+    PurchaseAccount = 'purchase_account',
+    PurchaseAccountsalesAccount = 'purchase_account,sales_account',
+    SalesAccount = 'sales_account'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ItemsListRemoteFieldsEnum {
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum ItemsRetrieveExpandEnum {
+    PurchaseAccount = 'purchase_account',
+    PurchaseAccountsalesAccount = 'purchase_account,sales_account',
+    SalesAccount = 'sales_account'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ItemsRetrieveRemoteFieldsEnum {
     Status = 'status'
 }

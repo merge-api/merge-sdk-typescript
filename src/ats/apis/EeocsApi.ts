@@ -31,6 +31,7 @@ export interface EeocsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: EeocsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -42,6 +43,7 @@ export interface EeocsListRequest {
 
 export interface EeocsRetrieveRequest {
     id: string;
+    expand?: EeocsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: EeocsRetrieveRemoteFieldsEnum;
 }
@@ -71,6 +73,10 @@ export class EeocsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -140,6 +146,10 @@ export class EeocsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -180,9 +190,16 @@ export class EeocsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum EeocsListExpandEnum {
+    Candidate = 'candidate'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum EeocsListRemoteFieldsEnum {
     DisabilityStatus = 'disability_status',
     DisabilityStatusgender = 'disability_status,gender',
@@ -201,9 +218,16 @@ export enum EeocsListRemoteFieldsEnum {
     VeteranStatus = 'veteran_status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum EeocsRetrieveExpandEnum {
+    Candidate = 'candidate'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum EeocsRetrieveRemoteFieldsEnum {
     DisabilityStatus = 'disability_status',
     DisabilityStatusgender = 'disability_status,gender',

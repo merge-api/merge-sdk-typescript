@@ -32,6 +32,7 @@ export interface OffersListRequest {
     createdBefore?: Date;
     creatorId?: string;
     cursor?: string;
+    expand?: OffersListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -43,6 +44,7 @@ export interface OffersListRequest {
 
 export interface OffersRetrieveRequest {
     id: string;
+    expand?: OffersRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: OffersRetrieveRemoteFieldsEnum;
 }
@@ -76,6 +78,10 @@ export class OffersApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -145,6 +151,10 @@ export class OffersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -185,16 +195,34 @@ export class OffersApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum OffersListExpandEnum {
+    Application = 'application',
+    Applicationcreator = 'application,creator',
+    Creator = 'creator'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum OffersListRemoteFieldsEnum {
     Status = 'status'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum OffersRetrieveExpandEnum {
+    Application = 'application',
+    Applicationcreator = 'application,creator',
+    Creator = 'creator'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum OffersRetrieveRemoteFieldsEnum {
     Status = 'status'
 }

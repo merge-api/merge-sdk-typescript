@@ -65,13 +65,13 @@ export interface EmployeePayrollRun {
      * @type {string}
      * @memberof EmployeePayrollRun
      */
-    employee?: string | null;
+    employee?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof EmployeePayrollRun
      */
-    payroll_run?: string | null;
+    payroll_run?: string | JSONValue | null;
     /**
      * The gross pay from the run.
      * @type {number}

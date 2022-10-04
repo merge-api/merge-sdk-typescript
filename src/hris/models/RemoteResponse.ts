@@ -14,6 +14,13 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    ResponseTypeEnum,
+    ResponseTypeEnumFromJSON,
+    ResponseTypeEnumFromJSONTyped,
+    ResponseTypeEnumToJSON,
+} from './';
+
 
 /**
  * # The RemoteResponse Object
@@ -46,16 +53,22 @@ export interface RemoteResponse {
     status: number;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {any}
      * @memberof RemoteResponse
      */
-    response: { [key: string]: any; };
+    response: any | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof RemoteResponse
      */
     response_headers?: { [key: string]: any; };
+    /**
+     * 
+     * @type {ResponseTypeEnum}
+     * @memberof RemoteResponse
+     */
+    response_type?: ResponseTypeEnum;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -80,6 +93,7 @@ export function RemoteResponseFromJSONTyped(json: JSONValue): RemoteResponse | u
         'status': json['status'],
         'response': json['response'],
         'response_headers': !exists(json, 'response_headers') ? undefined : json['response_headers'],
+        'response_type': !exists(json, 'response_type') ? undefined : ResponseTypeEnumFromJSON(json['response_type']) as ResponseTypeEnum,
         'headers': !exists(json, 'headers') ? undefined : json['headers'],
     };
 }
@@ -96,6 +110,7 @@ export function RemoteResponseToJSON(value?: RemoteResponse): JSONValue {
         'status': value.status,
         'response': value.response,
         'response_headers': value.response_headers,
+        'response_type': ResponseTypeEnumToJSON(value.response_type),
         'headers': value.headers,
     };
 }

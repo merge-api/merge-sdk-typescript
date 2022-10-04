@@ -60,7 +60,7 @@ export interface Activity {
      * @type {string}
      * @memberof Activity
      */
-    user?: string | null;
+    user?: string | JSONValue | null;
     /**
      * When the third party's activity was created.
      * @type {Date}

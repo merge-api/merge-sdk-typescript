@@ -58,6 +58,7 @@ export interface ApplicationsListRequest {
     creditedToId?: string;
     currentStageId?: string;
     cursor?: string;
+    expand?: ApplicationsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     jobId?: string;
@@ -75,6 +76,7 @@ export interface ApplicationsMetaPostRetrieveRequest {
 
 export interface ApplicationsRetrieveRequest {
     id: string;
+    expand?: ApplicationsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -213,6 +215,10 @@ export class ApplicationsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeDeletedData !== undefined) {
             queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
         }
@@ -327,6 +333,10 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -360,4 +370,79 @@ export class ApplicationsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum ApplicationsListExpandEnum {
+    Candidate = 'candidate',
+    CandidatecreditedTo = 'candidate,credited_to',
+    CandidatecreditedTocurrentStage = 'candidate,credited_to,current_stage',
+    CandidatecreditedTocurrentStagerejectReason = 'candidate,credited_to,current_stage,reject_reason',
+    CandidatecreditedTorejectReason = 'candidate,credited_to,reject_reason',
+    CandidatecurrentStage = 'candidate,current_stage',
+    CandidatecurrentStagerejectReason = 'candidate,current_stage,reject_reason',
+    Candidatejob = 'candidate,job',
+    CandidatejobcreditedTo = 'candidate,job,credited_to',
+    CandidatejobcreditedTocurrentStage = 'candidate,job,credited_to,current_stage',
+    CandidatejobcreditedTocurrentStagerejectReason = 'candidate,job,credited_to,current_stage,reject_reason',
+    CandidatejobcreditedTorejectReason = 'candidate,job,credited_to,reject_reason',
+    CandidatejobcurrentStage = 'candidate,job,current_stage',
+    CandidatejobcurrentStagerejectReason = 'candidate,job,current_stage,reject_reason',
+    CandidatejobrejectReason = 'candidate,job,reject_reason',
+    CandidaterejectReason = 'candidate,reject_reason',
+    CreditedTo = 'credited_to',
+    CreditedTocurrentStage = 'credited_to,current_stage',
+    CreditedTocurrentStagerejectReason = 'credited_to,current_stage,reject_reason',
+    CreditedTorejectReason = 'credited_to,reject_reason',
+    CurrentStage = 'current_stage',
+    CurrentStagerejectReason = 'current_stage,reject_reason',
+    Job = 'job',
+    JobcreditedTo = 'job,credited_to',
+    JobcreditedTocurrentStage = 'job,credited_to,current_stage',
+    JobcreditedTocurrentStagerejectReason = 'job,credited_to,current_stage,reject_reason',
+    JobcreditedTorejectReason = 'job,credited_to,reject_reason',
+    JobcurrentStage = 'job,current_stage',
+    JobcurrentStagerejectReason = 'job,current_stage,reject_reason',
+    JobrejectReason = 'job,reject_reason',
+    RejectReason = 'reject_reason'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum ApplicationsRetrieveExpandEnum {
+    Candidate = 'candidate',
+    CandidatecreditedTo = 'candidate,credited_to',
+    CandidatecreditedTocurrentStage = 'candidate,credited_to,current_stage',
+    CandidatecreditedTocurrentStagerejectReason = 'candidate,credited_to,current_stage,reject_reason',
+    CandidatecreditedTorejectReason = 'candidate,credited_to,reject_reason',
+    CandidatecurrentStage = 'candidate,current_stage',
+    CandidatecurrentStagerejectReason = 'candidate,current_stage,reject_reason',
+    Candidatejob = 'candidate,job',
+    CandidatejobcreditedTo = 'candidate,job,credited_to',
+    CandidatejobcreditedTocurrentStage = 'candidate,job,credited_to,current_stage',
+    CandidatejobcreditedTocurrentStagerejectReason = 'candidate,job,credited_to,current_stage,reject_reason',
+    CandidatejobcreditedTorejectReason = 'candidate,job,credited_to,reject_reason',
+    CandidatejobcurrentStage = 'candidate,job,current_stage',
+    CandidatejobcurrentStagerejectReason = 'candidate,job,current_stage,reject_reason',
+    CandidatejobrejectReason = 'candidate,job,reject_reason',
+    CandidaterejectReason = 'candidate,reject_reason',
+    CreditedTo = 'credited_to',
+    CreditedTocurrentStage = 'credited_to,current_stage',
+    CreditedTocurrentStagerejectReason = 'credited_to,current_stage,reject_reason',
+    CreditedTorejectReason = 'credited_to,reject_reason',
+    CurrentStage = 'current_stage',
+    CurrentStagerejectReason = 'current_stage,reject_reason',
+    Job = 'job',
+    JobcreditedTo = 'job,credited_to',
+    JobcreditedTocurrentStage = 'job,credited_to,current_stage',
+    JobcreditedTocurrentStagerejectReason = 'job,credited_to,current_stage,reject_reason',
+    JobcreditedTorejectReason = 'job,credited_to,reject_reason',
+    JobcurrentStage = 'job,current_stage',
+    JobcurrentStagerejectReason = 'job,current_stage,reject_reason',
+    JobrejectReason = 'job,reject_reason',
+    RejectReason = 'reject_reason'
 }

@@ -75,7 +75,7 @@ export interface Employee {
      * @type {string}
      * @memberof Employee
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The employee's first name.
      * @type {string}
@@ -105,7 +105,7 @@ export interface Employee {
      * @type {Array<string>}
      * @memberof Employee
      */
-    groups?: Array<string>;
+    groups?: Array<string> | JSONValue;
     /**
      * The employee's work email.
      * @type {string}
@@ -129,37 +129,37 @@ export interface Employee {
      * @type {Array<string>}
      * @memberof Employee
      */
-    employments?: Array<string>;
+    employments?: Array<string> | JSONValue;
     /**
      * 
      * @type {string}
      * @memberof Employee
      */
-    home_location?: string | null;
+    home_location?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Employee
      */
-    work_location?: string | null;
+    work_location?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Employee
      */
-    manager?: string | null;
+    manager?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Employee
      */
-    team?: string | null;
+    team?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Employee
      */
-    pay_group?: string | null;
+    pay_group?: string | JSONValue | null;
     /**
      * The employee's social security number.
      * @type {string}

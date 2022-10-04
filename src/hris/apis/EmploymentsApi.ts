@@ -31,6 +31,7 @@ export interface EmploymentsListRequest {
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
+    expand?: EmploymentsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -43,6 +44,7 @@ export interface EmploymentsListRequest {
 
 export interface EmploymentsRetrieveRequest {
     id: string;
+    expand?: EmploymentsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: EmploymentsRetrieveRemoteFieldsEnum;
 }
@@ -72,6 +74,10 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
         if (requestParameters.employeeId !== undefined) {
             queryParameters['employee_id'] = requestParameters.employeeId;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -145,6 +151,10 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -185,17 +195,26 @@ export class EmploymentsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum EmploymentsListExpandEnum {
+    Employee = 'employee',
+    EmployeepayGroup = 'employee,pay_group',
+    PayGroup = 'pay_group'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum EmploymentsListOrderByEnum {
     EffectiveDateDESC = '-effective_date',
     EffectiveDateASC = 'effective_date'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum EmploymentsListRemoteFieldsEnum {
     EmploymentType = 'employment_type',
     EmploymentTypeflsaStatus = 'employment_type,flsa_status',
@@ -214,9 +233,18 @@ export enum EmploymentsListRemoteFieldsEnum {
     PayPeriod = 'pay_period'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum EmploymentsRetrieveExpandEnum {
+    Employee = 'employee',
+    EmployeepayGroup = 'employee,pay_group',
+    PayGroup = 'pay_group'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum EmploymentsRetrieveRemoteFieldsEnum {
     EmploymentType = 'employment_type',
     EmploymentTypeflsaStatus = 'employment_type,flsa_status',

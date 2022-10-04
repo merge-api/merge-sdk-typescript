@@ -89,6 +89,7 @@ src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts
 src/models/RequestFormatEnum.ts
 src/models/RequestTypeEnum.ts
+src/models/ResponseTypeEnum.ts
 src/models/RunStateEnum.ts
 src/models/RunTypeEnum.ts
 src/models/SyncStatus.ts

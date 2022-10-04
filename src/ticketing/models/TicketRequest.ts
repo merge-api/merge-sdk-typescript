@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    PriorityEnum,
+    PriorityEnumFromJSON,
+    PriorityEnumFromJSONTyped,
+    PriorityEnumToJSON,
     TicketStatusEnum,
     TicketStatusEnumFromJSON,
     TicketStatusEnumFromJSONTyped,
@@ -123,6 +127,24 @@ export interface TicketRequest {
      * @memberof TicketRequest
      */
     remote_updated_at?: Date | null;
+    /**
+     * When the ticket was completed.
+     * @type {Date}
+     * @memberof TicketRequest
+     */
+    completed_at?: Date | null;
+    /**
+     * The 3rd party url of the Ticket.
+     * @type {string}
+     * @memberof TicketRequest
+     */
+    ticket_url?: string | null;
+    /**
+     * The priority or urgency of the Ticket. Possible values include: URGENT, HIGH, NORMAL, LOW - in cases where there is no clear mapping - the original value passed through.
+     * @type {PriorityEnum}
+     * @memberof TicketRequest
+     */
+    priority?: PriorityEnum | null;
 }
 
 export function TicketRequestFromJSON(json: JSONValue): TicketRequest | undefined {
@@ -151,6 +173,9 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | und
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
+        'completed_at': !exists(json, 'completed_at') ? undefined : (json['completed_at'] === null ? null : new Date(json['completed_at'])),
+        'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
+        'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
     };
 }
 
@@ -176,6 +201,9 @@ export function TicketRequestToJSON(value?: TicketRequest): JSONValue {
         'tags': value.tags,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
+        'completed_at': value.completed_at === undefined ? undefined : (value.completed_at === null ? null : value.completed_at.toISOString()),
+        'ticket_url': value.ticket_url,
+        'priority': PriorityEnumToJSON(value.priority),
     };
 }
 

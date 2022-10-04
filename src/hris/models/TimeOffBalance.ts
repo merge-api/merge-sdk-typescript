@@ -57,7 +57,7 @@ export interface TimeOffBalance {
      * @type {string}
      * @memberof TimeOffBalance
      */
-    employee?: string | null;
+    employee?: string | JSONValue | null;
     /**
      * The current remaining PTO balance in terms of hours. This does not represent the starting PTO balance. If the API provider only provides PTO balance in terms of days, we estimate 8 hours per day.
      * @type {number}

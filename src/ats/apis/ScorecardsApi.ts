@@ -31,6 +31,7 @@ export interface ScorecardsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: ScorecardsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     interviewId?: string;
@@ -44,6 +45,7 @@ export interface ScorecardsListRequest {
 
 export interface ScorecardsRetrieveRequest {
     id: string;
+    expand?: ScorecardsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: ScorecardsRetrieveRemoteFieldsEnum;
 }
@@ -73,6 +75,10 @@ export class ScorecardsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -150,6 +156,10 @@ export class ScorecardsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -190,16 +200,42 @@ export class ScorecardsApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum ScorecardsListExpandEnum {
+    Application = 'application',
+    Applicationinterview = 'application,interview',
+    Applicationinterviewinterviewer = 'application,interview,interviewer',
+    Applicationinterviewer = 'application,interviewer',
+    Interview = 'interview',
+    Interviewinterviewer = 'interview,interviewer',
+    Interviewer = 'interviewer'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ScorecardsListRemoteFieldsEnum {
     OverallRecommendation = 'overall_recommendation'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
+export enum ScorecardsRetrieveExpandEnum {
+    Application = 'application',
+    Applicationinterview = 'application,interview',
+    Applicationinterviewinterviewer = 'application,interview,interviewer',
+    Applicationinterviewer = 'application,interviewer',
+    Interview = 'interview',
+    Interviewinterviewer = 'interview,interviewer',
+    Interviewer = 'interviewer'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ScorecardsRetrieveRemoteFieldsEnum {
     OverallRecommendation = 'overall_recommendation'
 }

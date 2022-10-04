@@ -65,13 +65,13 @@ export interface TimeOff {
      * @type {string}
      * @memberof TimeOff
      */
-    employee?: string | null;
+    employee?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof TimeOff
      */
-    approver?: string | null;
+    approver?: string | JSONValue | null;
     /**
      * The status of this time off request.
      * @type {TimeOffStatusEnum}

@@ -14,6 +14,21 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    AddressRequest,
+    AddressRequestFromJSON,
+    AddressRequestFromJSONTyped,
+    AddressRequestToJSON,
+    EmailAddressRequest,
+    EmailAddressRequestFromJSON,
+    EmailAddressRequestFromJSONTyped,
+    EmailAddressRequestToJSON,
+    PhoneNumberRequest,
+    PhoneNumberRequestFromJSON,
+    PhoneNumberRequestFromJSONTyped,
+    PhoneNumberRequestToJSON,
+} from './';
+
 
 /**
  * # The Contact Object
@@ -49,6 +64,24 @@ export interface ContactRequest {
      * @memberof ContactRequest
      */
     account?: string | null;
+    /**
+     * 
+     * @type {Array<AddressRequest>}
+     * @memberof ContactRequest
+     */
+    addresses?: Array<AddressRequest>;
+    /**
+     * 
+     * @type {Array<EmailAddressRequest>}
+     * @memberof ContactRequest
+     */
+    email_addresses?: Array<EmailAddressRequest>;
+    /**
+     * 
+     * @type {Array<PhoneNumberRequest>}
+     * @memberof ContactRequest
+     */
+    phone_numbers?: Array<PhoneNumberRequest>;
     /**
      * When the contact's last activity occurred.
      * @type {Date}
@@ -90,6 +123,9 @@ export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | u
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
         'last_name': !exists(json, 'last_name') ? undefined : json['last_name'],
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<JSONValue>).map(AddressRequestFromJSON)) as Array<AddressRequest>,
+        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<JSONValue>).map(EmailAddressRequestFromJSON)) as Array<EmailAddressRequest>,
+        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(PhoneNumberRequestFromJSON)) as Array<PhoneNumberRequest>,
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
@@ -108,6 +144,9 @@ export function ContactRequestToJSON(value?: ContactRequest): JSONValue {
         'first_name': value.first_name,
         'last_name': value.last_name,
         'account': value.account,
+        'addresses': value.addresses === undefined ? undefined : ((value.addresses as Array<any>).map(AddressRequestToJSON)),
+        'email_addresses': value.email_addresses === undefined ? undefined : ((value.email_addresses as Array<any>).map(EmailAddressRequestToJSON)),
+        'phone_numbers': value.phone_numbers === undefined ? undefined : ((value.phone_numbers as Array<any>).map(PhoneNumberRequestToJSON)),
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'integration_params': value.integration_params,

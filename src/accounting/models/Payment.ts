@@ -65,13 +65,13 @@ export interface Payment {
      * @type {string}
      * @memberof Payment
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Payment
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * The payment's total amount.
      * @type {number}

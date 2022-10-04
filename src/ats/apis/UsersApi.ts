@@ -180,16 +180,16 @@ export class UsersApi extends runtime.BaseAPI {
 }
 
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum UsersListRemoteFieldsEnum {
     AccessRole = 'access_role'
 }
 /**
-    * @export
-    * @enum {string}
-    */
+* @export
+* @enum {string}
+*/
 export enum UsersRetrieveRemoteFieldsEnum {
     AccessRole = 'access_role'
 }

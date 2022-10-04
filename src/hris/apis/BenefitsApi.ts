@@ -31,6 +31,7 @@ export interface BenefitsListRequest {
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
+    expand?: BenefitsListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -41,6 +42,7 @@ export interface BenefitsListRequest {
 
 export interface BenefitsRetrieveRequest {
     id: string;
+    expand?: BenefitsRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -69,6 +71,10 @@ export class BenefitsApi extends runtime.BaseAPI {
 
         if (requestParameters.employeeId !== undefined) {
             queryParameters['employee_id'] = requestParameters.employeeId;
+        }
+
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -134,6 +140,10 @@ export class BenefitsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -167,4 +177,19 @@ export class BenefitsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum BenefitsListExpandEnum {
+    Employee = 'employee'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum BenefitsRetrieveExpandEnum {
+    Employee = 'employee'
 }

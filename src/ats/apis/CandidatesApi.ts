@@ -56,6 +56,7 @@ export interface CandidatesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: CandidatesListExpandEnum;
     firstName?: string | null;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
@@ -68,6 +69,7 @@ export interface CandidatesListRequest {
 
 export interface CandidatesRetrieveRequest {
     id: string;
+    expand?: CandidatesRetrieveExpandEnum;
     includeRemoteData?: boolean;
 }
 
@@ -190,6 +192,10 @@ export class CandidatesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.firstName !== undefined) {
             queryParameters['first_name'] = requestParameters.firstName;
         }
@@ -296,6 +302,10 @@ export class CandidatesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand !== undefined) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -329,4 +339,23 @@ export class CandidatesApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum CandidatesListExpandEnum {
+    Applications = 'applications',
+    Applicationsattachments = 'applications,attachments',
+    Attachments = 'attachments'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum CandidatesRetrieveExpandEnum {
+    Applications = 'applications',
+    Applicationsattachments = 'applications,attachments',
+    Attachments = 'attachments'
 }

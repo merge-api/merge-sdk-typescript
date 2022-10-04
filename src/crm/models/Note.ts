@@ -52,7 +52,7 @@ export interface Note {
      * @type {string}
      * @memberof Note
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
      * The note's content.
      * @type {string}
@@ -64,19 +64,19 @@ export interface Note {
      * @type {string}
      * @memberof Note
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Note
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof Note
      */
-    opportunity?: string | null;
+    opportunity?: string | JSONValue | null;
     /**
      * When the third party's lead was updated.
      * @type {Date}

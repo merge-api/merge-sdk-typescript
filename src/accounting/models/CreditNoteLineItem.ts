@@ -26,7 +26,7 @@ export interface CreditNoteLineItem {
      * @type {string}
      * @memberof CreditNoteLineItem
      */
-    item?: string | null;
+    item?: string | JSONValue | null;
     /**
      * The credit note line item's name.
      * @type {string}
