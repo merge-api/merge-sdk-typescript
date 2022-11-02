@@ -16,6 +16,7 @@ src/apis/NotesApi.ts
 src/apis/OpportunitiesApi.ts
 src/apis/PassthroughApi.ts
 src/apis/RegenerateKeyApi.ts
+src/apis/SelectiveSyncApi.ts
 src/apis/StagesApi.ts
 src/apis/SyncStatusApi.ts
 src/apis/TasksApi.ts
@@ -42,6 +43,8 @@ src/models/CRMContactEndpointRequest.ts
 src/models/CRMContactResponse.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
+src/models/ConditionSchema.ts
+src/models/ConditionTypeEnum.ts
 src/models/Contact.ts
 src/models/ContactRequest.ts
 src/models/CountryEnum.ts
@@ -67,6 +70,11 @@ src/models/LeadEndpointRequest.ts
 src/models/LeadRequest.ts
 src/models/LeadResponse.ts
 src/models/LinkToken.ts
+src/models/LinkedAccountCondition.ts
+src/models/LinkedAccountConditionRequest.ts
+src/models/LinkedAccountSelectiveSyncConfiguration.ts
+src/models/LinkedAccountSelectiveSyncConfigurationListRequest.ts
+src/models/LinkedAccountSelectiveSyncConfigurationRequest.ts
 src/models/LinkedAccountStatus.ts
 src/models/MetaResponse.ts
 src/models/MethodEnum.ts
@@ -76,6 +84,7 @@ src/models/Note.ts
 src/models/NoteEndpointRequest.ts
 src/models/NoteRequest.ts
 src/models/NoteResponse.ts
+src/models/OperatorSchema.ts
 src/models/Opportunity.ts
 src/models/OpportunityEndpointRequest.ts
 src/models/OpportunityRequest.ts

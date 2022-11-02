@@ -74,6 +74,18 @@ export interface CommentRequest {
      * @memberof CommentRequest
      */
     remote_created_at?: Date | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CommentRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CommentRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function CommentRequestFromJSON(json: JSONValue): CommentRequest | undefined {
@@ -95,6 +107,8 @@ export function CommentRequestFromJSONTyped(json: JSONValue): CommentRequest | u
         'ticket': !exists(json, 'ticket') ? undefined : json['ticket'],
         'is_private': !exists(json, 'is_private') ? undefined : json['is_private'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -113,6 +127,8 @@ export function CommentRequestToJSON(value?: CommentRequest): JSONValue {
         'ticket': value.ticket,
         'is_private': value.is_private,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

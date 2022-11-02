@@ -23,10 +23,6 @@ import {
     CountryEnumFromJSON,
     CountryEnumFromJSONTyped,
     CountryEnumToJSON,
-    StateEnum,
-    StateEnumFromJSON,
-    StateEnumFromJSONTyped,
-    StateEnumToJSON,
 } from './';
 
 
@@ -66,11 +62,17 @@ export interface Address {
      */
     city?: string | null;
     /**
-     * The address's state.
-     * @type {StateEnum}
+     * The address's state or region.
+     * @type {any}
      * @memberof Address
      */
-    state?: StateEnum | null;
+    readonly state?: any | null;
+    /**
+     * The address's state or region.
+     * @type {string}
+     * @memberof Address
+     */
+    country_subdivision?: string | null;
     /**
      * The address's country.
      * @type {CountryEnum}
@@ -100,7 +102,8 @@ export function AddressFromJSONTyped(json: JSONValue): Address | undefined {
         'street_1': !exists(json, 'street_1') ? undefined : json['street_1'],
         'street_2': !exists(json, 'street_2') ? undefined : json['street_2'],
         'city': !exists(json, 'city') ? undefined : json['city'],
-        'state': !exists(json, 'state') ? undefined : StateEnumFromJSON(json['state']) as StateEnum,
+        'state': !exists(json, 'state') ? undefined : json['state'],
+        'country_subdivision': !exists(json, 'country_subdivision') ? undefined : json['country_subdivision'],
         'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']) as CountryEnum,
         'zip_code': !exists(json, 'zip_code') ? undefined : json['zip_code'],
     };
@@ -117,7 +120,7 @@ export function AddressToJSON(value?: Address): JSONValue {
         'street_1': value.street_1,
         'street_2': value.street_2,
         'city': value.city,
-        'state': StateEnumToJSON(value.state),
+        'country_subdivision': value.country_subdivision,
         'country': CountryEnumToJSON(value.country),
         'zip_code': value.zip_code,
     };

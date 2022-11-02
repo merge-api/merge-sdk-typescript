@@ -22,6 +22,7 @@ export * from './PassthroughApi';
 export * from './RegenerateKeyApi';
 export * from './RejectReasonsApi';
 export * from './ScorecardsApi';
+export * from './SelectiveSyncApi';
 export * from './SyncStatusApi';
 export * from './TagsApi';
 export * from './UsersApi';

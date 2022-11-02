@@ -305,6 +305,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Updates an `Opportunity` object with the given `id`.
      */
     async opportunitiesPartialUpdateRaw(requestParameters: OpportunitiesPartialUpdateRequest): Promise<runtime.ApiResponse<OpportunityResponse | undefined>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
@@ -350,6 +351,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Updates an `Opportunity` object with the given `id`.
      */
     async opportunitiesPartialUpdate(requestParameters: OpportunitiesPartialUpdateRequest): Promise<OpportunityResponse | undefined> {
         const response = await this.opportunitiesPartialUpdateRaw(requestParameters);

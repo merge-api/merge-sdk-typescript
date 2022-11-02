@@ -20,6 +20,7 @@ export * from './PassthroughApi';
 export * from './PayGroupsApi';
 export * from './PayrollRunsApi';
 export * from './RegenerateKeyApi';
+export * from './SelectiveSyncApi';
 export * from './SyncStatusApi';
 export * from './TeamsApi';
 export * from './TimeOffApi';

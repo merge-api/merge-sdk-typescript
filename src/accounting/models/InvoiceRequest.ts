@@ -133,6 +133,18 @@ export interface InvoiceRequest {
      * @memberof InvoiceRequest
      */
     payments?: Array<string>;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InvoiceRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InvoiceRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function InvoiceRequestFromJSON(json: JSONValue): InvoiceRequest | undefined {
@@ -162,6 +174,8 @@ export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | u
         'balance': !exists(json, 'balance') ? undefined : json['balance'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -188,6 +202,8 @@ export function InvoiceRequestToJSON(value?: InvoiceRequest): JSONValue {
         'balance': value.balance,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'payments': value.payments,
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

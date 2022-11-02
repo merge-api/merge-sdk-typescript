@@ -25,6 +25,7 @@ export * from './PaymentsApi';
 export * from './PhoneNumbersApi';
 export * from './PurchaseOrdersApi';
 export * from './RegenerateKeyApi';
+export * from './SelectiveSyncApi';
 export * from './SyncStatusApi';
 export * from './TaxRatesApi';
 export * from './TrackingCategoriesApi';

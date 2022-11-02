@@ -68,6 +68,18 @@ export interface AttachmentRequest {
      * @memberof AttachmentRequest
      */
     remote_created_at?: Date | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AttachmentRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AttachmentRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function AttachmentRequestFromJSON(json: JSONValue): AttachmentRequest | undefined {
@@ -88,6 +100,8 @@ export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentReque
         'content_type': !exists(json, 'content_type') ? undefined : json['content_type'],
         'uploaded_by': !exists(json, 'uploaded_by') ? undefined : json['uploaded_by'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -105,6 +119,8 @@ export function AttachmentRequestToJSON(value?: AttachmentRequest): JSONValue {
         'content_type': value.content_type,
         'uploaded_by': value.uploaded_by,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

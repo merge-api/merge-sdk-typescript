@@ -15,16 +15,31 @@
 
 import * as runtime from '../../runtime';
 import {
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
     PurchaseOrder,
     PurchaseOrderFromJSON,
     PurchaseOrderToJSON,
+    PurchaseOrderEndpointRequest,
+    PurchaseOrderEndpointRequestFromJSON,
+    PurchaseOrderEndpointRequestToJSON,
+    PurchaseOrderResponse,
+    PurchaseOrderResponseFromJSON,
+    PurchaseOrderResponseToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
+
+export interface PurchaseOrdersCreateRequest {
+    purchaseOrderEndpointRequest: PurchaseOrderEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface PurchaseOrdersListRequest {
     createdAfter?: Date;
@@ -51,6 +66,56 @@ export interface PurchaseOrdersRetrieveRequest {
  * 
  */
 export class PurchaseOrdersApi extends runtime.BaseAPI {
+
+    /**
+     * Creates a `PurchaseOrder` object with the given values.
+     */
+    async purchaseOrdersCreateRaw(requestParameters: PurchaseOrdersCreateRequest): Promise<runtime.ApiResponse<PurchaseOrderResponse | undefined>> {
+        if (requestParameters.purchaseOrderEndpointRequest === null || requestParameters.purchaseOrderEndpointRequest === undefined) {
+            throw new runtime.RequiredError('purchaseOrderEndpointRequest','Required parameter requestParameters.purchaseOrderEndpointRequest was null or undefined when calling purchaseOrdersCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/purchase-orders`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PurchaseOrderEndpointRequestToJSON(requestParameters.purchaseOrderEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PurchaseOrderResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a `PurchaseOrder` object with the given values.
+     */
+    async purchaseOrdersCreate(requestParameters: PurchaseOrdersCreateRequest): Promise<PurchaseOrderResponse | undefined> {
+        const response = await this.purchaseOrdersCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `PurchaseOrder` objects.
@@ -128,6 +193,41 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
      */
     async purchaseOrdersList(requestParameters: PurchaseOrdersListRequest): Promise<MergePaginatedResponse<PurchaseOrder> | undefined> {
         const response = await this.purchaseOrdersListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `PurchaseOrder` POSTs.
+     */
+    async purchaseOrdersMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/purchase-orders/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `PurchaseOrder` POSTs.
+     */
+    async purchaseOrdersMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.purchaseOrdersMetaPostRetrieveRaw();
         return await response.value();
     }
 

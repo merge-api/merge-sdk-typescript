@@ -74,6 +74,18 @@ export interface InvoiceLineItemRequest {
      * @memberof InvoiceLineItemRequest
      */
     tracking_category?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InvoiceLineItemRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InvoiceLineItemRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function InvoiceLineItemRequestFromJSON(json: JSONValue): InvoiceLineItemRequest | undefined {
@@ -95,6 +107,8 @@ export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLin
         'item': !exists(json, 'item') ? undefined : json['item'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -113,6 +127,8 @@ export function InvoiceLineItemRequestToJSON(value?: InvoiceLineItemRequest): JS
         'item': value.item,
         'account': value.account,
         'tracking_category': value.tracking_category,
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

@@ -56,6 +56,12 @@ export interface TicketRequest {
      */
     assignees?: Array<string>;
     /**
+     * 
+     * @type {string}
+     * @memberof TicketRequest
+     */
+    creator?: string | null;
+    /**
      * The ticket's due date.
      * @type {Date}
      * @memberof TicketRequest
@@ -68,7 +74,7 @@ export interface TicketRequest {
      */
     status?: TicketStatusEnum | null;
     /**
-     * The ticket's description.
+     * The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
      * @type {string}
      * @memberof TicketRequest
      */
@@ -145,6 +151,18 @@ export interface TicketRequest {
      * @memberof TicketRequest
      */
     priority?: PriorityEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof TicketRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof TicketRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function TicketRequestFromJSON(json: JSONValue): TicketRequest | undefined {
@@ -161,6 +179,7 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | und
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'assignees': !exists(json, 'assignees') ? undefined : json['assignees'],
+        'creator': !exists(json, 'creator') ? undefined : json['creator'],
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
@@ -176,6 +195,8 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | und
         'completed_at': !exists(json, 'completed_at') ? undefined : (json['completed_at'] === null ? null : new Date(json['completed_at'])),
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -189,6 +210,7 @@ export function TicketRequestToJSON(value?: TicketRequest): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'assignees': value.assignees,
+        'creator': value.creator,
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'status': TicketStatusEnumToJSON(value.status),
         'description': value.description,
@@ -204,6 +226,8 @@ export function TicketRequestToJSON(value?: TicketRequest): JSONValue {
         'completed_at': value.completed_at === undefined ? undefined : (value.completed_at === null ? null : value.completed_at.toISOString()),
         'ticket_url': value.ticket_url,
         'priority': PriorityEnumToJSON(value.priority),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

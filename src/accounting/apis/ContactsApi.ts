@@ -18,6 +18,15 @@ import {
     Contact,
     ContactFromJSON,
     ContactToJSON,
+    ContactEndpointRequest,
+    ContactEndpointRequestFromJSON,
+    ContactEndpointRequestToJSON,
+    ContactResponse,
+    ContactResponseFromJSON,
+    ContactResponseToJSON,
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
 } from '../models';
 import {
@@ -25,6 +34,12 @@ import {
 	MergePaginatedResponseFromJSON,
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
+
+export interface ContactsCreateRequest {
+    contactEndpointRequest: ContactEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface ContactsListRequest {
     createdAfter?: Date;
@@ -51,6 +66,56 @@ export interface ContactsRetrieveRequest {
  * 
  */
 export class ContactsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates a `Contact` object with the given values.
+     */
+    async contactsCreateRaw(requestParameters: ContactsCreateRequest): Promise<runtime.ApiResponse<ContactResponse | undefined>> {
+        if (requestParameters.contactEndpointRequest === null || requestParameters.contactEndpointRequest === undefined) {
+            throw new runtime.RequiredError('contactEndpointRequest','Required parameter requestParameters.contactEndpointRequest was null or undefined when calling contactsCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/contacts`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ContactEndpointRequestToJSON(requestParameters.contactEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ContactResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a `Contact` object with the given values.
+     */
+    async contactsCreate(requestParameters: ContactsCreateRequest): Promise<ContactResponse | undefined> {
+        const response = await this.contactsCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `Contact` objects.
@@ -128,6 +193,41 @@ export class ContactsApi extends runtime.BaseAPI {
      */
     async contactsList(requestParameters: ContactsListRequest): Promise<MergePaginatedResponse<Contact> | undefined> {
         const response = await this.contactsListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `Contact` POSTs.
+     */
+    async contactsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/contacts/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Contact` POSTs.
+     */
+    async contactsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.contactsMetaPostRetrieveRaw();
         return await response.value();
     }
 

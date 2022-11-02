@@ -22,6 +22,7 @@ src/apis/PassthroughApi.ts
 src/apis/RegenerateKeyApi.ts
 src/apis/RejectReasonsApi.ts
 src/apis/ScorecardsApi.ts
+src/apis/SelectiveSyncApi.ts
 src/apis/SyncStatusApi.ts
 src/apis/TagsApi.ts
 src/apis/UsersApi.ts
@@ -53,6 +54,8 @@ src/models/CandidateRequest.ts
 src/models/CandidateResponse.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
+src/models/ConditionSchema.ts
+src/models/ConditionTypeEnum.ts
 src/models/DataPassthroughRequest.ts
 src/models/DebugModeLog.ts
 src/models/DebugModelLogSummary.ts
@@ -75,6 +78,11 @@ src/models/Job.ts
 src/models/JobInterviewStage.ts
 src/models/JobStatusEnum.ts
 src/models/LinkToken.ts
+src/models/LinkedAccountCondition.ts
+src/models/LinkedAccountConditionRequest.ts
+src/models/LinkedAccountSelectiveSyncConfiguration.ts
+src/models/LinkedAccountSelectiveSyncConfigurationListRequest.ts
+src/models/LinkedAccountSelectiveSyncConfigurationRequest.ts
 src/models/LinkedAccountStatus.ts
 src/models/MetaResponse.ts
 src/models/MethodEnum.ts
@@ -83,6 +91,7 @@ src/models/MultipartFormFieldRequest.ts
 src/models/Offer.ts
 src/models/OfferStatusEnum.ts
 src/models/Office.ts
+src/models/OperatorSchema.ts
 src/models/OverallRecommendationEnum.ts
 src/models/PhoneNumber.ts
 src/models/PhoneNumberRequest.ts

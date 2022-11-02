@@ -16,6 +16,7 @@ export * from './NotesApi';
 export * from './OpportunitiesApi';
 export * from './PassthroughApi';
 export * from './RegenerateKeyApi';
+export * from './SelectiveSyncApi';
 export * from './StagesApi';
 export * from './SyncStatusApi';
 export * from './TasksApi';

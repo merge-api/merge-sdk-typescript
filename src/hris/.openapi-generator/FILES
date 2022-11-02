@@ -20,6 +20,7 @@ src/apis/PassthroughApi.ts
 src/apis/PayGroupsApi.ts
 src/apis/PayrollRunsApi.ts
 src/apis/RegenerateKeyApi.ts
+src/apis/SelectiveSyncApi.ts
 src/apis/SyncStatusApi.ts
 src/apis/TeamsApi.ts
 src/apis/TimeOffApi.ts
@@ -40,6 +41,8 @@ src/models/Benefit.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
 src/models/Company.ts
+src/models/ConditionSchema.ts
+src/models/ConditionTypeEnum.ts
 src/models/CountryEnum.ts
 src/models/DataPassthroughRequest.ts
 src/models/DebugModeLog.ts
@@ -69,6 +72,11 @@ src/models/IgnoreCommonModelRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
 src/models/LinkToken.ts
+src/models/LinkedAccountCondition.ts
+src/models/LinkedAccountConditionRequest.ts
+src/models/LinkedAccountSelectiveSyncConfiguration.ts
+src/models/LinkedAccountSelectiveSyncConfigurationListRequest.ts
+src/models/LinkedAccountSelectiveSyncConfigurationRequest.ts
 src/models/LinkedAccountStatus.ts
 src/models/Location.ts
 src/models/LocationTypeEnum.ts
@@ -77,6 +85,7 @@ src/models/MetaResponse.ts
 src/models/MethodEnum.ts
 src/models/ModelOperation.ts
 src/models/MultipartFormFieldRequest.ts
+src/models/OperatorSchema.ts
 src/models/PayCurrencyEnum.ts
 src/models/PayFrequencyEnum.ts
 src/models/PayGroup.ts
