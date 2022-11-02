@@ -15,13 +15,10 @@
 
 import * as runtime from '../../runtime';
 import {
-    PaginatedProjectList,
-    PaginatedProjectListFromJSON,
-    PaginatedProjectListToJSON,
-    
     Project,
     ProjectFromJSON,
     ProjectToJSON,
+    User,
 } from '../models';
 import {
 	MergePaginatedResponse,
