@@ -75,6 +75,18 @@ export interface JournalEntryRequest {
      * @memberof JournalEntryRequest
      */
     currency?: CurrencyEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof JournalEntryRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof JournalEntryRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function JournalEntryRequestFromJSON(json: JSONValue): JournalEntryRequest | undefined {
@@ -95,6 +107,8 @@ export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryR
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -112,6 +126,8 @@ export function JournalEntryRequestToJSON(value?: JournalEntryRequest): JSONValu
         'payments': value.payments,
         'memo': value.memo,
         'currency': CurrencyEnumToJSON(value.currency),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

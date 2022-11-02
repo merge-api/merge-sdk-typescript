@@ -29,7 +29,7 @@ import {
  */
 export interface EndUserDetailsRequest {
     /**
-     * Your end user's email address.
+     * Your end user's email address. This is purely for identification purposes - setting this value will not cause any emails to be sent.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */
@@ -41,7 +41,7 @@ export interface EndUserDetailsRequest {
      */
     end_user_organization_name: string;
     /**
-     * Unique ID for your end user.
+     * This unique identifier typically represents the ID for your end user in your product's database. This value must be distinct from other Linked Accounts' unique identifiers.
      * @type {string}
      * @memberof EndUserDetailsRequest
      */

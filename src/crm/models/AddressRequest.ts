@@ -78,6 +78,18 @@ export interface AddressRequest {
      * @memberof AddressRequest
      */
     address_type?: AddressTypeEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AddressRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AddressRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function AddressRequestFromJSON(json: JSONValue): AddressRequest | undefined {
@@ -98,6 +110,8 @@ export function AddressRequestFromJSONTyped(json: JSONValue): AddressRequest | u
         'postal_code': !exists(json, 'postal_code') ? undefined : json['postal_code'],
         'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']) as CountryEnum,
         'address_type': !exists(json, 'address_type') ? undefined : AddressTypeEnumFromJSON(json['address_type']) as AddressTypeEnum,
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -115,6 +129,8 @@ export function AddressRequestToJSON(value?: AddressRequest): JSONValue {
         'postal_code': value.postal_code,
         'country': CountryEnumToJSON(value.country),
         'address_type': AddressTypeEnumToJSON(value.address_type),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

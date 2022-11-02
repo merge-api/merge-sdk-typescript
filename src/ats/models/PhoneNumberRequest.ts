@@ -44,6 +44,18 @@ export interface PhoneNumberRequest {
      * @memberof PhoneNumberRequest
      */
     phone_number_type?: PhoneNumberTypeEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PhoneNumberRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PhoneNumberRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function PhoneNumberRequestFromJSON(json: JSONValue): PhoneNumberRequest | undefined {
@@ -59,6 +71,8 @@ export function PhoneNumberRequestFromJSONTyped(json: JSONValue): PhoneNumberReq
         
         'value': !exists(json, 'value') ? undefined : json['value'],
         'phone_number_type': !exists(json, 'phone_number_type') ? undefined : PhoneNumberTypeEnumFromJSON(json['phone_number_type']) as PhoneNumberTypeEnum,
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -71,6 +85,8 @@ export function PhoneNumberRequestToJSON(value?: PhoneNumberRequest): JSONValue 
         
         'value': value.value,
         'phone_number_type': PhoneNumberTypeEnumToJSON(value.phone_number_type),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

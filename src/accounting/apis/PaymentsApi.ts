@@ -15,16 +15,31 @@
 
 import * as runtime from '../../runtime';
 import {
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
     Payment,
     PaymentFromJSON,
     PaymentToJSON,
+    PaymentEndpointRequest,
+    PaymentEndpointRequestFromJSON,
+    PaymentEndpointRequestToJSON,
+    PaymentResponse,
+    PaymentResponseFromJSON,
+    PaymentResponseToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
+
+export interface PaymentsCreateRequest {
+    paymentEndpointRequest: PaymentEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface PaymentsListRequest {
     accountId?: string;
@@ -51,6 +66,56 @@ export interface PaymentsRetrieveRequest {
  * 
  */
 export class PaymentsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates a `Payment` object with the given values.
+     */
+    async paymentsCreateRaw(requestParameters: PaymentsCreateRequest): Promise<runtime.ApiResponse<PaymentResponse | undefined>> {
+        if (requestParameters.paymentEndpointRequest === null || requestParameters.paymentEndpointRequest === undefined) {
+            throw new runtime.RequiredError('paymentEndpointRequest','Required parameter requestParameters.paymentEndpointRequest was null or undefined when calling paymentsCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/payments`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PaymentEndpointRequestToJSON(requestParameters.paymentEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => PaymentResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a `Payment` object with the given values.
+     */
+    async paymentsCreate(requestParameters: PaymentsCreateRequest): Promise<PaymentResponse | undefined> {
+        const response = await this.paymentsCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `Payment` objects.
@@ -132,6 +197,41 @@ export class PaymentsApi extends runtime.BaseAPI {
      */
     async paymentsList(requestParameters: PaymentsListRequest): Promise<MergePaginatedResponse<Payment> | undefined> {
         const response = await this.paymentsListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `Payment` POSTs.
+     */
+    async paymentsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/payments/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Payment` POSTs.
+     */
+    async paymentsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.paymentsMetaPostRetrieveRaw();
         return await response.value();
     }
 

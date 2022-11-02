@@ -101,6 +101,18 @@ export interface TimeOffRequest {
      * @memberof TimeOffRequest
      */
     end_time?: Date | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof TimeOffRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof TimeOffRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function TimeOffRequestFromJSON(json: JSONValue): TimeOffRequest | undefined {
@@ -124,6 +136,8 @@ export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest | u
         'request_type': !exists(json, 'request_type') ? undefined : RequestTypeEnumFromJSON(json['request_type']) as RequestTypeEnum,
         'start_time': !exists(json, 'start_time') ? undefined : (json['start_time'] === null ? null : new Date(json['start_time'])),
         'end_time': !exists(json, 'end_time') ? undefined : (json['end_time'] === null ? null : new Date(json['end_time'])),
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -144,6 +158,8 @@ export function TimeOffRequestToJSON(value?: TimeOffRequest): JSONValue {
         'request_type': RequestTypeEnumToJSON(value.request_type),
         'start_time': value.start_time === undefined ? undefined : (value.start_time === null ? null : value.start_time.toISOString()),
         'end_time': value.end_time === undefined ? undefined : (value.end_time === null ? null : value.end_time.toISOString()),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

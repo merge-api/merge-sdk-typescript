@@ -25,7 +25,7 @@ import {
 /**
  * # The Url Object
  * ### Description
- * The `Url` object is used to represent a candidate's website.
+ * The `Url` object is used to represent hyperlinks associated with the parent model.
  * ### Usage Example
  * Fetch from the `GET Candidate` endpoint and view their website urls.
  * @export
@@ -44,6 +44,18 @@ export interface UrlRequest {
      * @memberof UrlRequest
      */
     url_type?: UrlTypeEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof UrlRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof UrlRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function UrlRequestFromJSON(json: JSONValue): UrlRequest | undefined {
@@ -59,6 +71,8 @@ export function UrlRequestFromJSONTyped(json: JSONValue): UrlRequest | undefined
         
         'value': !exists(json, 'value') ? undefined : json['value'],
         'url_type': !exists(json, 'url_type') ? undefined : UrlTypeEnumFromJSON(json['url_type']) as UrlTypeEnum,
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -71,6 +85,8 @@ export function UrlRequestToJSON(value?: UrlRequest): JSONValue {
         
         'value': value.value,
         'url_type': UrlTypeEnumToJSON(value.url_type),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

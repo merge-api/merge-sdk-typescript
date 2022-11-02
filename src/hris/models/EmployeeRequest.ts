@@ -219,6 +219,18 @@ export interface EmployeeRequest {
      * @memberof EmployeeRequest
      */
     custom_fields?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof EmployeeRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof EmployeeRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function EmployeeRequestFromJSON(json: JSONValue): EmployeeRequest | undefined {
@@ -261,6 +273,8 @@ export function EmployeeRequestFromJSONTyped(json: JSONValue): EmployeeRequest |
         'termination_date': !exists(json, 'termination_date') ? undefined : (json['termination_date'] === null ? null : new Date(json['termination_date'])),
         'avatar': !exists(json, 'avatar') ? undefined : json['avatar'],
         'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -300,6 +314,8 @@ export function EmployeeRequestToJSON(value?: EmployeeRequest): JSONValue {
         'termination_date': value.termination_date === undefined ? undefined : (value.termination_date === null ? null : value.termination_date.toISOString()),
         'avatar': value.avatar,
         'custom_fields': value.custom_fields,
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

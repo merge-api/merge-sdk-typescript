@@ -14,6 +14,7 @@ export * from './LinkedAccountsApi';
 export * from './PassthroughApi';
 export * from './ProjectsApi';
 export * from './RegenerateKeyApi';
+export * from './SelectiveSyncApi';
 export * from './SyncStatusApi';
 export * from './TagsApi';
 export * from './TeamsApi';

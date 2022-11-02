@@ -69,6 +69,12 @@ export interface Ticket {
      */
     assignees?: Array<string> | JSONValue;
     /**
+     * 
+     * @type {string}
+     * @memberof Ticket
+     */
+    creator?: string | JSONValue | null;
+    /**
      * The ticket's due date.
      * @type {Date}
      * @memberof Ticket
@@ -81,7 +87,7 @@ export interface Ticket {
      */
     status?: TicketStatusEnum | null;
     /**
-     * The ticket's description.
+     * The ticket’s description. HTML version of description is mapped if supported by the third-party platform.
      * @type {string}
      * @memberof Ticket
      */
@@ -187,6 +193,7 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'assignees': !exists(json, 'assignees') ? undefined : json['assignees'],
+        'creator': !exists(json, 'creator') ? undefined : json['creator'],
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
@@ -217,6 +224,7 @@ export function TicketToJSON(value?: Ticket): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'assignees': value.assignees,
+        'creator': value.creator,
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'status': TicketStatusEnumToJSON(value.status),
         'description': value.description,

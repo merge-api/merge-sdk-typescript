@@ -62,6 +62,18 @@ export interface JournalLineRequest {
      * @memberof JournalLineRequest
      */
     description?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof JournalLineRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof JournalLineRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function JournalLineRequestFromJSON(json: JSONValue): JournalLineRequest | undefined {
@@ -81,6 +93,8 @@ export function JournalLineRequestFromJSONTyped(json: JSONValue): JournalLineReq
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -97,6 +111,8 @@ export function JournalLineRequestToJSON(value?: JournalLineRequest): JSONValue 
         'tracking_category': value.tracking_category,
         'contact': value.contact,
         'description': value.description,
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

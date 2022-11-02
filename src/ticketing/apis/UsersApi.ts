@@ -30,6 +30,7 @@ export interface UsersListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    emailAddress?: string | null;
     expand?: UsersListExpandEnum;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
@@ -66,6 +67,10 @@ export class UsersApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.emailAddress !== undefined) {
+            queryParameters['email_address'] = requestParameters.emailAddress;
         }
 
         if (requestParameters.expand !== undefined) {

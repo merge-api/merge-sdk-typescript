@@ -18,6 +18,15 @@ import {
     Expense,
     ExpenseFromJSON,
     ExpenseToJSON,
+    ExpenseEndpointRequest,
+    ExpenseEndpointRequestFromJSON,
+    ExpenseEndpointRequestToJSON,
+    ExpenseResponse,
+    ExpenseResponseFromJSON,
+    ExpenseResponseToJSON,
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
 } from '../models';
 import {
@@ -25,6 +34,12 @@ import {
 	MergePaginatedResponseFromJSON,
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
+
+export interface ExpensesCreateRequest {
+    expenseEndpointRequest: ExpenseEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface ExpensesListRequest {
     createdAfter?: Date;
@@ -49,6 +64,56 @@ export interface ExpensesRetrieveRequest {
  * 
  */
 export class ExpensesApi extends runtime.BaseAPI {
+
+    /**
+     * Creates an `Expense` object with the given values.
+     */
+    async expensesCreateRaw(requestParameters: ExpensesCreateRequest): Promise<runtime.ApiResponse<ExpenseResponse | undefined>> {
+        if (requestParameters.expenseEndpointRequest === null || requestParameters.expenseEndpointRequest === undefined) {
+            throw new runtime.RequiredError('expenseEndpointRequest','Required parameter requestParameters.expenseEndpointRequest was null or undefined when calling expensesCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/expenses`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ExpenseEndpointRequestToJSON(requestParameters.expenseEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ExpenseResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an `Expense` object with the given values.
+     */
+    async expensesCreate(requestParameters: ExpensesCreateRequest): Promise<ExpenseResponse | undefined> {
+        const response = await this.expensesCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `Expense` objects.
@@ -122,6 +187,41 @@ export class ExpensesApi extends runtime.BaseAPI {
      */
     async expensesList(requestParameters: ExpensesListRequest): Promise<MergePaginatedResponse<Expense> | undefined> {
         const response = await this.expensesListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `Expense` POSTs.
+     */
+    async expensesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/expenses/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Expense` POSTs.
+     */
+    async expensesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
+        const response = await this.expensesMetaPostRetrieveRaw();
         return await response.value();
     }
 

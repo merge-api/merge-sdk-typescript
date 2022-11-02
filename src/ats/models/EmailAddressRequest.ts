@@ -44,6 +44,18 @@ export interface EmailAddressRequest {
      * @memberof EmailAddressRequest
      */
     email_address_type?: EmailAddressTypeEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof EmailAddressRequest
+     */
+    integration_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof EmailAddressRequest
+     */
+    linked_account_params?: { [key: string]: any; } | null;
 }
 
 export function EmailAddressRequestFromJSON(json: JSONValue): EmailAddressRequest | undefined {
@@ -59,6 +71,8 @@ export function EmailAddressRequestFromJSONTyped(json: JSONValue): EmailAddressR
         
         'value': !exists(json, 'value') ? undefined : json['value'],
         'email_address_type': !exists(json, 'email_address_type') ? undefined : EmailAddressTypeEnumFromJSON(json['email_address_type']) as EmailAddressTypeEnum,
+        'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
+        'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
 }
 
@@ -71,6 +85,8 @@ export function EmailAddressRequestToJSON(value?: EmailAddressRequest): JSONValu
         
         'value': value.value,
         'email_address_type': EmailAddressTypeEnumToJSON(value.email_address_type),
+        'integration_params': value.integration_params,
+        'linked_account_params': value.linked_account_params,
     };
 }
 

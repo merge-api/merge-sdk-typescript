@@ -14,6 +14,7 @@ src/apis/LinkedAccountsApi.ts
 src/apis/PassthroughApi.ts
 src/apis/ProjectsApi.ts
 src/apis/RegenerateKeyApi.ts
+src/apis/SelectiveSyncApi.ts
 src/apis/SyncStatusApi.ts
 src/apis/TagsApi.ts
 src/apis/TeamsApi.ts
@@ -38,6 +39,8 @@ src/models/Comment.ts
 src/models/CommentEndpointRequest.ts
 src/models/CommentRequest.ts
 src/models/CommentResponse.ts
+src/models/ConditionSchema.ts
+src/models/ConditionTypeEnum.ts
 src/models/Contact.ts
 src/models/DataPassthroughRequest.ts
 src/models/DebugModeLog.ts
@@ -49,11 +52,17 @@ src/models/GenerateRemoteKeyRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
 src/models/LinkToken.ts
+src/models/LinkedAccountCondition.ts
+src/models/LinkedAccountConditionRequest.ts
+src/models/LinkedAccountSelectiveSyncConfiguration.ts
+src/models/LinkedAccountSelectiveSyncConfigurationListRequest.ts
+src/models/LinkedAccountSelectiveSyncConfigurationRequest.ts
 src/models/LinkedAccountStatus.ts
 src/models/MetaResponse.ts
 src/models/MethodEnum.ts
 src/models/ModelOperation.ts
 src/models/MultipartFormFieldRequest.ts
+src/models/OperatorSchema.ts
 src/models/PatchedTicketEndpointRequest.ts
 src/models/PatchedTicketRequest.ts
 src/models/PriorityEnum.ts

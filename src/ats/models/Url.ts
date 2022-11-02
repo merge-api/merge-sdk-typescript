@@ -25,7 +25,7 @@ import {
 /**
  * # The Url Object
  * ### Description
- * The `Url` object is used to represent a candidate's website.
+ * The `Url` object is used to represent hyperlinks associated with the parent model.
  * ### Usage Example
  * Fetch from the `GET Candidate` endpoint and view their website urls.
  * @export
