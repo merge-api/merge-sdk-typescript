@@ -18,9 +18,6 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    PaginatedTicketList,
-    PaginatedTicketListFromJSON,
-    PaginatedTicketListToJSON,
     
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
@@ -34,6 +31,7 @@ import {
     TicketResponse,
     TicketResponseFromJSON,
     TicketResponseToJSON,
+    User,
 } from '../models';
 import {
 	MergePaginatedResponse,

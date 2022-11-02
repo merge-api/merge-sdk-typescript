@@ -224,8 +224,8 @@ export enum BankInfoListExpandEnum {
 * @enum {string}
 */
 export enum BankInfoListOrderByEnum {
-    RemoteCreatedAt = '-remote_created_at',
-    RemoteCreatedAt = 'remote_created_at'
+    RemoteCreatedAtDESC = '-remote_created_at',
+    RemoteCreatedAtASC = 'remote_created_at'
 }
 /**
 * @export
