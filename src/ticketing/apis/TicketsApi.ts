@@ -84,6 +84,10 @@ export interface TicketsMetaPatchRetrieveRequest {
     id: string;
 }
 
+export interface TicketsMetaPostRetrieveRequest {
+    projectId?: string, 
+}
+
 export interface TicketsPartialUpdateRequest {
     id: string;
     patchedTicketEndpointRequest: PatchedTicketEndpointRequest;
@@ -381,8 +385,8 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        const queryParameters: any = {};
+    async ticketsMetaPostRetrieveRaw(requestParameters?: TicketsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = requestParameters || {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -408,8 +412,8 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.ticketsMetaPostRetrieveRaw();
+    async ticketsMetaPostRetrieve(requestParameters?: TicketsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.ticketsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
