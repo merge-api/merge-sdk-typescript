@@ -31,6 +31,27 @@ your requests. The `apiKey` property is the API Key of your Merge account, which
 `X-Account-Token` header which identifies which of your customers' data you are requesting. See the following
 examples for calling various category API's:
 
+#### node-fetch override on Node version < 17.5
+
+This SDK relies on the Fetch API, which is baked into Node starting at version 17.5. For those customers on older
+versions of Node, we allow you to explicitly set the fetchApi property like so:
+
+```
+import fetch from 'node-fetch'
+
+...
+
+let test_conf_crm = new Configuration({
+    apiKey: "REDACTED",
+    accessToken: "REDACTED",
+    fetchApi: fetch
+});
+```
+
+You can find the node-fetch package here: https://www.npmjs.com/package/node-fetch . We have tested that
+node-fetch @ 2.x.x can be passed in directly on Node version 16.0.0, however later versions of node-fetch or later
+versions of Node may require additional type adjustments to make it work.
+
 #### Accounting
 
 ```
