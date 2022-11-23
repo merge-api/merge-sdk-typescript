@@ -1,5 +1,6 @@
 import * as merge_sdk from '../src/index'
 import { Configuration } from '../src/index';
+import fetch from 'node-fetch'
 
 // note this is skipped for CI, just here for reference
 test.skip("can call account details api", async () => {
@@ -83,3 +84,24 @@ test.skip("can call account details api", async () => {
     expect(response6).toBeDefined()
     expect(response6?.previous).toBeDefined()
 });
+
+test.skip("can override fetchApi in the configuration", async () => {
+    /*
+    REDACTED TEST CONFS
+    */
+
+    let test_conf_crm = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED",
+        fetchApi: fetch
+    });
+
+    // crm call
+    let contacts_api = new merge_sdk.CRM.ContactsApi(test_conf_crm)
+
+    let response = await contacts_api.contactsList({
+    })
+
+    console.log(response)
+    expect(response).toBeDefined()
+})
