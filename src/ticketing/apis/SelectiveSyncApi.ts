@@ -21,7 +21,7 @@ import {
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
-    
+    ConditionSchema,
 } from '../models';
 import {
 	MergePaginatedResponse,
