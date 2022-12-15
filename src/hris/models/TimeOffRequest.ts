@@ -48,17 +48,17 @@ export interface TimeOffRequest {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The employee requesting time off.
      * @type {string}
      * @memberof TimeOffRequest
      */
-    employee?: string | null;
+    employee?: string | JSONValue | null;
     /**
-     * 
+     * The employee approving the time off request.
      * @type {string}
      * @memberof TimeOffRequest
      */
-    approver?: string | null;
+    approver?: string | JSONValue | null;
     /**
      * The status of this time off request.
      * @type {TimeOffStatusEnum}

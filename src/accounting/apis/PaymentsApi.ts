@@ -43,6 +43,7 @@ export interface PaymentsCreateRequest {
 
 export interface PaymentsListRequest {
     accountId?: string;
+    companyId?: string;
     contactId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -125,6 +126,10 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         if (requestParameters.accountId !== undefined) {
             queryParameters['account_id'] = requestParameters.accountId;
+        }
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
         }
 
         if (requestParameters.contactId !== undefined) {

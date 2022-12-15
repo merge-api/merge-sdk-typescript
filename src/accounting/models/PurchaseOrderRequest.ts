@@ -66,7 +66,7 @@ export interface PurchaseOrderRequest {
      * @type {string}
      * @memberof PurchaseOrderRequest
      */
-    delivery_address?: string | null;
+    delivery_address?: string | JSONValue | null;
     /**
      * The purchase order's customer.
      * @type {string}
@@ -97,6 +97,12 @@ export interface PurchaseOrderRequest {
      * @memberof PurchaseOrderRequest
      */
     currency?: CurrencyEnum | null;
+    /**
+     * The purchase order's exchange rate.
+     * @type {string}
+     * @memberof PurchaseOrderRequest
+     */
+    exchange_rate?: string | null;
     /**
      * When the third party's purchase order note was created.
      * @type {Date}
@@ -144,6 +150,7 @@ export function PurchaseOrderRequestFromJSONTyped(json: JSONValue): PurchaseOrde
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
@@ -168,6 +175,7 @@ export function PurchaseOrderRequestToJSON(value?: PurchaseOrderRequest): JSONVa
         'memo': value.memo,
         'total_amount': value.total_amount,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'integration_params': value.integration_params,

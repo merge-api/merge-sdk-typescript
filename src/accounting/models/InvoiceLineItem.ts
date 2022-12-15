@@ -14,6 +14,13 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    CurrencyEnum,
+    CurrencyEnumFromJSON,
+    CurrencyEnumFromJSONTyped,
+    CurrencyEnumToJSON,
+} from './';
+
 
 /**
  * # The InvoiceLineItem Object
@@ -63,6 +70,18 @@ export interface InvoiceLineItem {
      */
     total_amount?: number | null;
     /**
+     * The line item's currency.
+     * @type {CurrencyEnum}
+     * @memberof InvoiceLineItem
+     */
+    currency?: CurrencyEnum | null;
+    /**
+     * The line item's exchange rate.
+     * @type {string}
+     * @memberof InvoiceLineItem
+     */
+    exchange_rate?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof InvoiceLineItem
@@ -80,6 +99,12 @@ export interface InvoiceLineItem {
      * @memberof InvoiceLineItem
      */
     tracking_category?: string | JSONValue | null;
+    /**
+     * The company the line item belongs to.
+     * @type {string}
+     * @memberof InvoiceLineItem
+     */
+    company?: string | null;
 }
 
 export function InvoiceLineItemFromJSON(json: JSONValue): InvoiceLineItem | undefined {
@@ -99,9 +124,12 @@ export function InvoiceLineItemFromJSONTyped(json: JSONValue): InvoiceLineItem |
         'unit_price': !exists(json, 'unit_price') ? undefined : json['unit_price'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'item': !exists(json, 'item') ? undefined : json['item'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
     };
 }
 
@@ -117,9 +145,12 @@ export function InvoiceLineItemToJSON(value?: InvoiceLineItem): JSONValue {
         'unit_price': value.unit_price,
         'quantity': value.quantity,
         'total_amount': value.total_amount,
+        'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
         'item': value.item,
         'account': value.account,
         'tracking_category': value.tracking_category,
+        'company': value.company,
     };
 }
 

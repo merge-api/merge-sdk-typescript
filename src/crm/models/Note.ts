@@ -48,7 +48,7 @@ export interface Note {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The note's owner.
      * @type {string}
      * @memberof Note
      */
@@ -60,19 +60,19 @@ export interface Note {
      */
     content?: string | null;
     /**
-     * 
+     * The note's contact.
      * @type {string}
      * @memberof Note
      */
     contact?: string | JSONValue | null;
     /**
-     * 
+     * The note's account.
      * @type {string}
      * @memberof Note
      */
     account?: string | JSONValue | null;
     /**
-     * 
+     * The note's opportunity.
      * @type {string}
      * @memberof Note
      */

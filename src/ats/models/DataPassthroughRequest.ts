@@ -84,7 +84,7 @@ export interface DataPassthroughRequest {
      */
     request_format?: RequestFormatEnum | null;
     /**
-     * 
+     * Optional. If true, the response will always be an object of the form `{"type": T, "value": ...}` where `T` will be one of `string, boolean, number, null, array, object`.
      * @type {boolean}
      * @memberof DataPassthroughRequest
      */

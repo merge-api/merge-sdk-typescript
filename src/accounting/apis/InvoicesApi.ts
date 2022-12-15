@@ -42,6 +42,7 @@ export interface InvoicesCreateRequest {
 }
 
 export interface InvoicesListRequest {
+    companyId?: string;
     contactId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -124,6 +125,10 @@ export class InvoicesApi extends runtime.BaseAPI {
      */
     async invoicesListRaw(requestParameters: InvoicesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Invoice> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.contactId !== undefined) {
             queryParameters['contact_id'] = requestParameters.contactId;

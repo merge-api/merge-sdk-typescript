@@ -60,7 +60,7 @@ export interface Lead {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The lead's owner.
      * @type {string}
      * @memberof Lead
      */
@@ -132,13 +132,13 @@ export interface Lead {
      */
     converted_date?: Date | null;
     /**
-     * 
+     * The contact of the converted lead.
      * @type {string}
      * @memberof Lead
      */
     converted_contact?: string | JSONValue | null;
     /**
-     * 
+     * The account of the converted lead.
      * @type {string}
      * @memberof Lead
      */

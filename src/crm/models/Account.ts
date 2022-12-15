@@ -56,7 +56,7 @@ export interface Account {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The account's owner.
      * @type {string}
      * @memberof Account
      */

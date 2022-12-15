@@ -71,7 +71,7 @@ export interface Employee {
      */
     employee_number?: string | null;
     /**
-     * 
+     * The ID of the employee's company.
      * @type {string}
      * @memberof Employee
      */
@@ -131,31 +131,31 @@ export interface Employee {
      */
     employments?: Array<string> | JSONValue;
     /**
-     * 
+     * The employee's home address.
      * @type {string}
      * @memberof Employee
      */
     home_location?: string | JSONValue | null;
     /**
-     * 
+     * The employee's work address.
      * @type {string}
      * @memberof Employee
      */
     work_location?: string | JSONValue | null;
     /**
-     * 
+     * The employee ID of the employee's manager.
      * @type {string}
      * @memberof Employee
      */
     manager?: string | JSONValue | null;
     /**
-     * 
+     * The employee's team.
      * @type {string}
      * @memberof Employee
      */
     team?: string | JSONValue | null;
     /**
-     * 
+     * The employee's pay group
      * @type {string}
      * @memberof Employee
      */

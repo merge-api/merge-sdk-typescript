@@ -49,13 +49,13 @@ export interface Comment {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The author of the Comment, if the author is a User.
      * @type {string}
      * @memberof Comment
      */
     user?: string | JSONValue | null;
     /**
-     * 
+     * The author of the Comment, if the author is a Contact.
      * @type {string}
      * @memberof Comment
      */
@@ -73,7 +73,7 @@ export interface Comment {
      */
     html_body?: string | null;
     /**
-     * 
+     * The ticket associated with the comment. 
      * @type {string}
      * @memberof Comment
      */

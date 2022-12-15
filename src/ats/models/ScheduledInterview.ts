@@ -52,19 +52,19 @@ export interface ScheduledInterview {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The application being interviewed.
      * @type {string}
      * @memberof ScheduledInterview
      */
     application?: string | JSONValue | null;
     /**
-     * 
+     * The stage of the interview.
      * @type {string}
      * @memberof ScheduledInterview
      */
     job_interview_stage?: string | JSONValue | null;
     /**
-     * 
+     * The user organizing the interview.
      * @type {string}
      * @memberof ScheduledInterview
      */

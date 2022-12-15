@@ -27,6 +27,7 @@ import {
 } from '../../merge_paginated_response';
 
 export interface ItemsListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -57,6 +58,10 @@ export class ItemsApi extends runtime.BaseAPI {
      */
     async itemsListRaw(requestParameters: ItemsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Item> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

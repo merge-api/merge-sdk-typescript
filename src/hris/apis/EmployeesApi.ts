@@ -61,6 +61,7 @@ export interface EmployeesListRequest {
     employmentStatus?: EmployeesListEmploymentStatusEnum;
     expand?: EmployeesListExpandEnum;
     firstName?: string | null;
+    groups?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     includeSensitiveFields?: boolean;
@@ -223,6 +224,10 @@ export class EmployeesApi extends runtime.BaseAPI {
 
         if (requestParameters.firstName !== undefined) {
             queryParameters['first_name'] = requestParameters.firstName;
+        }
+
+        if (requestParameters.groups !== undefined) {
+            queryParameters['groups'] = requestParameters.groups;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {

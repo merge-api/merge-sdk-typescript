@@ -82,6 +82,12 @@ export interface CreditNoteLineItem {
      */
     account?: string | null;
     /**
+     * The company the credit note line item belongs to.
+     * @type {string}
+     * @memberof CreditNoteLineItem
+     */
+    company?: string | null;
+    /**
      * The third-party API ID of the matching object.
      * @type {string}
      * @memberof CreditNoteLineItem
@@ -110,6 +116,7 @@ export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLine
         'total_line_amount': !exists(json, 'total_line_amount') ? undefined : json['total_line_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }
@@ -131,6 +138,7 @@ export function CreditNoteLineItemToJSON(value?: CreditNoteLineItem): JSONValue 
         'total_line_amount': value.total_line_amount,
         'tracking_category': value.tracking_category,
         'account': value.account,
+        'company': value.company,
         'remote_id': value.remote_id,
     };
 }

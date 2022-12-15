@@ -71,7 +71,7 @@ export interface Employment {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The employee holding this position.
      * @type {string}
      * @memberof Employment
      */
@@ -107,7 +107,7 @@ export interface Employment {
      */
     pay_currency?: PayCurrencyEnum | null;
     /**
-     * 
+     * The employment's pay group
      * @type {string}
      * @memberof Employment
      */

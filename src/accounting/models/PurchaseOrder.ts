@@ -121,6 +121,12 @@ export interface PurchaseOrder {
      */
     currency?: CurrencyEnum | null;
     /**
+     * The purchase order's exchange rate.
+     * @type {string}
+     * @memberof PurchaseOrder
+     */
+    exchange_rate?: string | null;
+    /**
      * 
      * @type {Array<PurchaseOrderLineItem>}
      * @memberof PurchaseOrder
@@ -169,6 +175,7 @@ export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | und
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(PurchaseOrderLineItemFromJSON)) as Array<PurchaseOrderLineItem>,
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
@@ -193,6 +200,7 @@ export function PurchaseOrderToJSON(value?: PurchaseOrder): JSONValue {
         'memo': value.memo,
         'total_amount': value.total_amount,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
     };

@@ -99,6 +99,18 @@ export interface JournalEntry {
      */
     currency?: CurrencyEnum | null;
     /**
+     * The journal entry's exchange rate.
+     * @type {string}
+     * @memberof JournalEntry
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the journal entry belongs to.
+     * @type {string}
+     * @memberof JournalEntry
+     */
+    company?: string | null;
+    /**
      * 
      * @type {Array<JournalLine>}
      * @memberof JournalEntry
@@ -132,6 +144,8 @@ export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry | undef
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(JournalLineFromJSON)) as Array<JournalLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -151,6 +165,8 @@ export function JournalEntryToJSON(value?: JournalEntry): JSONValue {
         'payments': value.payments,
         'memo': value.memo,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
     };
 }
 

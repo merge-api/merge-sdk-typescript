@@ -54,13 +54,13 @@ export interface TicketRequest {
      * @type {Array<string>}
      * @memberof TicketRequest
      */
-    assignees?: Array<string>;
+    assignees?: Array<string> | JSONValue;
     /**
-     * 
+     * The user who created this ticket.
      * @type {string}
      * @memberof TicketRequest
      */
-    creator?: string | null;
+    creator?: string | JSONValue | null;
     /**
      * The ticket's due date.
      * @type {Date}
@@ -80,11 +80,11 @@ export interface TicketRequest {
      */
     description?: string | null;
     /**
-     * 
+     * The project the ticket belongs to.
      * @type {string}
      * @memberof TicketRequest
      */
-    project?: string | null;
+    project?: string | JSONValue | null;
     /**
      * The ticket's type.
      * @type {string}
@@ -92,29 +92,29 @@ export interface TicketRequest {
      */
     ticket_type?: string | null;
     /**
-     * 
+     * The account associated with the ticket.
      * @type {string}
      * @memberof TicketRequest
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
-     * 
+     * The contact associated with the ticket.
      * @type {string}
      * @memberof TicketRequest
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
-     * 
+     * The ticket's parent ticket.
      * @type {string}
      * @memberof TicketRequest
      */
-    parent_ticket?: string | null;
+    parent_ticket?: string | JSONValue | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof TicketRequest
      */
-    attachments?: Array<string>;
+    attachments?: Array<string> | JSONValue;
     /**
      * 
      * @type {Array<string>}

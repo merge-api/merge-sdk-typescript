@@ -75,6 +75,12 @@ export interface IncomeStatement {
      */
     currency?: CurrencyEnum | null;
     /**
+     * The company the income statement belongs to.
+     * @type {string}
+     * @memberof IncomeStatement
+     */
+    company?: string | null;
+    /**
      * The income statement's start period.
      * @type {Date}
      * @memberof IncomeStatement
@@ -152,6 +158,7 @@ export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement |
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'start_period': !exists(json, 'start_period') ? undefined : (json['start_period'] === null ? null : new Date(json['start_period'])),
         'end_period': !exists(json, 'end_period') ? undefined : (json['end_period'] === null ? null : new Date(json['end_period'])),
         'income': !exists(json, 'income') ? undefined : ((json['income'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
@@ -175,6 +182,7 @@ export function IncomeStatementToJSON(value?: IncomeStatement): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'currency': CurrencyEnumToJSON(value.currency),
+        'company': value.company,
         'start_period': value.start_period === undefined ? undefined : (value.start_period === null ? null : value.start_period.toISOString()),
         'end_period': value.end_period === undefined ? undefined : (value.end_period === null ? null : value.end_period.toISOString()),
         'gross_profit': value.gross_profit,

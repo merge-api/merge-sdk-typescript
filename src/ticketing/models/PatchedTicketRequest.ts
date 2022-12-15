@@ -50,7 +50,7 @@ export interface PatchedTicketRequest {
      */
     assignees?: Array<string>;
     /**
-     * 
+     * The user who created this ticket.
      * @type {string}
      * @memberof PatchedTicketRequest
      */
@@ -74,7 +74,7 @@ export interface PatchedTicketRequest {
      */
     description?: string | null;
     /**
-     * 
+     * The project the ticket belongs to.
      * @type {string}
      * @memberof PatchedTicketRequest
      */
@@ -86,19 +86,19 @@ export interface PatchedTicketRequest {
      */
     ticket_type?: string | null;
     /**
-     * 
+     * The account associated with the ticket.
      * @type {string}
      * @memberof PatchedTicketRequest
      */
     account?: string | null;
     /**
-     * 
+     * The contact associated with the ticket.
      * @type {string}
      * @memberof PatchedTicketRequest
      */
     contact?: string | null;
     /**
-     * 
+     * The ticket's parent ticket.
      * @type {string}
      * @memberof PatchedTicketRequest
      */

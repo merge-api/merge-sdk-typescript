@@ -51,13 +51,13 @@ export interface Application {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The candidate applying.
      * @type {string}
      * @memberof Application
      */
     candidate?: string | JSONValue | null;
     /**
-     * 
+     * The job being applied for.
      * @type {string}
      * @memberof Application
      */
@@ -81,19 +81,19 @@ export interface Application {
      */
     source?: string | null;
     /**
-     * 
+     * The user credited for this application.
      * @type {string}
      * @memberof Application
      */
     credited_to?: string | JSONValue | null;
     /**
-     * 
+     * The application's current stage.
      * @type {string}
      * @memberof Application
      */
     current_stage?: string | JSONValue | null;
     /**
-     * 
+     * The application's reason for rejection.
      * @type {string}
      * @memberof Application
      */
@@ -104,12 +104,6 @@ export interface Application {
      * @memberof Application
      */
     readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * Custom fields configured for a given model.
-     * @type {{ [key: string]: any; }}
-     * @memberof Application
-     */
-    custom_fields?: { [key: string]: any; } | null;
     /**
      * 
      * @type {boolean}
@@ -140,7 +134,6 @@ export function ApplicationFromJSONTyped(json: JSONValue): Application | undefin
         'current_stage': !exists(json, 'current_stage') ? undefined : json['current_stage'],
         'reject_reason': !exists(json, 'reject_reason') ? undefined : json['reject_reason'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
-        'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
@@ -161,7 +154,6 @@ export function ApplicationToJSON(value?: Application): JSONValue {
         'credited_to': value.credited_to,
         'current_stage': value.current_stage,
         'reject_reason': value.reject_reason,
-        'custom_fields': value.custom_fields,
     };
 }
 

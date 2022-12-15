@@ -67,6 +67,12 @@ export interface AccountingAttachment {
      */
     file_url?: string | null;
     /**
+     * The company the accounting attachment belongs to.
+     * @type {string}
+     * @memberof AccountingAttachment
+     */
+    company?: string | null;
+    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof AccountingAttachment
@@ -90,6 +96,7 @@ export function AccountingAttachmentFromJSONTyped(json: JSONValue): AccountingAt
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
@@ -104,6 +111,7 @@ export function AccountingAttachmentToJSON(value?: AccountingAttachment): JSONVa
         'remote_id': value.remote_id,
         'file_name': value.file_name,
         'file_url': value.file_url,
+        'company': value.company,
     };
 }
 

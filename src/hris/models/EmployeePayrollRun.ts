@@ -61,13 +61,13 @@ export interface EmployeePayrollRun {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The employee whose payroll is being run.
      * @type {string}
      * @memberof EmployeePayrollRun
      */
     employee?: string | JSONValue | null;
     /**
-     * 
+     * The payroll being run.
      * @type {string}
      * @memberof EmployeePayrollRun
      */

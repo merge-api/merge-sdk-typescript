@@ -70,19 +70,19 @@ export interface Opportunity {
      */
     amount?: number | null;
     /**
-     * 
+     * The opportunity's owner.
      * @type {string}
      * @memberof Opportunity
      */
     owner?: string | JSONValue | null;
     /**
-     * 
+     * The account of the opportunity.
      * @type {string}
      * @memberof Opportunity
      */
     account?: string | JSONValue | null;
     /**
-     * 
+     * The stage of the opportunity.
      * @type {string}
      * @memberof Opportunity
      */

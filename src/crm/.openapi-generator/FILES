@@ -90,6 +90,8 @@ src/models/OpportunityEndpointRequest.ts
 src/models/OpportunityRequest.ts
 src/models/OpportunityResponse.ts
 src/models/OpportunityStatusEnum.ts
+src/models/PatchedAccountRequest.ts
+src/models/PatchedCRMAccountEndpointRequest.ts
 src/models/PatchedOpportunityEndpointRequest.ts
 src/models/PatchedOpportunityRequest.ts
 src/models/PhoneNumber.ts

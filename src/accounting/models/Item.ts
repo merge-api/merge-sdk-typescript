@@ -83,17 +83,23 @@ export interface Item {
      */
     purchase_price?: number | null;
     /**
-     * 
+     * The item's purchase account.
      * @type {string}
      * @memberof Item
      */
     purchase_account?: string | JSONValue | null;
     /**
-     * 
+     * The item's sales account.
      * @type {string}
      * @memberof Item
      */
     sales_account?: string | JSONValue | null;
+    /**
+     * The company the item belongs to.
+     * @type {string}
+     * @memberof Item
+     */
+    company?: string | null;
     /**
      * When the third party's item note was updated.
      * @type {Date}
@@ -128,6 +134,7 @@ export function ItemFromJSONTyped(json: JSONValue): Item | undefined {
         'purchase_price': !exists(json, 'purchase_price') ? undefined : json['purchase_price'],
         'purchase_account': !exists(json, 'purchase_account') ? undefined : json['purchase_account'],
         'sales_account': !exists(json, 'sales_account') ? undefined : json['sales_account'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -147,6 +154,7 @@ export function ItemToJSON(value?: Item): JSONValue {
         'purchase_price': value.purchase_price,
         'purchase_account': value.purchase_account,
         'sales_account': value.sales_account,
+        'company': value.company,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
     };
 }

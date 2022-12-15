@@ -75,7 +75,7 @@ export interface VendorCredit {
      */
     transaction_date?: Date | null;
     /**
-     * 
+     * The vendor credit's vendor.
      * @type {string}
      * @memberof VendorCredit
      */
@@ -92,6 +92,18 @@ export interface VendorCredit {
      * @memberof VendorCredit
      */
     currency?: CurrencyEnum | null;
+    /**
+     * The vendor credit's exchange rate.
+     * @type {string}
+     * @memberof VendorCredit
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the vendor credit belongs to.
+     * @type {string}
+     * @memberof VendorCredit
+     */
+    company?: string | null;
     /**
      * 
      * @type {Array<VendorCreditLine>}
@@ -125,6 +137,8 @@ export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit | undef
         'vendor': !exists(json, 'vendor') ? undefined : json['vendor'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(VendorCreditLineFromJSON)) as Array<VendorCreditLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -143,6 +157,8 @@ export function VendorCreditToJSON(value?: VendorCredit): JSONValue {
         'vendor': value.vendor,
         'total_amount': value.total_amount,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
     };
 }
 

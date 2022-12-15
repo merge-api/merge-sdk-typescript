@@ -52,13 +52,13 @@ export interface Offer {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The application who is receiving the offer.
      * @type {string}
      * @memberof Offer
      */
     application?: string | JSONValue | null;
     /**
-     * 
+     * The user who created the offer.
      * @type {string}
      * @memberof Offer
      */

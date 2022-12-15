@@ -56,6 +56,12 @@ export interface VendorCreditLine {
      * @memberof VendorCreditLine
      */
     account?: string | JSONValue | null;
+    /**
+     * The company the line belongs to.
+     * @type {string}
+     * @memberof VendorCreditLine
+     */
+    company?: string | null;
 }
 
 export function VendorCreditLineFromJSON(json: JSONValue): VendorCreditLine | undefined {
@@ -74,6 +80,7 @@ export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
     };
 }
 
@@ -89,6 +96,7 @@ export function VendorCreditLineToJSON(value?: VendorCreditLine): JSONValue {
         'tracking_category': value.tracking_category,
         'description': value.description,
         'account': value.account,
+        'company': value.company,
     };
 }
 

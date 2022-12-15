@@ -22,95 +22,88 @@ import { JSONValue } from '../../merge_json';
  * ### Usage Example
  * TODO
  * @export
- * @interface AccountRequest
+ * @interface PatchedAccountRequest
  */
-export interface AccountRequest {
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof AccountRequest
-     */
-    remote_id?: string | null;
+export interface PatchedAccountRequest {
     /**
      * The account's owner.
      * @type {string}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
-    owner?: string | JSONValue | null;
+    owner?: string | null;
     /**
      * The account's name.
      * @type {string}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     name?: string | null;
     /**
      * The account's description.
      * @type {string}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     description?: string | null;
     /**
      * The account's industry.
      * @type {string}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     industry?: string | null;
     /**
      * The account's website.
      * @type {string}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     website?: string | null;
     /**
      * The account's number of employees.
      * @type {number}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     number_of_employees?: number | null;
     /**
      * When the account's last activity  occurred.
      * @type {Date}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     last_activity_at?: Date | null;
     /**
      * When the third party's account was updated.
      * @type {Date}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     remote_updated_at?: Date | null;
     /**
      * When the third party's account was created.
      * @type {Date}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     remote_created_at?: Date | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     integration_params?: { [key: string]: any; } | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof AccountRequest
+     * @memberof PatchedAccountRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function AccountRequestFromJSON(json: JSONValue): AccountRequest | undefined {
-    return AccountRequestFromJSONTyped(json);
+export function PatchedAccountRequestFromJSON(json: JSONValue): PatchedAccountRequest | undefined {
+    return PatchedAccountRequestFromJSONTyped(json);
 }
 
-export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | undefined {
+export function PatchedAccountRequestFromJSONTyped(json: JSONValue): PatchedAccountRequest | undefined {
     if ((json === undefined) || (json === null)) {
         return undefined;
     }
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
@@ -125,14 +118,13 @@ export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | u
     };
 }
 
-export function AccountRequestToJSON(value?: AccountRequest): JSONValue {
+export function PatchedAccountRequestToJSON(value?: PatchedAccountRequest): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }
 
     return {
         
-        'remote_id': value.remote_id,
         'owner': value.owner,
         'name': value.name,
         'description': value.description,

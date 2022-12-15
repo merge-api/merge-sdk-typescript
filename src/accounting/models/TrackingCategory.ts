@@ -81,11 +81,17 @@ export interface TrackingCategory {
      */
     category_type?: CategoryTypeEnum | null;
     /**
-     * 
+     * ID of the parent tracking category.
      * @type {string}
      * @memberof TrackingCategory
      */
     parent_category?: string | null;
+    /**
+     * The company the tracking category belongs to.
+     * @type {string}
+     * @memberof TrackingCategory
+     */
+    company?: string | null;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
@@ -112,6 +118,7 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
         'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
         'category_type': !exists(json, 'category_type') ? undefined : CategoryTypeEnumFromJSON(json['category_type']) as CategoryTypeEnum,
         'parent_category': !exists(json, 'parent_category') ? undefined : json['parent_category'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
@@ -128,6 +135,7 @@ export function TrackingCategoryToJSON(value?: TrackingCategory): JSONValue {
         'status': Status7d1EnumToJSON(value.status),
         'category_type': CategoryTypeEnumToJSON(value.category_type),
         'parent_category': value.parent_category,
+        'company': value.company,
     };
 }
 

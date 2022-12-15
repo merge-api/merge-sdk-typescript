@@ -37,7 +37,7 @@ export interface ExpenseLineRequest {
      * @type {string}
      * @memberof ExpenseLineRequest
      */
-    item?: string | null;
+    item?: string | JSONValue | null;
     /**
      * The line's net amount.
      * @type {number}
@@ -49,13 +49,19 @@ export interface ExpenseLineRequest {
      * @type {string}
      * @memberof ExpenseLineRequest
      */
-    tracking_category?: string | null;
+    tracking_category?: string | JSONValue | null;
     /**
-     * 
+     * The company the line belongs to.
      * @type {string}
      * @memberof ExpenseLineRequest
      */
-    account?: string | null;
+    company?: string | null;
+    /**
+     * The expense's payment account.
+     * @type {string}
+     * @memberof ExpenseLineRequest
+     */
+    account?: string | JSONValue | null;
     /**
      * The line item's description.
      * @type {string}
@@ -91,6 +97,7 @@ export function ExpenseLineRequestFromJSONTyped(json: JSONValue): ExpenseLineReq
         'item': !exists(json, 'item') ? undefined : json['item'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
@@ -109,6 +116,7 @@ export function ExpenseLineRequestToJSON(value?: ExpenseLineRequest): JSONValue 
         'item': value.item,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
+        'company': value.company,
         'account': value.account,
         'description': value.description,
         'integration_params': value.integration_params,

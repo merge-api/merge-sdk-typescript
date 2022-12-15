@@ -1,3 +1,13 @@
+# Version 2.0.5
+
+## Date: 2022-12-05
+
+- Several new query parameters for filtering our Ticketing category models
+- Almost all Accounting category models have a `companyId` property now, given its widespread use
+- Clarified the usage of `normalize_response` optional query param in passthrough apis
+- Patch capability for the Accounting category `Account` model
+- Various other minor backwards-compatible model/api tweaks
+
 # Version 2.0.4
 
 ## Date: 2022-11-02

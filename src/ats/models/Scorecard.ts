@@ -52,19 +52,19 @@ export interface Scorecard {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The application being scored.
      * @type {string}
      * @memberof Scorecard
      */
     application?: string | JSONValue | null;
     /**
-     * 
+     * The interview being scored.
      * @type {string}
      * @memberof Scorecard
      */
     interview?: string | JSONValue | null;
     /**
-     * 
+     * The interviewer doing the scoring.
      * @type {string}
      * @memberof Scorecard
      */

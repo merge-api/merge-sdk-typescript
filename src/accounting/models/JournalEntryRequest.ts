@@ -62,7 +62,7 @@ export interface JournalEntryRequest {
      * @type {Array<string>}
      * @memberof JournalEntryRequest
      */
-    payments?: Array<string>;
+    payments?: Array<string> | JSONValue;
     /**
      * The journal entry's private note.
      * @type {string}
@@ -75,6 +75,18 @@ export interface JournalEntryRequest {
      * @memberof JournalEntryRequest
      */
     currency?: CurrencyEnum | null;
+    /**
+     * The journal entry's exchange rate.
+     * @type {string}
+     * @memberof JournalEntryRequest
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the journal entry belongs to.
+     * @type {string}
+     * @memberof JournalEntryRequest
+     */
+    company?: string | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -107,6 +119,8 @@ export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryR
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -126,6 +140,8 @@ export function JournalEntryRequestToJSON(value?: JournalEntryRequest): JSONValu
         'payments': value.payments,
         'memo': value.memo,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

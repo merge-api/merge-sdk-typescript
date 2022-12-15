@@ -92,6 +92,12 @@ export interface ContactRequest {
      */
     remote_updated_at?: Date | null;
     /**
+     * The company the contact belongs to.
+     * @type {string}
+     * @memberof ContactRequest
+     */
+    company?: string | null;
+    /**
      * `Address` object IDs for the given `Contacts` object.
      * @type {Array<string>}
      * @memberof ContactRequest
@@ -137,6 +143,7 @@ export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | u
         'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
         'currency': !exists(json, 'currency') ? undefined : json['currency'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'addresses': !exists(json, 'addresses') ? undefined : json['addresses'],
         'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(AccountingPhoneNumberRequestFromJSON)) as Array<AccountingPhoneNumberRequest>,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
@@ -160,6 +167,7 @@ export function ContactRequestToJSON(value?: ContactRequest): JSONValue {
         'status': Status7d1EnumToJSON(value.status),
         'currency': value.currency,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
+        'company': value.company,
         'addresses': value.addresses,
         'phone_numbers': value.phone_numbers === undefined ? undefined : ((value.phone_numbers as Array<any>).map(AccountingPhoneNumberRequestToJSON)),
         'integration_params': value.integration_params,

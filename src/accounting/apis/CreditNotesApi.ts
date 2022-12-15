@@ -27,6 +27,7 @@ import {
 } from '../../merge_paginated_response';
 
 export interface CreditNotesListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -57,6 +58,10 @@ export class CreditNotesApi extends runtime.BaseAPI {
      */
     async creditNotesListRaw(requestParameters: CreditNotesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CreditNote> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

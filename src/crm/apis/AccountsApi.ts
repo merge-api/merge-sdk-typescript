@@ -28,6 +28,9 @@ import {
     MetaResponseFromJSON,
     MetaResponseToJSON,
     
+    PatchedCRMAccountEndpointRequest,
+    PatchedCRMAccountEndpointRequestFromJSON,
+    PatchedCRMAccountEndpointRequestToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -53,6 +56,17 @@ export interface AccountsListRequest {
     ownerId?: string;
     pageSize?: number;
     remoteId?: string | null;
+}
+
+export interface AccountsMetaPatchRetrieveRequest {
+    id: string;
+}
+
+export interface AccountsPartialUpdateRequest {
+    id: string;
+    patchedCRMAccountEndpointRequest: PatchedCRMAccountEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
 }
 
 export interface AccountsRetrieveRequest {
@@ -196,6 +210,45 @@ export class AccountsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns metadata for `CRMAccount` PATCHs.
+     */
+    async accountsMetaPatchRetrieveRaw(requestParameters: AccountsMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling accountsMetaPatchRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/accounts/meta/patch/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `CRMAccount` PATCHs.
+     */
+    async accountsMetaPatchRetrieve(requestParameters: AccountsMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.accountsMetaPatchRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns metadata for `CRMAccount` POSTs.
      */
     async accountsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
@@ -227,6 +280,60 @@ export class AccountsApi extends runtime.BaseAPI {
      */
     async accountsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
         const response = await this.accountsMetaPostRetrieveRaw();
+        return await response.value();
+    }
+
+    /**
+     * Updates an `Account` object with the given `id`.
+     */
+    async accountsPartialUpdateRaw(requestParameters: AccountsPartialUpdateRequest): Promise<runtime.ApiResponse<CRMAccountResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling accountsPartialUpdate.');
+        }
+
+        if (requestParameters.patchedCRMAccountEndpointRequest === null || requestParameters.patchedCRMAccountEndpointRequest === undefined) {
+            throw new runtime.RequiredError('patchedCRMAccountEndpointRequest','Required parameter requestParameters.patchedCRMAccountEndpointRequest was null or undefined when calling accountsPartialUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/accounts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchedCRMAccountEndpointRequestToJSON(requestParameters.patchedCRMAccountEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CRMAccountResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates an `Account` object with the given `id`.
+     */
+    async accountsPartialUpdate(requestParameters: AccountsPartialUpdateRequest): Promise<CRMAccountResponse | undefined> {
+        const response = await this.accountsPartialUpdateRaw(requestParameters);
         return await response.value();
     }
 

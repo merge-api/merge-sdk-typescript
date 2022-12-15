@@ -64,7 +64,7 @@ export interface EEOC {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The candidate being represented.
      * @type {string}
      * @memberof EEOC
      */

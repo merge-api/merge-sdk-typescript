@@ -33,17 +33,17 @@ export interface CommentRequest {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The author of the Comment, if the author is a User.
      * @type {string}
      * @memberof CommentRequest
      */
-    user?: string | null;
+    user?: string | JSONValue | null;
     /**
-     * 
+     * The author of the Comment, if the author is a Contact.
      * @type {string}
      * @memberof CommentRequest
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * The comment's text body.
      * @type {string}
@@ -57,11 +57,11 @@ export interface CommentRequest {
      */
     html_body?: string | null;
     /**
-     * 
+     * The ticket associated with the comment. 
      * @type {string}
      * @memberof CommentRequest
      */
-    ticket?: string | null;
+    ticket?: string | JSONValue | null;
     /**
      * Whether or not the comment is internal.
      * @type {boolean}

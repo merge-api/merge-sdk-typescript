@@ -162,12 +162,6 @@ export interface Candidate {
      */
     readonly remote_data?: Array<RemoteData> | null;
     /**
-     * Custom fields configured for a given model.
-     * @type {{ [key: string]: any; }}
-     * @memberof Candidate
-     */
-    custom_fields?: { [key: string]: any; } | null;
-    /**
      * 
      * @type {boolean}
      * @memberof Candidate
@@ -205,7 +199,6 @@ export function CandidateFromJSONTyped(json: JSONValue): Candidate | undefined {
         'applications': !exists(json, 'applications') ? undefined : json['applications'],
         'attachments': !exists(json, 'attachments') ? undefined : json['attachments'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
-        'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
@@ -234,7 +227,6 @@ export function CandidateToJSON(value?: Candidate): JSONValue {
         'tags': value.tags,
         'applications': value.applications,
         'attachments': value.attachments,
-        'custom_fields': value.custom_fields,
     };
 }
 

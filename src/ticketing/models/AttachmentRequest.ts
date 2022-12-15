@@ -39,11 +39,11 @@ export interface AttachmentRequest {
      */
     file_name?: string | null;
     /**
-     * 
+     * The ticket associated with the attachment.
      * @type {string}
      * @memberof AttachmentRequest
      */
-    ticket?: string | null;
+    ticket?: string | JSONValue | null;
     /**
      * The attachment's url.
      * @type {string}
@@ -57,7 +57,7 @@ export interface AttachmentRequest {
      */
     content_type?: string | null;
     /**
-     * 
+     * The user who uploaded the attachment.
      * @type {string}
      * @memberof AttachmentRequest
      */

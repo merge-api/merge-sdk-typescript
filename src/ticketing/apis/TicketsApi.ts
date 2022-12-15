@@ -18,6 +18,9 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    PaginatedTicketList,
+    PaginatedTicketListFromJSON,
+    PaginatedTicketListToJSON,
     
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
@@ -31,7 +34,6 @@ import {
     TicketResponse,
     TicketResponseFromJSON,
     TicketResponseToJSON,
-    User,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -73,8 +75,12 @@ export interface TicketsListRequest {
     parentTicketId?: string;
     priority?: TicketsListPriorityEnum;
     projectId?: string;
+    remoteCreatedAfter?: Date | null;
+    remoteCreatedBefore?: Date | null;
     remoteFields?: TicketsListRemoteFieldsEnum;
     remoteId?: string | null;
+    remoteUpdatedAfter?: Date | null;
+    remoteUpdatedBefore?: Date | null;
     status?: TicketsListStatusEnum;
     tags?: string;
     ticketType?: string | null;
@@ -290,12 +296,28 @@ export class TicketsApi extends runtime.BaseAPI {
             queryParameters['project_id'] = requestParameters.projectId;
         }
 
+        if (requestParameters.remoteCreatedAfter !== undefined) {
+            queryParameters['remote_created_after'] = (requestParameters.remoteCreatedAfter as any).toISOString();
+        }
+
+        if (requestParameters.remoteCreatedBefore !== undefined) {
+            queryParameters['remote_created_before'] = (requestParameters.remoteCreatedBefore as any).toISOString();
+        }
+
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
 
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
+        }
+
+        if (requestParameters.remoteUpdatedAfter !== undefined) {
+            queryParameters['remote_updated_after'] = (requestParameters.remoteUpdatedAfter as any).toISOString();
+        }
+
+        if (requestParameters.remoteUpdatedBefore !== undefined) {
+            queryParameters['remote_updated_before'] = (requestParameters.remoteUpdatedBefore as any).toISOString();
         }
 
         if (requestParameters.status !== undefined) {

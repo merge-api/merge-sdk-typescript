@@ -43,7 +43,7 @@ export interface Deduction {
      */
     readonly id?: string;
     /**
-     * 
+     * The deduction's employee payroll run.
      * @type {string}
      * @memberof Deduction
      */

@@ -72,7 +72,7 @@ export interface Contact {
      */
     last_name?: string | null;
     /**
-     * 
+     * The contact's account.
      * @type {string}
      * @memberof Contact
      */

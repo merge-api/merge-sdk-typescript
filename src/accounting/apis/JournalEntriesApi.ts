@@ -42,6 +42,7 @@ export interface JournalEntriesCreateRequest {
 }
 
 export interface JournalEntriesListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -120,6 +121,10 @@ export class JournalEntriesApi extends runtime.BaseAPI {
      */
     async journalEntriesListRaw(requestParameters: JournalEntriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<JournalEntry> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

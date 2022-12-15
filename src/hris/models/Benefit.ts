@@ -49,7 +49,7 @@ export interface Benefit {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The employee on the plan.
      * @type {string}
      * @memberof Benefit
      */

@@ -59,11 +59,11 @@ export interface ContactRequest {
      */
     last_name?: string | null;
     /**
-     * 
+     * The contact's account.
      * @type {string}
      * @memberof ContactRequest
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {Array<AddressRequest>}
