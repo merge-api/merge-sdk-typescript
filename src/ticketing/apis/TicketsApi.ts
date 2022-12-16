@@ -101,6 +101,10 @@ export interface TicketsRetrieveRequest {
     remoteFields?: TicketsRetrieveRemoteFieldsEnum;
 }
 
+export interface TicketsMetaPostRetrieveRequest {
+    projectId?: string,
+}
+
 /**
  * 
  */
@@ -400,8 +404,12 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async ticketsMetaPostRetrieveRaw(requestParameters?: TicketsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters?.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -427,8 +435,8 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.ticketsMetaPostRetrieveRaw();
+    async ticketsMetaPostRetrieve(requestParameters?: TicketsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.ticketsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
