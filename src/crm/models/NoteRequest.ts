@@ -32,11 +32,11 @@ export interface NoteRequest {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The note's owner.
      * @type {string}
      * @memberof NoteRequest
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
      * The note's content.
      * @type {string}
@@ -44,23 +44,23 @@ export interface NoteRequest {
      */
     content?: string | null;
     /**
-     * 
+     * The note's contact.
      * @type {string}
      * @memberof NoteRequest
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
-     * 
+     * The note's account.
      * @type {string}
      * @memberof NoteRequest
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
-     * 
+     * The note's opportunity.
      * @type {string}
      * @memberof NoteRequest
      */
-    opportunity?: string | null;
+    opportunity?: string | JSONValue | null;
     /**
      * When the third party's lead was updated.
      * @type {Date}

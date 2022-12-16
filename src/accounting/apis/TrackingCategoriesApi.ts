@@ -27,6 +27,7 @@ import {
 } from '../../merge_paginated_response';
 
 export interface TrackingCategoriesListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -55,6 +56,10 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
      */
     async trackingCategoriesListRaw(requestParameters: TrackingCategoriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<TrackingCategory> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

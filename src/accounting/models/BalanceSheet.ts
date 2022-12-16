@@ -75,6 +75,12 @@ export interface BalanceSheet {
      */
     currency?: CurrencyEnum | null;
     /**
+     * The company the balance sheet belongs to.
+     * @type {string}
+     * @memberof BalanceSheet
+     */
+    company?: string | null;
+    /**
      * The balance sheet's date. The balance sheet data will reflect the company's financial position this point in time.
      * @type {Date}
      * @memberof BalanceSheet
@@ -134,6 +140,7 @@ export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | undef
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'date': !exists(json, 'date') ? undefined : (json['date'] === null ? null : new Date(json['date'])),
         'net_assets': !exists(json, 'net_assets') ? undefined : json['net_assets'],
         'assets': !exists(json, 'assets') ? undefined : ((json['assets'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
@@ -154,6 +161,7 @@ export function BalanceSheetToJSON(value?: BalanceSheet): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'currency': CurrencyEnumToJSON(value.currency),
+        'company': value.company,
         'date': value.date === undefined ? undefined : (value.date === null ? null : value.date.toISOString()),
         'net_assets': value.net_assets,
         'remote_generated_at': value.remote_generated_at === undefined ? undefined : (value.remote_generated_at === null ? null : value.remote_generated_at.toISOString()),

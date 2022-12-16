@@ -14,6 +14,13 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    CurrencyEnum,
+    CurrencyEnumFromJSON,
+    CurrencyEnumFromJSONTyped,
+    CurrencyEnumToJSON,
+} from './';
+
 
 /**
  * # The InvoiceLineItem Object
@@ -57,23 +64,41 @@ export interface InvoiceLineItemRequest {
      */
     total_amount?: number | null;
     /**
-     * 
+     * The line item's currency.
+     * @type {CurrencyEnum}
+     * @memberof InvoiceLineItemRequest
+     */
+    currency?: CurrencyEnum | null;
+    /**
+     * The line item's exchange rate.
      * @type {string}
      * @memberof InvoiceLineItemRequest
      */
-    item?: string | null;
+    exchange_rate?: string | null;
     /**
      * 
      * @type {string}
      * @memberof InvoiceLineItemRequest
      */
-    account?: string | null;
+    item?: string | JSONValue | null;
     /**
      * 
      * @type {string}
      * @memberof InvoiceLineItemRequest
      */
-    tracking_category?: string | null;
+    account?: string | JSONValue | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof InvoiceLineItemRequest
+     */
+    tracking_category?: string | JSONValue | null;
+    /**
+     * The company the line item belongs to.
+     * @type {string}
+     * @memberof InvoiceLineItemRequest
+     */
+    company?: string | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -104,9 +129,12 @@ export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLin
         'unit_price': !exists(json, 'unit_price') ? undefined : json['unit_price'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'item': !exists(json, 'item') ? undefined : json['item'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -124,9 +152,12 @@ export function InvoiceLineItemRequestToJSON(value?: InvoiceLineItemRequest): JS
         'unit_price': value.unit_price,
         'quantity': value.quantity,
         'total_amount': value.total_amount,
+        'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
         'item': value.item,
         'account': value.account,
         'tracking_category': value.tracking_category,
+        'company': value.company,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

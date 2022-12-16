@@ -73,7 +73,7 @@ export interface Invoice {
      */
     type?: InvoiceTypeEnum | null;
     /**
-     * 
+     * The invoice's contact.
      * @type {string}
      * @memberof Invoice
      */
@@ -109,11 +109,23 @@ export interface Invoice {
      */
     memo?: string | null;
     /**
+     * The company the invoice belongs to.
+     * @type {string}
+     * @memberof Invoice
+     */
+    company?: string | null;
+    /**
      * The invoice's currency.
      * @type {CurrencyEnum}
      * @memberof Invoice
      */
     currency?: CurrencyEnum | null;
+    /**
+     * The invoice's exchange rate.
+     * @type {string}
+     * @memberof Invoice
+     */
+    exchange_rate?: string | null;
     /**
      * The invoice's total discount.
      * @type {number}
@@ -191,7 +203,9 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'paid_on_date': !exists(json, 'paid_on_date') ? undefined : (json['paid_on_date'] === null ? null : new Date(json['paid_on_date'])),
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'total_discount': !exists(json, 'total_discount') ? undefined : json['total_discount'],
         'sub_total': !exists(json, 'sub_total') ? undefined : json['sub_total'],
         'total_tax_amount': !exists(json, 'total_tax_amount') ? undefined : json['total_tax_amount'],
@@ -219,7 +233,9 @@ export function InvoiceToJSON(value?: Invoice): JSONValue {
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'paid_on_date': value.paid_on_date === undefined ? undefined : (value.paid_on_date === null ? null : value.paid_on_date.toISOString()),
         'memo': value.memo,
+        'company': value.company,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
         'total_discount': value.total_discount,
         'sub_total': value.sub_total,
         'total_tax_amount': value.total_tax_amount,

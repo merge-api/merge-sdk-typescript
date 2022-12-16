@@ -42,6 +42,7 @@ export interface ContactsCreateRequest {
 }
 
 export interface ContactsListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -122,6 +123,10 @@ export class ContactsApi extends runtime.BaseAPI {
      */
     async contactsListRaw(requestParameters: ContactsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

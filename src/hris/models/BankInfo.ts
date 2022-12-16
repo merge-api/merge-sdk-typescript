@@ -53,7 +53,7 @@ export interface BankInfo {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The employee with this bank account.
      * @type {string}
      * @memberof BankInfo
      */

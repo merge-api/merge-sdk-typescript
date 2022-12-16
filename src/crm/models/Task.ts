@@ -64,13 +64,13 @@ export interface Task {
      */
     content?: string | null;
     /**
-     * 
+     * The task's owner.
      * @type {string}
      * @memberof Task
      */
     owner?: string | JSONValue | null;
     /**
-     * 
+     * The task's account.
      * @type {string}
      * @memberof Task
      */

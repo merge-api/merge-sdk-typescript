@@ -27,6 +27,7 @@ import {
 } from '../../merge_paginated_response';
 
 export interface TransactionsListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -55,6 +56,10 @@ export class TransactionsApi extends runtime.BaseAPI {
      */
     async transactionsListRaw(requestParameters: TransactionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Transaction> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

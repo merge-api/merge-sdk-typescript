@@ -57,23 +57,23 @@ export interface OpportunityRequest {
      */
     amount?: number | null;
     /**
-     * 
+     * The opportunity's owner.
      * @type {string}
      * @memberof OpportunityRequest
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
-     * 
+     * The account of the opportunity.
      * @type {string}
      * @memberof OpportunityRequest
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
-     * 
+     * The stage of the opportunity.
      * @type {string}
      * @memberof OpportunityRequest
      */
-    stage?: string | null;
+    stage?: string | JSONValue | null;
     /**
      * The opportunity's status.
      * @type {OpportunityStatusEnum}

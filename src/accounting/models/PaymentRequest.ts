@@ -14,6 +14,13 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    CurrencyEnum,
+    CurrencyEnumFromJSON,
+    CurrencyEnumFromJSONTyped,
+    CurrencyEnumToJSON,
+} from './';
+
 
 /**
  * # The Payment Object
@@ -39,17 +46,35 @@ export interface PaymentRequest {
      */
     transaction_date?: Date | null;
     /**
-     * 
+     * The payment's contact.
      * @type {string}
      * @memberof PaymentRequest
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
-     * 
+     * The payment's account.
      * @type {string}
      * @memberof PaymentRequest
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
+    /**
+     * The payment's currency.
+     * @type {CurrencyEnum}
+     * @memberof PaymentRequest
+     */
+    currency?: CurrencyEnum | null;
+    /**
+     * The payment's exchange rate.
+     * @type {string}
+     * @memberof PaymentRequest
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the payment belongs to.
+     * @type {string}
+     * @memberof PaymentRequest
+     */
+    company?: string | null;
     /**
      * The payment's total amount.
      * @type {number}
@@ -91,6 +116,9 @@ export function PaymentRequestFromJSONTyped(json: JSONValue): PaymentRequest | u
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
@@ -109,6 +137,9 @@ export function PaymentRequestToJSON(value?: PaymentRequest): JSONValue {
         'transaction_date': value.transaction_date === undefined ? undefined : (value.transaction_date === null ? null : value.transaction_date.toISOString()),
         'contact': value.contact,
         'account': value.account,
+        'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
         'total_amount': value.total_amount,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'integration_params': value.integration_params,

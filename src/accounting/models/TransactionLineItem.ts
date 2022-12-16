@@ -14,6 +14,13 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    CurrencyEnum,
+    CurrencyEnumFromJSON,
+    CurrencyEnumFromJSONTyped,
+    CurrencyEnumToJSON,
+} from './';
+
 
 /**
  * # The TransactionLineItem Object
@@ -75,6 +82,24 @@ export interface TransactionLineItem {
      */
     tax_rate?: string | null;
     /**
+     * The line item's currency.
+     * @type {CurrencyEnum}
+     * @memberof TransactionLineItem
+     */
+    currency?: CurrencyEnum | null;
+    /**
+     * The line item's exchange rate.
+     * @type {string}
+     * @memberof TransactionLineItem
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the line belongs to.
+     * @type {string}
+     * @memberof TransactionLineItem
+     */
+    company?: string | null;
+    /**
      * The third-party API ID of the matching object.
      * @type {string}
      * @memberof TransactionLineItem
@@ -101,6 +126,9 @@ export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLi
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'total_line_amount': !exists(json, 'total_line_amount') ? undefined : json['total_line_amount'],
         'tax_rate': !exists(json, 'tax_rate') ? undefined : json['tax_rate'],
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }
@@ -120,6 +148,9 @@ export function TransactionLineItemToJSON(value?: TransactionLineItem): JSONValu
         'tracking_category': value.tracking_category,
         'total_line_amount': value.total_line_amount,
         'tax_rate': value.tax_rate,
+        'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
         'remote_id': value.remote_id,
     };
 }

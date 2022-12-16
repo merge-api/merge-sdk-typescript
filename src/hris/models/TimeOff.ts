@@ -61,13 +61,13 @@ export interface TimeOff {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The employee requesting time off.
      * @type {string}
      * @memberof TimeOff
      */
     employee?: string | JSONValue | null;
     /**
-     * 
+     * The employee approving the time off request.
      * @type {string}
      * @memberof TimeOff
      */

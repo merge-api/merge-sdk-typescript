@@ -51,19 +51,19 @@ export interface PatchedOpportunityRequest {
      */
     amount?: number | null;
     /**
-     * 
+     * The opportunity's owner.
      * @type {string}
      * @memberof PatchedOpportunityRequest
      */
     owner?: string | null;
     /**
-     * 
+     * The account of the opportunity.
      * @type {string}
      * @memberof PatchedOpportunityRequest
      */
     account?: string | null;
     /**
-     * 
+     * The stage of the opportunity.
      * @type {string}
      * @memberof PatchedOpportunityRequest
      */

@@ -37,7 +37,7 @@ export interface JournalLineRequest {
      * @type {string}
      * @memberof JournalLineRequest
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * The line's net amount.
      * @type {number}
@@ -49,7 +49,7 @@ export interface JournalLineRequest {
      * @type {string}
      * @memberof JournalLineRequest
      */
-    tracking_category?: string | null;
+    tracking_category?: string | JSONValue | null;
     /**
      * 
      * @type {string}

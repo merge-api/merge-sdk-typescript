@@ -32,11 +32,11 @@ export interface LeadRequest {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The lead's owner.
      * @type {string}
      * @memberof LeadRequest
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
      * The lead's source.
      * @type {string}
@@ -86,17 +86,17 @@ export interface LeadRequest {
      */
     converted_date?: Date | null;
     /**
-     * 
+     * The contact of the converted lead.
      * @type {string}
      * @memberof LeadRequest
      */
-    converted_contact?: string | null;
+    converted_contact?: string | JSONValue | null;
     /**
-     * 
+     * The account of the converted lead.
      * @type {string}
      * @memberof LeadRequest
      */
-    converted_account?: string | null;
+    converted_account?: string | JSONValue | null;
     /**
      * 
      * @type {{ [key: string]: any; }}

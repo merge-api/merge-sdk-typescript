@@ -135,19 +135,13 @@ export interface CandidateRequest {
      * @type {Array<string>}
      * @memberof CandidateRequest
      */
-    applications?: Array<string>;
+    applications?: Array<string> | JSONValue;
     /**
      * Array of `Attachment` object IDs.
      * @type {Array<string>}
      * @memberof CandidateRequest
      */
-    attachments?: Array<string>;
-    /**
-     * Custom fields configured for a given model.
-     * @type {{ [key: string]: any; }}
-     * @memberof CandidateRequest
-     */
-    custom_fields?: { [key: string]: any; } | null;
+    attachments?: Array<string> | JSONValue;
     /**
      * 
      * @type {string}
@@ -196,7 +190,6 @@ export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'applications': !exists(json, 'applications') ? undefined : json['applications'],
         'attachments': !exists(json, 'attachments') ? undefined : json['attachments'],
-        'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_template_id': !exists(json, 'remote_template_id') ? undefined : json['remote_template_id'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
@@ -227,7 +220,6 @@ export function CandidateRequestToJSON(value?: CandidateRequest): JSONValue {
         'tags': value.tags,
         'applications': value.applications,
         'attachments': value.attachments,
-        'custom_fields': value.custom_fields,
         'remote_template_id': value.remote_template_id,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,

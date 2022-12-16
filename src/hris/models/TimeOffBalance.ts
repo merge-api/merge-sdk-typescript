@@ -53,7 +53,7 @@ export interface TimeOffBalance {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The employee the balance belongs to.
      * @type {string}
      * @memberof TimeOffBalance
      */

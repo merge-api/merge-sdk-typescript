@@ -56,6 +56,7 @@ export interface CandidatesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    emailAddresses?: string;
     expand?: CandidatesListExpandEnum;
     firstName?: string | null;
     includeDeletedData?: boolean;
@@ -65,6 +66,7 @@ export interface CandidatesListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+    tags?: string;
 }
 
 export interface CandidatesRetrieveRequest {
@@ -192,6 +194,10 @@ export class CandidatesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.emailAddresses !== undefined) {
+            queryParameters['email_addresses'] = requestParameters.emailAddresses;
+        }
+
         if (requestParameters.expand !== undefined) {
             queryParameters['expand'] = requestParameters.expand;
         }
@@ -226,6 +232,10 @@ export class CandidatesApi extends runtime.BaseAPI {
 
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
+        }
+
+        if (requestParameters.tags !== undefined) {
+            queryParameters['tags'] = requestParameters.tags;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

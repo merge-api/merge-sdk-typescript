@@ -64,6 +64,8 @@ export * from './OpportunityEndpointRequest';
 export * from './OpportunityRequest';
 export * from './OpportunityResponse';
 export * from './OpportunityStatusEnum';
+export * from './PatchedAccountRequest';
+export * from './PatchedCRMAccountEndpointRequest';
 export * from './PatchedOpportunityEndpointRequest';
 export * from './PatchedOpportunityRequest';
 export * from './PhoneNumber';

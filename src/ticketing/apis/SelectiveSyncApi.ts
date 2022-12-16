@@ -35,7 +35,7 @@ export interface SelectiveSyncConfigurationsUpdateRequest {
 
 export interface SelectiveSyncMetaListRequest {
     commonModel?: string;
-    cursor?: number;
+    cursor?: string;
     pageSize?: number;
 }
 

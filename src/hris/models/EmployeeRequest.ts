@@ -58,11 +58,11 @@ export interface EmployeeRequest {
      */
     employee_number?: string | null;
     /**
-     * 
+     * The ID of the employee's company.
      * @type {string}
      * @memberof EmployeeRequest
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The employee's first name.
      * @type {string}
@@ -92,7 +92,7 @@ export interface EmployeeRequest {
      * @type {Array<string>}
      * @memberof EmployeeRequest
      */
-    groups?: Array<string>;
+    groups?: Array<string> | JSONValue;
     /**
      * The employee's work email.
      * @type {string}
@@ -116,37 +116,37 @@ export interface EmployeeRequest {
      * @type {Array<string>}
      * @memberof EmployeeRequest
      */
-    employments?: Array<string>;
+    employments?: Array<string> | JSONValue;
     /**
-     * 
+     * The employee's home address.
      * @type {string}
      * @memberof EmployeeRequest
      */
-    home_location?: string | null;
+    home_location?: string | JSONValue | null;
     /**
-     * 
+     * The employee's work address.
      * @type {string}
      * @memberof EmployeeRequest
      */
-    work_location?: string | null;
+    work_location?: string | JSONValue | null;
     /**
-     * 
+     * The employee ID of the employee's manager.
      * @type {string}
      * @memberof EmployeeRequest
      */
-    manager?: string | null;
+    manager?: string | JSONValue | null;
     /**
-     * 
+     * The employee's team.
      * @type {string}
      * @memberof EmployeeRequest
      */
-    team?: string | null;
+    team?: string | JSONValue | null;
     /**
-     * 
+     * The employee's pay group
      * @type {string}
      * @memberof EmployeeRequest
      */
-    pay_group?: string | null;
+    pay_group?: string | JSONValue | null;
     /**
      * The employee's social security number.
      * @type {string}

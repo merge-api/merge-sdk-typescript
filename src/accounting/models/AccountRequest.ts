@@ -96,11 +96,17 @@ export interface AccountRequest {
      */
     account_number?: string | null;
     /**
-     * 
+     * ID of the parent account.
      * @type {string}
      * @memberof AccountRequest
      */
     parent_account?: string | null;
+    /**
+     * The company the account belongs to.
+     * @type {string}
+     * @memberof AccountRequest
+     */
+    company?: string | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -136,6 +142,7 @@ export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | u
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'account_number': !exists(json, 'account_number') ? undefined : json['account_number'],
         'parent_account': !exists(json, 'parent_account') ? undefined : json['parent_account'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -158,6 +165,7 @@ export function AccountRequestToJSON(value?: AccountRequest): JSONValue {
         'currency': CurrencyEnumToJSON(value.currency),
         'account_number': value.account_number,
         'parent_account': value.parent_account,
+        'company': value.company,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

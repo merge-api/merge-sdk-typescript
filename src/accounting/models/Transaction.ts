@@ -105,6 +105,18 @@ export interface Transaction {
      */
     currency?: CurrencyEnum | null;
     /**
+     * The transaction's exchange rate.
+     * @type {string}
+     * @memberof Transaction
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the transaction belongs to.
+     * @type {string}
+     * @memberof Transaction
+     */
+    company?: string | null;
+    /**
      * 
      * @type {Array<TransactionLineItem>}
      * @memberof Transaction
@@ -139,6 +151,8 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction | undefin
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(TransactionLineItemFromJSON)) as Array<TransactionLineItem>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
@@ -159,6 +173,8 @@ export function TransactionToJSON(value?: Transaction): JSONValue {
         'contact': value.contact,
         'total_amount': value.total_amount,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
     };
 }
 

@@ -69,7 +69,7 @@ export interface Ticket {
      */
     assignees?: Array<string> | JSONValue;
     /**
-     * 
+     * The user who created this ticket.
      * @type {string}
      * @memberof Ticket
      */
@@ -93,7 +93,7 @@ export interface Ticket {
      */
     description?: string | null;
     /**
-     * 
+     * The project the ticket belongs to.
      * @type {string}
      * @memberof Ticket
      */
@@ -105,19 +105,19 @@ export interface Ticket {
      */
     ticket_type?: string | null;
     /**
-     * 
+     * The account associated with the ticket.
      * @type {string}
      * @memberof Ticket
      */
     account?: string | JSONValue | null;
     /**
-     * 
+     * The contact associated with the ticket.
      * @type {string}
      * @memberof Ticket
      */
     contact?: string | JSONValue | null;
     /**
-     * 
+     * The ticket's parent ticket.
      * @type {string}
      * @memberof Ticket
      */

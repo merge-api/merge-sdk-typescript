@@ -42,6 +42,7 @@ export interface ExpensesCreateRequest {
 }
 
 export interface ExpensesListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -120,6 +121,10 @@ export class ExpensesApi extends runtime.BaseAPI {
      */
     async expensesListRaw(requestParameters: ExpensesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Expense> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

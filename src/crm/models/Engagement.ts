@@ -52,7 +52,7 @@ export interface Engagement {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The engagement's owner.
      * @type {string}
      * @memberof Engagement
      */
@@ -76,7 +76,7 @@ export interface Engagement {
      */
     direction?: DirectionEnum | null;
     /**
-     * 
+     * The engagement type of the engagement.
      * @type {string}
      * @memberof Engagement
      */
@@ -94,7 +94,7 @@ export interface Engagement {
      */
     end_time?: Date | null;
     /**
-     * 
+     * The account of the engagement.
      * @type {string}
      * @memberof Engagement
      */

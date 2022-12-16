@@ -39,11 +39,11 @@ export interface EngagementRequest {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The engagement's owner.
      * @type {string}
      * @memberof EngagementRequest
      */
-    owner?: string | null;
+    owner?: string | JSONValue | null;
     /**
      * The engagement's content.
      * @type {string}
@@ -63,11 +63,11 @@ export interface EngagementRequest {
      */
     direction?: DirectionEnum | null;
     /**
-     * 
+     * The engagement type of the engagement.
      * @type {string}
      * @memberof EngagementRequest
      */
-    engagement_type?: string | null;
+    engagement_type?: string | JSONValue | null;
     /**
      * The time at which the engagement started.
      * @type {Date}
@@ -81,11 +81,11 @@ export interface EngagementRequest {
      */
     end_time?: Date | null;
     /**
-     * 
+     * The account of the engagement.
      * @type {string}
      * @memberof EngagementRequest
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * 
      * @type {{ [key: string]: any; }}

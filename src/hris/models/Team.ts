@@ -55,7 +55,7 @@ export interface Team {
      */
     name?: string | null;
     /**
-     * 
+     * The team's parent team.
      * @type {string}
      * @memberof Team
      */

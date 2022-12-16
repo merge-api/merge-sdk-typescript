@@ -25,7 +25,8 @@ export enum PayFrequencyEnum {
     Semiannually = 'SEMIANNUALLY',
     Annually = 'ANNUALLY',
     ThirteenMonthly = 'THIRTEEN-MONTHLY',
-    ProRata = 'PRO_RATA'
+    ProRata = 'PRO_RATA',
+    Semimonthly = 'SEMIMONTHLY'
 }
 
 export function PayFrequencyEnumFromJSON(json: any): PayFrequencyEnum {

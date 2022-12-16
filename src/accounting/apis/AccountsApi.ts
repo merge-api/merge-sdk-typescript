@@ -42,6 +42,7 @@ export interface AccountsCreateRequest {
 }
 
 export interface AccountsListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -120,6 +121,10 @@ export class AccountsApi extends runtime.BaseAPI {
      */
     async accountsListRaw(requestParameters: AccountsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Account> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

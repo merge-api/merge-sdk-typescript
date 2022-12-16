@@ -73,6 +73,12 @@ export interface TaxRate {
      */
     effective_tax_rate?: number | null;
     /**
+     * The company the tax rate belongs to.
+     * @type {string}
+     * @memberof TaxRate
+     */
+    company?: string | null;
+    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof TaxRate
@@ -97,6 +103,7 @@ export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | undefined {
         'description': !exists(json, 'description') ? undefined : json['description'],
         'total_tax_rate': !exists(json, 'total_tax_rate') ? undefined : json['total_tax_rate'],
         'effective_tax_rate': !exists(json, 'effective_tax_rate') ? undefined : json['effective_tax_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
     };
 }
@@ -112,6 +119,7 @@ export function TaxRateToJSON(value?: TaxRate): JSONValue {
         'description': value.description,
         'total_tax_rate': value.total_tax_rate,
         'effective_tax_rate': value.effective_tax_rate,
+        'company': value.company,
     };
 }
 

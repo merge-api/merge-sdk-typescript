@@ -70,6 +70,12 @@ export interface Issue {
      * @memberof Issue
      */
     readonly is_muted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Issue
+     */
+    readonly error_details?: { [key: string]: any; };
 }
 
 export function IssueFromJSON(json: JSONValue): Issue | undefined {
@@ -90,6 +96,7 @@ export function IssueFromJSONTyped(json: JSONValue): Issue | undefined {
         'first_incident_time': !exists(json, 'first_incident_time') ? undefined : (json['first_incident_time'] === null ? null : new Date(json['first_incident_time'])),
         'last_incident_time': !exists(json, 'last_incident_time') ? undefined : (json['last_incident_time'] === null ? null : new Date(json['last_incident_time'])),
         'is_muted': !exists(json, 'is_muted') ? undefined : json['is_muted'],
+        'error_details': !exists(json, 'error_details') ? undefined : json['error_details'],
     };
 }
 

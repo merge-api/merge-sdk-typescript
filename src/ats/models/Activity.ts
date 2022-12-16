@@ -56,7 +56,7 @@ export interface Activity {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The user the performed the action.
      * @type {string}
      * @memberof Activity
      */

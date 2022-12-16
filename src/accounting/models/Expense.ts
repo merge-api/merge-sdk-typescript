@@ -75,13 +75,13 @@ export interface Expense {
      */
     remote_created_at?: Date | null;
     /**
-     * 
+     * The expense's payment account.
      * @type {string}
      * @memberof Expense
      */
     account?: string | JSONValue | null;
     /**
-     * 
+     * The expense's contact.
      * @type {string}
      * @memberof Expense
      */
@@ -98,6 +98,18 @@ export interface Expense {
      * @memberof Expense
      */
     currency?: CurrencyEnum | null;
+    /**
+     * The expense's exchange rate.
+     * @type {string}
+     * @memberof Expense
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the expense belongs to.
+     * @type {string}
+     * @memberof Expense
+     */
+    company?: string | null;
     /**
      * The expense's private note.
      * @type {string}
@@ -138,6 +150,8 @@ export function ExpenseFromJSONTyped(json: JSONValue): Expense | undefined {
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(ExpenseLineFromJSON)) as Array<ExpenseLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
@@ -158,6 +172,8 @@ export function ExpenseToJSON(value?: Expense): JSONValue {
         'contact': value.contact,
         'total_amount': value.total_amount,
         'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
         'memo': value.memo,
     };
 }

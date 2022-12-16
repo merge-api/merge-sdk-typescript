@@ -42,6 +42,7 @@ export interface PurchaseOrdersCreateRequest {
 }
 
 export interface PurchaseOrdersListRequest {
+    companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -122,6 +123,10 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
      */
     async purchaseOrdersListRaw(requestParameters: PurchaseOrdersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<PurchaseOrder> | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters.companyId !== undefined) {
+            queryParameters['company_id'] = requestParameters.companyId;
+        }
 
         if (requestParameters.createdAfter !== undefined) {
             queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();

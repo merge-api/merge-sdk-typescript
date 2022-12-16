@@ -22,6 +22,7 @@ export enum PayPeriodEnum {
     Day = 'DAY',
     Week = 'WEEK',
     EveryTwoWeeks = 'EVERY_TWO_WEEKS',
+    Semimonthly = 'SEMIMONTHLY',
     Month = 'MONTH',
     Quarter = 'QUARTER',
     EverySixMonths = 'EVERY_SIX_MONTHS',

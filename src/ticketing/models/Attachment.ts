@@ -55,7 +55,7 @@ export interface Attachment {
      */
     file_name?: string | null;
     /**
-     * 
+     * The ticket associated with the attachment.
      * @type {string}
      * @memberof Attachment
      */
@@ -73,7 +73,7 @@ export interface Attachment {
      */
     content_type?: string | null;
     /**
-     * 
+     * The user who uploaded the attachment.
      * @type {string}
      * @memberof Attachment
      */

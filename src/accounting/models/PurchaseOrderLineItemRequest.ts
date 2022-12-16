@@ -14,6 +14,13 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    CurrencyEnum,
+    CurrencyEnumFromJSON,
+    CurrencyEnumFromJSONTyped,
+    CurrencyEnumToJSON,
+} from './';
+
 
 /**
  * # The PurchaseOrderLineItem Object
@@ -49,7 +56,7 @@ export interface PurchaseOrderLineItemRequest {
      * @type {string}
      * @memberof PurchaseOrderLineItemRequest
      */
-    item?: string | null;
+    item?: string | JSONValue | null;
     /**
      * The purchase order line item's account.
      * @type {string}
@@ -74,6 +81,24 @@ export interface PurchaseOrderLineItemRequest {
      * @memberof PurchaseOrderLineItemRequest
      */
     total_line_amount?: string | null;
+    /**
+     * The purchase order line item's currency.
+     * @type {CurrencyEnum}
+     * @memberof PurchaseOrderLineItemRequest
+     */
+    currency?: CurrencyEnum | null;
+    /**
+     * The purchase order line item's exchange rate.
+     * @type {string}
+     * @memberof PurchaseOrderLineItemRequest
+     */
+    exchange_rate?: string | null;
+    /**
+     * The company the purchase order line item belongs to.
+     * @type {string}
+     * @memberof PurchaseOrderLineItemRequest
+     */
+    company?: string | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -107,6 +132,9 @@ export function PurchaseOrderLineItemRequestFromJSONTyped(json: JSONValue): Purc
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'tax_amount': !exists(json, 'tax_amount') ? undefined : json['tax_amount'],
         'total_line_amount': !exists(json, 'total_line_amount') ? undefined : json['total_line_amount'],
+        'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -127,6 +155,9 @@ export function PurchaseOrderLineItemRequestToJSON(value?: PurchaseOrderLineItem
         'tracking_category': value.tracking_category,
         'tax_amount': value.tax_amount,
         'total_line_amount': value.total_line_amount,
+        'currency': CurrencyEnumToJSON(value.currency),
+        'exchange_rate': value.exchange_rate,
+        'company': value.company,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

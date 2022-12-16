@@ -51,7 +51,13 @@ export interface ExpenseLine {
      */
     tracking_category?: string | JSONValue | null;
     /**
-     * 
+     * The company the line belongs to.
+     * @type {string}
+     * @memberof ExpenseLine
+     */
+    company?: string | null;
+    /**
+     * The expense's payment account.
      * @type {string}
      * @memberof ExpenseLine
      */
@@ -79,6 +85,7 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | undefin
         'item': !exists(json, 'item') ? undefined : json['item'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'description': !exists(json, 'description') ? undefined : json['description'],
     };
@@ -95,6 +102,7 @@ export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
         'item': value.item,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
+        'company': value.company,
         'account': value.account,
         'description': value.description,
     };

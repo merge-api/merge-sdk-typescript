@@ -50,6 +50,12 @@ export interface ReportItem {
      * @memberof ReportItem
      */
     readonly sub_items?: { [key: string]: any; };
+    /**
+     * The company the report item belongs to.
+     * @type {string}
+     * @memberof ReportItem
+     */
+    company?: string | null;
 }
 
 export function ReportItemFromJSON(json: JSONValue): ReportItem | undefined {
@@ -67,6 +73,7 @@ export function ReportItemFromJSONTyped(json: JSONValue): ReportItem | undefined
         'name': !exists(json, 'name') ? undefined : json['name'],
         'value': !exists(json, 'value') ? undefined : json['value'],
         'sub_items': !exists(json, 'sub_items') ? undefined : json['sub_items'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
     };
 }
 
@@ -80,6 +87,7 @@ export function ReportItemToJSON(value?: ReportItem): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'value': value.value,
+        'company': value.company,
     };
 }
 

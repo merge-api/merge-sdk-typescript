@@ -18,7 +18,6 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
@@ -73,8 +72,12 @@ export interface TicketsListRequest {
     parentTicketId?: string;
     priority?: TicketsListPriorityEnum;
     projectId?: string;
+    remoteCreatedAfter?: Date | null;
+    remoteCreatedBefore?: Date | null;
     remoteFields?: TicketsListRemoteFieldsEnum;
     remoteId?: string | null;
+    remoteUpdatedAfter?: Date | null;
+    remoteUpdatedBefore?: Date | null;
     status?: TicketsListStatusEnum;
     tags?: string;
     ticketType?: string | null;
@@ -96,6 +99,10 @@ export interface TicketsRetrieveRequest {
     expand?: TicketsRetrieveExpandEnum;
     includeRemoteData?: boolean;
     remoteFields?: TicketsRetrieveRemoteFieldsEnum;
+}
+
+export interface TicketsMetaPostRetrieveRequest {
+    projectId?: string,
 }
 
 /**
@@ -290,12 +297,28 @@ export class TicketsApi extends runtime.BaseAPI {
             queryParameters['project_id'] = requestParameters.projectId;
         }
 
+        if (requestParameters.remoteCreatedAfter !== undefined) {
+            queryParameters['remote_created_after'] = (requestParameters.remoteCreatedAfter as any).toISOString();
+        }
+
+        if (requestParameters.remoteCreatedBefore !== undefined) {
+            queryParameters['remote_created_before'] = (requestParameters.remoteCreatedBefore as any).toISOString();
+        }
+
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
 
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
+        }
+
+        if (requestParameters.remoteUpdatedAfter !== undefined) {
+            queryParameters['remote_updated_after'] = (requestParameters.remoteUpdatedAfter as any).toISOString();
+        }
+
+        if (requestParameters.remoteUpdatedBefore !== undefined) {
+            queryParameters['remote_updated_before'] = (requestParameters.remoteUpdatedBefore as any).toISOString();
         }
 
         if (requestParameters.status !== undefined) {
@@ -381,8 +404,12 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async ticketsMetaPostRetrieveRaw(requestParameters?: TicketsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+        if (requestParameters?.projectId !== undefined) {
+            queryParameters['projectId'] = requestParameters.projectId;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -408,8 +435,8 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.ticketsMetaPostRetrieveRaw();
+    async ticketsMetaPostRetrieve(requestParameters?: TicketsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.ticketsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 

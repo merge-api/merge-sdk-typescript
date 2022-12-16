@@ -35,17 +35,17 @@ export interface ApplicationRequest {
      */
     remote_id?: string | null;
     /**
-     * 
+     * The candidate applying.
      * @type {string}
      * @memberof ApplicationRequest
      */
-    candidate?: string | null;
+    candidate?: string | JSONValue | null;
     /**
-     * 
+     * The job being applied for.
      * @type {string}
      * @memberof ApplicationRequest
      */
-    job?: string | null;
+    job?: string | JSONValue | null;
     /**
      * When the application was submitted.
      * @type {Date}
@@ -65,29 +65,23 @@ export interface ApplicationRequest {
      */
     source?: string | null;
     /**
-     * 
+     * The user credited for this application.
      * @type {string}
      * @memberof ApplicationRequest
      */
-    credited_to?: string | null;
+    credited_to?: string | JSONValue | null;
     /**
-     * 
+     * The application's current stage.
      * @type {string}
      * @memberof ApplicationRequest
      */
-    current_stage?: string | null;
+    current_stage?: string | JSONValue | null;
     /**
-     * 
+     * The application's reason for rejection.
      * @type {string}
      * @memberof ApplicationRequest
      */
-    reject_reason?: string | null;
-    /**
-     * Custom fields configured for a given model.
-     * @type {{ [key: string]: any; }}
-     * @memberof ApplicationRequest
-     */
-    custom_fields?: { [key: string]: any; } | null;
+    reject_reason?: string | JSONValue | null;
     /**
      * 
      * @type {string}
@@ -128,7 +122,6 @@ export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationReq
         'credited_to': !exists(json, 'credited_to') ? undefined : json['credited_to'],
         'current_stage': !exists(json, 'current_stage') ? undefined : json['current_stage'],
         'reject_reason': !exists(json, 'reject_reason') ? undefined : json['reject_reason'],
-        'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_template_id': !exists(json, 'remote_template_id') ? undefined : json['remote_template_id'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
@@ -151,7 +144,6 @@ export function ApplicationRequestToJSON(value?: ApplicationRequest): JSONValue 
         'credited_to': value.credited_to,
         'current_stage': value.current_stage,
         'reject_reason': value.reject_reason,
-        'custom_fields': value.custom_fields,
         'remote_template_id': value.remote_template_id,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
