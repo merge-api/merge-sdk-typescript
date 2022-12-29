@@ -19,6 +19,8 @@ import {
     ProjectFromJSON,
     ProjectToJSON,
     User,
+    UserFromJSON,
+    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -44,9 +46,10 @@ export interface ProjectsRetrieveRequest {
 }
 
 export interface ProjectsUsersListRequest {
-    id: string;
+    parentId: string;
     cursor?: string;
     expand?: ProjectsUsersListExpandEnum;
+    includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     pageSize?: number;
 }
@@ -171,11 +174,11 @@ export class ProjectsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a `User` object with the given `id`.
+     * Returns a list of `User` objects.
      */
     async projectsUsersListRaw(requestParameters: ProjectsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling projectsUsersList.');
+        if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
+            throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling projectsUsersList.');
         }
 
         const queryParameters: any = {};
@@ -186,6 +189,10 @@ export class ProjectsApi extends runtime.BaseAPI {
 
         if (requestParameters.expand !== undefined) {
             queryParameters['expand'] = requestParameters.expand;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
@@ -208,7 +215,7 @@ export class ProjectsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/ticketing/v1/projects/{id}/users`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ticketing/v1/projects/{parent_id}/users`.replace(`{${"parent_id"}}`, encodeURIComponent(String(requestParameters.parentId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -218,7 +225,7 @@ export class ProjectsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a `User` object with the given `id`.
+     * Returns a list of `User` objects.
      */
     async projectsUsersList(requestParameters: ProjectsUsersListRequest): Promise<MergePaginatedResponse<User> | undefined> {
         const response = await this.projectsUsersListRaw(requestParameters);

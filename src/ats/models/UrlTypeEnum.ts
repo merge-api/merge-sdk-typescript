@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum UrlTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Personal = 'PERSONAL',
     Company = 'COMPANY',
     Portfolio = 'PORTFOLIO',
@@ -27,15 +30,19 @@ export enum UrlTypeEnum {
     JobPosting = 'JOB_POSTING'
 }
 
+
 export function UrlTypeEnumFromJSON(json: any): UrlTypeEnum {
     return UrlTypeEnumFromJSONTyped(json, false);
 }
 
 export function UrlTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): UrlTypeEnum {
-    return json as UrlTypeEnum;
+    if ((<any>Object).values(UrlTypeEnum).includes(json)) {
+        return json as UrlTypeEnum;
+    }
+    return UrlTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function UrlTypeEnumToJSON(value?: UrlTypeEnum | null): any {
-    return value as any;
+export function UrlTypeEnumToJSON(value?: UrlTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

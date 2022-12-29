@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum AccessRoleEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     SuperAdmin = 'SUPER_ADMIN',
     Admin = 'ADMIN',
     TeamMember = 'TEAM_MEMBER',
@@ -25,15 +28,19 @@ export enum AccessRoleEnum {
     Interviewer = 'INTERVIEWER'
 }
 
+
 export function AccessRoleEnumFromJSON(json: any): AccessRoleEnum {
     return AccessRoleEnumFromJSONTyped(json, false);
 }
 
 export function AccessRoleEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccessRoleEnum {
-    return json as AccessRoleEnum;
+    if ((<any>Object).values(AccessRoleEnum).includes(json)) {
+        return json as AccessRoleEnum;
+    }
+    return AccessRoleEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function AccessRoleEnumToJSON(value?: AccessRoleEnum | null): any {
-    return value as any;
+export function AccessRoleEnumToJSON(value?: AccessRoleEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

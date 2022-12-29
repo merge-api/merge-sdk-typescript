@@ -111,6 +111,12 @@ export interface Engagement {
      * @memberof Engagement
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Engagement
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function EngagementFromJSON(json: JSONValue): Engagement | undefined {
@@ -136,6 +142,7 @@ export function EngagementFromJSONTyped(json: JSONValue): Engagement | undefined
         'account': !exists(json, 'account') ? undefined : json['account'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

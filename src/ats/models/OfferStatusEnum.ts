@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum OfferStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Draft = 'DRAFT',
     ApprovalSent = 'APPROVAL-SENT',
     Approved = 'APPROVED',
@@ -29,15 +32,19 @@ export enum OfferStatusEnum {
     Deprecated = 'DEPRECATED'
 }
 
+
 export function OfferStatusEnumFromJSON(json: any): OfferStatusEnum {
     return OfferStatusEnumFromJSONTyped(json, false);
 }
 
 export function OfferStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OfferStatusEnum {
-    return json as OfferStatusEnum;
+    if ((<any>Object).values(OfferStatusEnum).includes(json)) {
+        return json as OfferStatusEnum;
+    }
+    return OfferStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function OfferStatusEnumToJSON(value?: OfferStatusEnum | null): any {
-    return value as any;
+export function OfferStatusEnumToJSON(value?: OfferStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum PhoneNumberTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Home = 'HOME',
     Work = 'WORK',
     Mobile = 'MOBILE',
@@ -25,15 +28,19 @@ export enum PhoneNumberTypeEnum {
     Other = 'OTHER'
 }
 
+
 export function PhoneNumberTypeEnumFromJSON(json: any): PhoneNumberTypeEnum {
     return PhoneNumberTypeEnumFromJSONTyped(json, false);
 }
 
 export function PhoneNumberTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PhoneNumberTypeEnum {
-    return json as PhoneNumberTypeEnum;
+    if ((<any>Object).values(PhoneNumberTypeEnum).includes(json)) {
+        return json as PhoneNumberTypeEnum;
+    }
+    return PhoneNumberTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function PhoneNumberTypeEnumToJSON(value?: PhoneNumberTypeEnum | null): any {
-    return value as any;
+export function PhoneNumberTypeEnumToJSON(value?: PhoneNumberTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

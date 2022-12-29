@@ -90,6 +90,12 @@ export interface Benefit {
      * @memberof Benefit
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Benefit
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function BenefitFromJSON(json: JSONValue): Benefit | undefined {
@@ -112,6 +118,7 @@ export function BenefitFromJSONTyped(json: JSONValue): Benefit | undefined {
         'company_contribution': !exists(json, 'company_contribution') ? undefined : json['company_contribution'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

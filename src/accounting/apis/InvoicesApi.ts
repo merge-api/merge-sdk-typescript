@@ -304,13 +304,21 @@ export class InvoicesApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum InvoicesListExpandEnum {
+    Company = 'company',
     Contact = 'contact',
+    Contactcompany = 'contact,company',
     LineItems = 'line_items',
+    LineItemscompany = 'line_items,company',
     LineItemscontact = 'line_items,contact',
+    LineItemscontactcompany = 'line_items,contact,company',
     Payments = 'payments',
+    Paymentscompany = 'payments,company',
     Paymentscontact = 'payments,contact',
+    Paymentscontactcompany = 'payments,contact,company',
     PaymentslineItems = 'payments,line_items',
-    PaymentslineItemscontact = 'payments,line_items,contact'
+    PaymentslineItemscompany = 'payments,line_items,company',
+    PaymentslineItemscontact = 'payments,line_items,contact',
+    PaymentslineItemscontactcompany = 'payments,line_items,contact,company'
 }
 /**
 * @export
@@ -332,13 +340,21 @@ export enum InvoicesListTypeEnum {
 * @enum {string}
 */
 export enum InvoicesRetrieveExpandEnum {
+    Company = 'company',
     Contact = 'contact',
+    Contactcompany = 'contact,company',
     LineItems = 'line_items',
+    LineItemscompany = 'line_items,company',
     LineItemscontact = 'line_items,contact',
+    LineItemscontactcompany = 'line_items,contact,company',
     Payments = 'payments',
+    Paymentscompany = 'payments,company',
     Paymentscontact = 'payments,contact',
+    Paymentscontactcompany = 'payments,contact,company',
     PaymentslineItems = 'payments,line_items',
-    PaymentslineItemscontact = 'payments,line_items,contact'
+    PaymentslineItemscompany = 'payments,line_items,company',
+    PaymentslineItemscontact = 'payments,line_items,contact',
+    PaymentslineItemscontactcompany = 'payments,line_items,contact,company'
 }
 /**
 * @export

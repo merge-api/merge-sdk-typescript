@@ -12,25 +12,32 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum AccountTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Savings = 'SAVINGS',
     Checking = 'CHECKING'
 }
+
 
 export function AccountTypeEnumFromJSON(json: any): AccountTypeEnum {
     return AccountTypeEnumFromJSONTyped(json, false);
 }
 
 export function AccountTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountTypeEnum {
-    return json as AccountTypeEnum;
+    if ((<any>Object).values(AccountTypeEnum).includes(json)) {
+        return json as AccountTypeEnum;
+    }
+    return AccountTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function AccountTypeEnumToJSON(value?: AccountTypeEnum | null): any {
-    return value as any;
+export function AccountTypeEnumToJSON(value?: AccountTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

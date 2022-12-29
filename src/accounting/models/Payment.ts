@@ -112,6 +112,12 @@ export interface Payment {
      * @memberof Payment
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Payment
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function PaymentFromJSON(json: JSONValue): Payment | undefined {
@@ -137,6 +143,7 @@ export function PaymentFromJSONTyped(json: JSONValue): Payment | undefined {
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

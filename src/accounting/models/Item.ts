@@ -112,6 +112,12 @@ export interface Item {
      * @memberof Item
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Item
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function ItemFromJSON(json: JSONValue): Item | undefined {
@@ -137,6 +143,7 @@ export function ItemFromJSONTyped(json: JSONValue): Item | undefined {
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

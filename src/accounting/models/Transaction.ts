@@ -128,6 +128,12 @@ export interface Transaction {
      * @memberof Transaction
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Transaction
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function TransactionFromJSON(json: JSONValue): Transaction | undefined {
@@ -155,6 +161,7 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction | undefin
         'company': !exists(json, 'company') ? undefined : json['company'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(TransactionLineItemFromJSON)) as Array<TransactionLineItem>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

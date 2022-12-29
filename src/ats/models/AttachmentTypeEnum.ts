@@ -12,27 +12,34 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum AttachmentTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Resume = 'RESUME',
     CoverLetter = 'COVER_LETTER',
     OfferLetter = 'OFFER_LETTER',
     Other = 'OTHER'
 }
 
+
 export function AttachmentTypeEnumFromJSON(json: any): AttachmentTypeEnum {
     return AttachmentTypeEnumFromJSONTyped(json, false);
 }
 
 export function AttachmentTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AttachmentTypeEnum {
-    return json as AttachmentTypeEnum;
+    if ((<any>Object).values(AttachmentTypeEnum).includes(json)) {
+        return json as AttachmentTypeEnum;
+    }
+    return AttachmentTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function AttachmentTypeEnumToJSON(value?: AttachmentTypeEnum | null): any {
-    return value as any;
+export function AttachmentTypeEnumToJSON(value?: AttachmentTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

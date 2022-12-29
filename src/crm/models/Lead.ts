@@ -155,6 +155,12 @@ export interface Lead {
      * @memberof Lead
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Lead
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function LeadFromJSON(json: JSONValue): Lead | undefined {
@@ -186,6 +192,7 @@ export function LeadFromJSONTyped(json: JSONValue): Lead | undefined {
         'converted_account': !exists(json, 'converted_account') ? undefined : json['converted_account'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

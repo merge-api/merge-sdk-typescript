@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum EncodingEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Raw = 'RAW',
     Base64 = 'BASE64',
     GzipBase64 = 'GZIP_BASE64'
 }
+
 
 export function EncodingEnumFromJSON(json: any): EncodingEnum {
     return EncodingEnumFromJSONTyped(json, false);
 }
 
 export function EncodingEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EncodingEnum {
-    return json as EncodingEnum;
+    if ((<any>Object).values(EncodingEnum).includes(json)) {
+        return json as EncodingEnum;
+    }
+    return EncodingEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function EncodingEnumToJSON(value?: EncodingEnum | null): any {
-    return value as any;
+export function EncodingEnumToJSON(value?: EncodingEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

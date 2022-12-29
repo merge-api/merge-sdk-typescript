@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    SelectiveSyncConfigurationsUsageEnum,
+    SelectiveSyncConfigurationsUsageEnumFromJSON,
+    SelectiveSyncConfigurationsUsageEnumFromJSONTyped,
+    SelectiveSyncConfigurationsUsageEnumToJSON,
     SyncStatusStatusEnum,
     SyncStatusStatusEnumFromJSON,
     SyncStatusStatusEnumFromJSONTyped,
@@ -69,6 +73,12 @@ export interface SyncStatus {
      * @memberof SyncStatus
      */
     is_initial_sync: boolean;
+    /**
+     * 
+     * @type {SelectiveSyncConfigurationsUsageEnum}
+     * @memberof SyncStatus
+     */
+    selective_sync_configurations_usage?: SelectiveSyncConfigurationsUsageEnum;
 }
 
 export function SyncStatusFromJSON(json: JSONValue): SyncStatus | undefined {
@@ -88,6 +98,7 @@ export function SyncStatusFromJSONTyped(json: JSONValue): SyncStatus | undefined
         'next_sync_start': !exists(json, 'next_sync_start') ? undefined : (new Date(json['next_sync_start'])),
         'status': SyncStatusStatusEnumFromJSON(json['status']) as SyncStatusStatusEnum,
         'is_initial_sync': json['is_initial_sync'],
+        'selective_sync_configurations_usage': !exists(json, 'selective_sync_configurations_usage') ? undefined : SelectiveSyncConfigurationsUsageEnumFromJSON(json['selective_sync_configurations_usage']) as SelectiveSyncConfigurationsUsageEnum,
     };
 }
 
@@ -104,6 +115,7 @@ export function SyncStatusToJSON(value?: SyncStatus): JSONValue {
         'next_sync_start': value.next_sync_start === undefined ? undefined : (value.next_sync_start.toISOString()),
         'status': SyncStatusStatusEnumToJSON(value.status),
         'is_initial_sync': value.is_initial_sync,
+        'selective_sync_configurations_usage': SelectiveSyncConfigurationsUsageEnumToJSON(value.selective_sync_configurations_usage),
     };
 }
 

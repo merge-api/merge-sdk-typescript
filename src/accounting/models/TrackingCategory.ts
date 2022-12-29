@@ -98,6 +98,12 @@ export interface TrackingCategory {
      * @memberof TrackingCategory
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof TrackingCategory
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function TrackingCategoryFromJSON(json: JSONValue): TrackingCategory | undefined {
@@ -120,6 +126,7 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
         'parent_category': !exists(json, 'parent_category') ? undefined : json['parent_category'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

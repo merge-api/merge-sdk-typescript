@@ -105,6 +105,12 @@ export interface Offer {
      * @memberof Offer
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Offer
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function OfferFromJSON(json: JSONValue): Offer | undefined {
@@ -129,6 +135,7 @@ export function OfferFromJSONTyped(json: JSONValue): Offer | undefined {
         'status': !exists(json, 'status') ? undefined : OfferStatusEnumFromJSON(json['status']) as OfferStatusEnum,
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

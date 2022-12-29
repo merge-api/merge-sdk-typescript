@@ -32,7 +32,7 @@ export interface LinkToken {
      * @type {string}
      * @memberof LinkToken
      */
-    integration_name: string;
+    integration_name?: string;
     /**
      * 
      * @type {string}
@@ -53,7 +53,7 @@ export function LinkTokenFromJSONTyped(json: JSONValue): LinkToken | undefined {
     return {
         
         'link_token': json['link_token'],
-        'integration_name': json['integration_name'],
+        'integration_name': !exists(json, 'integration_name') ? undefined : json['integration_name'],
         'magic_link_url': !exists(json, 'magic_link_url') ? undefined : json['magic_link_url'],
     };
 }

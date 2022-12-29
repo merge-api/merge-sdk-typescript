@@ -12,25 +12,32 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum ResponseTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Json = 'JSON',
     Base64Gzip = 'BASE64_GZIP'
 }
+
 
 export function ResponseTypeEnumFromJSON(json: any): ResponseTypeEnum {
     return ResponseTypeEnumFromJSONTyped(json, false);
 }
 
 export function ResponseTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseTypeEnum {
-    return json as ResponseTypeEnum;
+    if ((<any>Object).values(ResponseTypeEnum).includes(json)) {
+        return json as ResponseTypeEnum;
+    }
+    return ResponseTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function ResponseTypeEnumToJSON(value?: ResponseTypeEnum | null): any {
-    return value as any;
+export function ResponseTypeEnumToJSON(value?: ResponseTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

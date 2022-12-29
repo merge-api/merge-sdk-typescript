@@ -134,6 +134,12 @@ export interface CashFlowStatement {
      * @memberof CashFlowStatement
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CashFlowStatement
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function CashFlowStatementFromJSON(json: JSONValue): CashFlowStatement | undefined {
@@ -162,6 +168,7 @@ export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStateme
         'financing_activities': !exists(json, 'financing_activities') ? undefined : ((json['financing_activities'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'remote_generated_at': !exists(json, 'remote_generated_at') ? undefined : (json['remote_generated_at'] === null ? null : new Date(json['remote_generated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

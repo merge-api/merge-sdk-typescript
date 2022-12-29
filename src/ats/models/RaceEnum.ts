@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum RaceEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     AmericanIndianOrAlaskanNative = 'AMERICAN_INDIAN_OR_ALASKAN_NATIVE',
     Asian = 'ASIAN',
     BlackOrAfricanAmerican = 'BLACK_OR_AFRICAN_AMERICAN',
@@ -28,15 +31,19 @@ export enum RaceEnum {
     DeclineToSelfIdentify = 'DECLINE_TO_SELF_IDENTIFY'
 }
 
+
 export function RaceEnumFromJSON(json: any): RaceEnum {
     return RaceEnumFromJSONTyped(json, false);
 }
 
 export function RaceEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RaceEnum {
-    return json as RaceEnum;
+    if ((<any>Object).values(RaceEnum).includes(json)) {
+        return json as RaceEnum;
+    }
+    return RaceEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function RaceEnumToJSON(value?: RaceEnum | null): any {
-    return value as any;
+export function RaceEnumToJSON(value?: RaceEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

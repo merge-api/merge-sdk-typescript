@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum TimeOffStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Requested = 'REQUESTED',
     Approved = 'APPROVED',
     Declined = 'DECLINED',
@@ -25,15 +28,19 @@ export enum TimeOffStatusEnum {
     Deleted = 'DELETED'
 }
 
+
 export function TimeOffStatusEnumFromJSON(json: any): TimeOffStatusEnum {
     return TimeOffStatusEnumFromJSONTyped(json, false);
 }
 
 export function TimeOffStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): TimeOffStatusEnum {
-    return json as TimeOffStatusEnum;
+    if ((<any>Object).values(TimeOffStatusEnum).includes(json)) {
+        return json as TimeOffStatusEnum;
+    }
+    return TimeOffStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function TimeOffStatusEnumToJSON(value?: TimeOffStatusEnum | null): any {
-    return value as any;
+export function TimeOffStatusEnumToJSON(value?: TimeOffStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

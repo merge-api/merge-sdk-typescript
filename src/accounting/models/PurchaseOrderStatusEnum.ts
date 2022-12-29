@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum PurchaseOrderStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Draft = 'DRAFT',
     Submitted = 'SUBMITTED',
     Authorized = 'AUTHORIZED',
@@ -25,15 +28,19 @@ export enum PurchaseOrderStatusEnum {
     Deleted = 'DELETED'
 }
 
+
 export function PurchaseOrderStatusEnumFromJSON(json: any): PurchaseOrderStatusEnum {
     return PurchaseOrderStatusEnumFromJSONTyped(json, false);
 }
 
 export function PurchaseOrderStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PurchaseOrderStatusEnum {
-    return json as PurchaseOrderStatusEnum;
+    if ((<any>Object).values(PurchaseOrderStatusEnum).includes(json)) {
+        return json as PurchaseOrderStatusEnum;
+    }
+    return PurchaseOrderStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function PurchaseOrderStatusEnumToJSON(value?: PurchaseOrderStatusEnum | null): any {
-    return value as any;
+export function PurchaseOrderStatusEnumToJSON(value?: PurchaseOrderStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

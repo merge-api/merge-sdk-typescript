@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum CategoriesEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Hris = 'hris',
     Ats = 'ats',
     Accounting = 'accounting',
@@ -25,15 +28,19 @@ export enum CategoriesEnum {
     Crm = 'crm'
 }
 
+
 export function CategoriesEnumFromJSON(json: any): CategoriesEnum {
     return CategoriesEnumFromJSONTyped(json, false);
 }
 
 export function CategoriesEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CategoriesEnum {
-    return json as CategoriesEnum;
+    if ((<any>Object).values(CategoriesEnum).includes(json)) {
+        return json as CategoriesEnum;
+    }
+    return CategoriesEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function CategoriesEnumToJSON(value?: CategoriesEnum | null): any {
-    return value as any;
+export function CategoriesEnumToJSON(value?: CategoriesEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

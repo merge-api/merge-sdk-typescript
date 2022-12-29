@@ -128,6 +128,12 @@ export interface Expense {
      * @memberof Expense
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Expense
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function ExpenseFromJSON(json: JSONValue): Expense | undefined {
@@ -155,6 +161,7 @@ export function ExpenseFromJSONTyped(json: JSONValue): Expense | undefined {
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(ExpenseLineFromJSON)) as Array<ExpenseLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

@@ -1,3 +1,11 @@
+# Version 2.0.6
+
+## Date: 2022-12-29
+
+- Added MERGE_NONSTANDARD_VALUE to all enums as the default deserialization option
+- Added scopes api models and methods (beta)
+- Added Ticketing category Collection model (replaces Project model gradually, both supported still)
+
 # Version 2.0.5
 
 ## Date: 2022-12-05

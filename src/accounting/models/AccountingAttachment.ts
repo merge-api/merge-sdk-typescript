@@ -78,6 +78,12 @@ export interface AccountingAttachment {
      * @memberof AccountingAttachment
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountingAttachment
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function AccountingAttachmentFromJSON(json: JSONValue): AccountingAttachment | undefined {
@@ -98,6 +104,7 @@ export function AccountingAttachmentFromJSONTyped(json: JSONValue): AccountingAt
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

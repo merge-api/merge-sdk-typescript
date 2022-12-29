@@ -84,6 +84,12 @@ export interface TaxRate {
      * @memberof TaxRate
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof TaxRate
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function TaxRateFromJSON(json: JSONValue): TaxRate | undefined {
@@ -105,6 +111,7 @@ export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | undefined {
         'effective_tax_rate': !exists(json, 'effective_tax_rate') ? undefined : json['effective_tax_rate'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

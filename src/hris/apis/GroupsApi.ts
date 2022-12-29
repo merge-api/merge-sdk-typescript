@@ -37,6 +37,7 @@ export interface GroupsListRequest {
     pageSize?: number;
     remoteFields?: GroupsListRemoteFieldsEnum;
     remoteId?: string | null;
+    types?: string;
 }
 
 export interface GroupsRetrieveRequest {
@@ -94,6 +95,10 @@ export class GroupsApi extends runtime.BaseAPI {
 
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
+        }
+
+        if (requestParameters.types !== undefined) {
+            queryParameters['types'] = requestParameters.types;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

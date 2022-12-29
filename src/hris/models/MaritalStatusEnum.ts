@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum MaritalStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Single = 'SINGLE',
     MarriedFilingJointly = 'MARRIED_FILING_JOINTLY',
     MarriedFilingSeparately = 'MARRIED_FILING_SEPARATELY',
@@ -25,15 +28,19 @@ export enum MaritalStatusEnum {
     QualifyingWidowOrWidowerWithDependentChild = 'QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD'
 }
 
+
 export function MaritalStatusEnumFromJSON(json: any): MaritalStatusEnum {
     return MaritalStatusEnumFromJSONTyped(json, false);
 }
 
 export function MaritalStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): MaritalStatusEnum {
-    return json as MaritalStatusEnum;
+    if ((<any>Object).values(MaritalStatusEnum).includes(json)) {
+        return json as MaritalStatusEnum;
+    }
+    return MaritalStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function MaritalStatusEnumToJSON(value?: MaritalStatusEnum | null): any {
-    return value as any;
+export function MaritalStatusEnumToJSON(value?: MaritalStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum RequestTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Vacation = 'VACATION',
     Sick = 'SICK',
     Personal = 'PERSONAL',
@@ -26,15 +29,19 @@ export enum RequestTypeEnum {
     Bereavement = 'BEREAVEMENT'
 }
 
+
 export function RequestTypeEnumFromJSON(json: any): RequestTypeEnum {
     return RequestTypeEnumFromJSONTyped(json, false);
 }
 
 export function RequestTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RequestTypeEnum {
-    return json as RequestTypeEnum;
+    if ((<any>Object).values(RequestTypeEnum).includes(json)) {
+        return json as RequestTypeEnum;
+    }
+    return RequestTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function RequestTypeEnumToJSON(value?: RequestTypeEnum | null): any {
-    return value as any;
+export function RequestTypeEnumToJSON(value?: RequestTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

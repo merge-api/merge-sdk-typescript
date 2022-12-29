@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum VeteranStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     AmNotAProtectedVeteran = 'I_AM_NOT_A_PROTECTED_VETERAN',
     IdentifyAsOneOrMoreOfTheClassificationsOfAProtectedVeteran = 'I_IDENTIFY_AS_ONE_OR_MORE_OF_THE_CLASSIFICATIONS_OF_A_PROTECTED_VETERAN',
     DontWishToAnswer = 'I_DONT_WISH_TO_ANSWER'
 }
+
 
 export function VeteranStatusEnumFromJSON(json: any): VeteranStatusEnum {
     return VeteranStatusEnumFromJSONTyped(json, false);
 }
 
 export function VeteranStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): VeteranStatusEnum {
-    return json as VeteranStatusEnum;
+    if ((<any>Object).values(VeteranStatusEnum).includes(json)) {
+        return json as VeteranStatusEnum;
+    }
+    return VeteranStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function VeteranStatusEnumToJSON(value?: VeteranStatusEnum | null): any {
-    return value as any;
+export function VeteranStatusEnumToJSON(value?: VeteranStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

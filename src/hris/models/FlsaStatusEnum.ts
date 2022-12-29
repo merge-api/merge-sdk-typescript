@@ -12,27 +12,34 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum FlsaStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Exempt = 'EXEMPT',
     SalariedNonexempt = 'SALARIED_NONEXEMPT',
     Nonexempt = 'NONEXEMPT',
     Owner = 'OWNER'
 }
 
+
 export function FlsaStatusEnumFromJSON(json: any): FlsaStatusEnum {
     return FlsaStatusEnumFromJSONTyped(json, false);
 }
 
 export function FlsaStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): FlsaStatusEnum {
-    return json as FlsaStatusEnum;
+    if ((<any>Object).values(FlsaStatusEnum).includes(json)) {
+        return json as FlsaStatusEnum;
+    }
+    return FlsaStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function FlsaStatusEnumToJSON(value?: FlsaStatusEnum | null): any {
-    return value as any;
+export function FlsaStatusEnumToJSON(value?: FlsaStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

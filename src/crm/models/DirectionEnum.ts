@@ -12,25 +12,32 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum DirectionEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Inbound = 'INBOUND',
     Outbound = 'OUTBOUND'
 }
+
 
 export function DirectionEnumFromJSON(json: any): DirectionEnum {
     return DirectionEnumFromJSONTyped(json, false);
 }
 
 export function DirectionEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): DirectionEnum {
-    return json as DirectionEnum;
+    if ((<any>Object).values(DirectionEnum).includes(json)) {
+        return json as DirectionEnum;
+    }
+    return DirectionEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function DirectionEnumToJSON(value?: DirectionEnum | null): any {
-    return value as any;
+export function DirectionEnumToJSON(value?: DirectionEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

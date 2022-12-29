@@ -14,16 +14,6 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
-import {
-    
-} from './';
-import {
-	RemoteData,
-	RemoteDataFromJSON,
-	RemoteDataFromJSONTyped,
-	RemoteDataToJSON,
-} from '../../remote_data';
-
 
 /**
  * # The Deduction Object
@@ -43,7 +33,7 @@ export interface Deduction {
      */
     readonly id?: string;
     /**
-     * The deduction's employee payroll run.
+     * 
      * @type {string}
      * @memberof Deduction
      */
@@ -67,17 +57,17 @@ export interface Deduction {
      */
     company_deduction?: number | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Deduction
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Deduction
      */
     remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Deduction
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function DeductionFromJSON(json: JSONValue): Deduction | undefined {
@@ -96,8 +86,8 @@ export function DeductionFromJSONTyped(json: JSONValue): Deduction | undefined {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'employee_deduction': !exists(json, 'employee_deduction') ? undefined : json['employee_deduction'],
         'company_deduction': !exists(json, 'company_deduction') ? undefined : json['company_deduction'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

@@ -12,25 +12,32 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum UnitsEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Hours = 'HOURS',
     Days = 'DAYS'
 }
+
 
 export function UnitsEnumFromJSON(json: any): UnitsEnum {
     return UnitsEnumFromJSONTyped(json, false);
 }
 
 export function UnitsEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): UnitsEnum {
-    return json as UnitsEnum;
+    if ((<any>Object).values(UnitsEnum).includes(json)) {
+        return json as UnitsEnum;
+    }
+    return UnitsEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function UnitsEnumToJSON(value?: UnitsEnum | null): any {
-    return value as any;
+export function UnitsEnumToJSON(value?: UnitsEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

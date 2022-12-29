@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum OpportunityStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Open = 'OPEN',
     Won = 'WON',
     Lost = 'LOST'
 }
+
 
 export function OpportunityStatusEnumFromJSON(json: any): OpportunityStatusEnum {
     return OpportunityStatusEnumFromJSONTyped(json, false);
 }
 
 export function OpportunityStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OpportunityStatusEnum {
-    return json as OpportunityStatusEnum;
+    if ((<any>Object).values(OpportunityStatusEnum).includes(json)) {
+        return json as OpportunityStatusEnum;
+    }
+    return OpportunityStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function OpportunityStatusEnumToJSON(value?: OpportunityStatusEnum | null): any {
-    return value as any;
+export function OpportunityStatusEnumToJSON(value?: OpportunityStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

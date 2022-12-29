@@ -139,6 +139,12 @@ export interface Job {
      * @memberof Job
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Job
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function JobFromJSON(json: JSONValue): Job | undefined {
@@ -168,6 +174,7 @@ export function JobFromJSONTyped(json: JSONValue): Job | undefined {
         'recruiters': !exists(json, 'recruiters') ? undefined : json['recruiters'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

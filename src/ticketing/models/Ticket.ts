@@ -99,6 +99,12 @@ export interface Ticket {
      */
     project?: string | JSONValue | null;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof Ticket
+     */
+    collections?: Array<string> | JSONValue;
+    /**
      * The ticket's type.
      * @type {string}
      * @memberof Ticket
@@ -176,6 +182,12 @@ export interface Ticket {
      * @memberof Ticket
      */
     priority?: PriorityEnum | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Ticket
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function TicketFromJSON(json: JSONValue): Ticket | undefined {
@@ -198,6 +210,7 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
         'project': !exists(json, 'project') ? undefined : json['project'],
+        'collections': !exists(json, 'collections') ? undefined : json['collections'],
         'ticket_type': !exists(json, 'ticket_type') ? undefined : json['ticket_type'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
@@ -211,6 +224,7 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 
@@ -229,6 +243,7 @@ export function TicketToJSON(value?: Ticket): JSONValue {
         'status': TicketStatusEnumToJSON(value.status),
         'description': value.description,
         'project': value.project,
+        'collections': value.collections,
         'ticket_type': value.ticket_type,
         'account': value.account,
         'contact': value.contact,
