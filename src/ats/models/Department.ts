@@ -65,6 +65,12 @@ export interface Department {
      * @memberof Department
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Department
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function DepartmentFromJSON(json: JSONValue): Department | undefined {
@@ -83,6 +89,7 @@ export function DepartmentFromJSONTyped(json: JSONValue): Department | undefined
         'name': !exists(json, 'name') ? undefined : json['name'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

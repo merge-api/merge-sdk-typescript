@@ -6,6 +6,7 @@ export * from './AttachmentsApi';
 export * from './AvailableActionsApi';
 export * from './BalanceSheetsApi';
 export * from './CashFlowStatementsApi';
+export * from './CommonModelScopesApi';
 export * from './CompanyInfoApi';
 export * from './ContactsApi';
 export * from './CreditNotesApi';

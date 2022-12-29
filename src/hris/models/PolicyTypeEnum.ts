@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum PolicyTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Vacation = 'VACATION',
     Sick = 'SICK',
     Personal = 'PERSONAL',
@@ -26,15 +29,19 @@ export enum PolicyTypeEnum {
     Bereavement = 'BEREAVEMENT'
 }
 
+
 export function PolicyTypeEnumFromJSON(json: any): PolicyTypeEnum {
     return PolicyTypeEnumFromJSONTyped(json, false);
 }
 
 export function PolicyTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PolicyTypeEnum {
-    return json as PolicyTypeEnum;
+    if ((<any>Object).values(PolicyTypeEnum).includes(json)) {
+        return json as PolicyTypeEnum;
+    }
+    return PolicyTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function PolicyTypeEnumToJSON(value?: PolicyTypeEnum | null): any {
-    return value as any;
+export function PolicyTypeEnumToJSON(value?: PolicyTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

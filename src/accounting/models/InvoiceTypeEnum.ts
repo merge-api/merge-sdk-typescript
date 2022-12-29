@@ -12,25 +12,32 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum InvoiceTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Receivable = 'ACCOUNTS_RECEIVABLE',
     Payable = 'ACCOUNTS_PAYABLE'
 }
+
 
 export function InvoiceTypeEnumFromJSON(json: any): InvoiceTypeEnum {
     return InvoiceTypeEnumFromJSONTyped(json, false);
 }
 
 export function InvoiceTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): InvoiceTypeEnum {
-    return json as InvoiceTypeEnum;
+    if ((<any>Object).values(InvoiceTypeEnum).includes(json)) {
+        return json as InvoiceTypeEnum;
+    }
+    return InvoiceTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function InvoiceTypeEnumToJSON(value?: InvoiceTypeEnum | null): any {
-    return value as any;
+export function InvoiceTypeEnumToJSON(value?: InvoiceTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

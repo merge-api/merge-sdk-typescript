@@ -122,6 +122,12 @@ export interface Location {
      * @memberof Location
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Location
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function LocationFromJSON(json: JSONValue): Location | undefined {
@@ -148,6 +154,7 @@ export function LocationFromJSONTyped(json: JSONValue): Location | undefined {
         'location_type': !exists(json, 'location_type') ? undefined : LocationTypeEnumFromJSON(json['location_type']) as LocationTypeEnum,
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

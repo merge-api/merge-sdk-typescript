@@ -113,7 +113,7 @@ export interface Invoice {
      * @type {string}
      * @memberof Invoice
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The invoice's currency.
      * @type {CurrencyEnum}
@@ -180,6 +180,12 @@ export interface Invoice {
      * @memberof Invoice
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Invoice
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function InvoiceFromJSON(json: JSONValue): Invoice | undefined {
@@ -215,6 +221,7 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(InvoiceLineItemFromJSON)) as Array<InvoiceLineItem>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

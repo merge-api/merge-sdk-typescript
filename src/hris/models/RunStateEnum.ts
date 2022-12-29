@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum RunStateEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Paid = 'PAID',
     Draft = 'DRAFT',
     Approved = 'APPROVED',
@@ -25,15 +28,19 @@ export enum RunStateEnum {
     Closed = 'CLOSED'
 }
 
+
 export function RunStateEnumFromJSON(json: any): RunStateEnum {
     return RunStateEnumFromJSONTyped(json, false);
 }
 
 export function RunStateEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RunStateEnum {
-    return json as RunStateEnum;
+    if ((<any>Object).values(RunStateEnum).includes(json)) {
+        return json as RunStateEnum;
+    }
+    return RunStateEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function RunStateEnumToJSON(value?: RunStateEnum | null): any {
-    return value as any;
+export function RunStateEnumToJSON(value?: RunStateEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

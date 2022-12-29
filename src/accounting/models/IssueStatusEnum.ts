@@ -12,25 +12,32 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum IssueStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Ongoing = 'ONGOING',
     Resolved = 'RESOLVED'
 }
+
 
 export function IssueStatusEnumFromJSON(json: any): IssueStatusEnum {
     return IssueStatusEnumFromJSONTyped(json, false);
 }
 
 export function IssueStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): IssueStatusEnum {
-    return json as IssueStatusEnum;
+    if ((<any>Object).values(IssueStatusEnum).includes(json)) {
+        return json as IssueStatusEnum;
+    }
+    return IssueStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function IssueStatusEnumToJSON(value?: IssueStatusEnum | null): any {
-    return value as any;
+export function IssueStatusEnumToJSON(value?: IssueStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

@@ -12,25 +12,32 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum AddressTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Billing = 'BILLING',
     Shipping = 'SHIPPING'
 }
+
 
 export function AddressTypeEnumFromJSON(json: any): AddressTypeEnum {
     return AddressTypeEnumFromJSONTyped(json, false);
 }
 
 export function AddressTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressTypeEnum {
-    return json as AddressTypeEnum;
+    if ((<any>Object).values(AddressTypeEnum).includes(json)) {
+        return json as AddressTypeEnum;
+    }
+    return AddressTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function AddressTypeEnumToJSON(value?: AddressTypeEnum | null): any {
-    return value as any;
+export function AddressTypeEnumToJSON(value?: AddressTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

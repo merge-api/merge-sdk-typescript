@@ -12,27 +12,34 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum TicketStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Open = 'OPEN',
     Closed = 'CLOSED',
     InProgress = 'IN_PROGRESS',
     OnHold = 'ON_HOLD'
 }
 
+
 export function TicketStatusEnumFromJSON(json: any): TicketStatusEnum {
     return TicketStatusEnumFromJSONTyped(json, false);
 }
 
 export function TicketStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): TicketStatusEnum {
-    return json as TicketStatusEnum;
+    if ((<any>Object).values(TicketStatusEnum).includes(json)) {
+        return json as TicketStatusEnum;
+    }
+    return TicketStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function TicketStatusEnumToJSON(value?: TicketStatusEnum | null): any {
-    return value as any;
+export function TicketStatusEnumToJSON(value?: TicketStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

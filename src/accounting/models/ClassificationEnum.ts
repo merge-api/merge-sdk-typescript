@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum ClassificationEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Asset = 'ASSET',
     Equity = 'EQUITY',
     Expense = 'EXPENSE',
@@ -25,15 +28,19 @@ export enum ClassificationEnum {
     Revenue = 'REVENUE'
 }
 
+
 export function ClassificationEnumFromJSON(json: any): ClassificationEnum {
     return ClassificationEnumFromJSONTyped(json, false);
 }
 
 export function ClassificationEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ClassificationEnum {
-    return json as ClassificationEnum;
+    if ((<any>Object).values(ClassificationEnum).includes(json)) {
+        return json as ClassificationEnum;
+    }
+    return ClassificationEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function ClassificationEnumToJSON(value?: ClassificationEnum | null): any {
-    return value as any;
+export function ClassificationEnumToJSON(value?: ClassificationEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

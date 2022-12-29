@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum PayCurrencyEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Xua = 'XUA',
     Afn = 'AFN',
     Afa = 'AFA',
@@ -326,15 +329,19 @@ export enum PayCurrencyEnum {
     Zwl = 'ZWL'
 }
 
+
 export function PayCurrencyEnumFromJSON(json: any): PayCurrencyEnum {
     return PayCurrencyEnumFromJSONTyped(json, false);
 }
 
 export function PayCurrencyEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PayCurrencyEnum {
-    return json as PayCurrencyEnum;
+    if ((<any>Object).values(PayCurrencyEnum).includes(json)) {
+        return json as PayCurrencyEnum;
+    }
+    return PayCurrencyEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function PayCurrencyEnumToJSON(value?: PayCurrencyEnum | null): any {
-    return value as any;
+export function PayCurrencyEnumToJSON(value?: PayCurrencyEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

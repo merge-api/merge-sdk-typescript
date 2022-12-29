@@ -122,6 +122,12 @@ export interface BalanceSheet {
      * @memberof BalanceSheet
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BalanceSheet
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function BalanceSheetFromJSON(json: JSONValue): BalanceSheet | undefined {
@@ -148,6 +154,7 @@ export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | undef
         'equity': !exists(json, 'equity') ? undefined : ((json['equity'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'remote_generated_at': !exists(json, 'remote_generated_at') ? undefined : (json['remote_generated_at'] === null ? null : new Date(json['remote_generated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum ConditionTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Boolean = 'BOOLEAN',
     Date = 'DATE',
     DateTime = 'DATE_TIME',
@@ -27,15 +30,19 @@ export enum ConditionTypeEnum {
     ListOfStrings = 'LIST_OF_STRINGS'
 }
 
+
 export function ConditionTypeEnumFromJSON(json: any): ConditionTypeEnum {
     return ConditionTypeEnumFromJSONTyped(json, false);
 }
 
 export function ConditionTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ConditionTypeEnum {
-    return json as ConditionTypeEnum;
+    if ((<any>Object).values(ConditionTypeEnum).includes(json)) {
+        return json as ConditionTypeEnum;
+    }
+    return ConditionTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function ConditionTypeEnumToJSON(value?: ConditionTypeEnum | null): any {
-    return value as any;
+export function ConditionTypeEnumToJSON(value?: ConditionTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

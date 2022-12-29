@@ -105,6 +105,12 @@ export interface InvoiceLineItem {
      * @memberof InvoiceLineItem
      */
     company?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InvoiceLineItem
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function InvoiceLineItemFromJSON(json: JSONValue): InvoiceLineItem | undefined {
@@ -130,6 +136,7 @@ export function InvoiceLineItemFromJSONTyped(json: JSONValue): InvoiceLineItem |
         'account': !exists(json, 'account') ? undefined : json['account'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'company': !exists(json, 'company') ? undefined : json['company'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

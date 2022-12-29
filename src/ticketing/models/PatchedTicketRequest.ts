@@ -80,6 +80,12 @@ export interface PatchedTicketRequest {
      */
     project?: string | null;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof PatchedTicketRequest
+     */
+    collections?: Array<string>;
+    /**
      * The ticket's type.
      * @type {string}
      * @memberof PatchedTicketRequest
@@ -171,6 +177,7 @@ export function PatchedTicketRequestFromJSONTyped(json: JSONValue): PatchedTicke
         'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
         'project': !exists(json, 'project') ? undefined : json['project'],
+        'collections': !exists(json, 'collections') ? undefined : json['collections'],
         'ticket_type': !exists(json, 'ticket_type') ? undefined : json['ticket_type'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
@@ -200,6 +207,7 @@ export function PatchedTicketRequestToJSON(value?: PatchedTicketRequest): JSONVa
         'status': TicketStatusEnumToJSON(value.status),
         'description': value.description,
         'project': value.project,
+        'collections': value.collections,
         'ticket_type': value.ticket_type,
         'account': value.account,
         'contact': value.contact,

@@ -1,5 +1,5 @@
 import * as merge_sdk from '../src/index'
-import { Configuration } from '../src/index';
+import { Configuration, JSONValue } from '../src/index';
 import fetch from 'node-fetch'
 
 // note this is skipped for CI, just here for reference
@@ -104,4 +104,22 @@ test.skip("can override fetchApi in the configuration", async () => {
 
     console.log(response)
     expect(response).toBeDefined()
+})
+
+test("can deserialize unknown enum values", async () => {
+    let ticket_json: JSONValue = {"status": "unknown_ticket_status"}
+
+    let ticket_deserialized = merge_sdk.Ticketing.TicketFromJSON(ticket_json)
+
+    expect(ticket_deserialized?.status).toBeDefined()
+    expect(ticket_deserialized?.status).toEqual(merge_sdk.Ticketing.TicketStatusEnum.MERGE_NONSTANDARD_VALUE)
+})
+
+test("can deserialize known enum values", async () => {
+    let employment_json: JSONValue = {"employment_type": merge_sdk.HRIS.EmploymentTypeEnum.FullTime}
+
+    let employment_deserialized = merge_sdk.HRIS.EmploymentFromJSON(employment_json)
+
+    expect(employment_deserialized?.employment_type).toBeDefined()
+    expect(employment_deserialized?.employment_type).toEqual(merge_sdk.HRIS.EmploymentTypeEnum.FullTime)
 })

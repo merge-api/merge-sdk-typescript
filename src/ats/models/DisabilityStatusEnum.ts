@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum DisabilityStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     YesIHaveADisabilityOrPreviouslyHadADisability = 'YES_I_HAVE_A_DISABILITY_OR_PREVIOUSLY_HAD_A_DISABILITY',
     NoIDontHaveADisability = 'NO_I_DONT_HAVE_A_DISABILITY',
     IDontWishToAnswer = 'I_DONT_WISH_TO_ANSWER'
 }
+
 
 export function DisabilityStatusEnumFromJSON(json: any): DisabilityStatusEnum {
     return DisabilityStatusEnumFromJSONTyped(json, false);
 }
 
 export function DisabilityStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): DisabilityStatusEnum {
-    return json as DisabilityStatusEnum;
+    if ((<any>Object).values(DisabilityStatusEnum).includes(json)) {
+        return json as DisabilityStatusEnum;
+    }
+    return DisabilityStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function DisabilityStatusEnumToJSON(value?: DisabilityStatusEnum | null): any {
-    return value as any;
+export function DisabilityStatusEnumToJSON(value?: DisabilityStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

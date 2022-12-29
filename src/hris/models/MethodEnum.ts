@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum MethodEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Get = 'GET',
     Options = 'OPTIONS',
     Head = 'HEAD',
@@ -27,15 +30,19 @@ export enum MethodEnum {
     Delete = 'DELETE'
 }
 
+
 export function MethodEnumFromJSON(json: any): MethodEnum {
     return MethodEnumFromJSONTyped(json, false);
 }
 
 export function MethodEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): MethodEnum {
-    return json as MethodEnum;
+    if ((<any>Object).values(MethodEnum).includes(json)) {
+        return json as MethodEnum;
+    }
+    return MethodEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function MethodEnumToJSON(value?: MethodEnum | null): any {
-    return value as any;
+export function MethodEnumToJSON(value?: MethodEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

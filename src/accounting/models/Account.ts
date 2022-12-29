@@ -132,6 +132,12 @@ export interface Account {
      * @memberof Account
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Account
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function AccountFromJSON(json: JSONValue): Account | undefined {
@@ -159,6 +165,7 @@ export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
         'parent_account': !exists(json, 'parent_account') ? undefined : json['parent_account'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

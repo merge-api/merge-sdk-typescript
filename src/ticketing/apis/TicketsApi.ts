@@ -31,6 +31,8 @@ import {
     TicketResponseFromJSON,
     TicketResponseToJSON,
     User,
+    UserFromJSON,
+    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -39,9 +41,10 @@ import {
 } from '../../merge_paginated_response';
 
 export interface TicketsCollaboratorsListRequest {
-    id: string;
+    parentId: string;
     cursor?: string;
     expand?: TicketsCollaboratorsListExpandEnum;
+    includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     pageSize?: number;
 }
@@ -55,6 +58,7 @@ export interface TicketsCreateRequest {
 export interface TicketsListRequest {
     accountId?: string;
     assigneeIds?: string;
+    collectionIds?: string;
     completedAfter?: Date | null;
     completedBefore?: Date | null;
     contactId?: string;
@@ -111,11 +115,11 @@ export interface TicketsMetaPostRetrieveRequest {
 export class TicketsApi extends runtime.BaseAPI {
 
     /**
-     * Returns a `User` object with the given `id`.
+     * Returns a list of `User` objects.
      */
     async ticketsCollaboratorsListRaw(requestParameters: TicketsCollaboratorsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsCollaboratorsList.');
+        if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
+            throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling ticketsCollaboratorsList.');
         }
 
         const queryParameters: any = {};
@@ -126,6 +130,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         if (requestParameters.expand !== undefined) {
             queryParameters['expand'] = requestParameters.expand;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
@@ -148,7 +156,7 @@ export class TicketsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/ticketing/v1/tickets/{id}/collaborators`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/ticketing/v1/tickets/{parent_id}/collaborators`.replace(`{${"parent_id"}}`, encodeURIComponent(String(requestParameters.parentId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -158,7 +166,7 @@ export class TicketsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a `User` object with the given `id`.
+     * Returns a list of `User` objects.
      */
     async ticketsCollaboratorsList(requestParameters: TicketsCollaboratorsListRequest): Promise<MergePaginatedResponse<User> | undefined> {
         const response = await this.ticketsCollaboratorsListRaw(requestParameters);
@@ -227,6 +235,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         if (requestParameters.assigneeIds !== undefined) {
             queryParameters['assignee_ids'] = requestParameters.assigneeIds;
+        }
+
+        if (requestParameters.collectionIds !== undefined) {
+            queryParameters['collection_ids'] = requestParameters.collectionIds;
         }
 
         if (requestParameters.completedAfter !== undefined) {
@@ -576,6 +588,38 @@ export enum TicketsListExpandEnum {
     Assigneesaccountcreator = 'assignees,account,creator',
     AssigneesaccountcreatorparentTicket = 'assignees,account,creator,parent_ticket',
     AssigneesaccountparentTicket = 'assignees,account,parent_ticket',
+    Assigneescollections = 'assignees,collections',
+    Assigneescollectionsaccount = 'assignees,collections,account',
+    Assigneescollectionsaccountcontact = 'assignees,collections,account,contact',
+    Assigneescollectionsaccountcontactcreator = 'assignees,collections,account,contact,creator',
+    AssigneescollectionsaccountcontactcreatorparentTicket = 'assignees,collections,account,contact,creator,parent_ticket',
+    AssigneescollectionsaccountcontactparentTicket = 'assignees,collections,account,contact,parent_ticket',
+    Assigneescollectionsaccountcreator = 'assignees,collections,account,creator',
+    AssigneescollectionsaccountcreatorparentTicket = 'assignees,collections,account,creator,parent_ticket',
+    AssigneescollectionsaccountparentTicket = 'assignees,collections,account,parent_ticket',
+    Assigneescollectionscontact = 'assignees,collections,contact',
+    Assigneescollectionscontactcreator = 'assignees,collections,contact,creator',
+    AssigneescollectionscontactcreatorparentTicket = 'assignees,collections,contact,creator,parent_ticket',
+    AssigneescollectionscontactparentTicket = 'assignees,collections,contact,parent_ticket',
+    Assigneescollectionscreator = 'assignees,collections,creator',
+    AssigneescollectionscreatorparentTicket = 'assignees,collections,creator,parent_ticket',
+    AssigneescollectionsparentTicket = 'assignees,collections,parent_ticket',
+    Assigneescollectionsproject = 'assignees,collections,project',
+    Assigneescollectionsprojectaccount = 'assignees,collections,project,account',
+    Assigneescollectionsprojectaccountcontact = 'assignees,collections,project,account,contact',
+    Assigneescollectionsprojectaccountcontactcreator = 'assignees,collections,project,account,contact,creator',
+    AssigneescollectionsprojectaccountcontactcreatorparentTicket = 'assignees,collections,project,account,contact,creator,parent_ticket',
+    AssigneescollectionsprojectaccountcontactparentTicket = 'assignees,collections,project,account,contact,parent_ticket',
+    Assigneescollectionsprojectaccountcreator = 'assignees,collections,project,account,creator',
+    AssigneescollectionsprojectaccountcreatorparentTicket = 'assignees,collections,project,account,creator,parent_ticket',
+    AssigneescollectionsprojectaccountparentTicket = 'assignees,collections,project,account,parent_ticket',
+    Assigneescollectionsprojectcontact = 'assignees,collections,project,contact',
+    Assigneescollectionsprojectcontactcreator = 'assignees,collections,project,contact,creator',
+    AssigneescollectionsprojectcontactcreatorparentTicket = 'assignees,collections,project,contact,creator,parent_ticket',
+    AssigneescollectionsprojectcontactparentTicket = 'assignees,collections,project,contact,parent_ticket',
+    Assigneescollectionsprojectcreator = 'assignees,collections,project,creator',
+    AssigneescollectionsprojectcreatorparentTicket = 'assignees,collections,project,creator,parent_ticket',
+    AssigneescollectionsprojectparentTicket = 'assignees,collections,project,parent_ticket',
     Assigneescontact = 'assignees,contact',
     Assigneescontactcreator = 'assignees,contact,creator',
     AssigneescontactcreatorparentTicket = 'assignees,contact,creator,parent_ticket',
@@ -617,6 +661,38 @@ export enum TicketsListExpandEnum {
     Attachmentsassigneesaccountcreator = 'attachments,assignees,account,creator',
     AttachmentsassigneesaccountcreatorparentTicket = 'attachments,assignees,account,creator,parent_ticket',
     AttachmentsassigneesaccountparentTicket = 'attachments,assignees,account,parent_ticket',
+    Attachmentsassigneescollections = 'attachments,assignees,collections',
+    Attachmentsassigneescollectionsaccount = 'attachments,assignees,collections,account',
+    Attachmentsassigneescollectionsaccountcontact = 'attachments,assignees,collections,account,contact',
+    Attachmentsassigneescollectionsaccountcontactcreator = 'attachments,assignees,collections,account,contact,creator',
+    AttachmentsassigneescollectionsaccountcontactcreatorparentTicket = 'attachments,assignees,collections,account,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionsaccountcontactparentTicket = 'attachments,assignees,collections,account,contact,parent_ticket',
+    Attachmentsassigneescollectionsaccountcreator = 'attachments,assignees,collections,account,creator',
+    AttachmentsassigneescollectionsaccountcreatorparentTicket = 'attachments,assignees,collections,account,creator,parent_ticket',
+    AttachmentsassigneescollectionsaccountparentTicket = 'attachments,assignees,collections,account,parent_ticket',
+    Attachmentsassigneescollectionscontact = 'attachments,assignees,collections,contact',
+    Attachmentsassigneescollectionscontactcreator = 'attachments,assignees,collections,contact,creator',
+    AttachmentsassigneescollectionscontactcreatorparentTicket = 'attachments,assignees,collections,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionscontactparentTicket = 'attachments,assignees,collections,contact,parent_ticket',
+    Attachmentsassigneescollectionscreator = 'attachments,assignees,collections,creator',
+    AttachmentsassigneescollectionscreatorparentTicket = 'attachments,assignees,collections,creator,parent_ticket',
+    AttachmentsassigneescollectionsparentTicket = 'attachments,assignees,collections,parent_ticket',
+    Attachmentsassigneescollectionsproject = 'attachments,assignees,collections,project',
+    Attachmentsassigneescollectionsprojectaccount = 'attachments,assignees,collections,project,account',
+    Attachmentsassigneescollectionsprojectaccountcontact = 'attachments,assignees,collections,project,account,contact',
+    Attachmentsassigneescollectionsprojectaccountcontactcreator = 'attachments,assignees,collections,project,account,contact,creator',
+    AttachmentsassigneescollectionsprojectaccountcontactcreatorparentTicket = 'attachments,assignees,collections,project,account,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectaccountcontactparentTicket = 'attachments,assignees,collections,project,account,contact,parent_ticket',
+    Attachmentsassigneescollectionsprojectaccountcreator = 'attachments,assignees,collections,project,account,creator',
+    AttachmentsassigneescollectionsprojectaccountcreatorparentTicket = 'attachments,assignees,collections,project,account,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectaccountparentTicket = 'attachments,assignees,collections,project,account,parent_ticket',
+    Attachmentsassigneescollectionsprojectcontact = 'attachments,assignees,collections,project,contact',
+    Attachmentsassigneescollectionsprojectcontactcreator = 'attachments,assignees,collections,project,contact,creator',
+    AttachmentsassigneescollectionsprojectcontactcreatorparentTicket = 'attachments,assignees,collections,project,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectcontactparentTicket = 'attachments,assignees,collections,project,contact,parent_ticket',
+    Attachmentsassigneescollectionsprojectcreator = 'attachments,assignees,collections,project,creator',
+    AttachmentsassigneescollectionsprojectcreatorparentTicket = 'attachments,assignees,collections,project,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectparentTicket = 'attachments,assignees,collections,project,parent_ticket',
     Attachmentsassigneescontact = 'attachments,assignees,contact',
     Attachmentsassigneescontactcreator = 'attachments,assignees,contact,creator',
     AttachmentsassigneescontactcreatorparentTicket = 'attachments,assignees,contact,creator,parent_ticket',
@@ -640,6 +716,38 @@ export enum TicketsListExpandEnum {
     Attachmentsassigneesprojectcreator = 'attachments,assignees,project,creator',
     AttachmentsassigneesprojectcreatorparentTicket = 'attachments,assignees,project,creator,parent_ticket',
     AttachmentsassigneesprojectparentTicket = 'attachments,assignees,project,parent_ticket',
+    Attachmentscollections = 'attachments,collections',
+    Attachmentscollectionsaccount = 'attachments,collections,account',
+    Attachmentscollectionsaccountcontact = 'attachments,collections,account,contact',
+    Attachmentscollectionsaccountcontactcreator = 'attachments,collections,account,contact,creator',
+    AttachmentscollectionsaccountcontactcreatorparentTicket = 'attachments,collections,account,contact,creator,parent_ticket',
+    AttachmentscollectionsaccountcontactparentTicket = 'attachments,collections,account,contact,parent_ticket',
+    Attachmentscollectionsaccountcreator = 'attachments,collections,account,creator',
+    AttachmentscollectionsaccountcreatorparentTicket = 'attachments,collections,account,creator,parent_ticket',
+    AttachmentscollectionsaccountparentTicket = 'attachments,collections,account,parent_ticket',
+    Attachmentscollectionscontact = 'attachments,collections,contact',
+    Attachmentscollectionscontactcreator = 'attachments,collections,contact,creator',
+    AttachmentscollectionscontactcreatorparentTicket = 'attachments,collections,contact,creator,parent_ticket',
+    AttachmentscollectionscontactparentTicket = 'attachments,collections,contact,parent_ticket',
+    Attachmentscollectionscreator = 'attachments,collections,creator',
+    AttachmentscollectionscreatorparentTicket = 'attachments,collections,creator,parent_ticket',
+    AttachmentscollectionsparentTicket = 'attachments,collections,parent_ticket',
+    Attachmentscollectionsproject = 'attachments,collections,project',
+    Attachmentscollectionsprojectaccount = 'attachments,collections,project,account',
+    Attachmentscollectionsprojectaccountcontact = 'attachments,collections,project,account,contact',
+    Attachmentscollectionsprojectaccountcontactcreator = 'attachments,collections,project,account,contact,creator',
+    AttachmentscollectionsprojectaccountcontactcreatorparentTicket = 'attachments,collections,project,account,contact,creator,parent_ticket',
+    AttachmentscollectionsprojectaccountcontactparentTicket = 'attachments,collections,project,account,contact,parent_ticket',
+    Attachmentscollectionsprojectaccountcreator = 'attachments,collections,project,account,creator',
+    AttachmentscollectionsprojectaccountcreatorparentTicket = 'attachments,collections,project,account,creator,parent_ticket',
+    AttachmentscollectionsprojectaccountparentTicket = 'attachments,collections,project,account,parent_ticket',
+    Attachmentscollectionsprojectcontact = 'attachments,collections,project,contact',
+    Attachmentscollectionsprojectcontactcreator = 'attachments,collections,project,contact,creator',
+    AttachmentscollectionsprojectcontactcreatorparentTicket = 'attachments,collections,project,contact,creator,parent_ticket',
+    AttachmentscollectionsprojectcontactparentTicket = 'attachments,collections,project,contact,parent_ticket',
+    Attachmentscollectionsprojectcreator = 'attachments,collections,project,creator',
+    AttachmentscollectionsprojectcreatorparentTicket = 'attachments,collections,project,creator,parent_ticket',
+    AttachmentscollectionsprojectparentTicket = 'attachments,collections,project,parent_ticket',
     Attachmentscontact = 'attachments,contact',
     Attachmentscontactcreator = 'attachments,contact,creator',
     AttachmentscontactcreatorparentTicket = 'attachments,contact,creator,parent_ticket',
@@ -663,6 +771,38 @@ export enum TicketsListExpandEnum {
     Attachmentsprojectcreator = 'attachments,project,creator',
     AttachmentsprojectcreatorparentTicket = 'attachments,project,creator,parent_ticket',
     AttachmentsprojectparentTicket = 'attachments,project,parent_ticket',
+    Collections = 'collections',
+    Collectionsaccount = 'collections,account',
+    Collectionsaccountcontact = 'collections,account,contact',
+    Collectionsaccountcontactcreator = 'collections,account,contact,creator',
+    CollectionsaccountcontactcreatorparentTicket = 'collections,account,contact,creator,parent_ticket',
+    CollectionsaccountcontactparentTicket = 'collections,account,contact,parent_ticket',
+    Collectionsaccountcreator = 'collections,account,creator',
+    CollectionsaccountcreatorparentTicket = 'collections,account,creator,parent_ticket',
+    CollectionsaccountparentTicket = 'collections,account,parent_ticket',
+    Collectionscontact = 'collections,contact',
+    Collectionscontactcreator = 'collections,contact,creator',
+    CollectionscontactcreatorparentTicket = 'collections,contact,creator,parent_ticket',
+    CollectionscontactparentTicket = 'collections,contact,parent_ticket',
+    Collectionscreator = 'collections,creator',
+    CollectionscreatorparentTicket = 'collections,creator,parent_ticket',
+    CollectionsparentTicket = 'collections,parent_ticket',
+    Collectionsproject = 'collections,project',
+    Collectionsprojectaccount = 'collections,project,account',
+    Collectionsprojectaccountcontact = 'collections,project,account,contact',
+    Collectionsprojectaccountcontactcreator = 'collections,project,account,contact,creator',
+    CollectionsprojectaccountcontactcreatorparentTicket = 'collections,project,account,contact,creator,parent_ticket',
+    CollectionsprojectaccountcontactparentTicket = 'collections,project,account,contact,parent_ticket',
+    Collectionsprojectaccountcreator = 'collections,project,account,creator',
+    CollectionsprojectaccountcreatorparentTicket = 'collections,project,account,creator,parent_ticket',
+    CollectionsprojectaccountparentTicket = 'collections,project,account,parent_ticket',
+    Collectionsprojectcontact = 'collections,project,contact',
+    Collectionsprojectcontactcreator = 'collections,project,contact,creator',
+    CollectionsprojectcontactcreatorparentTicket = 'collections,project,contact,creator,parent_ticket',
+    CollectionsprojectcontactparentTicket = 'collections,project,contact,parent_ticket',
+    Collectionsprojectcreator = 'collections,project,creator',
+    CollectionsprojectcreatorparentTicket = 'collections,project,creator,parent_ticket',
+    CollectionsprojectparentTicket = 'collections,project,parent_ticket',
     Contact = 'contact',
     Contactcreator = 'contact,creator',
     ContactcreatorparentTicket = 'contact,creator,parent_ticket',
@@ -736,6 +876,38 @@ export enum TicketsRetrieveExpandEnum {
     Assigneesaccountcreator = 'assignees,account,creator',
     AssigneesaccountcreatorparentTicket = 'assignees,account,creator,parent_ticket',
     AssigneesaccountparentTicket = 'assignees,account,parent_ticket',
+    Assigneescollections = 'assignees,collections',
+    Assigneescollectionsaccount = 'assignees,collections,account',
+    Assigneescollectionsaccountcontact = 'assignees,collections,account,contact',
+    Assigneescollectionsaccountcontactcreator = 'assignees,collections,account,contact,creator',
+    AssigneescollectionsaccountcontactcreatorparentTicket = 'assignees,collections,account,contact,creator,parent_ticket',
+    AssigneescollectionsaccountcontactparentTicket = 'assignees,collections,account,contact,parent_ticket',
+    Assigneescollectionsaccountcreator = 'assignees,collections,account,creator',
+    AssigneescollectionsaccountcreatorparentTicket = 'assignees,collections,account,creator,parent_ticket',
+    AssigneescollectionsaccountparentTicket = 'assignees,collections,account,parent_ticket',
+    Assigneescollectionscontact = 'assignees,collections,contact',
+    Assigneescollectionscontactcreator = 'assignees,collections,contact,creator',
+    AssigneescollectionscontactcreatorparentTicket = 'assignees,collections,contact,creator,parent_ticket',
+    AssigneescollectionscontactparentTicket = 'assignees,collections,contact,parent_ticket',
+    Assigneescollectionscreator = 'assignees,collections,creator',
+    AssigneescollectionscreatorparentTicket = 'assignees,collections,creator,parent_ticket',
+    AssigneescollectionsparentTicket = 'assignees,collections,parent_ticket',
+    Assigneescollectionsproject = 'assignees,collections,project',
+    Assigneescollectionsprojectaccount = 'assignees,collections,project,account',
+    Assigneescollectionsprojectaccountcontact = 'assignees,collections,project,account,contact',
+    Assigneescollectionsprojectaccountcontactcreator = 'assignees,collections,project,account,contact,creator',
+    AssigneescollectionsprojectaccountcontactcreatorparentTicket = 'assignees,collections,project,account,contact,creator,parent_ticket',
+    AssigneescollectionsprojectaccountcontactparentTicket = 'assignees,collections,project,account,contact,parent_ticket',
+    Assigneescollectionsprojectaccountcreator = 'assignees,collections,project,account,creator',
+    AssigneescollectionsprojectaccountcreatorparentTicket = 'assignees,collections,project,account,creator,parent_ticket',
+    AssigneescollectionsprojectaccountparentTicket = 'assignees,collections,project,account,parent_ticket',
+    Assigneescollectionsprojectcontact = 'assignees,collections,project,contact',
+    Assigneescollectionsprojectcontactcreator = 'assignees,collections,project,contact,creator',
+    AssigneescollectionsprojectcontactcreatorparentTicket = 'assignees,collections,project,contact,creator,parent_ticket',
+    AssigneescollectionsprojectcontactparentTicket = 'assignees,collections,project,contact,parent_ticket',
+    Assigneescollectionsprojectcreator = 'assignees,collections,project,creator',
+    AssigneescollectionsprojectcreatorparentTicket = 'assignees,collections,project,creator,parent_ticket',
+    AssigneescollectionsprojectparentTicket = 'assignees,collections,project,parent_ticket',
     Assigneescontact = 'assignees,contact',
     Assigneescontactcreator = 'assignees,contact,creator',
     AssigneescontactcreatorparentTicket = 'assignees,contact,creator,parent_ticket',
@@ -777,6 +949,38 @@ export enum TicketsRetrieveExpandEnum {
     Attachmentsassigneesaccountcreator = 'attachments,assignees,account,creator',
     AttachmentsassigneesaccountcreatorparentTicket = 'attachments,assignees,account,creator,parent_ticket',
     AttachmentsassigneesaccountparentTicket = 'attachments,assignees,account,parent_ticket',
+    Attachmentsassigneescollections = 'attachments,assignees,collections',
+    Attachmentsassigneescollectionsaccount = 'attachments,assignees,collections,account',
+    Attachmentsassigneescollectionsaccountcontact = 'attachments,assignees,collections,account,contact',
+    Attachmentsassigneescollectionsaccountcontactcreator = 'attachments,assignees,collections,account,contact,creator',
+    AttachmentsassigneescollectionsaccountcontactcreatorparentTicket = 'attachments,assignees,collections,account,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionsaccountcontactparentTicket = 'attachments,assignees,collections,account,contact,parent_ticket',
+    Attachmentsassigneescollectionsaccountcreator = 'attachments,assignees,collections,account,creator',
+    AttachmentsassigneescollectionsaccountcreatorparentTicket = 'attachments,assignees,collections,account,creator,parent_ticket',
+    AttachmentsassigneescollectionsaccountparentTicket = 'attachments,assignees,collections,account,parent_ticket',
+    Attachmentsassigneescollectionscontact = 'attachments,assignees,collections,contact',
+    Attachmentsassigneescollectionscontactcreator = 'attachments,assignees,collections,contact,creator',
+    AttachmentsassigneescollectionscontactcreatorparentTicket = 'attachments,assignees,collections,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionscontactparentTicket = 'attachments,assignees,collections,contact,parent_ticket',
+    Attachmentsassigneescollectionscreator = 'attachments,assignees,collections,creator',
+    AttachmentsassigneescollectionscreatorparentTicket = 'attachments,assignees,collections,creator,parent_ticket',
+    AttachmentsassigneescollectionsparentTicket = 'attachments,assignees,collections,parent_ticket',
+    Attachmentsassigneescollectionsproject = 'attachments,assignees,collections,project',
+    Attachmentsassigneescollectionsprojectaccount = 'attachments,assignees,collections,project,account',
+    Attachmentsassigneescollectionsprojectaccountcontact = 'attachments,assignees,collections,project,account,contact',
+    Attachmentsassigneescollectionsprojectaccountcontactcreator = 'attachments,assignees,collections,project,account,contact,creator',
+    AttachmentsassigneescollectionsprojectaccountcontactcreatorparentTicket = 'attachments,assignees,collections,project,account,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectaccountcontactparentTicket = 'attachments,assignees,collections,project,account,contact,parent_ticket',
+    Attachmentsassigneescollectionsprojectaccountcreator = 'attachments,assignees,collections,project,account,creator',
+    AttachmentsassigneescollectionsprojectaccountcreatorparentTicket = 'attachments,assignees,collections,project,account,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectaccountparentTicket = 'attachments,assignees,collections,project,account,parent_ticket',
+    Attachmentsassigneescollectionsprojectcontact = 'attachments,assignees,collections,project,contact',
+    Attachmentsassigneescollectionsprojectcontactcreator = 'attachments,assignees,collections,project,contact,creator',
+    AttachmentsassigneescollectionsprojectcontactcreatorparentTicket = 'attachments,assignees,collections,project,contact,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectcontactparentTicket = 'attachments,assignees,collections,project,contact,parent_ticket',
+    Attachmentsassigneescollectionsprojectcreator = 'attachments,assignees,collections,project,creator',
+    AttachmentsassigneescollectionsprojectcreatorparentTicket = 'attachments,assignees,collections,project,creator,parent_ticket',
+    AttachmentsassigneescollectionsprojectparentTicket = 'attachments,assignees,collections,project,parent_ticket',
     Attachmentsassigneescontact = 'attachments,assignees,contact',
     Attachmentsassigneescontactcreator = 'attachments,assignees,contact,creator',
     AttachmentsassigneescontactcreatorparentTicket = 'attachments,assignees,contact,creator,parent_ticket',
@@ -800,6 +1004,38 @@ export enum TicketsRetrieveExpandEnum {
     Attachmentsassigneesprojectcreator = 'attachments,assignees,project,creator',
     AttachmentsassigneesprojectcreatorparentTicket = 'attachments,assignees,project,creator,parent_ticket',
     AttachmentsassigneesprojectparentTicket = 'attachments,assignees,project,parent_ticket',
+    Attachmentscollections = 'attachments,collections',
+    Attachmentscollectionsaccount = 'attachments,collections,account',
+    Attachmentscollectionsaccountcontact = 'attachments,collections,account,contact',
+    Attachmentscollectionsaccountcontactcreator = 'attachments,collections,account,contact,creator',
+    AttachmentscollectionsaccountcontactcreatorparentTicket = 'attachments,collections,account,contact,creator,parent_ticket',
+    AttachmentscollectionsaccountcontactparentTicket = 'attachments,collections,account,contact,parent_ticket',
+    Attachmentscollectionsaccountcreator = 'attachments,collections,account,creator',
+    AttachmentscollectionsaccountcreatorparentTicket = 'attachments,collections,account,creator,parent_ticket',
+    AttachmentscollectionsaccountparentTicket = 'attachments,collections,account,parent_ticket',
+    Attachmentscollectionscontact = 'attachments,collections,contact',
+    Attachmentscollectionscontactcreator = 'attachments,collections,contact,creator',
+    AttachmentscollectionscontactcreatorparentTicket = 'attachments,collections,contact,creator,parent_ticket',
+    AttachmentscollectionscontactparentTicket = 'attachments,collections,contact,parent_ticket',
+    Attachmentscollectionscreator = 'attachments,collections,creator',
+    AttachmentscollectionscreatorparentTicket = 'attachments,collections,creator,parent_ticket',
+    AttachmentscollectionsparentTicket = 'attachments,collections,parent_ticket',
+    Attachmentscollectionsproject = 'attachments,collections,project',
+    Attachmentscollectionsprojectaccount = 'attachments,collections,project,account',
+    Attachmentscollectionsprojectaccountcontact = 'attachments,collections,project,account,contact',
+    Attachmentscollectionsprojectaccountcontactcreator = 'attachments,collections,project,account,contact,creator',
+    AttachmentscollectionsprojectaccountcontactcreatorparentTicket = 'attachments,collections,project,account,contact,creator,parent_ticket',
+    AttachmentscollectionsprojectaccountcontactparentTicket = 'attachments,collections,project,account,contact,parent_ticket',
+    Attachmentscollectionsprojectaccountcreator = 'attachments,collections,project,account,creator',
+    AttachmentscollectionsprojectaccountcreatorparentTicket = 'attachments,collections,project,account,creator,parent_ticket',
+    AttachmentscollectionsprojectaccountparentTicket = 'attachments,collections,project,account,parent_ticket',
+    Attachmentscollectionsprojectcontact = 'attachments,collections,project,contact',
+    Attachmentscollectionsprojectcontactcreator = 'attachments,collections,project,contact,creator',
+    AttachmentscollectionsprojectcontactcreatorparentTicket = 'attachments,collections,project,contact,creator,parent_ticket',
+    AttachmentscollectionsprojectcontactparentTicket = 'attachments,collections,project,contact,parent_ticket',
+    Attachmentscollectionsprojectcreator = 'attachments,collections,project,creator',
+    AttachmentscollectionsprojectcreatorparentTicket = 'attachments,collections,project,creator,parent_ticket',
+    AttachmentscollectionsprojectparentTicket = 'attachments,collections,project,parent_ticket',
     Attachmentscontact = 'attachments,contact',
     Attachmentscontactcreator = 'attachments,contact,creator',
     AttachmentscontactcreatorparentTicket = 'attachments,contact,creator,parent_ticket',
@@ -823,6 +1059,38 @@ export enum TicketsRetrieveExpandEnum {
     Attachmentsprojectcreator = 'attachments,project,creator',
     AttachmentsprojectcreatorparentTicket = 'attachments,project,creator,parent_ticket',
     AttachmentsprojectparentTicket = 'attachments,project,parent_ticket',
+    Collections = 'collections',
+    Collectionsaccount = 'collections,account',
+    Collectionsaccountcontact = 'collections,account,contact',
+    Collectionsaccountcontactcreator = 'collections,account,contact,creator',
+    CollectionsaccountcontactcreatorparentTicket = 'collections,account,contact,creator,parent_ticket',
+    CollectionsaccountcontactparentTicket = 'collections,account,contact,parent_ticket',
+    Collectionsaccountcreator = 'collections,account,creator',
+    CollectionsaccountcreatorparentTicket = 'collections,account,creator,parent_ticket',
+    CollectionsaccountparentTicket = 'collections,account,parent_ticket',
+    Collectionscontact = 'collections,contact',
+    Collectionscontactcreator = 'collections,contact,creator',
+    CollectionscontactcreatorparentTicket = 'collections,contact,creator,parent_ticket',
+    CollectionscontactparentTicket = 'collections,contact,parent_ticket',
+    Collectionscreator = 'collections,creator',
+    CollectionscreatorparentTicket = 'collections,creator,parent_ticket',
+    CollectionsparentTicket = 'collections,parent_ticket',
+    Collectionsproject = 'collections,project',
+    Collectionsprojectaccount = 'collections,project,account',
+    Collectionsprojectaccountcontact = 'collections,project,account,contact',
+    Collectionsprojectaccountcontactcreator = 'collections,project,account,contact,creator',
+    CollectionsprojectaccountcontactcreatorparentTicket = 'collections,project,account,contact,creator,parent_ticket',
+    CollectionsprojectaccountcontactparentTicket = 'collections,project,account,contact,parent_ticket',
+    Collectionsprojectaccountcreator = 'collections,project,account,creator',
+    CollectionsprojectaccountcreatorparentTicket = 'collections,project,account,creator,parent_ticket',
+    CollectionsprojectaccountparentTicket = 'collections,project,account,parent_ticket',
+    Collectionsprojectcontact = 'collections,project,contact',
+    Collectionsprojectcontactcreator = 'collections,project,contact,creator',
+    CollectionsprojectcontactcreatorparentTicket = 'collections,project,contact,creator,parent_ticket',
+    CollectionsprojectcontactparentTicket = 'collections,project,contact,parent_ticket',
+    Collectionsprojectcreator = 'collections,project,creator',
+    CollectionsprojectcreatorparentTicket = 'collections,project,creator,parent_ticket',
+    CollectionsprojectparentTicket = 'collections,project,parent_ticket',
     Contact = 'contact',
     Contactcreator = 'contact,creator',
     ContactcreatorparentTicket = 'contact,creator,parent_ticket',

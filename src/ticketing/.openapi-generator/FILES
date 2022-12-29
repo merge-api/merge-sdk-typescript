@@ -3,7 +3,9 @@ src/apis/AccountTokenApi.ts
 src/apis/AccountsApi.ts
 src/apis/AttachmentsApi.ts
 src/apis/AvailableActionsApi.ts
+src/apis/CollectionsApi.ts
 src/apis/CommentsApi.ts
+src/apis/CommonModelScopesApi.ts
 src/apis/ContactsApi.ts
 src/apis/DeleteAccountApi.ts
 src/apis/ForceResyncApi.ts
@@ -35,10 +37,19 @@ src/models/AttachmentRequest.ts
 src/models/AvailableActions.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
+src/models/Collection.ts
+src/models/CollectionTypeEnum.ts
 src/models/Comment.ts
 src/models/CommentEndpointRequest.ts
 src/models/CommentRequest.ts
 src/models/CommentResponse.ts
+src/models/CommonModelScopes.ts
+src/models/CommonModelScopesDisabledModels.ts
+src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
+src/models/CommonModelScopesPutInnerDeserializerEnabledActionsEnum.ts
+src/models/CommonModelScopesPutInnerDeserializerRequest.ts
+src/models/CommonModelScopesScope.ts
+src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts
 src/models/Contact.ts
@@ -72,6 +83,7 @@ src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts
 src/models/RequestFormatEnum.ts
 src/models/ResponseTypeEnum.ts
+src/models/SelectiveSyncConfigurationsUsageEnum.ts
 src/models/SyncStatus.ts
 src/models/SyncStatusStatusEnum.ts
 src/models/Tag.ts
@@ -83,6 +95,7 @@ src/models/TicketResponse.ts
 src/models/TicketStatusEnum.ts
 src/models/TicketingAttachmentEndpointRequest.ts
 src/models/TicketingAttachmentResponse.ts
+src/models/TypeEnum.ts
 src/models/User.ts
 src/models/ValidationProblemSource.ts
 src/models/WarningValidationProblem.ts

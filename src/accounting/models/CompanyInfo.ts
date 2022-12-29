@@ -132,6 +132,12 @@ export interface CompanyInfo {
      * @memberof CompanyInfo
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CompanyInfo
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function CompanyInfoFromJSON(json: JSONValue): CompanyInfo | undefined {
@@ -159,6 +165,7 @@ export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo | undefin
         'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<JSONValue>).map(AddressFromJSON)) as Array<Address>,
         'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(AccountingPhoneNumberFromJSON)) as Array<AccountingPhoneNumber>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

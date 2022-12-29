@@ -12,27 +12,34 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum PriorityEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Urgent = 'URGENT',
     High = 'HIGH',
     Normal = 'NORMAL',
     Low = 'LOW'
 }
 
+
 export function PriorityEnumFromJSON(json: any): PriorityEnum {
     return PriorityEnumFromJSONTyped(json, false);
 }
 
 export function PriorityEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PriorityEnum {
-    return json as PriorityEnum;
+    if ((<any>Object).values(PriorityEnum).includes(json)) {
+        return json as PriorityEnum;
+    }
+    return PriorityEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function PriorityEnumToJSON(value?: PriorityEnum | null): any {
-    return value as any;
+export function PriorityEnumToJSON(value?: PriorityEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

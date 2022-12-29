@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum CountryEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Af = 'AF',
     Ax = 'AX',
     Al = 'AL',
@@ -269,15 +272,19 @@ export enum CountryEnum {
     Zw = 'ZW'
 }
 
+
 export function CountryEnumFromJSON(json: any): CountryEnum {
     return CountryEnumFromJSONTyped(json, false);
 }
 
 export function CountryEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CountryEnum {
-    return json as CountryEnum;
+    if ((<any>Object).values(CountryEnum).includes(json)) {
+        return json as CountryEnum;
+    }
+    return CountryEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function CountryEnumToJSON(value?: CountryEnum | null): any {
-    return value as any;
+export function CountryEnumToJSON(value?: CountryEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

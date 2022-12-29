@@ -134,6 +134,12 @@ export interface Contact {
      * @memberof Contact
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Contact
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function ContactFromJSON(json: JSONValue): Contact | undefined {
@@ -162,6 +168,7 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
         'addresses': !exists(json, 'addresses') ? undefined : json['addresses'],
         'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(AccountingPhoneNumberFromJSON)) as Array<AccountingPhoneNumber>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

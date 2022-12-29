@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum RunTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Regular = 'REGULAR',
     OffCycle = 'OFF_CYCLE',
     Correction = 'CORRECTION',
@@ -25,15 +28,19 @@ export enum RunTypeEnum {
     SignOnBonus = 'SIGN_ON_BONUS'
 }
 
+
 export function RunTypeEnumFromJSON(json: any): RunTypeEnum {
     return RunTypeEnumFromJSONTyped(json, false);
 }
 
 export function RunTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RunTypeEnum {
-    return json as RunTypeEnum;
+    if ((<any>Object).values(RunTypeEnum).includes(json)) {
+        return json as RunTypeEnum;
+    }
+    return RunTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function RunTypeEnumToJSON(value?: RunTypeEnum | null): any {
-    return value as any;
+export function RunTypeEnumToJSON(value?: RunTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

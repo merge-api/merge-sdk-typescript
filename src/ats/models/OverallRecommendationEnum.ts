@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum OverallRecommendationEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     DefinitelyNo = 'DEFINITELY_NO',
     No = 'NO',
     Yes = 'YES',
@@ -25,15 +28,19 @@ export enum OverallRecommendationEnum {
     NoDecision = 'NO_DECISION'
 }
 
+
 export function OverallRecommendationEnumFromJSON(json: any): OverallRecommendationEnum {
     return OverallRecommendationEnumFromJSONTyped(json, false);
 }
 
 export function OverallRecommendationEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OverallRecommendationEnum {
-    return json as OverallRecommendationEnum;
+    if ((<any>Object).values(OverallRecommendationEnum).includes(json)) {
+        return json as OverallRecommendationEnum;
+    }
+    return OverallRecommendationEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function OverallRecommendationEnumToJSON(value?: OverallRecommendationEnum | null): any {
-    return value as any;
+export function OverallRecommendationEnumToJSON(value?: OverallRecommendationEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

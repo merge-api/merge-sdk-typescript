@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum EthnicityEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     AmericanIndianOrAlaskaNative = 'AMERICAN_INDIAN_OR_ALASKA_NATIVE',
     AsianOrIndianSubcontinent = 'ASIAN_OR_INDIAN_SUBCONTINENT',
     BlackOrAfricanAmerican = 'BLACK_OR_AFRICAN_AMERICAN',
@@ -28,15 +31,19 @@ export enum EthnicityEnum {
     PreferNotToDisclose = 'PREFER_NOT_TO_DISCLOSE'
 }
 
+
 export function EthnicityEnumFromJSON(json: any): EthnicityEnum {
     return EthnicityEnumFromJSONTyped(json, false);
 }
 
 export function EthnicityEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EthnicityEnum {
-    return json as EthnicityEnum;
+    if ((<any>Object).values(EthnicityEnum).includes(json)) {
+        return json as EthnicityEnum;
+    }
+    return EthnicityEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function EthnicityEnumToJSON(value?: EthnicityEnum | null): any {
-    return value as any;
+export function EthnicityEnumToJSON(value?: EthnicityEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum CreditNoteStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Submitted = 'SUBMITTED',
     Authorized = 'AUTHORIZED',
     Paid = 'PAID'
 }
+
 
 export function CreditNoteStatusEnumFromJSON(json: any): CreditNoteStatusEnum {
     return CreditNoteStatusEnumFromJSONTyped(json, false);
 }
 
 export function CreditNoteStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreditNoteStatusEnum {
-    return json as CreditNoteStatusEnum;
+    if ((<any>Object).values(CreditNoteStatusEnum).includes(json)) {
+        return json as CreditNoteStatusEnum;
+    }
+    return CreditNoteStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function CreditNoteStatusEnumToJSON(value?: CreditNoteStatusEnum | null): any {
-    return value as any;
+export function CreditNoteStatusEnumToJSON(value?: CreditNoteStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

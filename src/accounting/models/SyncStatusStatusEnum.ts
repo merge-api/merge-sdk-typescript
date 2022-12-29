@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum SyncStatusStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Syncing = 'SYNCING',
     Done = 'DONE',
     Failed = 'FAILED',
@@ -25,15 +28,19 @@ export enum SyncStatusStatusEnum {
     Paused = 'PAUSED'
 }
 
+
 export function SyncStatusStatusEnumFromJSON(json: any): SyncStatusStatusEnum {
     return SyncStatusStatusEnumFromJSONTyped(json, false);
 }
 
 export function SyncStatusStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): SyncStatusStatusEnum {
-    return json as SyncStatusStatusEnum;
+    if ((<any>Object).values(SyncStatusStatusEnum).includes(json)) {
+        return json as SyncStatusStatusEnum;
+    }
+    return SyncStatusStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function SyncStatusStatusEnumToJSON(value?: SyncStatusStatusEnum | null): any {
-    return value as any;
+export function SyncStatusStatusEnumToJSON(value?: SyncStatusStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

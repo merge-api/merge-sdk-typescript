@@ -98,6 +98,12 @@ export interface PayrollRun {
      * @memberof PayrollRun
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PayrollRun
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function PayrollRunFromJSON(json: JSONValue): PayrollRun | undefined {
@@ -120,6 +126,7 @@ export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun | undefined
         'check_date': !exists(json, 'check_date') ? undefined : (json['check_date'] === null ? null : new Date(json['check_date'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

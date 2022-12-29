@@ -142,6 +142,12 @@ export interface Employment {
      * @memberof Employment
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Employment
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function EmploymentFromJSON(json: JSONValue): Employment | undefined {
@@ -169,6 +175,7 @@ export function EmploymentFromJSONTyped(json: JSONValue): Employment | undefined
         'employment_type': !exists(json, 'employment_type') ? undefined : EmploymentTypeEnumFromJSON(json['employment_type']) as EmploymentTypeEnum,
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

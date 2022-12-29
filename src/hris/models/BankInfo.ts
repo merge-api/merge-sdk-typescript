@@ -100,6 +100,12 @@ export interface BankInfo {
      * @memberof BankInfo
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof BankInfo
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function BankInfoFromJSON(json: JSONValue): BankInfo | undefined {
@@ -123,6 +129,7 @@ export function BankInfoFromJSONTyped(json: JSONValue): BankInfo | undefined {
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

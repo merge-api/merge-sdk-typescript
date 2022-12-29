@@ -49,6 +49,12 @@ export interface Tag {
      * @memberof Tag
      */
     remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Tag
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function TagFromJSON(json: JSONValue): Tag | undefined {
@@ -66,6 +72,7 @@ export function TagFromJSONTyped(json: JSONValue): Tag | undefined {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

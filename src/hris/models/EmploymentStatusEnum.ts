@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum EmploymentStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Active = 'ACTIVE',
     Pending = 'PENDING',
     Inactive = 'INACTIVE'
 }
+
 
 export function EmploymentStatusEnumFromJSON(json: any): EmploymentStatusEnum {
     return EmploymentStatusEnumFromJSONTyped(json, false);
 }
 
 export function EmploymentStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmploymentStatusEnum {
-    return json as EmploymentStatusEnum;
+    if ((<any>Object).values(EmploymentStatusEnum).includes(json)) {
+        return json as EmploymentStatusEnum;
+    }
+    return EmploymentStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function EmploymentStatusEnumToJSON(value?: EmploymentStatusEnum | null): any {
-    return value as any;
+export function EmploymentStatusEnumToJSON(value?: EmploymentStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

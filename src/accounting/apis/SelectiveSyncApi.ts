@@ -15,13 +15,13 @@
 
 import * as runtime from '../../runtime';
 import {
+    ConditionSchema,
     LinkedAccountSelectiveSyncConfiguration,
     LinkedAccountSelectiveSyncConfigurationFromJSON,
     LinkedAccountSelectiveSyncConfigurationToJSON,
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
-    ConditionSchema,
 } from '../models';
 import {
 	MergePaginatedResponse,

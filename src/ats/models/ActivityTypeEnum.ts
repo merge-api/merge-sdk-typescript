@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum ActivityTypeEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Note = 'NOTE',
     Email = 'EMAIL',
     Other = 'OTHER'
 }
+
 
 export function ActivityTypeEnumFromJSON(json: any): ActivityTypeEnum {
     return ActivityTypeEnumFromJSONTyped(json, false);
 }
 
 export function ActivityTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ActivityTypeEnum {
-    return json as ActivityTypeEnum;
+    if ((<any>Object).values(ActivityTypeEnum).includes(json)) {
+        return json as ActivityTypeEnum;
+    }
+    return ActivityTypeEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function ActivityTypeEnumToJSON(value?: ActivityTypeEnum | null): any {
-    return value as any;
+export function ActivityTypeEnumToJSON(value?: ActivityTypeEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

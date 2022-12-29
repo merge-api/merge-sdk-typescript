@@ -144,6 +144,12 @@ export interface CreditNote {
      * @memberof CreditNote
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof CreditNote
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function CreditNoteFromJSON(json: JSONValue): CreditNote | undefined {
@@ -173,6 +179,7 @@ export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | undefined
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

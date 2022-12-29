@@ -66,6 +66,12 @@ export interface PayGroup {
      * @memberof PayGroup
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PayGroup
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function PayGroupFromJSON(json: JSONValue): PayGroup | undefined {
@@ -84,6 +90,7 @@ export function PayGroupFromJSONTyped(json: JSONValue): PayGroup | undefined {
         'pay_group_name': !exists(json, 'pay_group_name') ? undefined : json['pay_group_name'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

@@ -122,6 +122,12 @@ export interface JournalEntry {
      * @memberof JournalEntry
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof JournalEntry
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function JournalEntryFromJSON(json: JSONValue): JournalEntry | undefined {
@@ -148,6 +154,7 @@ export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry | undef
         'company': !exists(json, 'company') ? undefined : json['company'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(JournalLineFromJSON)) as Array<JournalLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

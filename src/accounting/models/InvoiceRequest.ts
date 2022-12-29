@@ -90,7 +90,7 @@ export interface InvoiceRequest {
      * @type {string}
      * @memberof InvoiceRequest
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The invoice's currency.
      * @type {CurrencyEnum}

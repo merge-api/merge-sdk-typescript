@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum VisibilityEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     AdminOnly = 'ADMIN_ONLY',
     Public = 'PUBLIC',
     Private = 'PRIVATE'
 }
+
 
 export function VisibilityEnumFromJSON(json: any): VisibilityEnum {
     return VisibilityEnumFromJSONTyped(json, false);
 }
 
 export function VisibilityEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): VisibilityEnum {
-    return json as VisibilityEnum;
+    if ((<any>Object).values(VisibilityEnum).includes(json)) {
+        return json as VisibilityEnum;
+    }
+    return VisibilityEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function VisibilityEnumToJSON(value?: VisibilityEnum | null): any {
-    return value as any;
+export function VisibilityEnumToJSON(value?: VisibilityEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

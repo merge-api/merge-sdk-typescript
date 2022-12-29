@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum ScheduledInterviewStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Scheduled = 'SCHEDULED',
     AwaitingFeedback = 'AWAITING_FEEDBACK',
     Complete = 'COMPLETE'
 }
+
 
 export function ScheduledInterviewStatusEnumFromJSON(json: any): ScheduledInterviewStatusEnum {
     return ScheduledInterviewStatusEnumFromJSONTyped(json, false);
 }
 
 export function ScheduledInterviewStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ScheduledInterviewStatusEnum {
-    return json as ScheduledInterviewStatusEnum;
+    if ((<any>Object).values(ScheduledInterviewStatusEnum).includes(json)) {
+        return json as ScheduledInterviewStatusEnum;
+    }
+    return ScheduledInterviewStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function ScheduledInterviewStatusEnumToJSON(value?: ScheduledInterviewStatusEnum | null): any {
-    return value as any;
+export function ScheduledInterviewStatusEnumToJSON(value?: ScheduledInterviewStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum RequestFormatEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Json = 'JSON',
     Xml = 'XML',
     Multipart = 'MULTIPART'
 }
+
 
 export function RequestFormatEnumFromJSON(json: any): RequestFormatEnum {
     return RequestFormatEnumFromJSONTyped(json, false);
 }
 
 export function RequestFormatEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RequestFormatEnum {
-    return json as RequestFormatEnum;
+    if ((<any>Object).values(RequestFormatEnum).includes(json)) {
+        return json as RequestFormatEnum;
+    }
+    return RequestFormatEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function RequestFormatEnumToJSON(value?: RequestFormatEnum | null): any {
-    return value as any;
+export function RequestFormatEnumToJSON(value?: RequestFormatEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

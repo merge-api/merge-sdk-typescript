@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum AccountDetailsAndActionsStatusEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Complete = 'COMPLETE',
     Incomplete = 'INCOMPLETE',
     RelinkNeeded = 'RELINK_NEEDED'
 }
+
 
 export function AccountDetailsAndActionsStatusEnumFromJSON(json: any): AccountDetailsAndActionsStatusEnum {
     return AccountDetailsAndActionsStatusEnumFromJSONTyped(json, false);
 }
 
 export function AccountDetailsAndActionsStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountDetailsAndActionsStatusEnum {
-    return json as AccountDetailsAndActionsStatusEnum;
+    if ((<any>Object).values(AccountDetailsAndActionsStatusEnum).includes(json)) {
+        return json as AccountDetailsAndActionsStatusEnum;
+    }
+    return AccountDetailsAndActionsStatusEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function AccountDetailsAndActionsStatusEnumToJSON(value?: AccountDetailsAndActionsStatusEnum | null): any {
-    return value as any;
+export function AccountDetailsAndActionsStatusEnumToJSON(value?: AccountDetailsAndActionsStatusEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

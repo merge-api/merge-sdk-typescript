@@ -5,6 +5,7 @@ src/apis/ApplicationsApi.ts
 src/apis/AttachmentsApi.ts
 src/apis/AvailableActionsApi.ts
 src/apis/CandidatesApi.ts
+src/apis/CommonModelScopesApi.ts
 src/apis/DeleteAccountApi.ts
 src/apis/DepartmentsApi.ts
 src/apis/EeocsApi.ts
@@ -54,6 +55,13 @@ src/models/CandidateRequest.ts
 src/models/CandidateResponse.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
+src/models/CommonModelScopes.ts
+src/models/CommonModelScopesDisabledModels.ts
+src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
+src/models/CommonModelScopesPutInnerDeserializerEnabledActionsEnum.ts
+src/models/CommonModelScopesPutInnerDeserializerRequest.ts
+src/models/CommonModelScopesScope.ts
+src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts
 src/models/DataPassthroughRequest.ts
@@ -108,9 +116,11 @@ src/models/ResponseTypeEnum.ts
 src/models/ScheduledInterview.ts
 src/models/ScheduledInterviewStatusEnum.ts
 src/models/Scorecard.ts
+src/models/SelectiveSyncConfigurationsUsageEnum.ts
 src/models/SyncStatus.ts
 src/models/SyncStatusStatusEnum.ts
 src/models/Tag.ts
+src/models/TypeEnum.ts
 src/models/UpdateApplicationStageRequest.ts
 src/models/Url.ts
 src/models/UrlRequest.ts

@@ -12,26 +12,33 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum ReasonEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     GeneralCustomerRequest = 'GENERAL_CUSTOMER_REQUEST',
     Gdpr = 'GDPR',
     Other = 'OTHER'
 }
+
 
 export function ReasonEnumFromJSON(json: any): ReasonEnum {
     return ReasonEnumFromJSONTyped(json, false);
 }
 
 export function ReasonEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ReasonEnum {
-    return json as ReasonEnum;
+    if ((<any>Object).values(ReasonEnum).includes(json)) {
+        return json as ReasonEnum;
+    }
+    return ReasonEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function ReasonEnumToJSON(value?: ReasonEnum | null): any {
-    return value as any;
+export function ReasonEnumToJSON(value?: ReasonEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 

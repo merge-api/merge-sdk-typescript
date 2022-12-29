@@ -140,6 +140,12 @@ export interface IncomeStatement {
      * @memberof IncomeStatement
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof IncomeStatement
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function IncomeStatementFromJSON(json: JSONValue): IncomeStatement | undefined {
@@ -169,6 +175,7 @@ export function IncomeStatementFromJSONTyped(json: JSONValue): IncomeStatement |
         'non_operating_expenses': !exists(json, 'non_operating_expenses') ? undefined : ((json['non_operating_expenses'] as Array<JSONValue>).map(ReportItemFromJSON)) as Array<ReportItem>,
         'net_income': !exists(json, 'net_income') ? undefined : json['net_income'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

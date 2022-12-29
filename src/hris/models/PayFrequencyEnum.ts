@@ -12,12 +12,15 @@
  * Do not edit the class manually.
  */
 
+import { JSONValue } from "../../merge_json";
+
 /**
  * 
  * @export
  * @enum {string}
  */
 export enum PayFrequencyEnum {
+    MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Weekly = 'WEEKLY',
     Biweekly = 'BIWEEKLY',
     Monthly = 'MONTHLY',
@@ -29,15 +32,19 @@ export enum PayFrequencyEnum {
     Semimonthly = 'SEMIMONTHLY'
 }
 
+
 export function PayFrequencyEnumFromJSON(json: any): PayFrequencyEnum {
     return PayFrequencyEnumFromJSONTyped(json, false);
 }
 
 export function PayFrequencyEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PayFrequencyEnum {
-    return json as PayFrequencyEnum;
+    if ((<any>Object).values(PayFrequencyEnum).includes(json)) {
+        return json as PayFrequencyEnum;
+    }
+    return PayFrequencyEnum.MERGE_NONSTANDARD_VALUE;
 }
 
-export function PayFrequencyEnumToJSON(value?: PayFrequencyEnum | null): any {
-    return value as any;
+export function PayFrequencyEnumToJSON(value?: PayFrequencyEnum | null): JSONValue {
+    return value ? value as string : null;
 }
 
