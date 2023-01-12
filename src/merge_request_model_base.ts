@@ -22,7 +22,7 @@ import { JSONValue } from './merge_json'
  * @interface MergeRequestModelBase
  */
 export interface MergeRequestModelBase {
-    misc_params_query?: { [key: string]: string }
+    misc_params_query: { [key: string]: string }
 }
 
 
