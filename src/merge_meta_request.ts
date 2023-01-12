@@ -13,15 +13,12 @@
  *
  */
 
-import { exists, mapValues } from './runtime';
-import { JSONValue } from './merge_json'
-
 /**
  * 
  * @export
- * @interface MergeRequestModelBase
+ * @interface MergeMetaRequest
  */
-export interface MergeRequestModelBase {
+export interface MergeMetaRequest {
     misc_params_query: { [key: string]: string }
 }
 
