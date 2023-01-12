@@ -49,7 +49,7 @@ test.skip("can call account details api", async () => {
     let emp_api = new merge_sdk.HRIS.EmployeesApi(test_conf_hris)
 
     let response3 = await emp_api.employeesList({
-        expand: merge_sdk.HRIS.EmployeesListExpandEnum.Company
+        expand: [merge_sdk.HRIS.EmployeesListExpandEnum.Company, merge_sdk.HRIS.EmployeesListExpandEnum.Team]
     })
 
     expect(response3).toBeDefined()
@@ -112,14 +112,16 @@ test("can deserialize unknown enum values", async () => {
     let ticket_deserialized = merge_sdk.Ticketing.TicketFromJSON(ticket_json)
 
     expect(ticket_deserialized?.status).toBeDefined()
-    expect(ticket_deserialized?.status).toEqual(merge_sdk.Ticketing.TicketStatusEnum.MERGE_NONSTANDARD_VALUE)
+    expect(ticket_deserialized?.status?.value).toEqual(merge_sdk.Ticketing.TicketStatusEnumValues.MERGE_NONSTANDARD_VALUE)
+    expect(ticket_deserialized?.status?.rawValue).toEqual("unknown_ticket_status")
 })
 
 test("can deserialize known enum values", async () => {
-    let employment_json: JSONValue = {"employment_type": merge_sdk.HRIS.EmploymentTypeEnum.FullTime}
+    let employment_json: JSONValue = {"employment_type": merge_sdk.HRIS.EmploymentTypeEnumValues.FullTime}
 
     let employment_deserialized = merge_sdk.HRIS.EmploymentFromJSON(employment_json)
 
     expect(employment_deserialized?.employment_type).toBeDefined()
-    expect(employment_deserialized?.employment_type).toEqual(merge_sdk.HRIS.EmploymentTypeEnum.FullTime)
+    expect(employment_deserialized?.employment_type?.value).toEqual(merge_sdk.HRIS.EmploymentTypeEnumValues.FullTime)
+    expect(employment_deserialized?.employment_type?.rawValue).toEqual(merge_sdk.HRIS.EmploymentTypeEnumValues.FullTime)
 })
