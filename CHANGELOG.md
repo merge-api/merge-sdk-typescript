@@ -5,7 +5,7 @@
 - Changed Expands enum options from a combinatoric list of strings with fixed order to an orderless array
 - Added `misc_params_query` to all *MetaPost and *MetaPatch requests, to allow for flexibility since those endpoints have various integration-specific query parameters.
 - increased `highwatermark` setting in case node-fetch is used, see: 
-- added new enum handler, which exposes both the standard deserialized merge enum as well as the raw string value if none match
+- added new enum handler, which exposes both the standard deserialized merge enum as well as the raw string value if none match; highlighted in the Enums section of README
 
 # Version 2.0.6
 
