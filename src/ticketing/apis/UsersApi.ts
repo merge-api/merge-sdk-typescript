@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface UsersListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
     emailAddress?: string | null;
-    expand?: UsersListExpandEnum;
+    expand?: Array<UsersListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -42,7 +46,7 @@ export interface UsersListRequest {
 
 export interface UsersRetrieveRequest {
     id: string;
-    expand?: UsersRetrieveExpandEnum;
+    expand?: Array<UsersRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -73,7 +77,7 @@ export class UsersApi extends runtime.BaseAPI {
             queryParameters['email_address'] = requestParameters.emailAddress;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -100,6 +104,9 @@ export class UsersApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,13 +147,16 @@ export class UsersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

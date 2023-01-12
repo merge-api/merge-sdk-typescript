@@ -33,7 +33,7 @@ export interface IgnoreCommonModelRequest {
      * @type {ReasonEnum}
      * @memberof IgnoreCommonModelRequest
      */
-    reason: ReasonEnum;
+    reason: ReasonEnum | null;
     /**
      * 
      * @type {string}

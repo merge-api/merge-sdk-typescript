@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface EeocsListRequest {
     candidateId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: EeocsListExpandEnum;
+    expand?: Array<EeocsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -39,13 +43,15 @@ export interface EeocsListRequest {
     pageSize?: number;
     remoteFields?: EeocsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: EeocsListShowEnumOriginsEnum;
 }
 
 export interface EeocsRetrieveRequest {
     id: string;
-    expand?: EeocsRetrieveExpandEnum;
+    expand?: Array<EeocsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: EeocsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: EeocsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -75,7 +81,7 @@ export class EeocsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -106,6 +112,13 @@ export class EeocsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -146,7 +159,7 @@ export class EeocsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -157,6 +170,13 @@ export class EeocsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -221,6 +241,27 @@ export enum EeocsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum EeocsListShowEnumOriginsEnum {
+    DisabilityStatus = 'disability_status',
+    DisabilityStatusgender = 'disability_status,gender',
+    DisabilityStatusgenderrace = 'disability_status,gender,race',
+    DisabilityStatusgenderraceveteranStatus = 'disability_status,gender,race,veteran_status',
+    DisabilityStatusgenderveteranStatus = 'disability_status,gender,veteran_status',
+    DisabilityStatusrace = 'disability_status,race',
+    DisabilityStatusraceveteranStatus = 'disability_status,race,veteran_status',
+    DisabilityStatusveteranStatus = 'disability_status,veteran_status',
+    Gender = 'gender',
+    Genderrace = 'gender,race',
+    GenderraceveteranStatus = 'gender,race,veteran_status',
+    GenderveteranStatus = 'gender,veteran_status',
+    Race = 'race',
+    RaceveteranStatus = 'race,veteran_status',
+    VeteranStatus = 'veteran_status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum EeocsRetrieveExpandEnum {
     Candidate = 'candidate'
 }
@@ -229,6 +270,27 @@ export enum EeocsRetrieveExpandEnum {
 * @enum {string}
 */
 export enum EeocsRetrieveRemoteFieldsEnum {
+    DisabilityStatus = 'disability_status',
+    DisabilityStatusgender = 'disability_status,gender',
+    DisabilityStatusgenderrace = 'disability_status,gender,race',
+    DisabilityStatusgenderraceveteranStatus = 'disability_status,gender,race,veteran_status',
+    DisabilityStatusgenderveteranStatus = 'disability_status,gender,veteran_status',
+    DisabilityStatusrace = 'disability_status,race',
+    DisabilityStatusraceveteranStatus = 'disability_status,race,veteran_status',
+    DisabilityStatusveteranStatus = 'disability_status,veteran_status',
+    Gender = 'gender',
+    Genderrace = 'gender,race',
+    GenderraceveteranStatus = 'gender,race,veteran_status',
+    GenderveteranStatus = 'gender,veteran_status',
+    Race = 'race',
+    RaceveteranStatus = 'race,veteran_status',
+    VeteranStatus = 'veteran_status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum EeocsRetrieveShowEnumOriginsEnum {
     DisabilityStatus = 'disability_status',
     DisabilityStatusgender = 'disability_status,gender',
     DisabilityStatusgenderrace = 'disability_status,gender,race',

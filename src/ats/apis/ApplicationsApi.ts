@@ -38,6 +38,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface ApplicationsChangeStageCreateRequest {
     id: string;
     isDebugMode?: boolean;
@@ -58,7 +62,7 @@ export interface ApplicationsListRequest {
     creditedToId?: string;
     currentStageId?: string;
     cursor?: string;
-    expand?: ApplicationsListExpandEnum;
+    expand?: Array<ApplicationsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     jobId?: string;
@@ -70,13 +74,13 @@ export interface ApplicationsListRequest {
     source?: string | null;
 }
 
-export interface ApplicationsMetaPostRetrieveRequest {
+export interface ApplicationsMetaPostRetrieveRequest extends MergeMetaRequest {
     applicationRemoteTemplateId?: string;
 }
 
 export interface ApplicationsRetrieveRequest {
     id: string;
-    expand?: ApplicationsRetrieveExpandEnum;
+    expand?: Array<ApplicationsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -102,6 +106,9 @@ export class ApplicationsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -152,6 +159,9 @@ export class ApplicationsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -215,7 +225,7 @@ export class ApplicationsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -255,6 +265,9 @@ export class ApplicationsApi extends runtime.BaseAPI {
             queryParameters['source'] = requestParameters.source;
         }
 
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -292,6 +305,15 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         if (requestParameters.applicationRemoteTemplateId !== undefined) {
             queryParameters['application_remote_template_id'] = requestParameters.applicationRemoteTemplateId;
+        }
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -333,13 +355,16 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -378,35 +403,9 @@ export class ApplicationsApi extends runtime.BaseAPI {
 */
 export enum ApplicationsListExpandEnum {
     Candidate = 'candidate',
-    CandidatecreditedTo = 'candidate,credited_to',
-    CandidatecreditedTocurrentStage = 'candidate,credited_to,current_stage',
-    CandidatecreditedTocurrentStagerejectReason = 'candidate,credited_to,current_stage,reject_reason',
-    CandidatecreditedTorejectReason = 'candidate,credited_to,reject_reason',
-    CandidatecurrentStage = 'candidate,current_stage',
-    CandidatecurrentStagerejectReason = 'candidate,current_stage,reject_reason',
-    Candidatejob = 'candidate,job',
-    CandidatejobcreditedTo = 'candidate,job,credited_to',
-    CandidatejobcreditedTocurrentStage = 'candidate,job,credited_to,current_stage',
-    CandidatejobcreditedTocurrentStagerejectReason = 'candidate,job,credited_to,current_stage,reject_reason',
-    CandidatejobcreditedTorejectReason = 'candidate,job,credited_to,reject_reason',
-    CandidatejobcurrentStage = 'candidate,job,current_stage',
-    CandidatejobcurrentStagerejectReason = 'candidate,job,current_stage,reject_reason',
-    CandidatejobrejectReason = 'candidate,job,reject_reason',
-    CandidaterejectReason = 'candidate,reject_reason',
     CreditedTo = 'credited_to',
-    CreditedTocurrentStage = 'credited_to,current_stage',
-    CreditedTocurrentStagerejectReason = 'credited_to,current_stage,reject_reason',
-    CreditedTorejectReason = 'credited_to,reject_reason',
     CurrentStage = 'current_stage',
-    CurrentStagerejectReason = 'current_stage,reject_reason',
     Job = 'job',
-    JobcreditedTo = 'job,credited_to',
-    JobcreditedTocurrentStage = 'job,credited_to,current_stage',
-    JobcreditedTocurrentStagerejectReason = 'job,credited_to,current_stage,reject_reason',
-    JobcreditedTorejectReason = 'job,credited_to,reject_reason',
-    JobcurrentStage = 'job,current_stage',
-    JobcurrentStagerejectReason = 'job,current_stage,reject_reason',
-    JobrejectReason = 'job,reject_reason',
     RejectReason = 'reject_reason'
 }
 /**
@@ -415,34 +414,8 @@ export enum ApplicationsListExpandEnum {
 */
 export enum ApplicationsRetrieveExpandEnum {
     Candidate = 'candidate',
-    CandidatecreditedTo = 'candidate,credited_to',
-    CandidatecreditedTocurrentStage = 'candidate,credited_to,current_stage',
-    CandidatecreditedTocurrentStagerejectReason = 'candidate,credited_to,current_stage,reject_reason',
-    CandidatecreditedTorejectReason = 'candidate,credited_to,reject_reason',
-    CandidatecurrentStage = 'candidate,current_stage',
-    CandidatecurrentStagerejectReason = 'candidate,current_stage,reject_reason',
-    Candidatejob = 'candidate,job',
-    CandidatejobcreditedTo = 'candidate,job,credited_to',
-    CandidatejobcreditedTocurrentStage = 'candidate,job,credited_to,current_stage',
-    CandidatejobcreditedTocurrentStagerejectReason = 'candidate,job,credited_to,current_stage,reject_reason',
-    CandidatejobcreditedTorejectReason = 'candidate,job,credited_to,reject_reason',
-    CandidatejobcurrentStage = 'candidate,job,current_stage',
-    CandidatejobcurrentStagerejectReason = 'candidate,job,current_stage,reject_reason',
-    CandidatejobrejectReason = 'candidate,job,reject_reason',
-    CandidaterejectReason = 'candidate,reject_reason',
     CreditedTo = 'credited_to',
-    CreditedTocurrentStage = 'credited_to,current_stage',
-    CreditedTocurrentStagerejectReason = 'credited_to,current_stage,reject_reason',
-    CreditedTorejectReason = 'credited_to,reject_reason',
     CurrentStage = 'current_stage',
-    CurrentStagerejectReason = 'current_stage,reject_reason',
     Job = 'job',
-    JobcreditedTo = 'job,credited_to',
-    JobcreditedTocurrentStage = 'job,credited_to,current_stage',
-    JobcreditedTocurrentStagerejectReason = 'job,credited_to,current_stage,reject_reason',
-    JobcreditedTorejectReason = 'job,credited_to,reject_reason',
-    JobcurrentStage = 'job,current_stage',
-    JobcurrentStagerejectReason = 'job,current_stage,reject_reason',
-    JobrejectReason = 'job,reject_reason',
     RejectReason = 'reject_reason'
 }

@@ -41,6 +41,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface EmployeesCreateRequest {
     employeeEndpointRequest: EmployeeEndpointRequest;
     isDebugMode?: boolean;
@@ -59,7 +63,7 @@ export interface EmployeesListRequest {
     cursor?: string;
     displayFullName?: string | null;
     employmentStatus?: EmployeesListEmploymentStatusEnum;
-    expand?: EmployeesListExpandEnum;
+    expand?: Array<EmployeesListExpandEnum>;
     firstName?: string | null;
     groups?: string;
     includeDeletedData?: boolean;
@@ -74,17 +78,20 @@ export interface EmployeesListRequest {
     personalEmail?: string | null;
     remoteFields?: EmployeesListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: EmployeesListShowEnumOriginsEnum;
     teamId?: string;
     workEmail?: string | null;
     workLocationId?: string;
 }
 
+// extends MergeMetaRequest
 export interface EmployeesRetrieveRequest {
     id: string;
-    expand?: EmployeesRetrieveExpandEnum;
+    expand?: Array<EmployeesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     includeSensitiveFields?: boolean;
     remoteFields?: EmployeesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: EmployeesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -109,6 +116,9 @@ export class EmployeesApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -155,6 +165,9 @@ export class EmployeesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -218,7 +231,7 @@ export class EmployeesApi extends runtime.BaseAPI {
             queryParameters['employment_status'] = requestParameters.employmentStatus;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -278,6 +291,10 @@ export class EmployeesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.teamId !== undefined) {
             queryParameters['team_id'] = requestParameters.teamId;
         }
@@ -289,6 +306,9 @@ export class EmployeesApi extends runtime.BaseAPI {
         if (requestParameters.workLocationId !== undefined) {
             queryParameters['work_location_id'] = requestParameters.workLocationId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -322,8 +342,17 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Employee` POSTs.
      */
-    async employeesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async employeesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -349,8 +378,8 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Employee` POSTs.
      */
-    async employeesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.employeesMetaPostRetrieveRaw();
+    async employeesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.employeesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -364,7 +393,7 @@ export class EmployeesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -379,6 +408,13 @@ export class EmployeesApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -426,260 +462,13 @@ export enum EmployeesListEmploymentStatusEnum {
 */
 export enum EmployeesListExpandEnum {
     Company = 'company',
-    CompanypayGroup = 'company,pay_group',
     Employments = 'employments',
-    Employmentscompany = 'employments,company',
-    EmploymentscompanypayGroup = 'employments,company,pay_group',
-    Employmentsgroups = 'employments,groups',
-    Employmentsgroupscompany = 'employments,groups,company',
-    EmploymentsgroupscompanypayGroup = 'employments,groups,company,pay_group',
-    EmploymentsgroupshomeLocation = 'employments,groups,home_location',
-    EmploymentsgroupshomeLocationcompany = 'employments,groups,home_location,company',
-    EmploymentsgroupshomeLocationcompanypayGroup = 'employments,groups,home_location,company,pay_group',
-    EmploymentsgroupshomeLocationmanager = 'employments,groups,home_location,manager',
-    EmploymentsgroupshomeLocationmanagercompany = 'employments,groups,home_location,manager,company',
-    EmploymentsgroupshomeLocationmanagercompanypayGroup = 'employments,groups,home_location,manager,company,pay_group',
-    EmploymentsgroupshomeLocationmanagerpayGroup = 'employments,groups,home_location,manager,pay_group',
-    EmploymentsgroupshomeLocationmanagerteam = 'employments,groups,home_location,manager,team',
-    EmploymentsgroupshomeLocationmanagerteamcompany = 'employments,groups,home_location,manager,team,company',
-    EmploymentsgroupshomeLocationmanagerteamcompanypayGroup = 'employments,groups,home_location,manager,team,company,pay_group',
-    EmploymentsgroupshomeLocationmanagerteampayGroup = 'employments,groups,home_location,manager,team,pay_group',
-    EmploymentsgroupshomeLocationpayGroup = 'employments,groups,home_location,pay_group',
-    EmploymentsgroupshomeLocationteam = 'employments,groups,home_location,team',
-    EmploymentsgroupshomeLocationteamcompany = 'employments,groups,home_location,team,company',
-    EmploymentsgroupshomeLocationteamcompanypayGroup = 'employments,groups,home_location,team,company,pay_group',
-    EmploymentsgroupshomeLocationteampayGroup = 'employments,groups,home_location,team,pay_group',
-    EmploymentsgroupshomeLocationworkLocation = 'employments,groups,home_location,work_location',
-    EmploymentsgroupshomeLocationworkLocationcompany = 'employments,groups,home_location,work_location,company',
-    EmploymentsgroupshomeLocationworkLocationcompanypayGroup = 'employments,groups,home_location,work_location,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanager = 'employments,groups,home_location,work_location,manager',
-    EmploymentsgroupshomeLocationworkLocationmanagercompany = 'employments,groups,home_location,work_location,manager,company',
-    EmploymentsgroupshomeLocationworkLocationmanagercompanypayGroup = 'employments,groups,home_location,work_location,manager,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanagerpayGroup = 'employments,groups,home_location,work_location,manager,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanagerteam = 'employments,groups,home_location,work_location,manager,team',
-    EmploymentsgroupshomeLocationworkLocationmanagerteamcompany = 'employments,groups,home_location,work_location,manager,team,company',
-    EmploymentsgroupshomeLocationworkLocationmanagerteamcompanypayGroup = 'employments,groups,home_location,work_location,manager,team,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanagerteampayGroup = 'employments,groups,home_location,work_location,manager,team,pay_group',
-    EmploymentsgroupshomeLocationworkLocationpayGroup = 'employments,groups,home_location,work_location,pay_group',
-    EmploymentsgroupshomeLocationworkLocationteam = 'employments,groups,home_location,work_location,team',
-    EmploymentsgroupshomeLocationworkLocationteamcompany = 'employments,groups,home_location,work_location,team,company',
-    EmploymentsgroupshomeLocationworkLocationteamcompanypayGroup = 'employments,groups,home_location,work_location,team,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationteampayGroup = 'employments,groups,home_location,work_location,team,pay_group',
-    Employmentsgroupsmanager = 'employments,groups,manager',
-    Employmentsgroupsmanagercompany = 'employments,groups,manager,company',
-    EmploymentsgroupsmanagercompanypayGroup = 'employments,groups,manager,company,pay_group',
-    EmploymentsgroupsmanagerpayGroup = 'employments,groups,manager,pay_group',
-    Employmentsgroupsmanagerteam = 'employments,groups,manager,team',
-    Employmentsgroupsmanagerteamcompany = 'employments,groups,manager,team,company',
-    EmploymentsgroupsmanagerteamcompanypayGroup = 'employments,groups,manager,team,company,pay_group',
-    EmploymentsgroupsmanagerteampayGroup = 'employments,groups,manager,team,pay_group',
-    EmploymentsgroupspayGroup = 'employments,groups,pay_group',
-    Employmentsgroupsteam = 'employments,groups,team',
-    Employmentsgroupsteamcompany = 'employments,groups,team,company',
-    EmploymentsgroupsteamcompanypayGroup = 'employments,groups,team,company,pay_group',
-    EmploymentsgroupsteampayGroup = 'employments,groups,team,pay_group',
-    EmploymentsgroupsworkLocation = 'employments,groups,work_location',
-    EmploymentsgroupsworkLocationcompany = 'employments,groups,work_location,company',
-    EmploymentsgroupsworkLocationcompanypayGroup = 'employments,groups,work_location,company,pay_group',
-    EmploymentsgroupsworkLocationmanager = 'employments,groups,work_location,manager',
-    EmploymentsgroupsworkLocationmanagercompany = 'employments,groups,work_location,manager,company',
-    EmploymentsgroupsworkLocationmanagercompanypayGroup = 'employments,groups,work_location,manager,company,pay_group',
-    EmploymentsgroupsworkLocationmanagerpayGroup = 'employments,groups,work_location,manager,pay_group',
-    EmploymentsgroupsworkLocationmanagerteam = 'employments,groups,work_location,manager,team',
-    EmploymentsgroupsworkLocationmanagerteamcompany = 'employments,groups,work_location,manager,team,company',
-    EmploymentsgroupsworkLocationmanagerteamcompanypayGroup = 'employments,groups,work_location,manager,team,company,pay_group',
-    EmploymentsgroupsworkLocationmanagerteampayGroup = 'employments,groups,work_location,manager,team,pay_group',
-    EmploymentsgroupsworkLocationpayGroup = 'employments,groups,work_location,pay_group',
-    EmploymentsgroupsworkLocationteam = 'employments,groups,work_location,team',
-    EmploymentsgroupsworkLocationteamcompany = 'employments,groups,work_location,team,company',
-    EmploymentsgroupsworkLocationteamcompanypayGroup = 'employments,groups,work_location,team,company,pay_group',
-    EmploymentsgroupsworkLocationteampayGroup = 'employments,groups,work_location,team,pay_group',
-    EmploymentshomeLocation = 'employments,home_location',
-    EmploymentshomeLocationcompany = 'employments,home_location,company',
-    EmploymentshomeLocationcompanypayGroup = 'employments,home_location,company,pay_group',
-    EmploymentshomeLocationmanager = 'employments,home_location,manager',
-    EmploymentshomeLocationmanagercompany = 'employments,home_location,manager,company',
-    EmploymentshomeLocationmanagercompanypayGroup = 'employments,home_location,manager,company,pay_group',
-    EmploymentshomeLocationmanagerpayGroup = 'employments,home_location,manager,pay_group',
-    EmploymentshomeLocationmanagerteam = 'employments,home_location,manager,team',
-    EmploymentshomeLocationmanagerteamcompany = 'employments,home_location,manager,team,company',
-    EmploymentshomeLocationmanagerteamcompanypayGroup = 'employments,home_location,manager,team,company,pay_group',
-    EmploymentshomeLocationmanagerteampayGroup = 'employments,home_location,manager,team,pay_group',
-    EmploymentshomeLocationpayGroup = 'employments,home_location,pay_group',
-    EmploymentshomeLocationteam = 'employments,home_location,team',
-    EmploymentshomeLocationteamcompany = 'employments,home_location,team,company',
-    EmploymentshomeLocationteamcompanypayGroup = 'employments,home_location,team,company,pay_group',
-    EmploymentshomeLocationteampayGroup = 'employments,home_location,team,pay_group',
-    EmploymentshomeLocationworkLocation = 'employments,home_location,work_location',
-    EmploymentshomeLocationworkLocationcompany = 'employments,home_location,work_location,company',
-    EmploymentshomeLocationworkLocationcompanypayGroup = 'employments,home_location,work_location,company,pay_group',
-    EmploymentshomeLocationworkLocationmanager = 'employments,home_location,work_location,manager',
-    EmploymentshomeLocationworkLocationmanagercompany = 'employments,home_location,work_location,manager,company',
-    EmploymentshomeLocationworkLocationmanagercompanypayGroup = 'employments,home_location,work_location,manager,company,pay_group',
-    EmploymentshomeLocationworkLocationmanagerpayGroup = 'employments,home_location,work_location,manager,pay_group',
-    EmploymentshomeLocationworkLocationmanagerteam = 'employments,home_location,work_location,manager,team',
-    EmploymentshomeLocationworkLocationmanagerteamcompany = 'employments,home_location,work_location,manager,team,company',
-    EmploymentshomeLocationworkLocationmanagerteamcompanypayGroup = 'employments,home_location,work_location,manager,team,company,pay_group',
-    EmploymentshomeLocationworkLocationmanagerteampayGroup = 'employments,home_location,work_location,manager,team,pay_group',
-    EmploymentshomeLocationworkLocationpayGroup = 'employments,home_location,work_location,pay_group',
-    EmploymentshomeLocationworkLocationteam = 'employments,home_location,work_location,team',
-    EmploymentshomeLocationworkLocationteamcompany = 'employments,home_location,work_location,team,company',
-    EmploymentshomeLocationworkLocationteamcompanypayGroup = 'employments,home_location,work_location,team,company,pay_group',
-    EmploymentshomeLocationworkLocationteampayGroup = 'employments,home_location,work_location,team,pay_group',
-    Employmentsmanager = 'employments,manager',
-    Employmentsmanagercompany = 'employments,manager,company',
-    EmploymentsmanagercompanypayGroup = 'employments,manager,company,pay_group',
-    EmploymentsmanagerpayGroup = 'employments,manager,pay_group',
-    Employmentsmanagerteam = 'employments,manager,team',
-    Employmentsmanagerteamcompany = 'employments,manager,team,company',
-    EmploymentsmanagerteamcompanypayGroup = 'employments,manager,team,company,pay_group',
-    EmploymentsmanagerteampayGroup = 'employments,manager,team,pay_group',
-    EmploymentspayGroup = 'employments,pay_group',
-    Employmentsteam = 'employments,team',
-    Employmentsteamcompany = 'employments,team,company',
-    EmploymentsteamcompanypayGroup = 'employments,team,company,pay_group',
-    EmploymentsteampayGroup = 'employments,team,pay_group',
-    EmploymentsworkLocation = 'employments,work_location',
-    EmploymentsworkLocationcompany = 'employments,work_location,company',
-    EmploymentsworkLocationcompanypayGroup = 'employments,work_location,company,pay_group',
-    EmploymentsworkLocationmanager = 'employments,work_location,manager',
-    EmploymentsworkLocationmanagercompany = 'employments,work_location,manager,company',
-    EmploymentsworkLocationmanagercompanypayGroup = 'employments,work_location,manager,company,pay_group',
-    EmploymentsworkLocationmanagerpayGroup = 'employments,work_location,manager,pay_group',
-    EmploymentsworkLocationmanagerteam = 'employments,work_location,manager,team',
-    EmploymentsworkLocationmanagerteamcompany = 'employments,work_location,manager,team,company',
-    EmploymentsworkLocationmanagerteamcompanypayGroup = 'employments,work_location,manager,team,company,pay_group',
-    EmploymentsworkLocationmanagerteampayGroup = 'employments,work_location,manager,team,pay_group',
-    EmploymentsworkLocationpayGroup = 'employments,work_location,pay_group',
-    EmploymentsworkLocationteam = 'employments,work_location,team',
-    EmploymentsworkLocationteamcompany = 'employments,work_location,team,company',
-    EmploymentsworkLocationteamcompanypayGroup = 'employments,work_location,team,company,pay_group',
-    EmploymentsworkLocationteampayGroup = 'employments,work_location,team,pay_group',
     Groups = 'groups',
-    Groupscompany = 'groups,company',
-    GroupscompanypayGroup = 'groups,company,pay_group',
-    GroupshomeLocation = 'groups,home_location',
-    GroupshomeLocationcompany = 'groups,home_location,company',
-    GroupshomeLocationcompanypayGroup = 'groups,home_location,company,pay_group',
-    GroupshomeLocationmanager = 'groups,home_location,manager',
-    GroupshomeLocationmanagercompany = 'groups,home_location,manager,company',
-    GroupshomeLocationmanagercompanypayGroup = 'groups,home_location,manager,company,pay_group',
-    GroupshomeLocationmanagerpayGroup = 'groups,home_location,manager,pay_group',
-    GroupshomeLocationmanagerteam = 'groups,home_location,manager,team',
-    GroupshomeLocationmanagerteamcompany = 'groups,home_location,manager,team,company',
-    GroupshomeLocationmanagerteamcompanypayGroup = 'groups,home_location,manager,team,company,pay_group',
-    GroupshomeLocationmanagerteampayGroup = 'groups,home_location,manager,team,pay_group',
-    GroupshomeLocationpayGroup = 'groups,home_location,pay_group',
-    GroupshomeLocationteam = 'groups,home_location,team',
-    GroupshomeLocationteamcompany = 'groups,home_location,team,company',
-    GroupshomeLocationteamcompanypayGroup = 'groups,home_location,team,company,pay_group',
-    GroupshomeLocationteampayGroup = 'groups,home_location,team,pay_group',
-    GroupshomeLocationworkLocation = 'groups,home_location,work_location',
-    GroupshomeLocationworkLocationcompany = 'groups,home_location,work_location,company',
-    GroupshomeLocationworkLocationcompanypayGroup = 'groups,home_location,work_location,company,pay_group',
-    GroupshomeLocationworkLocationmanager = 'groups,home_location,work_location,manager',
-    GroupshomeLocationworkLocationmanagercompany = 'groups,home_location,work_location,manager,company',
-    GroupshomeLocationworkLocationmanagercompanypayGroup = 'groups,home_location,work_location,manager,company,pay_group',
-    GroupshomeLocationworkLocationmanagerpayGroup = 'groups,home_location,work_location,manager,pay_group',
-    GroupshomeLocationworkLocationmanagerteam = 'groups,home_location,work_location,manager,team',
-    GroupshomeLocationworkLocationmanagerteamcompany = 'groups,home_location,work_location,manager,team,company',
-    GroupshomeLocationworkLocationmanagerteamcompanypayGroup = 'groups,home_location,work_location,manager,team,company,pay_group',
-    GroupshomeLocationworkLocationmanagerteampayGroup = 'groups,home_location,work_location,manager,team,pay_group',
-    GroupshomeLocationworkLocationpayGroup = 'groups,home_location,work_location,pay_group',
-    GroupshomeLocationworkLocationteam = 'groups,home_location,work_location,team',
-    GroupshomeLocationworkLocationteamcompany = 'groups,home_location,work_location,team,company',
-    GroupshomeLocationworkLocationteamcompanypayGroup = 'groups,home_location,work_location,team,company,pay_group',
-    GroupshomeLocationworkLocationteampayGroup = 'groups,home_location,work_location,team,pay_group',
-    Groupsmanager = 'groups,manager',
-    Groupsmanagercompany = 'groups,manager,company',
-    GroupsmanagercompanypayGroup = 'groups,manager,company,pay_group',
-    GroupsmanagerpayGroup = 'groups,manager,pay_group',
-    Groupsmanagerteam = 'groups,manager,team',
-    Groupsmanagerteamcompany = 'groups,manager,team,company',
-    GroupsmanagerteamcompanypayGroup = 'groups,manager,team,company,pay_group',
-    GroupsmanagerteampayGroup = 'groups,manager,team,pay_group',
-    GroupspayGroup = 'groups,pay_group',
-    Groupsteam = 'groups,team',
-    Groupsteamcompany = 'groups,team,company',
-    GroupsteamcompanypayGroup = 'groups,team,company,pay_group',
-    GroupsteampayGroup = 'groups,team,pay_group',
-    GroupsworkLocation = 'groups,work_location',
-    GroupsworkLocationcompany = 'groups,work_location,company',
-    GroupsworkLocationcompanypayGroup = 'groups,work_location,company,pay_group',
-    GroupsworkLocationmanager = 'groups,work_location,manager',
-    GroupsworkLocationmanagercompany = 'groups,work_location,manager,company',
-    GroupsworkLocationmanagercompanypayGroup = 'groups,work_location,manager,company,pay_group',
-    GroupsworkLocationmanagerpayGroup = 'groups,work_location,manager,pay_group',
-    GroupsworkLocationmanagerteam = 'groups,work_location,manager,team',
-    GroupsworkLocationmanagerteamcompany = 'groups,work_location,manager,team,company',
-    GroupsworkLocationmanagerteamcompanypayGroup = 'groups,work_location,manager,team,company,pay_group',
-    GroupsworkLocationmanagerteampayGroup = 'groups,work_location,manager,team,pay_group',
-    GroupsworkLocationpayGroup = 'groups,work_location,pay_group',
-    GroupsworkLocationteam = 'groups,work_location,team',
-    GroupsworkLocationteamcompany = 'groups,work_location,team,company',
-    GroupsworkLocationteamcompanypayGroup = 'groups,work_location,team,company,pay_group',
-    GroupsworkLocationteampayGroup = 'groups,work_location,team,pay_group',
     HomeLocation = 'home_location',
-    HomeLocationcompany = 'home_location,company',
-    HomeLocationcompanypayGroup = 'home_location,company,pay_group',
-    HomeLocationmanager = 'home_location,manager',
-    HomeLocationmanagercompany = 'home_location,manager,company',
-    HomeLocationmanagercompanypayGroup = 'home_location,manager,company,pay_group',
-    HomeLocationmanagerpayGroup = 'home_location,manager,pay_group',
-    HomeLocationmanagerteam = 'home_location,manager,team',
-    HomeLocationmanagerteamcompany = 'home_location,manager,team,company',
-    HomeLocationmanagerteamcompanypayGroup = 'home_location,manager,team,company,pay_group',
-    HomeLocationmanagerteampayGroup = 'home_location,manager,team,pay_group',
-    HomeLocationpayGroup = 'home_location,pay_group',
-    HomeLocationteam = 'home_location,team',
-    HomeLocationteamcompany = 'home_location,team,company',
-    HomeLocationteamcompanypayGroup = 'home_location,team,company,pay_group',
-    HomeLocationteampayGroup = 'home_location,team,pay_group',
-    HomeLocationworkLocation = 'home_location,work_location',
-    HomeLocationworkLocationcompany = 'home_location,work_location,company',
-    HomeLocationworkLocationcompanypayGroup = 'home_location,work_location,company,pay_group',
-    HomeLocationworkLocationmanager = 'home_location,work_location,manager',
-    HomeLocationworkLocationmanagercompany = 'home_location,work_location,manager,company',
-    HomeLocationworkLocationmanagercompanypayGroup = 'home_location,work_location,manager,company,pay_group',
-    HomeLocationworkLocationmanagerpayGroup = 'home_location,work_location,manager,pay_group',
-    HomeLocationworkLocationmanagerteam = 'home_location,work_location,manager,team',
-    HomeLocationworkLocationmanagerteamcompany = 'home_location,work_location,manager,team,company',
-    HomeLocationworkLocationmanagerteamcompanypayGroup = 'home_location,work_location,manager,team,company,pay_group',
-    HomeLocationworkLocationmanagerteampayGroup = 'home_location,work_location,manager,team,pay_group',
-    HomeLocationworkLocationpayGroup = 'home_location,work_location,pay_group',
-    HomeLocationworkLocationteam = 'home_location,work_location,team',
-    HomeLocationworkLocationteamcompany = 'home_location,work_location,team,company',
-    HomeLocationworkLocationteamcompanypayGroup = 'home_location,work_location,team,company,pay_group',
-    HomeLocationworkLocationteampayGroup = 'home_location,work_location,team,pay_group',
     Manager = 'manager',
-    Managercompany = 'manager,company',
-    ManagercompanypayGroup = 'manager,company,pay_group',
-    ManagerpayGroup = 'manager,pay_group',
-    Managerteam = 'manager,team',
-    Managerteamcompany = 'manager,team,company',
-    ManagerteamcompanypayGroup = 'manager,team,company,pay_group',
-    ManagerteampayGroup = 'manager,team,pay_group',
     PayGroup = 'pay_group',
     Team = 'team',
-    Teamcompany = 'team,company',
-    TeamcompanypayGroup = 'team,company,pay_group',
-    TeampayGroup = 'team,pay_group',
-    WorkLocation = 'work_location',
-    WorkLocationcompany = 'work_location,company',
-    WorkLocationcompanypayGroup = 'work_location,company,pay_group',
-    WorkLocationmanager = 'work_location,manager',
-    WorkLocationmanagercompany = 'work_location,manager,company',
-    WorkLocationmanagercompanypayGroup = 'work_location,manager,company,pay_group',
-    WorkLocationmanagerpayGroup = 'work_location,manager,pay_group',
-    WorkLocationmanagerteam = 'work_location,manager,team',
-    WorkLocationmanagerteamcompany = 'work_location,manager,team,company',
-    WorkLocationmanagerteamcompanypayGroup = 'work_location,manager,team,company,pay_group',
-    WorkLocationmanagerteampayGroup = 'work_location,manager,team,pay_group',
-    WorkLocationpayGroup = 'work_location,pay_group',
-    WorkLocationteam = 'work_location,team',
-    WorkLocationteamcompany = 'work_location,team,company',
-    WorkLocationteamcompanypayGroup = 'work_location,team,company,pay_group',
-    WorkLocationteampayGroup = 'work_location,team,pay_group'
+    WorkLocation = 'work_location'
 }
 /**
 * @export
@@ -706,268 +495,63 @@ export enum EmployeesListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum EmployeesListShowEnumOriginsEnum {
+    EmploymentStatus = 'employment_status',
+    EmploymentStatusethnicity = 'employment_status,ethnicity',
+    EmploymentStatusethnicitygender = 'employment_status,ethnicity,gender',
+    EmploymentStatusethnicitygendermaritalStatus = 'employment_status,ethnicity,gender,marital_status',
+    EmploymentStatusethnicitymaritalStatus = 'employment_status,ethnicity,marital_status',
+    EmploymentStatusgender = 'employment_status,gender',
+    EmploymentStatusgendermaritalStatus = 'employment_status,gender,marital_status',
+    EmploymentStatusmaritalStatus = 'employment_status,marital_status',
+    Ethnicity = 'ethnicity',
+    Ethnicitygender = 'ethnicity,gender',
+    EthnicitygendermaritalStatus = 'ethnicity,gender,marital_status',
+    EthnicitymaritalStatus = 'ethnicity,marital_status',
+    Gender = 'gender',
+    GendermaritalStatus = 'gender,marital_status',
+    MaritalStatus = 'marital_status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum EmployeesRetrieveExpandEnum {
     Company = 'company',
-    CompanypayGroup = 'company,pay_group',
     Employments = 'employments',
-    Employmentscompany = 'employments,company',
-    EmploymentscompanypayGroup = 'employments,company,pay_group',
-    Employmentsgroups = 'employments,groups',
-    Employmentsgroupscompany = 'employments,groups,company',
-    EmploymentsgroupscompanypayGroup = 'employments,groups,company,pay_group',
-    EmploymentsgroupshomeLocation = 'employments,groups,home_location',
-    EmploymentsgroupshomeLocationcompany = 'employments,groups,home_location,company',
-    EmploymentsgroupshomeLocationcompanypayGroup = 'employments,groups,home_location,company,pay_group',
-    EmploymentsgroupshomeLocationmanager = 'employments,groups,home_location,manager',
-    EmploymentsgroupshomeLocationmanagercompany = 'employments,groups,home_location,manager,company',
-    EmploymentsgroupshomeLocationmanagercompanypayGroup = 'employments,groups,home_location,manager,company,pay_group',
-    EmploymentsgroupshomeLocationmanagerpayGroup = 'employments,groups,home_location,manager,pay_group',
-    EmploymentsgroupshomeLocationmanagerteam = 'employments,groups,home_location,manager,team',
-    EmploymentsgroupshomeLocationmanagerteamcompany = 'employments,groups,home_location,manager,team,company',
-    EmploymentsgroupshomeLocationmanagerteamcompanypayGroup = 'employments,groups,home_location,manager,team,company,pay_group',
-    EmploymentsgroupshomeLocationmanagerteampayGroup = 'employments,groups,home_location,manager,team,pay_group',
-    EmploymentsgroupshomeLocationpayGroup = 'employments,groups,home_location,pay_group',
-    EmploymentsgroupshomeLocationteam = 'employments,groups,home_location,team',
-    EmploymentsgroupshomeLocationteamcompany = 'employments,groups,home_location,team,company',
-    EmploymentsgroupshomeLocationteamcompanypayGroup = 'employments,groups,home_location,team,company,pay_group',
-    EmploymentsgroupshomeLocationteampayGroup = 'employments,groups,home_location,team,pay_group',
-    EmploymentsgroupshomeLocationworkLocation = 'employments,groups,home_location,work_location',
-    EmploymentsgroupshomeLocationworkLocationcompany = 'employments,groups,home_location,work_location,company',
-    EmploymentsgroupshomeLocationworkLocationcompanypayGroup = 'employments,groups,home_location,work_location,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanager = 'employments,groups,home_location,work_location,manager',
-    EmploymentsgroupshomeLocationworkLocationmanagercompany = 'employments,groups,home_location,work_location,manager,company',
-    EmploymentsgroupshomeLocationworkLocationmanagercompanypayGroup = 'employments,groups,home_location,work_location,manager,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanagerpayGroup = 'employments,groups,home_location,work_location,manager,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanagerteam = 'employments,groups,home_location,work_location,manager,team',
-    EmploymentsgroupshomeLocationworkLocationmanagerteamcompany = 'employments,groups,home_location,work_location,manager,team,company',
-    EmploymentsgroupshomeLocationworkLocationmanagerteamcompanypayGroup = 'employments,groups,home_location,work_location,manager,team,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationmanagerteampayGroup = 'employments,groups,home_location,work_location,manager,team,pay_group',
-    EmploymentsgroupshomeLocationworkLocationpayGroup = 'employments,groups,home_location,work_location,pay_group',
-    EmploymentsgroupshomeLocationworkLocationteam = 'employments,groups,home_location,work_location,team',
-    EmploymentsgroupshomeLocationworkLocationteamcompany = 'employments,groups,home_location,work_location,team,company',
-    EmploymentsgroupshomeLocationworkLocationteamcompanypayGroup = 'employments,groups,home_location,work_location,team,company,pay_group',
-    EmploymentsgroupshomeLocationworkLocationteampayGroup = 'employments,groups,home_location,work_location,team,pay_group',
-    Employmentsgroupsmanager = 'employments,groups,manager',
-    Employmentsgroupsmanagercompany = 'employments,groups,manager,company',
-    EmploymentsgroupsmanagercompanypayGroup = 'employments,groups,manager,company,pay_group',
-    EmploymentsgroupsmanagerpayGroup = 'employments,groups,manager,pay_group',
-    Employmentsgroupsmanagerteam = 'employments,groups,manager,team',
-    Employmentsgroupsmanagerteamcompany = 'employments,groups,manager,team,company',
-    EmploymentsgroupsmanagerteamcompanypayGroup = 'employments,groups,manager,team,company,pay_group',
-    EmploymentsgroupsmanagerteampayGroup = 'employments,groups,manager,team,pay_group',
-    EmploymentsgroupspayGroup = 'employments,groups,pay_group',
-    Employmentsgroupsteam = 'employments,groups,team',
-    Employmentsgroupsteamcompany = 'employments,groups,team,company',
-    EmploymentsgroupsteamcompanypayGroup = 'employments,groups,team,company,pay_group',
-    EmploymentsgroupsteampayGroup = 'employments,groups,team,pay_group',
-    EmploymentsgroupsworkLocation = 'employments,groups,work_location',
-    EmploymentsgroupsworkLocationcompany = 'employments,groups,work_location,company',
-    EmploymentsgroupsworkLocationcompanypayGroup = 'employments,groups,work_location,company,pay_group',
-    EmploymentsgroupsworkLocationmanager = 'employments,groups,work_location,manager',
-    EmploymentsgroupsworkLocationmanagercompany = 'employments,groups,work_location,manager,company',
-    EmploymentsgroupsworkLocationmanagercompanypayGroup = 'employments,groups,work_location,manager,company,pay_group',
-    EmploymentsgroupsworkLocationmanagerpayGroup = 'employments,groups,work_location,manager,pay_group',
-    EmploymentsgroupsworkLocationmanagerteam = 'employments,groups,work_location,manager,team',
-    EmploymentsgroupsworkLocationmanagerteamcompany = 'employments,groups,work_location,manager,team,company',
-    EmploymentsgroupsworkLocationmanagerteamcompanypayGroup = 'employments,groups,work_location,manager,team,company,pay_group',
-    EmploymentsgroupsworkLocationmanagerteampayGroup = 'employments,groups,work_location,manager,team,pay_group',
-    EmploymentsgroupsworkLocationpayGroup = 'employments,groups,work_location,pay_group',
-    EmploymentsgroupsworkLocationteam = 'employments,groups,work_location,team',
-    EmploymentsgroupsworkLocationteamcompany = 'employments,groups,work_location,team,company',
-    EmploymentsgroupsworkLocationteamcompanypayGroup = 'employments,groups,work_location,team,company,pay_group',
-    EmploymentsgroupsworkLocationteampayGroup = 'employments,groups,work_location,team,pay_group',
-    EmploymentshomeLocation = 'employments,home_location',
-    EmploymentshomeLocationcompany = 'employments,home_location,company',
-    EmploymentshomeLocationcompanypayGroup = 'employments,home_location,company,pay_group',
-    EmploymentshomeLocationmanager = 'employments,home_location,manager',
-    EmploymentshomeLocationmanagercompany = 'employments,home_location,manager,company',
-    EmploymentshomeLocationmanagercompanypayGroup = 'employments,home_location,manager,company,pay_group',
-    EmploymentshomeLocationmanagerpayGroup = 'employments,home_location,manager,pay_group',
-    EmploymentshomeLocationmanagerteam = 'employments,home_location,manager,team',
-    EmploymentshomeLocationmanagerteamcompany = 'employments,home_location,manager,team,company',
-    EmploymentshomeLocationmanagerteamcompanypayGroup = 'employments,home_location,manager,team,company,pay_group',
-    EmploymentshomeLocationmanagerteampayGroup = 'employments,home_location,manager,team,pay_group',
-    EmploymentshomeLocationpayGroup = 'employments,home_location,pay_group',
-    EmploymentshomeLocationteam = 'employments,home_location,team',
-    EmploymentshomeLocationteamcompany = 'employments,home_location,team,company',
-    EmploymentshomeLocationteamcompanypayGroup = 'employments,home_location,team,company,pay_group',
-    EmploymentshomeLocationteampayGroup = 'employments,home_location,team,pay_group',
-    EmploymentshomeLocationworkLocation = 'employments,home_location,work_location',
-    EmploymentshomeLocationworkLocationcompany = 'employments,home_location,work_location,company',
-    EmploymentshomeLocationworkLocationcompanypayGroup = 'employments,home_location,work_location,company,pay_group',
-    EmploymentshomeLocationworkLocationmanager = 'employments,home_location,work_location,manager',
-    EmploymentshomeLocationworkLocationmanagercompany = 'employments,home_location,work_location,manager,company',
-    EmploymentshomeLocationworkLocationmanagercompanypayGroup = 'employments,home_location,work_location,manager,company,pay_group',
-    EmploymentshomeLocationworkLocationmanagerpayGroup = 'employments,home_location,work_location,manager,pay_group',
-    EmploymentshomeLocationworkLocationmanagerteam = 'employments,home_location,work_location,manager,team',
-    EmploymentshomeLocationworkLocationmanagerteamcompany = 'employments,home_location,work_location,manager,team,company',
-    EmploymentshomeLocationworkLocationmanagerteamcompanypayGroup = 'employments,home_location,work_location,manager,team,company,pay_group',
-    EmploymentshomeLocationworkLocationmanagerteampayGroup = 'employments,home_location,work_location,manager,team,pay_group',
-    EmploymentshomeLocationworkLocationpayGroup = 'employments,home_location,work_location,pay_group',
-    EmploymentshomeLocationworkLocationteam = 'employments,home_location,work_location,team',
-    EmploymentshomeLocationworkLocationteamcompany = 'employments,home_location,work_location,team,company',
-    EmploymentshomeLocationworkLocationteamcompanypayGroup = 'employments,home_location,work_location,team,company,pay_group',
-    EmploymentshomeLocationworkLocationteampayGroup = 'employments,home_location,work_location,team,pay_group',
-    Employmentsmanager = 'employments,manager',
-    Employmentsmanagercompany = 'employments,manager,company',
-    EmploymentsmanagercompanypayGroup = 'employments,manager,company,pay_group',
-    EmploymentsmanagerpayGroup = 'employments,manager,pay_group',
-    Employmentsmanagerteam = 'employments,manager,team',
-    Employmentsmanagerteamcompany = 'employments,manager,team,company',
-    EmploymentsmanagerteamcompanypayGroup = 'employments,manager,team,company,pay_group',
-    EmploymentsmanagerteampayGroup = 'employments,manager,team,pay_group',
-    EmploymentspayGroup = 'employments,pay_group',
-    Employmentsteam = 'employments,team',
-    Employmentsteamcompany = 'employments,team,company',
-    EmploymentsteamcompanypayGroup = 'employments,team,company,pay_group',
-    EmploymentsteampayGroup = 'employments,team,pay_group',
-    EmploymentsworkLocation = 'employments,work_location',
-    EmploymentsworkLocationcompany = 'employments,work_location,company',
-    EmploymentsworkLocationcompanypayGroup = 'employments,work_location,company,pay_group',
-    EmploymentsworkLocationmanager = 'employments,work_location,manager',
-    EmploymentsworkLocationmanagercompany = 'employments,work_location,manager,company',
-    EmploymentsworkLocationmanagercompanypayGroup = 'employments,work_location,manager,company,pay_group',
-    EmploymentsworkLocationmanagerpayGroup = 'employments,work_location,manager,pay_group',
-    EmploymentsworkLocationmanagerteam = 'employments,work_location,manager,team',
-    EmploymentsworkLocationmanagerteamcompany = 'employments,work_location,manager,team,company',
-    EmploymentsworkLocationmanagerteamcompanypayGroup = 'employments,work_location,manager,team,company,pay_group',
-    EmploymentsworkLocationmanagerteampayGroup = 'employments,work_location,manager,team,pay_group',
-    EmploymentsworkLocationpayGroup = 'employments,work_location,pay_group',
-    EmploymentsworkLocationteam = 'employments,work_location,team',
-    EmploymentsworkLocationteamcompany = 'employments,work_location,team,company',
-    EmploymentsworkLocationteamcompanypayGroup = 'employments,work_location,team,company,pay_group',
-    EmploymentsworkLocationteampayGroup = 'employments,work_location,team,pay_group',
     Groups = 'groups',
-    Groupscompany = 'groups,company',
-    GroupscompanypayGroup = 'groups,company,pay_group',
-    GroupshomeLocation = 'groups,home_location',
-    GroupshomeLocationcompany = 'groups,home_location,company',
-    GroupshomeLocationcompanypayGroup = 'groups,home_location,company,pay_group',
-    GroupshomeLocationmanager = 'groups,home_location,manager',
-    GroupshomeLocationmanagercompany = 'groups,home_location,manager,company',
-    GroupshomeLocationmanagercompanypayGroup = 'groups,home_location,manager,company,pay_group',
-    GroupshomeLocationmanagerpayGroup = 'groups,home_location,manager,pay_group',
-    GroupshomeLocationmanagerteam = 'groups,home_location,manager,team',
-    GroupshomeLocationmanagerteamcompany = 'groups,home_location,manager,team,company',
-    GroupshomeLocationmanagerteamcompanypayGroup = 'groups,home_location,manager,team,company,pay_group',
-    GroupshomeLocationmanagerteampayGroup = 'groups,home_location,manager,team,pay_group',
-    GroupshomeLocationpayGroup = 'groups,home_location,pay_group',
-    GroupshomeLocationteam = 'groups,home_location,team',
-    GroupshomeLocationteamcompany = 'groups,home_location,team,company',
-    GroupshomeLocationteamcompanypayGroup = 'groups,home_location,team,company,pay_group',
-    GroupshomeLocationteampayGroup = 'groups,home_location,team,pay_group',
-    GroupshomeLocationworkLocation = 'groups,home_location,work_location',
-    GroupshomeLocationworkLocationcompany = 'groups,home_location,work_location,company',
-    GroupshomeLocationworkLocationcompanypayGroup = 'groups,home_location,work_location,company,pay_group',
-    GroupshomeLocationworkLocationmanager = 'groups,home_location,work_location,manager',
-    GroupshomeLocationworkLocationmanagercompany = 'groups,home_location,work_location,manager,company',
-    GroupshomeLocationworkLocationmanagercompanypayGroup = 'groups,home_location,work_location,manager,company,pay_group',
-    GroupshomeLocationworkLocationmanagerpayGroup = 'groups,home_location,work_location,manager,pay_group',
-    GroupshomeLocationworkLocationmanagerteam = 'groups,home_location,work_location,manager,team',
-    GroupshomeLocationworkLocationmanagerteamcompany = 'groups,home_location,work_location,manager,team,company',
-    GroupshomeLocationworkLocationmanagerteamcompanypayGroup = 'groups,home_location,work_location,manager,team,company,pay_group',
-    GroupshomeLocationworkLocationmanagerteampayGroup = 'groups,home_location,work_location,manager,team,pay_group',
-    GroupshomeLocationworkLocationpayGroup = 'groups,home_location,work_location,pay_group',
-    GroupshomeLocationworkLocationteam = 'groups,home_location,work_location,team',
-    GroupshomeLocationworkLocationteamcompany = 'groups,home_location,work_location,team,company',
-    GroupshomeLocationworkLocationteamcompanypayGroup = 'groups,home_location,work_location,team,company,pay_group',
-    GroupshomeLocationworkLocationteampayGroup = 'groups,home_location,work_location,team,pay_group',
-    Groupsmanager = 'groups,manager',
-    Groupsmanagercompany = 'groups,manager,company',
-    GroupsmanagercompanypayGroup = 'groups,manager,company,pay_group',
-    GroupsmanagerpayGroup = 'groups,manager,pay_group',
-    Groupsmanagerteam = 'groups,manager,team',
-    Groupsmanagerteamcompany = 'groups,manager,team,company',
-    GroupsmanagerteamcompanypayGroup = 'groups,manager,team,company,pay_group',
-    GroupsmanagerteampayGroup = 'groups,manager,team,pay_group',
-    GroupspayGroup = 'groups,pay_group',
-    Groupsteam = 'groups,team',
-    Groupsteamcompany = 'groups,team,company',
-    GroupsteamcompanypayGroup = 'groups,team,company,pay_group',
-    GroupsteampayGroup = 'groups,team,pay_group',
-    GroupsworkLocation = 'groups,work_location',
-    GroupsworkLocationcompany = 'groups,work_location,company',
-    GroupsworkLocationcompanypayGroup = 'groups,work_location,company,pay_group',
-    GroupsworkLocationmanager = 'groups,work_location,manager',
-    GroupsworkLocationmanagercompany = 'groups,work_location,manager,company',
-    GroupsworkLocationmanagercompanypayGroup = 'groups,work_location,manager,company,pay_group',
-    GroupsworkLocationmanagerpayGroup = 'groups,work_location,manager,pay_group',
-    GroupsworkLocationmanagerteam = 'groups,work_location,manager,team',
-    GroupsworkLocationmanagerteamcompany = 'groups,work_location,manager,team,company',
-    GroupsworkLocationmanagerteamcompanypayGroup = 'groups,work_location,manager,team,company,pay_group',
-    GroupsworkLocationmanagerteampayGroup = 'groups,work_location,manager,team,pay_group',
-    GroupsworkLocationpayGroup = 'groups,work_location,pay_group',
-    GroupsworkLocationteam = 'groups,work_location,team',
-    GroupsworkLocationteamcompany = 'groups,work_location,team,company',
-    GroupsworkLocationteamcompanypayGroup = 'groups,work_location,team,company,pay_group',
-    GroupsworkLocationteampayGroup = 'groups,work_location,team,pay_group',
     HomeLocation = 'home_location',
-    HomeLocationcompany = 'home_location,company',
-    HomeLocationcompanypayGroup = 'home_location,company,pay_group',
-    HomeLocationmanager = 'home_location,manager',
-    HomeLocationmanagercompany = 'home_location,manager,company',
-    HomeLocationmanagercompanypayGroup = 'home_location,manager,company,pay_group',
-    HomeLocationmanagerpayGroup = 'home_location,manager,pay_group',
-    HomeLocationmanagerteam = 'home_location,manager,team',
-    HomeLocationmanagerteamcompany = 'home_location,manager,team,company',
-    HomeLocationmanagerteamcompanypayGroup = 'home_location,manager,team,company,pay_group',
-    HomeLocationmanagerteampayGroup = 'home_location,manager,team,pay_group',
-    HomeLocationpayGroup = 'home_location,pay_group',
-    HomeLocationteam = 'home_location,team',
-    HomeLocationteamcompany = 'home_location,team,company',
-    HomeLocationteamcompanypayGroup = 'home_location,team,company,pay_group',
-    HomeLocationteampayGroup = 'home_location,team,pay_group',
-    HomeLocationworkLocation = 'home_location,work_location',
-    HomeLocationworkLocationcompany = 'home_location,work_location,company',
-    HomeLocationworkLocationcompanypayGroup = 'home_location,work_location,company,pay_group',
-    HomeLocationworkLocationmanager = 'home_location,work_location,manager',
-    HomeLocationworkLocationmanagercompany = 'home_location,work_location,manager,company',
-    HomeLocationworkLocationmanagercompanypayGroup = 'home_location,work_location,manager,company,pay_group',
-    HomeLocationworkLocationmanagerpayGroup = 'home_location,work_location,manager,pay_group',
-    HomeLocationworkLocationmanagerteam = 'home_location,work_location,manager,team',
-    HomeLocationworkLocationmanagerteamcompany = 'home_location,work_location,manager,team,company',
-    HomeLocationworkLocationmanagerteamcompanypayGroup = 'home_location,work_location,manager,team,company,pay_group',
-    HomeLocationworkLocationmanagerteampayGroup = 'home_location,work_location,manager,team,pay_group',
-    HomeLocationworkLocationpayGroup = 'home_location,work_location,pay_group',
-    HomeLocationworkLocationteam = 'home_location,work_location,team',
-    HomeLocationworkLocationteamcompany = 'home_location,work_location,team,company',
-    HomeLocationworkLocationteamcompanypayGroup = 'home_location,work_location,team,company,pay_group',
-    HomeLocationworkLocationteampayGroup = 'home_location,work_location,team,pay_group',
     Manager = 'manager',
-    Managercompany = 'manager,company',
-    ManagercompanypayGroup = 'manager,company,pay_group',
-    ManagerpayGroup = 'manager,pay_group',
-    Managerteam = 'manager,team',
-    Managerteamcompany = 'manager,team,company',
-    ManagerteamcompanypayGroup = 'manager,team,company,pay_group',
-    ManagerteampayGroup = 'manager,team,pay_group',
     PayGroup = 'pay_group',
     Team = 'team',
-    Teamcompany = 'team,company',
-    TeamcompanypayGroup = 'team,company,pay_group',
-    TeampayGroup = 'team,pay_group',
-    WorkLocation = 'work_location',
-    WorkLocationcompany = 'work_location,company',
-    WorkLocationcompanypayGroup = 'work_location,company,pay_group',
-    WorkLocationmanager = 'work_location,manager',
-    WorkLocationmanagercompany = 'work_location,manager,company',
-    WorkLocationmanagercompanypayGroup = 'work_location,manager,company,pay_group',
-    WorkLocationmanagerpayGroup = 'work_location,manager,pay_group',
-    WorkLocationmanagerteam = 'work_location,manager,team',
-    WorkLocationmanagerteamcompany = 'work_location,manager,team,company',
-    WorkLocationmanagerteamcompanypayGroup = 'work_location,manager,team,company,pay_group',
-    WorkLocationmanagerteampayGroup = 'work_location,manager,team,pay_group',
-    WorkLocationpayGroup = 'work_location,pay_group',
-    WorkLocationteam = 'work_location,team',
-    WorkLocationteamcompany = 'work_location,team,company',
-    WorkLocationteamcompanypayGroup = 'work_location,team,company,pay_group',
-    WorkLocationteampayGroup = 'work_location,team,pay_group'
+    WorkLocation = 'work_location'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum EmployeesRetrieveRemoteFieldsEnum {
+    EmploymentStatus = 'employment_status',
+    EmploymentStatusethnicity = 'employment_status,ethnicity',
+    EmploymentStatusethnicitygender = 'employment_status,ethnicity,gender',
+    EmploymentStatusethnicitygendermaritalStatus = 'employment_status,ethnicity,gender,marital_status',
+    EmploymentStatusethnicitymaritalStatus = 'employment_status,ethnicity,marital_status',
+    EmploymentStatusgender = 'employment_status,gender',
+    EmploymentStatusgendermaritalStatus = 'employment_status,gender,marital_status',
+    EmploymentStatusmaritalStatus = 'employment_status,marital_status',
+    Ethnicity = 'ethnicity',
+    Ethnicitygender = 'ethnicity,gender',
+    EthnicitygendermaritalStatus = 'ethnicity,gender,marital_status',
+    EthnicitymaritalStatus = 'ethnicity,marital_status',
+    Gender = 'gender',
+    GendermaritalStatus = 'gender,marital_status',
+    MaritalStatus = 'marital_status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum EmployeesRetrieveShowEnumOriginsEnum {
     EmploymentStatus = 'employment_status',
     EmploymentStatusethnicity = 'employment_status,ethnicity',
     EmploymentStatusethnicitygender = 'employment_status,ethnicity,gender',

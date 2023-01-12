@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface AccountsCreateRequest {
     accountEndpointRequest: AccountEndpointRequest;
     isDebugMode?: boolean;
@@ -53,12 +57,15 @@ export interface AccountsListRequest {
     pageSize?: number;
     remoteFields?: AccountsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: AccountsListShowEnumOriginsEnum;
 }
 
+// extends MergeMetaRequest
 export interface AccountsRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: AccountsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: AccountsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -83,6 +90,9 @@ export class AccountsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -166,6 +176,13 @@ export class AccountsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -198,8 +215,17 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Account` POSTs.
      */
-    async accountsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async accountsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -225,8 +251,8 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Account` POSTs.
      */
-    async accountsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.accountsMetaPostRetrieveRaw();
+    async accountsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.accountsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -247,6 +273,13 @@ export class AccountsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -292,7 +325,25 @@ export enum AccountsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum AccountsListShowEnumOriginsEnum {
+    Classification = 'classification',
+    Classificationstatus = 'classification,status',
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum AccountsRetrieveRemoteFieldsEnum {
+    Classification = 'classification',
+    Classificationstatus = 'classification,status',
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum AccountsRetrieveShowEnumOriginsEnum {
     Classification = 'classification',
     Classificationstatus = 'classification,status',
     Status = 'status'

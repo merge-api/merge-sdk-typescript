@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface TrackingCategoriesListRequest {
     companyId?: string;
     createdAfter?: Date;
@@ -38,12 +42,14 @@ export interface TrackingCategoriesListRequest {
     pageSize?: number;
     remoteFields?: TrackingCategoriesListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: TrackingCategoriesListShowEnumOriginsEnum;
 }
 
 export interface TrackingCategoriesRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: TrackingCategoriesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: TrackingCategoriesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -101,6 +107,13 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -148,6 +161,13 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -190,6 +210,20 @@ export enum TrackingCategoriesListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum TrackingCategoriesListShowEnumOriginsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TrackingCategoriesRetrieveRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum TrackingCategoriesRetrieveShowEnumOriginsEnum {
     Status = 'status'
 }

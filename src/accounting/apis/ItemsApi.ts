@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface ItemsListRequest {
     companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: ItemsListExpandEnum;
+    expand?: Array<ItemsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -39,13 +43,15 @@ export interface ItemsListRequest {
     pageSize?: number;
     remoteFields?: ItemsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: ItemsListShowEnumOriginsEnum;
 }
 
 export interface ItemsRetrieveRequest {
     id: string;
-    expand?: ItemsRetrieveExpandEnum;
+    expand?: Array<ItemsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: ItemsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: ItemsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -75,7 +81,7 @@ export class ItemsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -106,6 +112,13 @@ export class ItemsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -146,7 +159,7 @@ export class ItemsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -157,6 +170,13 @@ export class ItemsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -195,7 +215,6 @@ export class ItemsApi extends runtime.BaseAPI {
 */
 export enum ItemsListExpandEnum {
     PurchaseAccount = 'purchase_account',
-    PurchaseAccountsalesAccount = 'purchase_account,sales_account',
     SalesAccount = 'sales_account'
 }
 /**
@@ -209,9 +228,15 @@ export enum ItemsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum ItemsListShowEnumOriginsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ItemsRetrieveExpandEnum {
     PurchaseAccount = 'purchase_account',
-    PurchaseAccountsalesAccount = 'purchase_account,sales_account',
     SalesAccount = 'sales_account'
 }
 /**
@@ -219,5 +244,12 @@ export enum ItemsRetrieveExpandEnum {
 * @enum {string}
 */
 export enum ItemsRetrieveRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum ItemsRetrieveShowEnumOriginsEnum {
     Status = 'status'
 }

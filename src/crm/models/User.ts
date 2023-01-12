@@ -28,7 +28,7 @@ import {
 /**
  * # The User Object
  * ### Description
- * The `User` object is used to represent a user in the CRM system.
+ * The `User` object is used to represent a user with a login to the CRM system.
  * ### Usage Example
  * TODO
  * @export

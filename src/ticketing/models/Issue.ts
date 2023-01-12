@@ -39,7 +39,7 @@ export interface Issue {
      * @type {IssueStatusEnum}
      * @memberof Issue
      */
-    status?: IssueStatusEnum;
+    status?: IssueStatusEnum | null;
     /**
      * 
      * @type {string}

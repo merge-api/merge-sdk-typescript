@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface GroupsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -37,6 +41,7 @@ export interface GroupsListRequest {
     pageSize?: number;
     remoteFields?: GroupsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: GroupsListShowEnumOriginsEnum;
     types?: string;
 }
 
@@ -44,6 +49,7 @@ export interface GroupsRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: GroupsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: GroupsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -97,9 +103,16 @@ export class GroupsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.types !== undefined) {
             queryParameters['types'] = requestParameters.types;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -148,6 +161,13 @@ export class GroupsApi extends runtime.BaseAPI {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -190,6 +210,20 @@ export enum GroupsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum GroupsListShowEnumOriginsEnum {
+    Type = 'type'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum GroupsRetrieveRemoteFieldsEnum {
+    Type = 'type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum GroupsRetrieveShowEnumOriginsEnum {
     Type = 'type'
 }

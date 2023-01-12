@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface EmployeePayrollRunsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -33,7 +37,7 @@ export interface EmployeePayrollRunsListRequest {
     employeeId?: string;
     endedAfter?: Date | null;
     endedBefore?: Date | null;
-    expand?: EmployeePayrollRunsListExpandEnum;
+    expand?: Array<EmployeePayrollRunsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -47,7 +51,7 @@ export interface EmployeePayrollRunsListRequest {
 
 export interface EmployeePayrollRunsRetrieveRequest {
     id: string;
-    expand?: EmployeePayrollRunsRetrieveExpandEnum;
+    expand?: Array<EmployeePayrollRunsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -86,7 +90,7 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
             queryParameters['ended_before'] = (requestParameters.endedBefore as any).toISOString();
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -125,6 +129,9 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
         if (requestParameters.startedBefore !== undefined) {
             queryParameters['started_before'] = (requestParameters.startedBefore as any).toISOString();
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -165,13 +172,16 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -210,7 +220,6 @@ export class EmployeePayrollRunsApi extends runtime.BaseAPI {
 */
 export enum EmployeePayrollRunsListExpandEnum {
     Employee = 'employee',
-    EmployeepayrollRun = 'employee,payroll_run',
     PayrollRun = 'payroll_run'
 }
 /**
@@ -219,6 +228,5 @@ export enum EmployeePayrollRunsListExpandEnum {
 */
 export enum EmployeePayrollRunsRetrieveExpandEnum {
     Employee = 'employee',
-    EmployeepayrollRun = 'employee,payroll_run',
     PayrollRun = 'payroll_run'
 }

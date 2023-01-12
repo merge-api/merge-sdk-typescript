@@ -46,7 +46,7 @@ export interface DataPassthroughRequest {
      * @type {MethodEnum}
      * @memberof DataPassthroughRequest
      */
-    method: MethodEnum;
+    method: MethodEnum | null;
     /**
      * 
      * @type {string}

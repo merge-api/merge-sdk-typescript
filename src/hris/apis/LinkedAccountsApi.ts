@@ -23,6 +23,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface LinkedAccountsListRequest {
     category?: LinkedAccountsListCategoryEnum;
     cursor?: string;
@@ -101,6 +105,9 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
         if (requestParameters.status !== undefined) {
             queryParameters['status'] = requestParameters.status;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

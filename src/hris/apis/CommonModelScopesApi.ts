@@ -23,6 +23,10 @@ import {
     CommonModelScopesUpdateSerializerToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface CommonModelScopesRetrieveRequest {
     integrationSlug?: string;
     linkedAccountId?: string;
@@ -52,6 +56,9 @@ export class CommonModelScopesApi extends runtime.BaseAPI {
         if (requestParameters.linkedAccountId !== undefined) {
             queryParameters['linked_account_id'] = requestParameters.linkedAccountId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -99,6 +106,9 @@ export class CommonModelScopesApi extends runtime.BaseAPI {
         if (requestParameters.linkedAccountId !== undefined) {
             queryParameters['linked_account_id'] = requestParameters.linkedAccountId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

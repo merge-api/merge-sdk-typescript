@@ -23,6 +23,10 @@ import {
     RemoteResponseToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface PassthroughCreateRequest {
     dataPassthroughRequest: DataPassthroughRequest;
 }
@@ -41,6 +45,9 @@ export class PassthroughApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

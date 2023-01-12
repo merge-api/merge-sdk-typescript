@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface ContactsCreateRequest {
     contactEndpointRequest: ContactEndpointRequest;
     isDebugMode?: boolean;
@@ -46,7 +50,7 @@ export interface ContactsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: ContactsListExpandEnum;
+    expand?: Array<ContactsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -54,13 +58,16 @@ export interface ContactsListRequest {
     pageSize?: number;
     remoteFields?: ContactsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: ContactsListShowEnumOriginsEnum;
 }
 
+// extends MergeMetaRequest
 export interface ContactsRetrieveRequest {
     id: string;
-    expand?: ContactsRetrieveExpandEnum;
+    expand?: Array<ContactsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: ContactsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: ContactsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -85,6 +92,9 @@ export class ContactsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,7 +150,7 @@ export class ContactsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -171,6 +181,13 @@ export class ContactsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -204,8 +221,17 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Contact` POSTs.
      */
-    async contactsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async contactsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -231,8 +257,8 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Contact` POSTs.
      */
-    async contactsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.contactsMetaPostRetrieveRaw();
+    async contactsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.contactsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -246,7 +272,7 @@ export class ContactsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -257,6 +283,13 @@ export class ContactsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -295,7 +328,6 @@ export class ContactsApi extends runtime.BaseAPI {
 */
 export enum ContactsListExpandEnum {
     Addresses = 'addresses',
-    AddressesphoneNumbers = 'addresses,phone_numbers',
     PhoneNumbers = 'phone_numbers'
 }
 /**
@@ -309,9 +341,15 @@ export enum ContactsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum ContactsListShowEnumOriginsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ContactsRetrieveExpandEnum {
     Addresses = 'addresses',
-    AddressesphoneNumbers = 'addresses,phone_numbers',
     PhoneNumbers = 'phone_numbers'
 }
 /**
@@ -319,5 +357,12 @@ export enum ContactsRetrieveExpandEnum {
 * @enum {string}
 */
 export enum ContactsRetrieveRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum ContactsRetrieveShowEnumOriginsEnum {
     Status = 'status'
 }

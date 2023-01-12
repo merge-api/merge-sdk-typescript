@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface AttachmentsCreateRequest {
     attachmentEndpointRequest: AttachmentEndpointRequest;
     isDebugMode?: boolean;
@@ -46,7 +50,7 @@ export interface AttachmentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: AttachmentsListExpandEnum;
+    expand?: Array<AttachmentsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -54,13 +58,16 @@ export interface AttachmentsListRequest {
     pageSize?: number;
     remoteFields?: AttachmentsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: AttachmentsListShowEnumOriginsEnum;
 }
 
+// extends MergeMetaRequest
 export interface AttachmentsRetrieveRequest {
     id: string;
-    expand?: AttachmentsRetrieveExpandEnum;
+    expand?: Array<AttachmentsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: AttachmentsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: AttachmentsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -85,6 +92,9 @@ export class AttachmentsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,7 +150,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -171,6 +181,13 @@ export class AttachmentsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -204,8 +221,17 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Attachment` POSTs.
      */
-    async attachmentsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async attachmentsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -231,8 +257,8 @@ export class AttachmentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Attachment` POSTs.
      */
-    async attachmentsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.attachmentsMetaPostRetrieveRaw();
+    async attachmentsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.attachmentsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -246,7 +272,7 @@ export class AttachmentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -257,6 +283,13 @@ export class AttachmentsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -307,6 +340,13 @@ export enum AttachmentsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum AttachmentsListShowEnumOriginsEnum {
+    AttachmentType = 'attachment_type'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum AttachmentsRetrieveExpandEnum {
     Candidate = 'candidate'
 }
@@ -315,5 +355,12 @@ export enum AttachmentsRetrieveExpandEnum {
 * @enum {string}
 */
 export enum AttachmentsRetrieveRemoteFieldsEnum {
+    AttachmentType = 'attachment_type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum AttachmentsRetrieveShowEnumOriginsEnum {
     AttachmentType = 'attachment_type'
 }

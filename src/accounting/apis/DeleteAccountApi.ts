@@ -15,6 +15,11 @@
 
 import * as runtime from '../../runtime';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
+//
 /**
  * 
  */
@@ -25,6 +30,9 @@ export class DeleteAccountApi extends runtime.BaseAPI {
      */
     async deleteAccountCreateRaw(): Promise<runtime.ApiResponse<void>> {
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

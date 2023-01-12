@@ -23,6 +23,10 @@ import {
     RemoteKeyToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface GenerateKeyCreateRequest {
     generateRemoteKeyRequest: GenerateRemoteKeyRequest;
 }
@@ -41,6 +45,9 @@ export class GenerateKeyApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

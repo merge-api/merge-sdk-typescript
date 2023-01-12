@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface InvoicesCreateRequest {
     invoiceEndpointRequest: InvoiceEndpointRequest;
     isDebugMode?: boolean;
@@ -47,7 +51,7 @@ export interface InvoicesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: InvoicesListExpandEnum;
+    expand?: Array<InvoicesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -55,14 +59,17 @@ export interface InvoicesListRequest {
     pageSize?: number;
     remoteFields?: InvoicesListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: InvoicesListShowEnumOriginsEnum;
     type?: InvoicesListTypeEnum;
 }
 
+// extends MergeMetaRequest
 export interface InvoicesRetrieveRequest {
     id: string;
-    expand?: InvoicesRetrieveExpandEnum;
+    expand?: Array<InvoicesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: InvoicesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: InvoicesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -87,6 +94,9 @@ export class InvoicesApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -146,7 +156,7 @@ export class InvoicesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -178,9 +188,16 @@ export class InvoicesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.type !== undefined) {
             queryParameters['type'] = requestParameters.type;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -214,8 +231,17 @@ export class InvoicesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Invoice` POSTs.
      */
-    async invoicesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async invoicesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -241,8 +267,8 @@ export class InvoicesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Invoice` POSTs.
      */
-    async invoicesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.invoicesMetaPostRetrieveRaw();
+    async invoicesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.invoicesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -256,7 +282,7 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -267,6 +293,13 @@ export class InvoicesApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -306,25 +339,21 @@ export class InvoicesApi extends runtime.BaseAPI {
 export enum InvoicesListExpandEnum {
     Company = 'company',
     Contact = 'contact',
-    Contactcompany = 'contact,company',
     LineItems = 'line_items',
-    LineItemscompany = 'line_items,company',
-    LineItemscontact = 'line_items,contact',
-    LineItemscontactcompany = 'line_items,contact,company',
-    Payments = 'payments',
-    Paymentscompany = 'payments,company',
-    Paymentscontact = 'payments,contact',
-    Paymentscontactcompany = 'payments,contact,company',
-    PaymentslineItems = 'payments,line_items',
-    PaymentslineItemscompany = 'payments,line_items,company',
-    PaymentslineItemscontact = 'payments,line_items,contact',
-    PaymentslineItemscontactcompany = 'payments,line_items,contact,company'
+    Payments = 'payments'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum InvoicesListRemoteFieldsEnum {
+    Type = 'type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum InvoicesListShowEnumOriginsEnum {
     Type = 'type'
 }
 /**
@@ -342,24 +371,20 @@ export enum InvoicesListTypeEnum {
 export enum InvoicesRetrieveExpandEnum {
     Company = 'company',
     Contact = 'contact',
-    Contactcompany = 'contact,company',
     LineItems = 'line_items',
-    LineItemscompany = 'line_items,company',
-    LineItemscontact = 'line_items,contact',
-    LineItemscontactcompany = 'line_items,contact,company',
-    Payments = 'payments',
-    Paymentscompany = 'payments,company',
-    Paymentscontact = 'payments,contact',
-    Paymentscontactcompany = 'payments,contact,company',
-    PaymentslineItems = 'payments,line_items',
-    PaymentslineItemscompany = 'payments,line_items,company',
-    PaymentslineItemscontact = 'payments,line_items,contact',
-    PaymentslineItemscontactcompany = 'payments,line_items,contact,company'
+    Payments = 'payments'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum InvoicesRetrieveRemoteFieldsEnum {
+    Type = 'type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum InvoicesRetrieveShowEnumOriginsEnum {
     Type = 'type'
 }

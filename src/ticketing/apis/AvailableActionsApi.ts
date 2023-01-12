@@ -20,6 +20,11 @@ import {
     AvailableActionsToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
+//
 /**
  * 
  */
@@ -30,6 +35,9 @@ export class AvailableActionsApi extends runtime.BaseAPI {
      */
     async availableActionsRetrieveRaw(): Promise<runtime.ApiResponse<AvailableActions | undefined>> {
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

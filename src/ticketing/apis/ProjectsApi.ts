@@ -19,14 +19,16 @@ import {
     ProjectFromJSON,
     ProjectToJSON,
     User,
-    UserFromJSON,
-    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
+
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
 
 export interface ProjectsListRequest {
     createdAfter?: Date;
@@ -48,7 +50,7 @@ export interface ProjectsRetrieveRequest {
 export interface ProjectsUsersListRequest {
     parentId: string;
     cursor?: string;
-    expand?: ProjectsUsersListExpandEnum;
+    expand?: Array<ProjectsUsersListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     pageSize?: number;
@@ -101,6 +103,9 @@ export class ProjectsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -143,6 +148,9 @@ export class ProjectsApi extends runtime.BaseAPI {
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -187,7 +195,7 @@ export class ProjectsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -202,6 +210,9 @@ export class ProjectsApi extends runtime.BaseAPI {
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

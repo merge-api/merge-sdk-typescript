@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface JobsListRequest {
     code?: string | null;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: JobsListExpandEnum;
+    expand?: Array<JobsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -39,14 +43,16 @@ export interface JobsListRequest {
     pageSize?: number;
     remoteFields?: JobsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: JobsListShowEnumOriginsEnum;
     status?: JobsListStatusEnum;
 }
 
 export interface JobsRetrieveRequest {
     id: string;
-    expand?: JobsRetrieveExpandEnum;
+    expand?: Array<JobsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: JobsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: JobsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -76,7 +82,7 @@ export class JobsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -108,9 +114,16 @@ export class JobsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.status !== undefined) {
             queryParameters['status'] = requestParameters.status;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -151,7 +164,7 @@ export class JobsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -162,6 +175,13 @@ export class JobsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -200,19 +220,8 @@ export class JobsApi extends runtime.BaseAPI {
 */
 export enum JobsListExpandEnum {
     Departments = 'departments',
-    DepartmentshiringManagers = 'departments,hiring_managers',
-    DepartmentshiringManagersrecruiters = 'departments,hiring_managers,recruiters',
-    Departmentsoffices = 'departments,offices',
-    DepartmentsofficeshiringManagers = 'departments,offices,hiring_managers',
-    DepartmentsofficeshiringManagersrecruiters = 'departments,offices,hiring_managers,recruiters',
-    Departmentsofficesrecruiters = 'departments,offices,recruiters',
-    Departmentsrecruiters = 'departments,recruiters',
     HiringManagers = 'hiring_managers',
-    HiringManagersrecruiters = 'hiring_managers,recruiters',
     Offices = 'offices',
-    OfficeshiringManagers = 'offices,hiring_managers',
-    OfficeshiringManagersrecruiters = 'offices,hiring_managers,recruiters',
-    Officesrecruiters = 'offices,recruiters',
     Recruiters = 'recruiters'
 }
 /**
@@ -220,6 +229,13 @@ export enum JobsListExpandEnum {
 * @enum {string}
 */
 export enum JobsListRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum JobsListShowEnumOriginsEnum {
     Status = 'status'
 }
 /**
@@ -239,19 +255,8 @@ export enum JobsListStatusEnum {
 */
 export enum JobsRetrieveExpandEnum {
     Departments = 'departments',
-    DepartmentshiringManagers = 'departments,hiring_managers',
-    DepartmentshiringManagersrecruiters = 'departments,hiring_managers,recruiters',
-    Departmentsoffices = 'departments,offices',
-    DepartmentsofficeshiringManagers = 'departments,offices,hiring_managers',
-    DepartmentsofficeshiringManagersrecruiters = 'departments,offices,hiring_managers,recruiters',
-    Departmentsofficesrecruiters = 'departments,offices,recruiters',
-    Departmentsrecruiters = 'departments,recruiters',
     HiringManagers = 'hiring_managers',
-    HiringManagersrecruiters = 'hiring_managers,recruiters',
     Offices = 'offices',
-    OfficeshiringManagers = 'offices,hiring_managers',
-    OfficeshiringManagersrecruiters = 'offices,hiring_managers,recruiters',
-    Officesrecruiters = 'offices,recruiters',
     Recruiters = 'recruiters'
 }
 /**
@@ -259,5 +264,12 @@ export enum JobsRetrieveExpandEnum {
 * @enum {string}
 */
 export enum JobsRetrieveRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum JobsRetrieveShowEnumOriginsEnum {
     Status = 'status'
 }

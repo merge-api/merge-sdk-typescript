@@ -36,7 +36,7 @@ import {
 /**
  * # The Account Object
  * ### Description
- * The `Account` object is used to represent an account in the remote system.
+ * The `Account` object is used to represent a company in a CRM system.
  * ### Usage Example
  * TODO
  * @export
@@ -104,13 +104,13 @@ export interface Account {
      */
     readonly phone_numbers?: Array<PhoneNumber>;
     /**
-     * When the account's last activity  occurred.
+     * The last date (either most recent or furthest in the future) of when an activity occurs in an account.
      * @type {Date}
      * @memberof Account
      */
     last_activity_at?: Date | null;
     /**
-     * When the third party's account was updated.
+     * When the CRM system account data was last modified by a user with a login.
      * @type {Date}
      * @memberof Account
      */

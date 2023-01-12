@@ -23,6 +23,10 @@ import {
     LinkTokenToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface LinkTokenCreateRequest {
     endUserDetailsRequest: EndUserDetailsRequest;
 }
@@ -41,6 +45,9 @@ export class LinkTokenApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

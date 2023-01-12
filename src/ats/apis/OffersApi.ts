@@ -26,13 +26,17 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface OffersListRequest {
     applicationId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     creatorId?: string;
     cursor?: string;
-    expand?: OffersListExpandEnum;
+    expand?: Array<OffersListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -40,13 +44,15 @@ export interface OffersListRequest {
     pageSize?: number;
     remoteFields?: OffersListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: OffersListShowEnumOriginsEnum;
 }
 
 export interface OffersRetrieveRequest {
     id: string;
-    expand?: OffersRetrieveExpandEnum;
+    expand?: Array<OffersRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: OffersRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: OffersRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -80,7 +86,7 @@ export class OffersApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -111,6 +117,13 @@ export class OffersApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -151,7 +164,7 @@ export class OffersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -162,6 +175,13 @@ export class OffersApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -200,7 +220,6 @@ export class OffersApi extends runtime.BaseAPI {
 */
 export enum OffersListExpandEnum {
     Application = 'application',
-    Applicationcreator = 'application,creator',
     Creator = 'creator'
 }
 /**
@@ -214,9 +233,15 @@ export enum OffersListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum OffersListShowEnumOriginsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum OffersRetrieveExpandEnum {
     Application = 'application',
-    Applicationcreator = 'application,creator',
     Creator = 'creator'
 }
 /**
@@ -224,5 +249,12 @@ export enum OffersRetrieveExpandEnum {
 * @enum {string}
 */
 export enum OffersRetrieveRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum OffersRetrieveShowEnumOriginsEnum {
     Status = 'status'
 }

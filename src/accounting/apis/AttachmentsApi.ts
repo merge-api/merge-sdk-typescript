@@ -18,6 +18,15 @@ import {
     AccountingAttachment,
     AccountingAttachmentFromJSON,
     AccountingAttachmentToJSON,
+    AccountingAttachmentEndpointRequest,
+    AccountingAttachmentEndpointRequestFromJSON,
+    AccountingAttachmentEndpointRequestToJSON,
+    AccountingAttachmentResponse,
+    AccountingAttachmentResponseFromJSON,
+    AccountingAttachmentResponseToJSON,
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
 } from '../models';
 import {
@@ -25,6 +34,16 @@ import {
 	MergePaginatedResponseFromJSON,
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
+
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
+export interface AttachmentsCreateRequest {
+    accountingAttachmentEndpointRequest: AccountingAttachmentEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface AttachmentsListRequest {
     companyId?: string;
@@ -39,6 +58,7 @@ export interface AttachmentsListRequest {
     remoteId?: string | null;
 }
 
+// extends MergeMetaRequest
 export interface AttachmentsRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
@@ -48,6 +68,59 @@ export interface AttachmentsRetrieveRequest {
  * 
  */
 export class AttachmentsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates an `AccountingAttachment` object with the given values.
+     */
+    async attachmentsCreateRaw(requestParameters: AttachmentsCreateRequest): Promise<runtime.ApiResponse<AccountingAttachmentResponse | undefined>> {
+        if (requestParameters.accountingAttachmentEndpointRequest === null || requestParameters.accountingAttachmentEndpointRequest === undefined) {
+            throw new runtime.RequiredError('accountingAttachmentEndpointRequest','Required parameter requestParameters.accountingAttachmentEndpointRequest was null or undefined when calling attachmentsCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/attachments`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: AccountingAttachmentEndpointRequestToJSON(requestParameters.accountingAttachmentEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => AccountingAttachmentResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an `AccountingAttachment` object with the given values.
+     */
+    async attachmentsCreate(requestParameters: AttachmentsCreateRequest): Promise<AccountingAttachmentResponse | undefined> {
+        const response = await this.attachmentsCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `AccountingAttachment` objects.
@@ -95,6 +168,9 @@ export class AttachmentsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -125,6 +201,50 @@ export class AttachmentsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns metadata for `AccountingAttachment` POSTs.
+     */
+    async attachmentsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/accounting/v1/attachments/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `AccountingAttachment` POSTs.
+     */
+    async attachmentsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.attachmentsMetaPostRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns an `AccountingAttachment` object with the given `id`.
      */
     async attachmentsRetrieveRaw(requestParameters: AttachmentsRetrieveRequest): Promise<runtime.ApiResponse<AccountingAttachment | undefined>> {
@@ -137,6 +257,9 @@ export class AttachmentsApi extends runtime.BaseAPI {
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

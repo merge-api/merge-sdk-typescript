@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface ContactsCreateRequest {
     cRMContactEndpointRequest: CRMContactEndpointRequest;
     isDebugMode?: boolean;
@@ -46,7 +50,7 @@ export interface ContactsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: ContactsListExpandEnum;
+    expand?: Array<ContactsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -55,9 +59,10 @@ export interface ContactsListRequest {
     remoteId?: string | null;
 }
 
+// extends MergeMetaRequest
 export interface ContactsRetrieveRequest {
     id: string;
-    expand?: ContactsRetrieveExpandEnum;
+    expand?: Array<ContactsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -83,6 +88,9 @@ export class ContactsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -138,7 +146,7 @@ export class ContactsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -165,6 +173,9 @@ export class ContactsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -198,8 +209,17 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMContact` POSTs.
      */
-    async contactsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async contactsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -225,8 +245,8 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMContact` POSTs.
      */
-    async contactsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.contactsMetaPostRetrieveRaw();
+    async contactsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.contactsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -240,13 +260,16 @@ export class ContactsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

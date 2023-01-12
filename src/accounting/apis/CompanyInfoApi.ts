@@ -26,11 +26,15 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface CompanyInfoListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: CompanyInfoListExpandEnum;
+    expand?: Array<CompanyInfoListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -41,7 +45,7 @@ export interface CompanyInfoListRequest {
 
 export interface CompanyInfoRetrieveRequest {
     id: string;
-    expand?: CompanyInfoRetrieveExpandEnum;
+    expand?: Array<CompanyInfoRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -68,7 +72,7 @@ export class CompanyInfoApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -95,6 +99,9 @@ export class CompanyInfoApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -135,13 +142,16 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -180,7 +190,6 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 */
 export enum CompanyInfoListExpandEnum {
     Addresses = 'addresses',
-    AddressesphoneNumbers = 'addresses,phone_numbers',
     PhoneNumbers = 'phone_numbers'
 }
 /**
@@ -189,6 +198,5 @@ export enum CompanyInfoListExpandEnum {
 */
 export enum CompanyInfoRetrieveExpandEnum {
     Addresses = 'addresses',
-    AddressesphoneNumbers = 'addresses,phone_numbers',
     PhoneNumbers = 'phone_numbers'
 }

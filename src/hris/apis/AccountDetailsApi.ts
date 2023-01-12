@@ -20,6 +20,11 @@ import {
     AccountDetailsToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
+//
 /**
  * 
  */
@@ -30,6 +35,9 @@ export class AccountDetailsApi extends runtime.BaseAPI {
      */
     async accountDetailsRetrieveRaw(): Promise<runtime.ApiResponse<AccountDetails | undefined>> {
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

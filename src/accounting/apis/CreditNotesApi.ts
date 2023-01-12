@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface CreditNotesListRequest {
     companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: CreditNotesListExpandEnum;
+    expand?: Array<CreditNotesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -39,13 +43,15 @@ export interface CreditNotesListRequest {
     pageSize?: number;
     remoteFields?: CreditNotesListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: CreditNotesListShowEnumOriginsEnum;
 }
 
 export interface CreditNotesRetrieveRequest {
     id: string;
-    expand?: CreditNotesRetrieveExpandEnum;
+    expand?: Array<CreditNotesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: CreditNotesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: CreditNotesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -75,7 +81,7 @@ export class CreditNotesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -106,6 +112,13 @@ export class CreditNotesApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -146,7 +159,7 @@ export class CreditNotesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -157,6 +170,13 @@ export class CreditNotesApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -209,6 +229,15 @@ export enum CreditNotesListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum CreditNotesListShowEnumOriginsEnum {
+    Status = 'status',
+    Statustype = 'status,type',
+    Type = 'type'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum CreditNotesRetrieveExpandEnum {
     Payments = 'payments'
 }
@@ -217,6 +246,15 @@ export enum CreditNotesRetrieveExpandEnum {
 * @enum {string}
 */
 export enum CreditNotesRetrieveRemoteFieldsEnum {
+    Status = 'status',
+    Statustype = 'status,type',
+    Type = 'type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum CreditNotesRetrieveShowEnumOriginsEnum {
     Status = 'status',
     Statustype = 'status,type',
     Type = 'type'

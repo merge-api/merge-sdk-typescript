@@ -26,11 +26,15 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface ActivitiesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: ActivitiesListExpandEnum;
+    expand?: Array<ActivitiesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -38,14 +42,16 @@ export interface ActivitiesListRequest {
     pageSize?: number;
     remoteFields?: ActivitiesListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: ActivitiesListShowEnumOriginsEnum;
     userId?: string;
 }
 
 export interface ActivitiesRetrieveRequest {
     id: string;
-    expand?: ActivitiesRetrieveExpandEnum;
+    expand?: Array<ActivitiesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: ActivitiesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: ActivitiesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -71,7 +77,7 @@ export class ActivitiesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -103,9 +109,16 @@ export class ActivitiesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.userId !== undefined) {
             queryParameters['user_id'] = requestParameters.userId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -146,7 +159,7 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -157,6 +170,13 @@ export class ActivitiesApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -209,6 +229,15 @@ export enum ActivitiesListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum ActivitiesListShowEnumOriginsEnum {
+    ActivityType = 'activity_type',
+    ActivityTypevisibility = 'activity_type,visibility',
+    Visibility = 'visibility'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum ActivitiesRetrieveExpandEnum {
     User = 'user'
 }
@@ -217,6 +246,15 @@ export enum ActivitiesRetrieveExpandEnum {
 * @enum {string}
 */
 export enum ActivitiesRetrieveRemoteFieldsEnum {
+    ActivityType = 'activity_type',
+    ActivityTypevisibility = 'activity_type,visibility',
+    Visibility = 'visibility'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum ActivitiesRetrieveShowEnumOriginsEnum {
     ActivityType = 'activity_type',
     ActivityTypevisibility = 'activity_type,visibility',
     Visibility = 'visibility'

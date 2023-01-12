@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface ExpensesCreateRequest {
     expenseEndpointRequest: ExpenseEndpointRequest;
     isDebugMode?: boolean;
@@ -46,7 +50,7 @@ export interface ExpensesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: ExpensesListExpandEnum;
+    expand?: Array<ExpensesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -55,9 +59,10 @@ export interface ExpensesListRequest {
     remoteId?: string | null;
 }
 
+// extends MergeMetaRequest
 export interface ExpensesRetrieveRequest {
     id: string;
-    expand?: ExpensesRetrieveExpandEnum;
+    expand?: Array<ExpensesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -83,6 +88,9 @@ export class ExpensesApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -138,7 +146,7 @@ export class ExpensesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -165,6 +173,9 @@ export class ExpensesApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -198,8 +209,17 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Expense` POSTs.
      */
-    async expensesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async expensesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -225,8 +245,8 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Expense` POSTs.
      */
-    async expensesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.expensesMetaPostRetrieveRaw();
+    async expensesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.expensesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -240,13 +260,16 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -285,7 +308,6 @@ export class ExpensesApi extends runtime.BaseAPI {
 */
 export enum ExpensesListExpandEnum {
     Account = 'account',
-    Accountcontact = 'account,contact',
     Contact = 'contact'
 }
 /**
@@ -294,6 +316,5 @@ export enum ExpensesListExpandEnum {
 */
 export enum ExpensesRetrieveExpandEnum {
     Account = 'account',
-    Accountcontact = 'account,contact',
     Contact = 'contact'
 }

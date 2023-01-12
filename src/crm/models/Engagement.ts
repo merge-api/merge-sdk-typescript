@@ -32,7 +32,7 @@ import {
 /**
  * # The Engagement Object
  * ### Description
- * The `Engagement` object is used to represent an engagement in the remote system.
+ * The `Engagement` object is used to represent an interaction noted in a CRM system.
  * ### Usage Example
  * TODO
  * @export
