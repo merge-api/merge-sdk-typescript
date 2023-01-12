@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum OriginTypeEnum {
+export enum OriginTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     CustomObject = 'CUSTOM_OBJECT',
     CommonModel = 'COMMON_MODEL',
     RemoteOnlyModel = 'REMOTE_ONLY_MODEL'
+}
+
+export interface OriginTypeEnum {
+    value: OriginTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function OriginTypeEnumFromJSON(json: any): OriginTypeEnum {
 }
 
 export function OriginTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OriginTypeEnum {
-    if ((<any>Object).values(OriginTypeEnum).includes(json)) {
-        return json as OriginTypeEnum;
+    if ((<any>Object).values(OriginTypeEnumValues).includes(json)) {
+        return {
+            value: json as OriginTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return OriginTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: OriginTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function OriginTypeEnumToJSON(value?: OriginTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != OriginTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

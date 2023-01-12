@@ -19,12 +19,17 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum TicketStatusEnum {
+export enum TicketStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Open = 'OPEN',
     Closed = 'CLOSED',
     InProgress = 'IN_PROGRESS',
     OnHold = 'ON_HOLD'
+}
+
+export interface TicketStatusEnum {
+    value: TicketStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -33,13 +38,19 @@ export function TicketStatusEnumFromJSON(json: any): TicketStatusEnum {
 }
 
 export function TicketStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): TicketStatusEnum {
-    if ((<any>Object).values(TicketStatusEnum).includes(json)) {
-        return json as TicketStatusEnum;
+    if ((<any>Object).values(TicketStatusEnumValues).includes(json)) {
+        return {
+            value: json as TicketStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return TicketStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: TicketStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function TicketStatusEnumToJSON(value?: TicketStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != TicketStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

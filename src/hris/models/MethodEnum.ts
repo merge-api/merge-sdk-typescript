@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum MethodEnum {
+export enum MethodEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Get = 'GET',
     Options = 'OPTIONS',
@@ -30,19 +30,30 @@ export enum MethodEnum {
     Delete = 'DELETE'
 }
 
+export interface MethodEnum {
+    value: MethodEnumValues,
+    rawValue: string
+}
+
 
 export function MethodEnumFromJSON(json: any): MethodEnum {
     return MethodEnumFromJSONTyped(json, false);
 }
 
 export function MethodEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): MethodEnum {
-    if ((<any>Object).values(MethodEnum).includes(json)) {
-        return json as MethodEnum;
+    if ((<any>Object).values(MethodEnumValues).includes(json)) {
+        return {
+            value: json as MethodEnumValues,
+            rawValue: json as string
+        }
     }
-    return MethodEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: MethodEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function MethodEnumToJSON(value?: MethodEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != MethodEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

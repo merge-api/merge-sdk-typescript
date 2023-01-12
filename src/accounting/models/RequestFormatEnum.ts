@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum RequestFormatEnum {
+export enum RequestFormatEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Json = 'JSON',
     Xml = 'XML',
     Multipart = 'MULTIPART'
+}
+
+export interface RequestFormatEnum {
+    value: RequestFormatEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function RequestFormatEnumFromJSON(json: any): RequestFormatEnum {
 }
 
 export function RequestFormatEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RequestFormatEnum {
-    if ((<any>Object).values(RequestFormatEnum).includes(json)) {
-        return json as RequestFormatEnum;
+    if ((<any>Object).values(RequestFormatEnumValues).includes(json)) {
+        return {
+            value: json as RequestFormatEnumValues,
+            rawValue: json as string
+        }
     }
-    return RequestFormatEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: RequestFormatEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function RequestFormatEnumToJSON(value?: RequestFormatEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != RequestFormatEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

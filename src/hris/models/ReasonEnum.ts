@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum ReasonEnum {
+export enum ReasonEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     GeneralCustomerRequest = 'GENERAL_CUSTOMER_REQUEST',
     Gdpr = 'GDPR',
     Other = 'OTHER'
+}
+
+export interface ReasonEnum {
+    value: ReasonEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function ReasonEnumFromJSON(json: any): ReasonEnum {
 }
 
 export function ReasonEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ReasonEnum {
-    if ((<any>Object).values(ReasonEnum).includes(json)) {
-        return json as ReasonEnum;
+    if ((<any>Object).values(ReasonEnumValues).includes(json)) {
+        return {
+            value: json as ReasonEnumValues,
+            rawValue: json as string
+        }
     }
-    return ReasonEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: ReasonEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function ReasonEnumToJSON(value?: ReasonEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != ReasonEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

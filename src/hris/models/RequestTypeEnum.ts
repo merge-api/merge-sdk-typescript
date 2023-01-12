@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum RequestTypeEnum {
+export enum RequestTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Vacation = 'VACATION',
     Sick = 'SICK',
@@ -29,19 +29,30 @@ export enum RequestTypeEnum {
     Bereavement = 'BEREAVEMENT'
 }
 
+export interface RequestTypeEnum {
+    value: RequestTypeEnumValues,
+    rawValue: string
+}
+
 
 export function RequestTypeEnumFromJSON(json: any): RequestTypeEnum {
     return RequestTypeEnumFromJSONTyped(json, false);
 }
 
 export function RequestTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RequestTypeEnum {
-    if ((<any>Object).values(RequestTypeEnum).includes(json)) {
-        return json as RequestTypeEnum;
+    if ((<any>Object).values(RequestTypeEnumValues).includes(json)) {
+        return {
+            value: json as RequestTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return RequestTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: RequestTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function RequestTypeEnumToJSON(value?: RequestTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != RequestTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

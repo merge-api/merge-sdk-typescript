@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum SelectiveSyncConfigurationsUsageEnum {
+export enum SelectiveSyncConfigurationsUsageEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     NextSync = 'IN_NEXT_SYNC',
     LastSync = 'IN_LAST_SYNC'
+}
+
+export interface SelectiveSyncConfigurationsUsageEnum {
+    value: SelectiveSyncConfigurationsUsageEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function SelectiveSyncConfigurationsUsageEnumFromJSON(json: any): Selecti
 }
 
 export function SelectiveSyncConfigurationsUsageEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): SelectiveSyncConfigurationsUsageEnum {
-    if ((<any>Object).values(SelectiveSyncConfigurationsUsageEnum).includes(json)) {
-        return json as SelectiveSyncConfigurationsUsageEnum;
+    if ((<any>Object).values(SelectiveSyncConfigurationsUsageEnumValues).includes(json)) {
+        return {
+            value: json as SelectiveSyncConfigurationsUsageEnumValues,
+            rawValue: json as string
+        }
     }
-    return SelectiveSyncConfigurationsUsageEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: SelectiveSyncConfigurationsUsageEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function SelectiveSyncConfigurationsUsageEnumToJSON(value?: SelectiveSyncConfigurationsUsageEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != SelectiveSyncConfigurationsUsageEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

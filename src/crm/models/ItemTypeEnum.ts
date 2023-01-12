@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum ItemTypeEnum {
+export enum ItemTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     String = 'string',
     Number = 'number',
@@ -28,19 +28,30 @@ export enum ItemTypeEnum {
     Bool = 'bool'
 }
 
+export interface ItemTypeEnum {
+    value: ItemTypeEnumValues,
+    rawValue: string
+}
+
 
 export function ItemTypeEnumFromJSON(json: any): ItemTypeEnum {
     return ItemTypeEnumFromJSONTyped(json, false);
 }
 
 export function ItemTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ItemTypeEnum {
-    if ((<any>Object).values(ItemTypeEnum).includes(json)) {
-        return json as ItemTypeEnum;
+    if ((<any>Object).values(ItemTypeEnumValues).includes(json)) {
+        return {
+            value: json as ItemTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return ItemTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: ItemTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function ItemTypeEnumToJSON(value?: ItemTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != ItemTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

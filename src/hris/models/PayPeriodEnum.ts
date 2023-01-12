@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum PayPeriodEnum {
+export enum PayPeriodEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Hour = 'HOUR',
     Day = 'DAY',
@@ -32,19 +32,30 @@ export enum PayPeriodEnum {
     Year = 'YEAR'
 }
 
+export interface PayPeriodEnum {
+    value: PayPeriodEnumValues,
+    rawValue: string
+}
+
 
 export function PayPeriodEnumFromJSON(json: any): PayPeriodEnum {
     return PayPeriodEnumFromJSONTyped(json, false);
 }
 
 export function PayPeriodEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PayPeriodEnum {
-    if ((<any>Object).values(PayPeriodEnum).includes(json)) {
-        return json as PayPeriodEnum;
+    if ((<any>Object).values(PayPeriodEnumValues).includes(json)) {
+        return {
+            value: json as PayPeriodEnumValues,
+            rawValue: json as string
+        }
     }
-    return PayPeriodEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: PayPeriodEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function PayPeriodEnumToJSON(value?: PayPeriodEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != PayPeriodEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

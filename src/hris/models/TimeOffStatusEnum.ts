@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum TimeOffStatusEnum {
+export enum TimeOffStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Requested = 'REQUESTED',
     Approved = 'APPROVED',
@@ -28,19 +28,30 @@ export enum TimeOffStatusEnum {
     Deleted = 'DELETED'
 }
 
+export interface TimeOffStatusEnum {
+    value: TimeOffStatusEnumValues,
+    rawValue: string
+}
+
 
 export function TimeOffStatusEnumFromJSON(json: any): TimeOffStatusEnum {
     return TimeOffStatusEnumFromJSONTyped(json, false);
 }
 
 export function TimeOffStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): TimeOffStatusEnum {
-    if ((<any>Object).values(TimeOffStatusEnum).includes(json)) {
-        return json as TimeOffStatusEnum;
+    if ((<any>Object).values(TimeOffStatusEnumValues).includes(json)) {
+        return {
+            value: json as TimeOffStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return TimeOffStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: TimeOffStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function TimeOffStatusEnumToJSON(value?: TimeOffStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != TimeOffStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum DisabilityStatusEnum {
+export enum DisabilityStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     YesIHaveADisabilityOrPreviouslyHadADisability = 'YES_I_HAVE_A_DISABILITY_OR_PREVIOUSLY_HAD_A_DISABILITY',
     NoIDontHaveADisability = 'NO_I_DONT_HAVE_A_DISABILITY',
     IDontWishToAnswer = 'I_DONT_WISH_TO_ANSWER'
+}
+
+export interface DisabilityStatusEnum {
+    value: DisabilityStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function DisabilityStatusEnumFromJSON(json: any): DisabilityStatusEnum {
 }
 
 export function DisabilityStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): DisabilityStatusEnum {
-    if ((<any>Object).values(DisabilityStatusEnum).includes(json)) {
-        return json as DisabilityStatusEnum;
+    if ((<any>Object).values(DisabilityStatusEnumValues).includes(json)) {
+        return {
+            value: json as DisabilityStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return DisabilityStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: DisabilityStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function DisabilityStatusEnumToJSON(value?: DisabilityStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != DisabilityStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

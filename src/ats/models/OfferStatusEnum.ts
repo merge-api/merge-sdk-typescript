@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum OfferStatusEnum {
+export enum OfferStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Draft = 'DRAFT',
     ApprovalSent = 'APPROVAL-SENT',
@@ -32,19 +32,30 @@ export enum OfferStatusEnum {
     Deprecated = 'DEPRECATED'
 }
 
+export interface OfferStatusEnum {
+    value: OfferStatusEnumValues,
+    rawValue: string
+}
+
 
 export function OfferStatusEnumFromJSON(json: any): OfferStatusEnum {
     return OfferStatusEnumFromJSONTyped(json, false);
 }
 
 export function OfferStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OfferStatusEnum {
-    if ((<any>Object).values(OfferStatusEnum).includes(json)) {
-        return json as OfferStatusEnum;
+    if ((<any>Object).values(OfferStatusEnumValues).includes(json)) {
+        return {
+            value: json as OfferStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return OfferStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: OfferStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function OfferStatusEnumToJSON(value?: OfferStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != OfferStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

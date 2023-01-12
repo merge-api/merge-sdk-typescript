@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum OverallRecommendationEnum {
+export enum OverallRecommendationEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     DefinitelyNo = 'DEFINITELY_NO',
     No = 'NO',
@@ -28,19 +28,30 @@ export enum OverallRecommendationEnum {
     NoDecision = 'NO_DECISION'
 }
 
+export interface OverallRecommendationEnum {
+    value: OverallRecommendationEnumValues,
+    rawValue: string
+}
+
 
 export function OverallRecommendationEnumFromJSON(json: any): OverallRecommendationEnum {
     return OverallRecommendationEnumFromJSONTyped(json, false);
 }
 
 export function OverallRecommendationEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OverallRecommendationEnum {
-    if ((<any>Object).values(OverallRecommendationEnum).includes(json)) {
-        return json as OverallRecommendationEnum;
+    if ((<any>Object).values(OverallRecommendationEnumValues).includes(json)) {
+        return {
+            value: json as OverallRecommendationEnumValues,
+            rawValue: json as string
+        }
     }
-    return OverallRecommendationEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: OverallRecommendationEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function OverallRecommendationEnumToJSON(value?: OverallRecommendationEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != OverallRecommendationEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum PolicyTypeEnum {
+export enum PolicyTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Vacation = 'VACATION',
     Sick = 'SICK',
@@ -29,19 +29,30 @@ export enum PolicyTypeEnum {
     Bereavement = 'BEREAVEMENT'
 }
 
+export interface PolicyTypeEnum {
+    value: PolicyTypeEnumValues,
+    rawValue: string
+}
+
 
 export function PolicyTypeEnumFromJSON(json: any): PolicyTypeEnum {
     return PolicyTypeEnumFromJSONTyped(json, false);
 }
 
 export function PolicyTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PolicyTypeEnum {
-    if ((<any>Object).values(PolicyTypeEnum).includes(json)) {
-        return json as PolicyTypeEnum;
+    if ((<any>Object).values(PolicyTypeEnumValues).includes(json)) {
+        return {
+            value: json as PolicyTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return PolicyTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: PolicyTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function PolicyTypeEnumToJSON(value?: PolicyTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != PolicyTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

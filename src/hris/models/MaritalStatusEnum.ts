@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum MaritalStatusEnum {
+export enum MaritalStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Single = 'SINGLE',
     MarriedFilingJointly = 'MARRIED_FILING_JOINTLY',
@@ -28,19 +28,30 @@ export enum MaritalStatusEnum {
     QualifyingWidowOrWidowerWithDependentChild = 'QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD'
 }
 
+export interface MaritalStatusEnum {
+    value: MaritalStatusEnumValues,
+    rawValue: string
+}
+
 
 export function MaritalStatusEnumFromJSON(json: any): MaritalStatusEnum {
     return MaritalStatusEnumFromJSONTyped(json, false);
 }
 
 export function MaritalStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): MaritalStatusEnum {
-    if ((<any>Object).values(MaritalStatusEnum).includes(json)) {
-        return json as MaritalStatusEnum;
+    if ((<any>Object).values(MaritalStatusEnumValues).includes(json)) {
+        return {
+            value: json as MaritalStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return MaritalStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: MaritalStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function MaritalStatusEnumToJSON(value?: MaritalStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != MaritalStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

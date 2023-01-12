@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CreditNoteStatusEnum {
+export enum CreditNoteStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Submitted = 'SUBMITTED',
     Authorized = 'AUTHORIZED',
     Paid = 'PAID'
+}
+
+export interface CreditNoteStatusEnum {
+    value: CreditNoteStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function CreditNoteStatusEnumFromJSON(json: any): CreditNoteStatusEnum {
 }
 
 export function CreditNoteStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreditNoteStatusEnum {
-    if ((<any>Object).values(CreditNoteStatusEnum).includes(json)) {
-        return json as CreditNoteStatusEnum;
+    if ((<any>Object).values(CreditNoteStatusEnumValues).includes(json)) {
+        return {
+            value: json as CreditNoteStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return CreditNoteStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CreditNoteStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CreditNoteStatusEnumToJSON(value?: CreditNoteStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CreditNoteStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

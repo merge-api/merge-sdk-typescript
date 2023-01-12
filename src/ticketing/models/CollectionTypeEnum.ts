@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CollectionTypeEnum {
+export enum CollectionTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     List = 'LIST',
     Project = 'PROJECT'
+}
+
+export interface CollectionTypeEnum {
+    value: CollectionTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function CollectionTypeEnumFromJSON(json: any): CollectionTypeEnum {
 }
 
 export function CollectionTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CollectionTypeEnum {
-    if ((<any>Object).values(CollectionTypeEnum).includes(json)) {
-        return json as CollectionTypeEnum;
+    if ((<any>Object).values(CollectionTypeEnumValues).includes(json)) {
+        return {
+            value: json as CollectionTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return CollectionTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CollectionTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CollectionTypeEnumToJSON(value?: CollectionTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CollectionTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum ResponseTypeEnum {
+export enum ResponseTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Json = 'JSON',
     Base64Gzip = 'BASE64_GZIP'
+}
+
+export interface ResponseTypeEnum {
+    value: ResponseTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function ResponseTypeEnumFromJSON(json: any): ResponseTypeEnum {
 }
 
 export function ResponseTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResponseTypeEnum {
-    if ((<any>Object).values(ResponseTypeEnum).includes(json)) {
-        return json as ResponseTypeEnum;
+    if ((<any>Object).values(ResponseTypeEnumValues).includes(json)) {
+        return {
+            value: json as ResponseTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return ResponseTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: ResponseTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function ResponseTypeEnumToJSON(value?: ResponseTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != ResponseTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

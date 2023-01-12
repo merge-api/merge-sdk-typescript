@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum AccountTypeEnum {
+export enum AccountTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Savings = 'SAVINGS',
     Checking = 'CHECKING'
+}
+
+export interface AccountTypeEnum {
+    value: AccountTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function AccountTypeEnumFromJSON(json: any): AccountTypeEnum {
 }
 
 export function AccountTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountTypeEnum {
-    if ((<any>Object).values(AccountTypeEnum).includes(json)) {
-        return json as AccountTypeEnum;
+    if ((<any>Object).values(AccountTypeEnumValues).includes(json)) {
+        return {
+            value: json as AccountTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return AccountTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: AccountTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function AccountTypeEnumToJSON(value?: AccountTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != AccountTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

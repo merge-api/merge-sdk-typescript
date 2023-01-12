@@ -19,12 +19,17 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum EarningTypeEnum {
+export enum EarningTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Salary = 'SALARY',
     Reimbursement = 'REIMBURSEMENT',
     Overtime = 'OVERTIME',
     Bonus = 'BONUS'
+}
+
+export interface EarningTypeEnum {
+    value: EarningTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -33,13 +38,19 @@ export function EarningTypeEnumFromJSON(json: any): EarningTypeEnum {
 }
 
 export function EarningTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EarningTypeEnum {
-    if ((<any>Object).values(EarningTypeEnum).includes(json)) {
-        return json as EarningTypeEnum;
+    if ((<any>Object).values(EarningTypeEnumValues).includes(json)) {
+        return {
+            value: json as EarningTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return EarningTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: EarningTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function EarningTypeEnumToJSON(value?: EarningTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != EarningTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum PhoneNumberTypeEnum {
+export enum PhoneNumberTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Home = 'HOME',
     Work = 'WORK',
@@ -28,19 +28,30 @@ export enum PhoneNumberTypeEnum {
     Other = 'OTHER'
 }
 
+export interface PhoneNumberTypeEnum {
+    value: PhoneNumberTypeEnumValues,
+    rawValue: string
+}
+
 
 export function PhoneNumberTypeEnumFromJSON(json: any): PhoneNumberTypeEnum {
     return PhoneNumberTypeEnumFromJSONTyped(json, false);
 }
 
 export function PhoneNumberTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PhoneNumberTypeEnum {
-    if ((<any>Object).values(PhoneNumberTypeEnum).includes(json)) {
-        return json as PhoneNumberTypeEnum;
+    if ((<any>Object).values(PhoneNumberTypeEnumValues).includes(json)) {
+        return {
+            value: json as PhoneNumberTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return PhoneNumberTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: PhoneNumberTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function PhoneNumberTypeEnumToJSON(value?: PhoneNumberTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != PhoneNumberTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

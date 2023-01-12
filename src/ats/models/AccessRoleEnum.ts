@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum AccessRoleEnum {
+export enum AccessRoleEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     SuperAdmin = 'SUPER_ADMIN',
     Admin = 'ADMIN',
@@ -28,19 +28,30 @@ export enum AccessRoleEnum {
     Interviewer = 'INTERVIEWER'
 }
 
+export interface AccessRoleEnum {
+    value: AccessRoleEnumValues,
+    rawValue: string
+}
+
 
 export function AccessRoleEnumFromJSON(json: any): AccessRoleEnum {
     return AccessRoleEnumFromJSONTyped(json, false);
 }
 
 export function AccessRoleEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccessRoleEnum {
-    if ((<any>Object).values(AccessRoleEnum).includes(json)) {
-        return json as AccessRoleEnum;
+    if ((<any>Object).values(AccessRoleEnumValues).includes(json)) {
+        return {
+            value: json as AccessRoleEnumValues,
+            rawValue: json as string
+        }
     }
-    return AccessRoleEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: AccessRoleEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function AccessRoleEnumToJSON(value?: AccessRoleEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != AccessRoleEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

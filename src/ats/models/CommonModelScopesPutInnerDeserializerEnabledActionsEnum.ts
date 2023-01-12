@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CommonModelScopesPutInnerDeserializerEnabledActionsEnum {
+export enum CommonModelScopesPutInnerDeserializerEnabledActionsEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Read = 'READ',
     Write = 'WRITE'
+}
+
+export interface CommonModelScopesPutInnerDeserializerEnabledActionsEnum {
+    value: CommonModelScopesPutInnerDeserializerEnabledActionsEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function CommonModelScopesPutInnerDeserializerEnabledActionsEnumFromJSON(
 }
 
 export function CommonModelScopesPutInnerDeserializerEnabledActionsEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CommonModelScopesPutInnerDeserializerEnabledActionsEnum {
-    if ((<any>Object).values(CommonModelScopesPutInnerDeserializerEnabledActionsEnum).includes(json)) {
-        return json as CommonModelScopesPutInnerDeserializerEnabledActionsEnum;
+    if ((<any>Object).values(CommonModelScopesPutInnerDeserializerEnabledActionsEnumValues).includes(json)) {
+        return {
+            value: json as CommonModelScopesPutInnerDeserializerEnabledActionsEnumValues,
+            rawValue: json as string
+        }
     }
-    return CommonModelScopesPutInnerDeserializerEnabledActionsEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CommonModelScopesPutInnerDeserializerEnabledActionsEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CommonModelScopesPutInnerDeserializerEnabledActionsEnumToJSON(value?: CommonModelScopesPutInnerDeserializerEnabledActionsEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CommonModelScopesPutInnerDeserializerEnabledActionsEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

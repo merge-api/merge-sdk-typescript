@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum GenderEnum {
+export enum GenderEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Male = 'MALE',
     Female = 'FEMALE',
@@ -28,19 +28,30 @@ export enum GenderEnum {
     PreferNotToDisclose = 'PREFER_NOT_TO_DISCLOSE'
 }
 
+export interface GenderEnum {
+    value: GenderEnumValues,
+    rawValue: string
+}
+
 
 export function GenderEnumFromJSON(json: any): GenderEnum {
     return GenderEnumFromJSONTyped(json, false);
 }
 
 export function GenderEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): GenderEnum {
-    if ((<any>Object).values(GenderEnum).includes(json)) {
-        return json as GenderEnum;
+    if ((<any>Object).values(GenderEnumValues).includes(json)) {
+        return {
+            value: json as GenderEnumValues,
+            rawValue: json as string
+        }
     }
-    return GenderEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: GenderEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function GenderEnumToJSON(value?: GenderEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != GenderEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

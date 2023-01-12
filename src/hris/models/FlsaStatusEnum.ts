@@ -19,12 +19,17 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum FlsaStatusEnum {
+export enum FlsaStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Exempt = 'EXEMPT',
     SalariedNonexempt = 'SALARIED_NONEXEMPT',
     Nonexempt = 'NONEXEMPT',
     Owner = 'OWNER'
+}
+
+export interface FlsaStatusEnum {
+    value: FlsaStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -33,13 +38,19 @@ export function FlsaStatusEnumFromJSON(json: any): FlsaStatusEnum {
 }
 
 export function FlsaStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): FlsaStatusEnum {
-    if ((<any>Object).values(FlsaStatusEnum).includes(json)) {
-        return json as FlsaStatusEnum;
+    if ((<any>Object).values(FlsaStatusEnumValues).includes(json)) {
+        return {
+            value: json as FlsaStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return FlsaStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: FlsaStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function FlsaStatusEnumToJSON(value?: FlsaStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != FlsaStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

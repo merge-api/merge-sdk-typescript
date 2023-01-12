@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum TaskStatusEnum {
+export enum TaskStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Open = 'OPEN',
     Closed = 'CLOSED'
+}
+
+export interface TaskStatusEnum {
+    value: TaskStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function TaskStatusEnumFromJSON(json: any): TaskStatusEnum {
 }
 
 export function TaskStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): TaskStatusEnum {
-    if ((<any>Object).values(TaskStatusEnum).includes(json)) {
-        return json as TaskStatusEnum;
+    if ((<any>Object).values(TaskStatusEnumValues).includes(json)) {
+        return {
+            value: json as TaskStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return TaskStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: TaskStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function TaskStatusEnumToJSON(value?: TaskStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != TaskStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

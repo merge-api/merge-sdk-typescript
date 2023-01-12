@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum LocationTypeEnum {
+export enum LocationTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Home = 'HOME',
     Work = 'WORK'
+}
+
+export interface LocationTypeEnum {
+    value: LocationTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function LocationTypeEnumFromJSON(json: any): LocationTypeEnum {
 }
 
 export function LocationTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): LocationTypeEnum {
-    if ((<any>Object).values(LocationTypeEnum).includes(json)) {
-        return json as LocationTypeEnum;
+    if ((<any>Object).values(LocationTypeEnumValues).includes(json)) {
+        return {
+            value: json as LocationTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return LocationTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: LocationTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function LocationTypeEnumToJSON(value?: LocationTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != LocationTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

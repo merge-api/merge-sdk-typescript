@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum PayFrequencyEnum {
+export enum PayFrequencyEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Weekly = 'WEEKLY',
     Biweekly = 'BIWEEKLY',
@@ -32,19 +32,30 @@ export enum PayFrequencyEnum {
     Semimonthly = 'SEMIMONTHLY'
 }
 
+export interface PayFrequencyEnum {
+    value: PayFrequencyEnumValues,
+    rawValue: string
+}
+
 
 export function PayFrequencyEnumFromJSON(json: any): PayFrequencyEnum {
     return PayFrequencyEnumFromJSONTyped(json, false);
 }
 
 export function PayFrequencyEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PayFrequencyEnum {
-    if ((<any>Object).values(PayFrequencyEnum).includes(json)) {
-        return json as PayFrequencyEnum;
+    if ((<any>Object).values(PayFrequencyEnumValues).includes(json)) {
+        return {
+            value: json as PayFrequencyEnumValues,
+            rawValue: json as string
+        }
     }
-    return PayFrequencyEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: PayFrequencyEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function PayFrequencyEnumToJSON(value?: PayFrequencyEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != PayFrequencyEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

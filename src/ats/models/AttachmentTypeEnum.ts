@@ -19,12 +19,17 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum AttachmentTypeEnum {
+export enum AttachmentTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Resume = 'RESUME',
     CoverLetter = 'COVER_LETTER',
     OfferLetter = 'OFFER_LETTER',
     Other = 'OTHER'
+}
+
+export interface AttachmentTypeEnum {
+    value: AttachmentTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -33,13 +38,19 @@ export function AttachmentTypeEnumFromJSON(json: any): AttachmentTypeEnum {
 }
 
 export function AttachmentTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AttachmentTypeEnum {
-    if ((<any>Object).values(AttachmentTypeEnum).includes(json)) {
-        return json as AttachmentTypeEnum;
+    if ((<any>Object).values(AttachmentTypeEnumValues).includes(json)) {
+        return {
+            value: json as AttachmentTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return AttachmentTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: AttachmentTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function AttachmentTypeEnumToJSON(value?: AttachmentTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != AttachmentTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

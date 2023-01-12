@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum VeteranStatusEnum {
+export enum VeteranStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     AmNotAProtectedVeteran = 'I_AM_NOT_A_PROTECTED_VETERAN',
     IdentifyAsOneOrMoreOfTheClassificationsOfAProtectedVeteran = 'I_IDENTIFY_AS_ONE_OR_MORE_OF_THE_CLASSIFICATIONS_OF_A_PROTECTED_VETERAN',
     DontWishToAnswer = 'I_DONT_WISH_TO_ANSWER'
+}
+
+export interface VeteranStatusEnum {
+    value: VeteranStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function VeteranStatusEnumFromJSON(json: any): VeteranStatusEnum {
 }
 
 export function VeteranStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): VeteranStatusEnum {
-    if ((<any>Object).values(VeteranStatusEnum).includes(json)) {
-        return json as VeteranStatusEnum;
+    if ((<any>Object).values(VeteranStatusEnumValues).includes(json)) {
+        return {
+            value: json as VeteranStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return VeteranStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: VeteranStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function VeteranStatusEnumToJSON(value?: VeteranStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != VeteranStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

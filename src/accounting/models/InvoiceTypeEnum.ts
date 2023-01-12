@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum InvoiceTypeEnum {
+export enum InvoiceTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Receivable = 'ACCOUNTS_RECEIVABLE',
     Payable = 'ACCOUNTS_PAYABLE'
+}
+
+export interface InvoiceTypeEnum {
+    value: InvoiceTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function InvoiceTypeEnumFromJSON(json: any): InvoiceTypeEnum {
 }
 
 export function InvoiceTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): InvoiceTypeEnum {
-    if ((<any>Object).values(InvoiceTypeEnum).includes(json)) {
-        return json as InvoiceTypeEnum;
+    if ((<any>Object).values(InvoiceTypeEnumValues).includes(json)) {
+        return {
+            value: json as InvoiceTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return InvoiceTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: InvoiceTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function InvoiceTypeEnumToJSON(value?: InvoiceTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != InvoiceTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum TypeEnum {
+export enum TypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Organization = 'ORGANIZATION',
     Integration = 'INTEGRATION',
     LinkedAccount = 'LINKED_ACCOUNT'
+}
+
+export interface TypeEnum {
+    value: TypeEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function TypeEnumFromJSON(json: any): TypeEnum {
 }
 
 export function TypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): TypeEnum {
-    if ((<any>Object).values(TypeEnum).includes(json)) {
-        return json as TypeEnum;
+    if ((<any>Object).values(TypeEnumValues).includes(json)) {
+        return {
+            value: json as TypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return TypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: TypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function TypeEnumToJSON(value?: TypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != TypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

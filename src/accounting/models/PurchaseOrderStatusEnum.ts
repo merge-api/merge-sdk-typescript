@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum PurchaseOrderStatusEnum {
+export enum PurchaseOrderStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Draft = 'DRAFT',
     Submitted = 'SUBMITTED',
@@ -28,19 +28,30 @@ export enum PurchaseOrderStatusEnum {
     Deleted = 'DELETED'
 }
 
+export interface PurchaseOrderStatusEnum {
+    value: PurchaseOrderStatusEnumValues,
+    rawValue: string
+}
+
 
 export function PurchaseOrderStatusEnumFromJSON(json: any): PurchaseOrderStatusEnum {
     return PurchaseOrderStatusEnumFromJSONTyped(json, false);
 }
 
 export function PurchaseOrderStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PurchaseOrderStatusEnum {
-    if ((<any>Object).values(PurchaseOrderStatusEnum).includes(json)) {
-        return json as PurchaseOrderStatusEnum;
+    if ((<any>Object).values(PurchaseOrderStatusEnumValues).includes(json)) {
+        return {
+            value: json as PurchaseOrderStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return PurchaseOrderStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: PurchaseOrderStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function PurchaseOrderStatusEnumToJSON(value?: PurchaseOrderStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != PurchaseOrderStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 
