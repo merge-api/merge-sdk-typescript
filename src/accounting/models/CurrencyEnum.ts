@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CurrencyEnum {
+export enum CurrencyEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Xua = 'XUA',
     Afn = 'AFN',
@@ -329,19 +329,30 @@ export enum CurrencyEnum {
     Zwl = 'ZWL'
 }
 
+export interface CurrencyEnum {
+    value: CurrencyEnumValues,
+    rawValue: string
+}
+
 
 export function CurrencyEnumFromJSON(json: any): CurrencyEnum {
     return CurrencyEnumFromJSONTyped(json, false);
 }
 
 export function CurrencyEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CurrencyEnum {
-    if ((<any>Object).values(CurrencyEnum).includes(json)) {
-        return json as CurrencyEnum;
+    if ((<any>Object).values(CurrencyEnumValues).includes(json)) {
+        return {
+            value: json as CurrencyEnumValues,
+            rawValue: json as string
+        }
     }
-    return CurrencyEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CurrencyEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CurrencyEnumToJSON(value?: CurrencyEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CurrencyEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

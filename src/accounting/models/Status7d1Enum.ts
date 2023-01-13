@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum Status7d1Enum {
+export enum Status7d1EnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Active = 'ACTIVE',
     Archived = 'ARCHIVED'
+}
+
+export interface Status7d1Enum {
+    value: Status7d1EnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function Status7d1EnumFromJSON(json: any): Status7d1Enum {
 }
 
 export function Status7d1EnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): Status7d1Enum {
-    if ((<any>Object).values(Status7d1Enum).includes(json)) {
-        return json as Status7d1Enum;
+    if ((<any>Object).values(Status7d1EnumValues).includes(json)) {
+        return {
+            value: json as Status7d1EnumValues,
+            rawValue: json as string
+        }
     }
-    return Status7d1Enum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: Status7d1EnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function Status7d1EnumToJSON(value?: Status7d1Enum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != Status7d1EnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

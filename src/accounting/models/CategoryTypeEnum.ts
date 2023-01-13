@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CategoryTypeEnum {
+export enum CategoryTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Class = 'CLASS',
     Department = 'DEPARTMENT'
+}
+
+export interface CategoryTypeEnum {
+    value: CategoryTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function CategoryTypeEnumFromJSON(json: any): CategoryTypeEnum {
 }
 
 export function CategoryTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CategoryTypeEnum {
-    if ((<any>Object).values(CategoryTypeEnum).includes(json)) {
-        return json as CategoryTypeEnum;
+    if ((<any>Object).values(CategoryTypeEnumValues).includes(json)) {
+        return {
+            value: json as CategoryTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return CategoryTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CategoryTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CategoryTypeEnumToJSON(value?: CategoryTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CategoryTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

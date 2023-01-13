@@ -20,10 +20,15 @@ import {
     AddressToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface AddressesRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: AddressesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: AddressesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -48,6 +53,13 @@ export class AddressesApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -85,5 +97,12 @@ export class AddressesApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum AddressesRetrieveRemoteFieldsEnum {
+    Type = 'type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum AddressesRetrieveShowEnumOriginsEnum {
     Type = 'type'
 }

@@ -41,6 +41,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface CandidatesCreateRequest {
     candidateEndpointRequest: CandidateEndpointRequest;
     isDebugMode?: boolean;
@@ -57,7 +61,7 @@ export interface CandidatesListRequest {
     createdBefore?: Date;
     cursor?: string;
     emailAddresses?: string;
-    expand?: CandidatesListExpandEnum;
+    expand?: Array<CandidatesListExpandEnum>;
     firstName?: string | null;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
@@ -69,9 +73,10 @@ export interface CandidatesListRequest {
     tags?: string;
 }
 
+// extends MergeMetaRequest
 export interface CandidatesRetrieveRequest {
     id: string;
-    expand?: CandidatesRetrieveExpandEnum;
+    expand?: Array<CandidatesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -97,6 +102,9 @@ export class CandidatesApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -143,6 +151,9 @@ export class CandidatesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -198,7 +209,7 @@ export class CandidatesApi extends runtime.BaseAPI {
             queryParameters['email_addresses'] = requestParameters.emailAddresses;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -238,6 +249,9 @@ export class CandidatesApi extends runtime.BaseAPI {
             queryParameters['tags'] = requestParameters.tags;
         }
 
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -270,8 +284,17 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Candidate` POSTs.
      */
-    async candidatesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async candidatesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -297,8 +320,8 @@ export class CandidatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Candidate` POSTs.
      */
-    async candidatesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.candidatesMetaPostRetrieveRaw();
+    async candidatesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.candidatesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -312,13 +335,16 @@ export class CandidatesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -357,7 +383,6 @@ export class CandidatesApi extends runtime.BaseAPI {
 */
 export enum CandidatesListExpandEnum {
     Applications = 'applications',
-    Applicationsattachments = 'applications,attachments',
     Attachments = 'attachments'
 }
 /**
@@ -366,6 +391,5 @@ export enum CandidatesListExpandEnum {
 */
 export enum CandidatesRetrieveExpandEnum {
     Applications = 'applications',
-    Applicationsattachments = 'applications,attachments',
     Attachments = 'attachments'
 }

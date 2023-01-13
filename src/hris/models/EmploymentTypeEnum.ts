@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum EmploymentTypeEnum {
+export enum EmploymentTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     FullTime = 'FULL_TIME',
     PartTime = 'PART_TIME',
@@ -28,19 +28,30 @@ export enum EmploymentTypeEnum {
     Freelance = 'FREELANCE'
 }
 
+export interface EmploymentTypeEnum {
+    value: EmploymentTypeEnumValues,
+    rawValue: string
+}
+
 
 export function EmploymentTypeEnumFromJSON(json: any): EmploymentTypeEnum {
     return EmploymentTypeEnumFromJSONTyped(json, false);
 }
 
 export function EmploymentTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmploymentTypeEnum {
-    if ((<any>Object).values(EmploymentTypeEnum).includes(json)) {
-        return json as EmploymentTypeEnum;
+    if ((<any>Object).values(EmploymentTypeEnumValues).includes(json)) {
+        return {
+            value: json as EmploymentTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return EmploymentTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: EmploymentTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function EmploymentTypeEnumToJSON(value?: EmploymentTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != EmploymentTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

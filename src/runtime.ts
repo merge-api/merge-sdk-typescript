@@ -88,13 +88,14 @@ export class BaseAPI {
             }
         }
         let response = await (this.configuration.fetchApi || fetch)(fetchParams.input, fetchParams.init);
+        let response_for_post_processing = response.clone()
         for (const middleware of this.middleware) {
             if (middleware.post) {
                 response = await middleware.post({
                     fetch: this.fetchApi,
                     input,
                     init,
-                    response: response.clone(),
+                    response: response_for_post_processing,
                 }) || response;
             }
         }

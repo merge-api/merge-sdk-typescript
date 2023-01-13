@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum ClassificationEnum {
+export enum ClassificationEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Asset = 'ASSET',
     Equity = 'EQUITY',
@@ -28,19 +28,30 @@ export enum ClassificationEnum {
     Revenue = 'REVENUE'
 }
 
+export interface ClassificationEnum {
+    value: ClassificationEnumValues,
+    rawValue: string
+}
+
 
 export function ClassificationEnumFromJSON(json: any): ClassificationEnum {
     return ClassificationEnumFromJSONTyped(json, false);
 }
 
 export function ClassificationEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ClassificationEnum {
-    if ((<any>Object).values(ClassificationEnum).includes(json)) {
-        return json as ClassificationEnum;
+    if ((<any>Object).values(ClassificationEnumValues).includes(json)) {
+        return {
+            value: json as ClassificationEnumValues,
+            rawValue: json as string
+        }
     }
-    return ClassificationEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: ClassificationEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function ClassificationEnumToJSON(value?: ClassificationEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != ClassificationEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

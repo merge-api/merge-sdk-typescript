@@ -20,6 +20,11 @@ import {
     SyncStatusToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
+//
 /**
  * 
  */
@@ -30,6 +35,9 @@ export class ForceResyncApi extends runtime.BaseAPI {
      */
     async syncStatusResyncCreateRaw(): Promise<runtime.ApiResponse<Array<SyncStatus> | undefined>> {
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

@@ -32,7 +32,7 @@ import {
 /**
  * # The Task Object
  * ### Description
- * The `Task` object is used to represent a task in the remote system.
+ * The `Task` object is used to represent a task, such as a to-do item.
  * ### Usage Example
  * TODO
  * @export

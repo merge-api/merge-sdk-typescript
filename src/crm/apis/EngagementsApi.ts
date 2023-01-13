@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface EngagementsCreateRequest {
     engagementEndpointRequest: EngagementEndpointRequest;
     isDebugMode?: boolean;
@@ -45,7 +49,7 @@ export interface EngagementsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: EngagementsListExpandEnum;
+    expand?: Array<EngagementsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -54,9 +58,10 @@ export interface EngagementsListRequest {
     remoteId?: string | null;
 }
 
+// extends MergeMetaRequest
 export interface EngagementsRetrieveRequest {
     id: string;
-    expand?: EngagementsRetrieveExpandEnum;
+    expand?: Array<EngagementsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -82,6 +87,9 @@ export class EngagementsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -133,7 +141,7 @@ export class EngagementsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -160,6 +168,9 @@ export class EngagementsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -193,8 +204,17 @@ export class EngagementsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Engagement` POSTs.
      */
-    async engagementsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async engagementsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -220,8 +240,8 @@ export class EngagementsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Engagement` POSTs.
      */
-    async engagementsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.engagementsMetaPostRetrieveRaw();
+    async engagementsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.engagementsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -235,13 +255,16 @@ export class EngagementsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -280,12 +303,8 @@ export class EngagementsApi extends runtime.BaseAPI {
 */
 export enum EngagementsListExpandEnum {
     Account = 'account',
-    AccountengagementType = 'account,engagement_type',
     EngagementType = 'engagement_type',
-    Owner = 'owner',
-    Owneraccount = 'owner,account',
-    OwneraccountengagementType = 'owner,account,engagement_type',
-    OwnerengagementType = 'owner,engagement_type'
+    Owner = 'owner'
 }
 /**
 * @export
@@ -293,10 +312,6 @@ export enum EngagementsListExpandEnum {
 */
 export enum EngagementsRetrieveExpandEnum {
     Account = 'account',
-    AccountengagementType = 'account,engagement_type',
     EngagementType = 'engagement_type',
-    Owner = 'owner',
-    Owneraccount = 'owner,account',
-    OwneraccountengagementType = 'owner,account,engagement_type',
-    OwnerengagementType = 'owner,engagement_type'
+    Owner = 'owner'
 }

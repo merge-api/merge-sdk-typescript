@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum AddressTypeEnum {
+export enum AddressTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Billing = 'BILLING',
     Shipping = 'SHIPPING'
+}
+
+export interface AddressTypeEnum {
+    value: AddressTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function AddressTypeEnumFromJSON(json: any): AddressTypeEnum {
 }
 
 export function AddressTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AddressTypeEnum {
-    if ((<any>Object).values(AddressTypeEnum).includes(json)) {
-        return json as AddressTypeEnum;
+    if ((<any>Object).values(AddressTypeEnumValues).includes(json)) {
+        return {
+            value: json as AddressTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return AddressTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: AddressTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function AddressTypeEnumToJSON(value?: AddressTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != AddressTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

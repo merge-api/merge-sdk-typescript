@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum OpportunityStatusEnum {
+export enum OpportunityStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Open = 'OPEN',
     Won = 'WON',
     Lost = 'LOST'
+}
+
+export interface OpportunityStatusEnum {
+    value: OpportunityStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function OpportunityStatusEnumFromJSON(json: any): OpportunityStatusEnum 
 }
 
 export function OpportunityStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OpportunityStatusEnum {
-    if ((<any>Object).values(OpportunityStatusEnum).includes(json)) {
-        return json as OpportunityStatusEnum;
+    if ((<any>Object).values(OpportunityStatusEnumValues).includes(json)) {
+        return {
+            value: json as OpportunityStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return OpportunityStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: OpportunityStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function OpportunityStatusEnumToJSON(value?: OpportunityStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != OpportunityStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

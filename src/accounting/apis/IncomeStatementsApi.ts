@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface IncomeStatementsListRequest {
     companyId?: string;
     createdAfter?: Date;
@@ -95,6 +99,9 @@ export class IncomeStatementsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -137,6 +144,9 @@ export class IncomeStatementsApi extends runtime.BaseAPI {
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

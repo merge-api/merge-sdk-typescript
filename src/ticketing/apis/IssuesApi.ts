@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface IssuesListRequest {
     accountToken?: string;
     cursor?: string;
@@ -109,6 +113,9 @@ export class IssuesApi extends runtime.BaseAPI {
             queryParameters['status'] = requestParameters.status;
         }
 
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -147,6 +154,9 @@ export class IssuesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

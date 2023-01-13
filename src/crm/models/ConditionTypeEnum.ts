@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum ConditionTypeEnum {
+export enum ConditionTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Boolean = 'BOOLEAN',
     Date = 'DATE',
@@ -30,19 +30,30 @@ export enum ConditionTypeEnum {
     ListOfStrings = 'LIST_OF_STRINGS'
 }
 
+export interface ConditionTypeEnum {
+    value: ConditionTypeEnumValues,
+    rawValue: string
+}
+
 
 export function ConditionTypeEnumFromJSON(json: any): ConditionTypeEnum {
     return ConditionTypeEnumFromJSONTyped(json, false);
 }
 
 export function ConditionTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ConditionTypeEnum {
-    if ((<any>Object).values(ConditionTypeEnum).includes(json)) {
-        return json as ConditionTypeEnum;
+    if ((<any>Object).values(ConditionTypeEnumValues).includes(json)) {
+        return {
+            value: json as ConditionTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return ConditionTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: ConditionTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function ConditionTypeEnumToJSON(value?: ConditionTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != ConditionTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

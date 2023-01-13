@@ -20,6 +20,10 @@ import {
     AccountTokenToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface AccountTokenRetrieveRequest {
     publicToken: string;
 }
@@ -38,6 +42,9 @@ export class AccountTokenApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

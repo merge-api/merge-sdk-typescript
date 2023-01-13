@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum RunStateEnum {
+export enum RunStateEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Paid = 'PAID',
     Draft = 'DRAFT',
@@ -28,19 +28,30 @@ export enum RunStateEnum {
     Closed = 'CLOSED'
 }
 
+export interface RunStateEnum {
+    value: RunStateEnumValues,
+    rawValue: string
+}
+
 
 export function RunStateEnumFromJSON(json: any): RunStateEnum {
     return RunStateEnumFromJSONTyped(json, false);
 }
 
 export function RunStateEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RunStateEnum {
-    if ((<any>Object).values(RunStateEnum).includes(json)) {
-        return json as RunStateEnum;
+    if ((<any>Object).values(RunStateEnumValues).includes(json)) {
+        return {
+            value: json as RunStateEnumValues,
+            rawValue: json as string
+        }
     }
-    return RunStateEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: RunStateEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function RunStateEnumToJSON(value?: RunStateEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != RunStateEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

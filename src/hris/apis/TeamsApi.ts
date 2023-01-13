@@ -26,11 +26,15 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface TeamsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: TeamsListExpandEnum;
+    expand?: Array<TeamsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -42,7 +46,7 @@ export interface TeamsListRequest {
 
 export interface TeamsRetrieveRequest {
     id: string;
-    expand?: TeamsRetrieveExpandEnum;
+    expand?: Array<TeamsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -69,7 +73,7 @@ export class TeamsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -100,6 +104,9 @@ export class TeamsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,13 +147,16 @@ export class TeamsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

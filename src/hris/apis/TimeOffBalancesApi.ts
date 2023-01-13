@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface TimeOffBalancesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
-    expand?: TimeOffBalancesListExpandEnum;
+    expand?: Array<TimeOffBalancesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -40,13 +44,15 @@ export interface TimeOffBalancesListRequest {
     policyType?: TimeOffBalancesListPolicyTypeEnum;
     remoteFields?: TimeOffBalancesListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: TimeOffBalancesListShowEnumOriginsEnum;
 }
 
 export interface TimeOffBalancesRetrieveRequest {
     id: string;
-    expand?: TimeOffBalancesRetrieveExpandEnum;
+    expand?: Array<TimeOffBalancesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: TimeOffBalancesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: TimeOffBalancesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -76,7 +82,7 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
             queryParameters['employee_id'] = requestParameters.employeeId;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -111,6 +117,13 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -151,7 +164,7 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -162,6 +175,13 @@ export class TimeOffBalancesApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -224,6 +244,13 @@ export enum TimeOffBalancesListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum TimeOffBalancesListShowEnumOriginsEnum {
+    PolicyType = 'policy_type'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TimeOffBalancesRetrieveExpandEnum {
     Employee = 'employee'
 }
@@ -232,5 +259,12 @@ export enum TimeOffBalancesRetrieveExpandEnum {
 * @enum {string}
 */
 export enum TimeOffBalancesRetrieveRemoteFieldsEnum {
+    PolicyType = 'policy_type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum TimeOffBalancesRetrieveShowEnumOriginsEnum {
     PolicyType = 'policy_type'
 }

@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface TimeOffCreateRequest {
     timeOffEndpointRequest: TimeOffEndpointRequest;
     isDebugMode?: boolean;
@@ -47,7 +51,7 @@ export interface TimeOffListRequest {
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
-    expand?: TimeOffListExpandEnum;
+    expand?: Array<TimeOffListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -56,14 +60,17 @@ export interface TimeOffListRequest {
     remoteFields?: TimeOffListRemoteFieldsEnum;
     remoteId?: string | null;
     requestType?: TimeOffListRequestTypeEnum;
+    showEnumOrigins?: TimeOffListShowEnumOriginsEnum;
     status?: TimeOffListStatusEnum;
 }
 
+// extends MergeMetaRequest
 export interface TimeOffRetrieveRequest {
     id: string;
-    expand?: TimeOffRetrieveExpandEnum;
+    expand?: Array<TimeOffRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: TimeOffRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: TimeOffRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -88,6 +95,9 @@ export class TimeOffApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -147,7 +157,7 @@ export class TimeOffApi extends runtime.BaseAPI {
             queryParameters['employee_id'] = requestParameters.employeeId;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -183,9 +193,16 @@ export class TimeOffApi extends runtime.BaseAPI {
             queryParameters['request_type'] = requestParameters.requestType;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.status !== undefined) {
             queryParameters['status'] = requestParameters.status;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -219,8 +236,17 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `TimeOff` POSTs.
      */
-    async timeOffMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async timeOffMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -246,8 +272,8 @@ export class TimeOffApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `TimeOff` POSTs.
      */
-    async timeOffMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.timeOffMetaPostRetrieveRaw();
+    async timeOffMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.timeOffMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -261,7 +287,7 @@ export class TimeOffApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -272,6 +298,13 @@ export class TimeOffApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -310,8 +343,7 @@ export class TimeOffApi extends runtime.BaseAPI {
 */
 export enum TimeOffListExpandEnum {
     Approver = 'approver',
-    Employee = 'employee',
-    Employeeapprover = 'employee,approver'
+    Employee = 'employee'
 }
 /**
 * @export
@@ -342,6 +374,19 @@ export enum TimeOffListRequestTypeEnum {
 * @export
 * @enum {string}
 */
+export enum TimeOffListShowEnumOriginsEnum {
+    RequestType = 'request_type',
+    RequestTypestatus = 'request_type,status',
+    RequestTypestatusunits = 'request_type,status,units',
+    RequestTypeunits = 'request_type,units',
+    Status = 'status',
+    Statusunits = 'status,units',
+    Units = 'units'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TimeOffListStatusEnum {
     Approved = 'APPROVED',
     Cancelled = 'CANCELLED',
@@ -355,14 +400,26 @@ export enum TimeOffListStatusEnum {
 */
 export enum TimeOffRetrieveExpandEnum {
     Approver = 'approver',
-    Employee = 'employee',
-    Employeeapprover = 'employee,approver'
+    Employee = 'employee'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum TimeOffRetrieveRemoteFieldsEnum {
+    RequestType = 'request_type',
+    RequestTypestatus = 'request_type,status',
+    RequestTypestatusunits = 'request_type,status,units',
+    RequestTypeunits = 'request_type,units',
+    Status = 'status',
+    Statusunits = 'status,units',
+    Units = 'units'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum TimeOffRetrieveShowEnumOriginsEnum {
     RequestType = 'request_type',
     RequestTypestatus = 'request_type,status',
     RequestTypestatusunits = 'request_type,status,units',

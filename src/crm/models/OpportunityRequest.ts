@@ -25,7 +25,7 @@ import {
 /**
  * # The Opportunity Object
  * ### Description
- * The `Opportunity` object is used to represent an opportunity in the remote system.
+ * The `Opportunity` object is used to represent a deal opportunity in a CRM system.
  * ### Usage Example
  * TODO
  * @export

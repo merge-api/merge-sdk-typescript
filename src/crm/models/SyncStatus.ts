@@ -66,7 +66,7 @@ export interface SyncStatus {
      * @type {SyncStatusStatusEnum}
      * @memberof SyncStatus
      */
-    status: SyncStatusStatusEnum;
+    status: SyncStatusStatusEnum | null;
     /**
      * 
      * @type {boolean}
@@ -78,7 +78,7 @@ export interface SyncStatus {
      * @type {SelectiveSyncConfigurationsUsageEnum}
      * @memberof SyncStatus
      */
-    selective_sync_configurations_usage?: SelectiveSyncConfigurationsUsageEnum;
+    selective_sync_configurations_usage?: SelectiveSyncConfigurationsUsageEnum | null;
 }
 
 export function SyncStatusFromJSON(json: JSONValue): SyncStatus | undefined {

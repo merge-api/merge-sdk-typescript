@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum JobStatusEnum {
+export enum JobStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Open = 'OPEN',
     Closed = 'CLOSED',
@@ -28,19 +28,30 @@ export enum JobStatusEnum {
     Pending = 'PENDING'
 }
 
+export interface JobStatusEnum {
+    value: JobStatusEnumValues,
+    rawValue: string
+}
+
 
 export function JobStatusEnumFromJSON(json: any): JobStatusEnum {
     return JobStatusEnumFromJSONTyped(json, false);
 }
 
 export function JobStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): JobStatusEnum {
-    if ((<any>Object).values(JobStatusEnum).includes(json)) {
-        return json as JobStatusEnum;
+    if ((<any>Object).values(JobStatusEnumValues).includes(json)) {
+        return {
+            value: json as JobStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return JobStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: JobStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function JobStatusEnumToJSON(value?: JobStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != JobStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

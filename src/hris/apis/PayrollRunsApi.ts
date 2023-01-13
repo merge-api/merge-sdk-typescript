@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface PayrollRunsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -40,6 +44,7 @@ export interface PayrollRunsListRequest {
     remoteFields?: PayrollRunsListRemoteFieldsEnum;
     remoteId?: string | null;
     runType?: PayrollRunsListRunTypeEnum;
+    showEnumOrigins?: PayrollRunsListShowEnumOriginsEnum;
     startedAfter?: Date | null;
     startedBefore?: Date | null;
 }
@@ -48,6 +53,7 @@ export interface PayrollRunsRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: PayrollRunsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: PayrollRunsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -113,6 +119,10 @@ export class PayrollRunsApi extends runtime.BaseAPI {
             queryParameters['run_type'] = requestParameters.runType;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.startedAfter !== undefined) {
             queryParameters['started_after'] = (requestParameters.startedAfter as any).toISOString();
         }
@@ -120,6 +130,9 @@ export class PayrollRunsApi extends runtime.BaseAPI {
         if (requestParameters.startedBefore !== undefined) {
             queryParameters['started_before'] = (requestParameters.startedBefore as any).toISOString();
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -167,6 +180,13 @@ export class PayrollRunsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -223,7 +243,25 @@ export enum PayrollRunsListRunTypeEnum {
 * @export
 * @enum {string}
 */
+export enum PayrollRunsListShowEnumOriginsEnum {
+    State = 'run_state',
+    StaterunType = 'run_state,run_type',
+    Type = 'run_type'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum PayrollRunsRetrieveRemoteFieldsEnum {
+    State = 'run_state',
+    StaterunType = 'run_state,run_type',
+    Type = 'run_type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum PayrollRunsRetrieveShowEnumOriginsEnum {
     State = 'run_state',
     StaterunType = 'run_state,run_type',
     Type = 'run_type'

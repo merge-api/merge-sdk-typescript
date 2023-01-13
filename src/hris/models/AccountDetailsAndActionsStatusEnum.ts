@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum AccountDetailsAndActionsStatusEnum {
+export enum AccountDetailsAndActionsStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Complete = 'COMPLETE',
     Incomplete = 'INCOMPLETE',
     RelinkNeeded = 'RELINK_NEEDED'
+}
+
+export interface AccountDetailsAndActionsStatusEnum {
+    value: AccountDetailsAndActionsStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function AccountDetailsAndActionsStatusEnumFromJSON(json: any): AccountDe
 }
 
 export function AccountDetailsAndActionsStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): AccountDetailsAndActionsStatusEnum {
-    if ((<any>Object).values(AccountDetailsAndActionsStatusEnum).includes(json)) {
-        return json as AccountDetailsAndActionsStatusEnum;
+    if ((<any>Object).values(AccountDetailsAndActionsStatusEnumValues).includes(json)) {
+        return {
+            value: json as AccountDetailsAndActionsStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return AccountDetailsAndActionsStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: AccountDetailsAndActionsStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function AccountDetailsAndActionsStatusEnumToJSON(value?: AccountDetailsAndActionsStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != AccountDetailsAndActionsStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

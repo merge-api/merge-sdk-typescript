@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface CommentsCreateRequest {
     commentEndpointRequest: CommentEndpointRequest;
     isDebugMode?: boolean;
@@ -45,7 +49,7 @@ export interface CommentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: CommentsListExpandEnum;
+    expand?: Array<CommentsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -55,9 +59,10 @@ export interface CommentsListRequest {
     ticketId?: string;
 }
 
+// extends MergeMetaRequest
 export interface CommentsRetrieveRequest {
     id: string;
-    expand?: CommentsRetrieveExpandEnum;
+    expand?: Array<CommentsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -83,6 +88,9 @@ export class CommentsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -134,7 +142,7 @@ export class CommentsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -165,6 +173,9 @@ export class CommentsApi extends runtime.BaseAPI {
         if (requestParameters.ticketId !== undefined) {
             queryParameters['ticket_id'] = requestParameters.ticketId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -198,8 +209,17 @@ export class CommentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Comment` POSTs.
      */
-    async commentsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async commentsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -225,8 +245,8 @@ export class CommentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Comment` POSTs.
      */
-    async commentsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.commentsMetaPostRetrieveRaw();
+    async commentsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.commentsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -240,13 +260,16 @@ export class CommentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -285,12 +308,8 @@ export class CommentsApi extends runtime.BaseAPI {
 */
 export enum CommentsListExpandEnum {
     Contact = 'contact',
-    Contactticket = 'contact,ticket',
     Ticket = 'ticket',
-    User = 'user',
-    Usercontact = 'user,contact',
-    Usercontactticket = 'user,contact,ticket',
-    Userticket = 'user,ticket'
+    User = 'user'
 }
 /**
 * @export
@@ -298,10 +317,6 @@ export enum CommentsListExpandEnum {
 */
 export enum CommentsRetrieveExpandEnum {
     Contact = 'contact',
-    Contactticket = 'contact,ticket',
     Ticket = 'ticket',
-    User = 'user',
-    Usercontact = 'user,contact',
-    Usercontactticket = 'user,contact,ticket',
-    Userticket = 'user,ticket'
+    User = 'user'
 }

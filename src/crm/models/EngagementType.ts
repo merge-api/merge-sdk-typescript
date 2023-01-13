@@ -25,7 +25,7 @@ import {
 /**
  * # The Engagement Type Object
  * ### Description
- * The `Engagement Type` object is used to represent the type of an engagement in the remote system.
+ * The `Engagement Type` object is used to represent an interaction activity. A given `Engagement` typically has an `Engagement Type` object represented in the engagement_type field.
  * ### Usage Example
  * TODO
  * @export

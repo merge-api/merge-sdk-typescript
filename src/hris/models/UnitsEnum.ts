@@ -19,10 +19,15 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum UnitsEnum {
+export enum UnitsEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Hours = 'HOURS',
     Days = 'DAYS'
+}
+
+export interface UnitsEnum {
+    value: UnitsEnumValues,
+    rawValue: string
 }
 
 
@@ -31,13 +36,19 @@ export function UnitsEnumFromJSON(json: any): UnitsEnum {
 }
 
 export function UnitsEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): UnitsEnum {
-    if ((<any>Object).values(UnitsEnum).includes(json)) {
-        return json as UnitsEnum;
+    if ((<any>Object).values(UnitsEnumValues).includes(json)) {
+        return {
+            value: json as UnitsEnumValues,
+            rawValue: json as string
+        }
     }
-    return UnitsEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: UnitsEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function UnitsEnumToJSON(value?: UnitsEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != UnitsEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

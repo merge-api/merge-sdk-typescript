@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface UsersListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -38,12 +42,14 @@ export interface UsersListRequest {
     pageSize?: number;
     remoteFields?: UsersListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: UsersListShowEnumOriginsEnum;
 }
 
 export interface UsersRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: UsersRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: UsersRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -101,6 +107,13 @@ export class UsersApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -148,6 +161,13 @@ export class UsersApi extends runtime.BaseAPI {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -190,6 +210,20 @@ export enum UsersListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum UsersListShowEnumOriginsEnum {
+    AccessRole = 'access_role'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum UsersRetrieveRemoteFieldsEnum {
+    AccessRole = 'access_role'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum UsersRetrieveShowEnumOriginsEnum {
     AccessRole = 'access_role'
 }

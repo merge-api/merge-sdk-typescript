@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum EncodingEnum {
+export enum EncodingEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Raw = 'RAW',
     Base64 = 'BASE64',
     GzipBase64 = 'GZIP_BASE64'
+}
+
+export interface EncodingEnum {
+    value: EncodingEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function EncodingEnumFromJSON(json: any): EncodingEnum {
 }
 
 export function EncodingEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EncodingEnum {
-    if ((<any>Object).values(EncodingEnum).includes(json)) {
-        return json as EncodingEnum;
+    if ((<any>Object).values(EncodingEnumValues).includes(json)) {
+        return {
+            value: json as EncodingEnumValues,
+            rawValue: json as string
+        }
     }
-    return EncodingEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: EncodingEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function EncodingEnumToJSON(value?: EncodingEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != EncodingEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

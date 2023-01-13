@@ -38,6 +38,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface AccountsCreateRequest {
     cRMAccountEndpointRequest: CRMAccountEndpointRequest;
     isDebugMode?: boolean;
@@ -48,7 +52,7 @@ export interface AccountsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: AccountsListExpandEnum;
+    expand?: Array<AccountsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -58,10 +62,11 @@ export interface AccountsListRequest {
     remoteId?: string | null;
 }
 
-export interface AccountsMetaPatchRetrieveRequest {
+export interface AccountsMetaPatchRetrieveRequest extends MergeMetaRequest {
     id: string;
 }
 
+// extends MergeMetaRequest
 export interface AccountsPartialUpdateRequest {
     id: string;
     patchedCRMAccountEndpointRequest: PatchedCRMAccountEndpointRequest;
@@ -71,7 +76,7 @@ export interface AccountsPartialUpdateRequest {
 
 export interface AccountsRetrieveRequest {
     id: string;
-    expand?: AccountsRetrieveExpandEnum;
+    expand?: Array<AccountsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -97,6 +102,9 @@ export class AccountsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -148,7 +156,7 @@ export class AccountsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -179,6 +187,9 @@ export class AccountsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -219,6 +230,16 @@ export class AccountsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -251,8 +272,17 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMAccount` POSTs.
      */
-    async accountsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async accountsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -278,8 +308,8 @@ export class AccountsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `CRMAccount` POSTs.
      */
-    async accountsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.accountsMetaPostRetrieveRaw();
+    async accountsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.accountsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -304,6 +334,9 @@ export class AccountsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -347,13 +380,16 @@ export class AccountsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

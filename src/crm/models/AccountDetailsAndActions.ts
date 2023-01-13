@@ -52,13 +52,13 @@ export interface AccountDetailsAndActions {
      * @type {CategoryEnum}
      * @memberof AccountDetailsAndActions
      */
-    category?: CategoryEnum;
+    category?: CategoryEnum | null;
     /**
      * 
      * @type {AccountDetailsAndActionsStatusEnum}
      * @memberof AccountDetailsAndActions
      */
-    status: AccountDetailsAndActionsStatusEnum;
+    status: AccountDetailsAndActionsStatusEnum | null;
     /**
      * 
      * @type {string}

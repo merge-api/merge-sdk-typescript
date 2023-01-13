@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface PurchaseOrdersCreateRequest {
     purchaseOrderEndpointRequest: PurchaseOrderEndpointRequest;
     isDebugMode?: boolean;
@@ -46,7 +50,7 @@ export interface PurchaseOrdersListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: PurchaseOrdersListExpandEnum;
+    expand?: Array<PurchaseOrdersListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -54,13 +58,16 @@ export interface PurchaseOrdersListRequest {
     pageSize?: number;
     remoteFields?: PurchaseOrdersListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: PurchaseOrdersListShowEnumOriginsEnum;
 }
 
+// extends MergeMetaRequest
 export interface PurchaseOrdersRetrieveRequest {
     id: string;
-    expand?: PurchaseOrdersRetrieveExpandEnum;
+    expand?: Array<PurchaseOrdersRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: PurchaseOrdersRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: PurchaseOrdersRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -85,6 +92,9 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,7 +150,7 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -171,6 +181,13 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -204,8 +221,17 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `PurchaseOrder` POSTs.
      */
-    async purchaseOrdersMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async purchaseOrdersMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -231,8 +257,8 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `PurchaseOrder` POSTs.
      */
-    async purchaseOrdersMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.purchaseOrdersMetaPostRetrieveRaw();
+    async purchaseOrdersMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.purchaseOrdersMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -246,7 +272,7 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -257,6 +283,13 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -295,8 +328,7 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 */
 export enum PurchaseOrdersListExpandEnum {
     DeliveryAddress = 'delivery_address',
-    LineItems = 'line_items',
-    LineItemsdeliveryAddress = 'line_items,delivery_address'
+    LineItems = 'line_items'
 }
 /**
 * @export
@@ -309,15 +341,28 @@ export enum PurchaseOrdersListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum PurchaseOrdersListShowEnumOriginsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum PurchaseOrdersRetrieveExpandEnum {
     DeliveryAddress = 'delivery_address',
-    LineItems = 'line_items',
-    LineItemsdeliveryAddress = 'line_items,delivery_address'
+    LineItems = 'line_items'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum PurchaseOrdersRetrieveRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum PurchaseOrdersRetrieveShowEnumOriginsEnum {
     Status = 'status'
 }

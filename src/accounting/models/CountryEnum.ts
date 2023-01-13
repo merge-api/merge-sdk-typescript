@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CountryEnum {
+export enum CountryEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Af = 'AF',
     Ax = 'AX',
@@ -272,19 +272,30 @@ export enum CountryEnum {
     Zw = 'ZW'
 }
 
+export interface CountryEnum {
+    value: CountryEnumValues,
+    rawValue: string
+}
+
 
 export function CountryEnumFromJSON(json: any): CountryEnum {
     return CountryEnumFromJSONTyped(json, false);
 }
 
 export function CountryEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CountryEnum {
-    if ((<any>Object).values(CountryEnum).includes(json)) {
-        return json as CountryEnum;
+    if ((<any>Object).values(CountryEnumValues).includes(json)) {
+        return {
+            value: json as CountryEnumValues,
+            rawValue: json as string
+        }
     }
-    return CountryEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CountryEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CountryEnumToJSON(value?: CountryEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CountryEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

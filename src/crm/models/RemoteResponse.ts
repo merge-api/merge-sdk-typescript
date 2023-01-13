@@ -68,7 +68,7 @@ export interface RemoteResponse {
      * @type {ResponseTypeEnum}
      * @memberof RemoteResponse
      */
-    response_type?: ResponseTypeEnum;
+    response_type?: ResponseTypeEnum | null;
     /**
      * 
      * @type {{ [key: string]: any; }}

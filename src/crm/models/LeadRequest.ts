@@ -18,7 +18,7 @@ import { JSONValue } from '../../merge_json';
 /**
  * # The Lead Object
  * ### Description
- * The `Lead` object is used to represent a lead in the remote system.
+ * The `Lead` object is used to represent an individual who is a potential customer.
  * ### Usage Example
  * TODO
  * @export

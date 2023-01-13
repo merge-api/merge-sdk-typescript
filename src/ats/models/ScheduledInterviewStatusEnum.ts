@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum ScheduledInterviewStatusEnum {
+export enum ScheduledInterviewStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Scheduled = 'SCHEDULED',
     AwaitingFeedback = 'AWAITING_FEEDBACK',
     Complete = 'COMPLETE'
+}
+
+export interface ScheduledInterviewStatusEnum {
+    value: ScheduledInterviewStatusEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function ScheduledInterviewStatusEnumFromJSON(json: any): ScheduledInterv
 }
 
 export function ScheduledInterviewStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ScheduledInterviewStatusEnum {
-    if ((<any>Object).values(ScheduledInterviewStatusEnum).includes(json)) {
-        return json as ScheduledInterviewStatusEnum;
+    if ((<any>Object).values(ScheduledInterviewStatusEnumValues).includes(json)) {
+        return {
+            value: json as ScheduledInterviewStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return ScheduledInterviewStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: ScheduledInterviewStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function ScheduledInterviewStatusEnumToJSON(value?: ScheduledInterviewStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != ScheduledInterviewStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

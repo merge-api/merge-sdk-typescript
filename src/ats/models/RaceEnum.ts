@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum RaceEnum {
+export enum RaceEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     AmericanIndianOrAlaskanNative = 'AMERICAN_INDIAN_OR_ALASKAN_NATIVE',
     Asian = 'ASIAN',
@@ -31,19 +31,30 @@ export enum RaceEnum {
     DeclineToSelfIdentify = 'DECLINE_TO_SELF_IDENTIFY'
 }
 
+export interface RaceEnum {
+    value: RaceEnumValues,
+    rawValue: string
+}
+
 
 export function RaceEnumFromJSON(json: any): RaceEnum {
     return RaceEnumFromJSONTyped(json, false);
 }
 
 export function RaceEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): RaceEnum {
-    if ((<any>Object).values(RaceEnum).includes(json)) {
-        return json as RaceEnum;
+    if ((<any>Object).values(RaceEnumValues).includes(json)) {
+        return {
+            value: json as RaceEnumValues,
+            rawValue: json as string
+        }
     }
-    return RaceEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: RaceEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function RaceEnumToJSON(value?: RaceEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != RaceEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

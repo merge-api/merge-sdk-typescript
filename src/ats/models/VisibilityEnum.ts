@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum VisibilityEnum {
+export enum VisibilityEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     AdminOnly = 'ADMIN_ONLY',
     Public = 'PUBLIC',
     Private = 'PRIVATE'
+}
+
+export interface VisibilityEnum {
+    value: VisibilityEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function VisibilityEnumFromJSON(json: any): VisibilityEnum {
 }
 
 export function VisibilityEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): VisibilityEnum {
-    if ((<any>Object).values(VisibilityEnum).includes(json)) {
-        return json as VisibilityEnum;
+    if ((<any>Object).values(VisibilityEnumValues).includes(json)) {
+        return {
+            value: json as VisibilityEnumValues,
+            rawValue: json as string
+        }
     }
-    return VisibilityEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: VisibilityEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function VisibilityEnumToJSON(value?: VisibilityEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != VisibilityEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

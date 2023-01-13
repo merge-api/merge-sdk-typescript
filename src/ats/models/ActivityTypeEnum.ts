@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum ActivityTypeEnum {
+export enum ActivityTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Note = 'NOTE',
     Email = 'EMAIL',
     Other = 'OTHER'
+}
+
+export interface ActivityTypeEnum {
+    value: ActivityTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function ActivityTypeEnumFromJSON(json: any): ActivityTypeEnum {
 }
 
 export function ActivityTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): ActivityTypeEnum {
-    if ((<any>Object).values(ActivityTypeEnum).includes(json)) {
-        return json as ActivityTypeEnum;
+    if ((<any>Object).values(ActivityTypeEnumValues).includes(json)) {
+        return {
+            value: json as ActivityTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return ActivityTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: ActivityTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function ActivityTypeEnumToJSON(value?: ActivityTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != ActivityTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

@@ -26,11 +26,15 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface TasksListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: TasksListExpandEnum;
+    expand?: Array<TasksListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -41,7 +45,7 @@ export interface TasksListRequest {
 
 export interface TasksRetrieveRequest {
     id: string;
-    expand?: TasksRetrieveExpandEnum;
+    expand?: Array<TasksRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -68,7 +72,7 @@ export class TasksApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -95,6 +99,9 @@ export class TasksApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -135,13 +142,16 @@ export class TasksApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -180,8 +190,7 @@ export class TasksApi extends runtime.BaseAPI {
 */
 export enum TasksListExpandEnum {
     Account = 'account',
-    Owner = 'owner',
-    Owneraccount = 'owner,account'
+    Owner = 'owner'
 }
 /**
 * @export
@@ -189,6 +198,5 @@ export enum TasksListExpandEnum {
 */
 export enum TasksRetrieveExpandEnum {
     Account = 'account',
-    Owner = 'owner',
-    Owneraccount = 'owner,account'
+    Owner = 'owner'
 }

@@ -18,7 +18,7 @@ import { JSONValue } from '../../merge_json';
 /**
  * # The Note Object
  * ### Description
- * The `Note` object is used to represent a note in the remote system.
+ * The `Note` object is used to represent a note on another object.
  * ### Usage Example
  * TODO
  * @export

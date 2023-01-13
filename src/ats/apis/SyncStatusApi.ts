@@ -23,6 +23,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface SyncStatusListRequest {
     cursor?: string;
     pageSize?: number;
@@ -46,6 +50,9 @@ export class SyncStatusApi extends runtime.BaseAPI {
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

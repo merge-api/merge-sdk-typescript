@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface PaymentsCreateRequest {
     paymentEndpointRequest: PaymentEndpointRequest;
     isDebugMode?: boolean;
@@ -48,7 +52,7 @@ export interface PaymentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: PaymentsListExpandEnum;
+    expand?: Array<PaymentsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -57,9 +61,10 @@ export interface PaymentsListRequest {
     remoteId?: string | null;
 }
 
+// extends MergeMetaRequest
 export interface PaymentsRetrieveRequest {
     id: string;
-    expand?: PaymentsRetrieveExpandEnum;
+    expand?: Array<PaymentsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -85,6 +90,9 @@ export class PaymentsApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -148,7 +156,7 @@ export class PaymentsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -175,6 +183,9 @@ export class PaymentsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -208,8 +219,17 @@ export class PaymentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Payment` POSTs.
      */
-    async paymentsMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async paymentsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -235,8 +255,8 @@ export class PaymentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Payment` POSTs.
      */
-    async paymentsMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.paymentsMetaPostRetrieveRaw();
+    async paymentsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.paymentsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -250,13 +270,16 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -295,8 +318,7 @@ export class PaymentsApi extends runtime.BaseAPI {
 */
 export enum PaymentsListExpandEnum {
     Account = 'account',
-    Contact = 'contact',
-    Contactaccount = 'contact,account'
+    Contact = 'contact'
 }
 /**
 * @export
@@ -304,6 +326,5 @@ export enum PaymentsListExpandEnum {
 */
 export enum PaymentsRetrieveExpandEnum {
     Account = 'account',
-    Contact = 'contact',
-    Contactaccount = 'contact,account'
+    Contact = 'contact'
 }

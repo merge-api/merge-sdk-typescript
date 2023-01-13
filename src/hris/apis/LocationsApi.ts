@@ -26,6 +26,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface LocationsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -37,12 +41,14 @@ export interface LocationsListRequest {
     pageSize?: number;
     remoteFields?: LocationsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: LocationsListShowEnumOriginsEnum;
 }
 
 export interface LocationsRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: LocationsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: LocationsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -96,6 +102,13 @@ export class LocationsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -143,6 +156,13 @@ export class LocationsApi extends runtime.BaseAPI {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -185,6 +205,20 @@ export enum LocationsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum LocationsListShowEnumOriginsEnum {
+    LocationType = 'location_type'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum LocationsRetrieveRemoteFieldsEnum {
+    LocationType = 'location_type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum LocationsRetrieveShowEnumOriginsEnum {
     LocationType = 'location_type'
 }

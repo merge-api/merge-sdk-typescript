@@ -47,6 +47,9 @@ src/models/AccountResponse.ts
 src/models/AccountStatusEnum.ts
 src/models/AccountToken.ts
 src/models/AccountingAttachment.ts
+src/models/AccountingAttachmentEndpointRequest.ts
+src/models/AccountingAttachmentRequest.ts
+src/models/AccountingAttachmentResponse.ts
 src/models/AccountingPhoneNumber.ts
 src/models/AccountingPhoneNumberRequest.ts
 src/models/Address.ts

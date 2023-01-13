@@ -19,12 +19,17 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum GroupTypeEnum {
+export enum GroupTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Team = 'TEAM',
     Department = 'DEPARTMENT',
     CostCenter = 'COST_CENTER',
     BusinessUnit = 'BUSINESS_UNIT'
+}
+
+export interface GroupTypeEnum {
+    value: GroupTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -33,13 +38,19 @@ export function GroupTypeEnumFromJSON(json: any): GroupTypeEnum {
 }
 
 export function GroupTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): GroupTypeEnum {
-    if ((<any>Object).values(GroupTypeEnum).includes(json)) {
-        return json as GroupTypeEnum;
+    if ((<any>Object).values(GroupTypeEnumValues).includes(json)) {
+        return {
+            value: json as GroupTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return GroupTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: GroupTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function GroupTypeEnumToJSON(value?: GroupTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != GroupTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

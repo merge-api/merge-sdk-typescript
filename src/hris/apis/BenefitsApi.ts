@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface BenefitsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
-    expand?: BenefitsListExpandEnum;
+    expand?: Array<BenefitsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -42,7 +46,7 @@ export interface BenefitsListRequest {
 
 export interface BenefitsRetrieveRequest {
     id: string;
-    expand?: BenefitsRetrieveExpandEnum;
+    expand?: Array<BenefitsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -73,7 +77,7 @@ export class BenefitsApi extends runtime.BaseAPI {
             queryParameters['employee_id'] = requestParameters.employeeId;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -100,6 +104,9 @@ export class BenefitsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,13 +147,16 @@ export class BenefitsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

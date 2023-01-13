@@ -19,12 +19,17 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CardinalityEnum {
+export enum CardinalityEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     OneToOne = 'ONE_TO_ONE',
     ManyToOne = 'MANY_TO_ONE',
     ManyToMany = 'MANY_TO_MANY',
     OneToMany = 'ONE_TO_MANY'
+}
+
+export interface CardinalityEnum {
+    value: CardinalityEnumValues,
+    rawValue: string
 }
 
 
@@ -33,13 +38,19 @@ export function CardinalityEnumFromJSON(json: any): CardinalityEnum {
 }
 
 export function CardinalityEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CardinalityEnum {
-    if ((<any>Object).values(CardinalityEnum).includes(json)) {
-        return json as CardinalityEnum;
+    if ((<any>Object).values(CardinalityEnumValues).includes(json)) {
+        return {
+            value: json as CardinalityEnumValues,
+            rawValue: json as string
+        }
     }
-    return CardinalityEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CardinalityEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CardinalityEnumToJSON(value?: CardinalityEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CardinalityEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

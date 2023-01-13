@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface EmploymentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
     employeeId?: string;
-    expand?: EmploymentsListExpandEnum;
+    expand?: Array<EmploymentsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -40,13 +44,15 @@ export interface EmploymentsListRequest {
     pageSize?: number;
     remoteFields?: EmploymentsListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: EmploymentsListShowEnumOriginsEnum;
 }
 
 export interface EmploymentsRetrieveRequest {
     id: string;
-    expand?: EmploymentsRetrieveExpandEnum;
+    expand?: Array<EmploymentsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: EmploymentsRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: EmploymentsRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -76,7 +82,7 @@ export class EmploymentsApi extends runtime.BaseAPI {
             queryParameters['employee_id'] = requestParameters.employeeId;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -111,6 +117,13 @@ export class EmploymentsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -151,7 +164,7 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -162,6 +175,13 @@ export class EmploymentsApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -200,7 +220,6 @@ export class EmploymentsApi extends runtime.BaseAPI {
 */
 export enum EmploymentsListExpandEnum {
     Employee = 'employee',
-    EmployeepayGroup = 'employee,pay_group',
     PayGroup = 'pay_group'
 }
 /**
@@ -236,9 +255,29 @@ export enum EmploymentsListRemoteFieldsEnum {
 * @export
 * @enum {string}
 */
+export enum EmploymentsListShowEnumOriginsEnum {
+    EmploymentType = 'employment_type',
+    EmploymentTypeflsaStatus = 'employment_type,flsa_status',
+    EmploymentTypeflsaStatuspayFrequency = 'employment_type,flsa_status,pay_frequency',
+    EmploymentTypeflsaStatuspayFrequencypayPeriod = 'employment_type,flsa_status,pay_frequency,pay_period',
+    EmploymentTypeflsaStatuspayPeriod = 'employment_type,flsa_status,pay_period',
+    EmploymentTypepayFrequency = 'employment_type,pay_frequency',
+    EmploymentTypepayFrequencypayPeriod = 'employment_type,pay_frequency,pay_period',
+    EmploymentTypepayPeriod = 'employment_type,pay_period',
+    FlsaStatus = 'flsa_status',
+    FlsaStatuspayFrequency = 'flsa_status,pay_frequency',
+    FlsaStatuspayFrequencypayPeriod = 'flsa_status,pay_frequency,pay_period',
+    FlsaStatuspayPeriod = 'flsa_status,pay_period',
+    PayFrequency = 'pay_frequency',
+    PayFrequencypayPeriod = 'pay_frequency,pay_period',
+    PayPeriod = 'pay_period'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum EmploymentsRetrieveExpandEnum {
     Employee = 'employee',
-    EmployeepayGroup = 'employee,pay_group',
     PayGroup = 'pay_group'
 }
 /**
@@ -246,6 +285,27 @@ export enum EmploymentsRetrieveExpandEnum {
 * @enum {string}
 */
 export enum EmploymentsRetrieveRemoteFieldsEnum {
+    EmploymentType = 'employment_type',
+    EmploymentTypeflsaStatus = 'employment_type,flsa_status',
+    EmploymentTypeflsaStatuspayFrequency = 'employment_type,flsa_status,pay_frequency',
+    EmploymentTypeflsaStatuspayFrequencypayPeriod = 'employment_type,flsa_status,pay_frequency,pay_period',
+    EmploymentTypeflsaStatuspayPeriod = 'employment_type,flsa_status,pay_period',
+    EmploymentTypepayFrequency = 'employment_type,pay_frequency',
+    EmploymentTypepayFrequencypayPeriod = 'employment_type,pay_frequency,pay_period',
+    EmploymentTypepayPeriod = 'employment_type,pay_period',
+    FlsaStatus = 'flsa_status',
+    FlsaStatuspayFrequency = 'flsa_status,pay_frequency',
+    FlsaStatuspayFrequencypayPeriod = 'flsa_status,pay_frequency,pay_period',
+    FlsaStatuspayPeriod = 'flsa_status,pay_period',
+    PayFrequency = 'pay_frequency',
+    PayFrequencypayPeriod = 'pay_frequency,pay_period',
+    PayPeriod = 'pay_period'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum EmploymentsRetrieveShowEnumOriginsEnum {
     EmploymentType = 'employment_type',
     EmploymentTypeflsaStatus = 'employment_type,flsa_status',
     EmploymentTypeflsaStatuspayFrequency = 'employment_type,flsa_status,pay_frequency',

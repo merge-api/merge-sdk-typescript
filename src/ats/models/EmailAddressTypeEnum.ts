@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum EmailAddressTypeEnum {
+export enum EmailAddressTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Personal = 'PERSONAL',
     Work = 'WORK',
     Other = 'OTHER'
+}
+
+export interface EmailAddressTypeEnum {
+    value: EmailAddressTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function EmailAddressTypeEnumFromJSON(json: any): EmailAddressTypeEnum {
 }
 
 export function EmailAddressTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EmailAddressTypeEnum {
-    if ((<any>Object).values(EmailAddressTypeEnum).includes(json)) {
-        return json as EmailAddressTypeEnum;
+    if ((<any>Object).values(EmailAddressTypeEnumValues).includes(json)) {
+        return {
+            value: json as EmailAddressTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return EmailAddressTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: EmailAddressTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function EmailAddressTypeEnumToJSON(value?: EmailAddressTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != EmailAddressTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

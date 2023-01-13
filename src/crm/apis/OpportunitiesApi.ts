@@ -38,6 +38,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface OpportunitiesCreateRequest {
     opportunityEndpointRequest: OpportunityEndpointRequest;
     isDebugMode?: boolean;
@@ -49,7 +53,7 @@ export interface OpportunitiesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: OpportunitiesListExpandEnum;
+    expand?: Array<OpportunitiesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -58,14 +62,16 @@ export interface OpportunitiesListRequest {
     pageSize?: number;
     remoteFields?: OpportunitiesListRemoteFieldsEnum;
     remoteId?: string | null;
+    showEnumOrigins?: OpportunitiesListShowEnumOriginsEnum;
     stageId?: string;
     status?: OpportunitiesListStatusEnum;
 }
 
-export interface OpportunitiesMetaPatchRetrieveRequest {
+export interface OpportunitiesMetaPatchRetrieveRequest extends MergeMetaRequest {
     id: string;
 }
 
+// extends MergeMetaRequest
 export interface OpportunitiesPartialUpdateRequest {
     id: string;
     patchedOpportunityEndpointRequest: PatchedOpportunityEndpointRequest;
@@ -75,9 +81,10 @@ export interface OpportunitiesPartialUpdateRequest {
 
 export interface OpportunitiesRetrieveRequest {
     id: string;
-    expand?: OpportunitiesRetrieveExpandEnum;
+    expand?: Array<OpportunitiesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: OpportunitiesRetrieveRemoteFieldsEnum;
+    showEnumOrigins?: OpportunitiesRetrieveShowEnumOriginsEnum;
 }
 
 /**
@@ -102,6 +109,9 @@ export class OpportunitiesApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -157,7 +167,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -193,6 +203,10 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
         if (requestParameters.stageId !== undefined) {
             queryParameters['stage_id'] = requestParameters.stageId;
         }
@@ -200,6 +214,9 @@ export class OpportunitiesApi extends runtime.BaseAPI {
         if (requestParameters.status !== undefined) {
             queryParameters['status'] = requestParameters.status;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -240,6 +257,16 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -272,8 +299,17 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Opportunity` POSTs.
      */
-    async opportunitiesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async opportunitiesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -299,8 +335,8 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Opportunity` POSTs.
      */
-    async opportunitiesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.opportunitiesMetaPostRetrieveRaw();
+    async opportunitiesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.opportunitiesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -325,6 +361,9 @@ export class OpportunitiesApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -368,7 +407,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -379,6 +418,13 @@ export class OpportunitiesApi extends runtime.BaseAPI {
         if (requestParameters.remoteFields !== undefined) {
             queryParameters['remote_fields'] = requestParameters.remoteFields;
         }
+
+        if (requestParameters.showEnumOrigins !== undefined) {
+            queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
+        }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -418,17 +464,20 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 export enum OpportunitiesListExpandEnum {
     Account = 'account',
     Owner = 'owner',
-    Owneraccount = 'owner,account',
-    Ownerstage = 'owner,stage',
-    Ownerstageaccount = 'owner,stage,account',
-    Stage = 'stage',
-    Stageaccount = 'stage,account'
+    Stage = 'stage'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum OpportunitiesListRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum OpportunitiesListShowEnumOriginsEnum {
     Status = 'status'
 }
 /**
@@ -447,16 +496,19 @@ export enum OpportunitiesListStatusEnum {
 export enum OpportunitiesRetrieveExpandEnum {
     Account = 'account',
     Owner = 'owner',
-    Owneraccount = 'owner,account',
-    Ownerstage = 'owner,stage',
-    Ownerstageaccount = 'owner,stage,account',
-    Stage = 'stage',
-    Stageaccount = 'stage,account'
+    Stage = 'stage'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum OpportunitiesRetrieveRemoteFieldsEnum {
+    Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum OpportunitiesRetrieveShowEnumOriginsEnum {
     Status = 'status'
 }

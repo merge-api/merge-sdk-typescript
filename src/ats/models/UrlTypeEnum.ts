@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum UrlTypeEnum {
+export enum UrlTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Personal = 'PERSONAL',
     Company = 'COMPANY',
@@ -30,19 +30,30 @@ export enum UrlTypeEnum {
     JobPosting = 'JOB_POSTING'
 }
 
+export interface UrlTypeEnum {
+    value: UrlTypeEnumValues,
+    rawValue: string
+}
+
 
 export function UrlTypeEnumFromJSON(json: any): UrlTypeEnum {
     return UrlTypeEnumFromJSONTyped(json, false);
 }
 
 export function UrlTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): UrlTypeEnum {
-    if ((<any>Object).values(UrlTypeEnum).includes(json)) {
-        return json as UrlTypeEnum;
+    if ((<any>Object).values(UrlTypeEnumValues).includes(json)) {
+        return {
+            value: json as UrlTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return UrlTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: UrlTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function UrlTypeEnumToJSON(value?: UrlTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != UrlTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

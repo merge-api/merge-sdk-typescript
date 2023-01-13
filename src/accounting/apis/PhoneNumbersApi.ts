@@ -20,6 +20,10 @@ import {
     AccountingPhoneNumberToJSON,
 } from '../models';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface PhoneNumbersRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
@@ -43,6 +47,9 @@ export class PhoneNumbersApi extends runtime.BaseAPI {
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

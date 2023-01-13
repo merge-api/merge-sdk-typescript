@@ -35,6 +35,10 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface NotesCreateRequest {
     noteEndpointRequest: NoteEndpointRequest;
     isDebugMode?: boolean;
@@ -47,7 +51,7 @@ export interface NotesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: NotesListExpandEnum;
+    expand?: Array<NotesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -58,9 +62,10 @@ export interface NotesListRequest {
     remoteId?: string | null;
 }
 
+// extends MergeMetaRequest
 export interface NotesRetrieveRequest {
     id: string;
-    expand?: NotesRetrieveExpandEnum;
+    expand?: Array<NotesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -86,6 +91,9 @@ export class NotesApi extends runtime.BaseAPI {
         if (requestParameters.runAsync !== undefined) {
             queryParameters['run_async'] = requestParameters.runAsync;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -145,7 +153,7 @@ export class NotesApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -181,6 +189,9 @@ export class NotesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+
+        
+
         const headerParameters: runtime.HTTPHeaders = {};
 
 
@@ -213,8 +224,17 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Note` POSTs.
      */
-    async notesMetaPostRetrieveRaw(): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async notesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -240,8 +260,8 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Note` POSTs.
      */
-    async notesMetaPostRetrieve(): Promise<MetaResponse | undefined> {
-        const response = await this.notesMetaPostRetrieveRaw();
+    async notesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.notesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -255,13 +275,16 @@ export class NotesApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -300,20 +323,9 @@ export class NotesApi extends runtime.BaseAPI {
 */
 export enum NotesListExpandEnum {
     Account = 'account',
-    Accountopportunity = 'account,opportunity',
     Contact = 'contact',
-    Contactaccount = 'contact,account',
-    Contactaccountopportunity = 'contact,account,opportunity',
-    Contactopportunity = 'contact,opportunity',
     Opportunity = 'opportunity',
-    Owner = 'owner',
-    Owneraccount = 'owner,account',
-    Owneraccountopportunity = 'owner,account,opportunity',
-    Ownercontact = 'owner,contact',
-    Ownercontactaccount = 'owner,contact,account',
-    Ownercontactaccountopportunity = 'owner,contact,account,opportunity',
-    Ownercontactopportunity = 'owner,contact,opportunity',
-    Owneropportunity = 'owner,opportunity'
+    Owner = 'owner'
 }
 /**
 * @export
@@ -321,18 +333,7 @@ export enum NotesListExpandEnum {
 */
 export enum NotesRetrieveExpandEnum {
     Account = 'account',
-    Accountopportunity = 'account,opportunity',
     Contact = 'contact',
-    Contactaccount = 'contact,account',
-    Contactaccountopportunity = 'contact,account,opportunity',
-    Contactopportunity = 'contact,opportunity',
     Opportunity = 'opportunity',
-    Owner = 'owner',
-    Owneraccount = 'owner,account',
-    Owneraccountopportunity = 'owner,account,opportunity',
-    Ownercontact = 'owner,contact',
-    Ownercontactaccount = 'owner,contact,account',
-    Ownercontactaccountopportunity = 'owner,contact,account,opportunity',
-    Ownercontactopportunity = 'owner,contact,opportunity',
-    Owneropportunity = 'owner,opportunity'
+    Owner = 'owner'
 }

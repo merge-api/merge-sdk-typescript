@@ -19,11 +19,16 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum CommonModelScopesScopeTypeEnum {
+export enum CommonModelScopesScopeTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Organization = 'ORGANIZATION',
     Integration = 'INTEGRATION',
     LinkedAccount = 'LINKED_ACCOUNT'
+}
+
+export interface CommonModelScopesScopeTypeEnum {
+    value: CommonModelScopesScopeTypeEnumValues,
+    rawValue: string
 }
 
 
@@ -32,13 +37,19 @@ export function CommonModelScopesScopeTypeEnumFromJSON(json: any): CommonModelSc
 }
 
 export function CommonModelScopesScopeTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): CommonModelScopesScopeTypeEnum {
-    if ((<any>Object).values(CommonModelScopesScopeTypeEnum).includes(json)) {
-        return json as CommonModelScopesScopeTypeEnum;
+    if ((<any>Object).values(CommonModelScopesScopeTypeEnumValues).includes(json)) {
+        return {
+            value: json as CommonModelScopesScopeTypeEnumValues,
+            rawValue: json as string
+        }
     }
-    return CommonModelScopesScopeTypeEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: CommonModelScopesScopeTypeEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function CommonModelScopesScopeTypeEnumToJSON(value?: CommonModelScopesScopeTypeEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != CommonModelScopesScopeTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

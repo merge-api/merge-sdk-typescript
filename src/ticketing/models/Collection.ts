@@ -34,6 +34,9 @@ import {
  * ### Description
  * The `Collection` object is used to represent collections of tickets. Collections may include other collections as
  * sub collections.
+ * 
+ * ### Usage Example
+ * TODO
  * @export
  * @interface Collection
  */

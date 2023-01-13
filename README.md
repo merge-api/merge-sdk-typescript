@@ -1,4 +1,4 @@
-## @mergeapi/merge-sdk-typescript@2.0.6
+## @mergeapi/merge-sdk-typescript@3.0.0
 
 This is the Merge API, Inc. SDK client for Typescript. It utilizes [Fetch API](https://fetch.spec.whatwg.org/) to
 make requests to Merge on behalf of customers. We recommend only using this module in NodeJS server environments.
@@ -133,6 +133,23 @@ let response = await ticketsApi.ticketsList({});
 console.log(response);
 ```
 
+### Enums
+
+Merge's API tries to unify enum values across integrations for a given category. However, there will be
+sporadic cases where integration enum values are too unique to be mapped. In these cases, the value will
+come back as-is. In order to support this behavior, starting in v3.0.0 of merge-sdk-typescript, all enum
+values will be wrapped in an interface like:
+
+```
+{
+    value: EnumValue,
+    rawValue: string
+}
+```
+
+Where the `rawValue` property will be the string from the Merge API, which may be the enum value as-is
+from the integration source.
+
 ### Building
 
 To build and compile the typescript sources to javascript use:
@@ -154,7 +171,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @mergeapi/merge-sdk-typescript@2.0.6 --save
+npm install @mergeapi/merge-sdk-typescript@3.0.0 --save
 ```
 
 _unPublished (not recommended):_

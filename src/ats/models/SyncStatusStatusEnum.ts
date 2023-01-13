@@ -19,7 +19,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum SyncStatusStatusEnum {
+export enum SyncStatusStatusEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Syncing = 'SYNCING',
     Done = 'DONE',
@@ -28,19 +28,30 @@ export enum SyncStatusStatusEnum {
     Paused = 'PAUSED'
 }
 
+export interface SyncStatusStatusEnum {
+    value: SyncStatusStatusEnumValues,
+    rawValue: string
+}
+
 
 export function SyncStatusStatusEnumFromJSON(json: any): SyncStatusStatusEnum {
     return SyncStatusStatusEnumFromJSONTyped(json, false);
 }
 
 export function SyncStatusStatusEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): SyncStatusStatusEnum {
-    if ((<any>Object).values(SyncStatusStatusEnum).includes(json)) {
-        return json as SyncStatusStatusEnum;
+    if ((<any>Object).values(SyncStatusStatusEnumValues).includes(json)) {
+        return {
+            value: json as SyncStatusStatusEnumValues,
+            rawValue: json as string
+        }
     }
-    return SyncStatusStatusEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: SyncStatusStatusEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function SyncStatusStatusEnumToJSON(value?: SyncStatusStatusEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != SyncStatusStatusEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

@@ -26,12 +26,16 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
 export interface VendorCreditsListRequest {
     companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
-    expand?: VendorCreditsListExpandEnum;
+    expand?: Array<VendorCreditsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -42,7 +46,7 @@ export interface VendorCreditsListRequest {
 
 export interface VendorCreditsRetrieveRequest {
     id: string;
-    expand?: VendorCreditsRetrieveExpandEnum;
+    expand?: Array<VendorCreditsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -73,7 +77,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
@@ -100,6 +104,9 @@ export class VendorCreditsApi extends runtime.BaseAPI {
         if (requestParameters.remoteId !== undefined) {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,13 +147,16 @@ export class VendorCreditsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
-        if (requestParameters.expand !== undefined) {
+        if (requestParameters.expand) {
             queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -185,7 +195,6 @@ export class VendorCreditsApi extends runtime.BaseAPI {
 */
 export enum VendorCreditsListExpandEnum {
     Lines = 'lines',
-    Linesvendor = 'lines,vendor',
     Vendor = 'vendor'
 }
 /**
@@ -194,6 +203,5 @@ export enum VendorCreditsListExpandEnum {
 */
 export enum VendorCreditsRetrieveExpandEnum {
     Lines = 'lines',
-    Linesvendor = 'lines,vendor',
     Vendor = 'vendor'
 }

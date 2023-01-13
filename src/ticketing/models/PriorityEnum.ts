@@ -19,12 +19,17 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum PriorityEnum {
+export enum PriorityEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     Urgent = 'URGENT',
     High = 'HIGH',
     Normal = 'NORMAL',
     Low = 'LOW'
+}
+
+export interface PriorityEnum {
+    value: PriorityEnumValues,
+    rawValue: string
 }
 
 
@@ -33,13 +38,19 @@ export function PriorityEnumFromJSON(json: any): PriorityEnum {
 }
 
 export function PriorityEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): PriorityEnum {
-    if ((<any>Object).values(PriorityEnum).includes(json)) {
-        return json as PriorityEnum;
+    if ((<any>Object).values(PriorityEnumValues).includes(json)) {
+        return {
+            value: json as PriorityEnumValues,
+            rawValue: json as string
+        }
     }
-    return PriorityEnum.MERGE_NONSTANDARD_VALUE;
+    return {
+        value: PriorityEnumValues.MERGE_NONSTANDARD_VALUE,
+        rawValue: json as string
+    }
 }
 
 export function PriorityEnumToJSON(value?: PriorityEnum | null): JSONValue {
-    return value ? value as string : null;
+    return value && value.value != PriorityEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 
