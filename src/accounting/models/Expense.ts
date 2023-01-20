@@ -36,7 +36,7 @@ import {
 /**
  * # The Expense Object
  * ### Description
- * The `Expense` object is used to represent a company's expenses
+ * The `Expense` object is used to represent a purchase made from a business which can be made with a check, credit card, or cash. Each expense object is dedicated to a grouping of expenses, with each expense recorded in the lines object.
  * 
  * ### Usage Example
  * Fetch from the `GET Expense` endpoint and view a company's expense.
@@ -121,7 +121,7 @@ export interface Expense {
      * @type {Array<ExpenseLine>}
      * @memberof Expense
      */
-    readonly lines?: Array<ExpenseLine>;
+    lines?: Array<ExpenseLine>;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
@@ -182,6 +182,7 @@ export function ExpenseToJSON(value?: Expense): JSONValue {
         'exchange_rate': value.exchange_rate,
         'company': value.company,
         'memo': value.memo,
+        'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(ExpenseLineToJSON)),
     };
 }
 

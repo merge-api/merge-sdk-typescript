@@ -32,7 +32,7 @@ import {
 /**
  * # The Item Object
  * ### Description
- * The `Item` object is used to represent an item that a company buys, sells, or resells, such as products and services.
+ * The `Item` object refers to the goods involved in a transaction.
  * 
  * ### Usage Example
  * Fetch from the `LIST Items` endpoint and view a company's items.
@@ -77,19 +77,19 @@ export interface Item {
      */
     unit_price?: number | null;
     /**
-     * The item's purchase price.
+     * The price at which the item is purchased from a vendor.
      * @type {number}
      * @memberof Item
      */
     purchase_price?: number | null;
     /**
-     * The item's purchase account.
+     * References the default account used to record a purchase of the item.
      * @type {string}
      * @memberof Item
      */
     purchase_account?: string | JSONValue | null;
     /**
-     * The item's sales account.
+     * References the default account used to record a sale.
      * @type {string}
      * @memberof Item
      */

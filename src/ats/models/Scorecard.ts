@@ -32,7 +32,7 @@ import {
 /**
  * # The Scorecard Object
  * ### Description
- * The `Scorecard` object is used to represent a Scorecard for an interview.
+ * The `Scorecard` object is used to represent an interviewer's candidate recommendation based on a particular interview.
  * ### Usage Example
  * Fetch from the `LIST Scorecards` endpoint and filter by `application` to show all scorecard for an applicant.
  * @export

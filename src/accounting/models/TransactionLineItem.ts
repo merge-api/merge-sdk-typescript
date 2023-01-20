@@ -34,7 +34,7 @@ import {
  */
 export interface TransactionLineItem {
     /**
-     * A memo attached to the line item.
+     * An internal note used by the business to clarify purpose of the transaction.
      * @type {string}
      * @memberof TransactionLineItem
      */
@@ -69,6 +69,12 @@ export interface TransactionLineItem {
      * @memberof TransactionLineItem
      */
     tracking_category?: string | null;
+    /**
+     * The line's associated tracking categories.
+     * @type {Array<string>}
+     * @memberof TransactionLineItem
+     */
+    tracking_categories: Array<string>;
     /**
      * The line item's total.
      * @type {string}
@@ -124,6 +130,7 @@ export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLi
         'item': !exists(json, 'item') ? undefined : json['item'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'tracking_categories': json['tracking_categories'],
         'total_line_amount': !exists(json, 'total_line_amount') ? undefined : json['total_line_amount'],
         'tax_rate': !exists(json, 'tax_rate') ? undefined : json['tax_rate'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
@@ -146,6 +153,7 @@ export function TransactionLineItemToJSON(value?: TransactionLineItem): JSONValu
         'item': value.item,
         'account': value.account,
         'tracking_category': value.tracking_category,
+        'tracking_categories': value.tracking_categories,
         'total_line_amount': value.total_line_amount,
         'tax_rate': value.tax_rate,
         'currency': CurrencyEnumToJSON(value.currency),

@@ -19,13 +19,17 @@ import {
     CurrencyEnumFromJSON,
     CurrencyEnumFromJSONTyped,
     CurrencyEnumToJSON,
+    JournalLineRequest,
+    JournalLineRequestFromJSON,
+    JournalLineRequestFromJSONTyped,
+    JournalLineRequestToJSON,
 } from './';
 
 
 /**
  * # The JournalEntry Object
  * ### Description
- * The `JournalEntry` object is used to represent a company's journey entries.
+ * The `JournalEntry` object is used to get a record of all manually created entries made in a company’s general ledger. The journal line items for each journal entry should sum to zero.
  * 
  * ### Usage Example
  * Fetch from the `GET JournalEntry` endpoint and view a company's journey entry.
@@ -89,6 +93,12 @@ export interface JournalEntryRequest {
     company?: string | null;
     /**
      * 
+     * @type {Array<JournalLineRequest>}
+     * @memberof JournalEntryRequest
+     */
+    lines?: Array<JournalLineRequest> | JSONValue;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof JournalEntryRequest
      */
@@ -121,6 +131,7 @@ export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryR
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'company': !exists(json, 'company') ? undefined : json['company'],
+        'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(JournalLineRequestFromJSON)) as Array<JournalLineRequest>,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -142,6 +153,7 @@ export function JournalEntryRequestToJSON(value?: JournalEntryRequest): JSONValu
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,
         'company': value.company,
+        'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(JournalLineRequestToJSON)),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

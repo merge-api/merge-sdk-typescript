@@ -51,6 +51,12 @@ export interface ExpenseLineRequest {
      */
     tracking_category?: string | JSONValue | null;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof ExpenseLineRequest
+     */
+    tracking_categories?: Array<string> | JSONValue;
+    /**
      * The company the line belongs to.
      * @type {string}
      * @memberof ExpenseLineRequest
@@ -63,7 +69,7 @@ export interface ExpenseLineRequest {
      */
     account?: string | JSONValue | null;
     /**
-     * The line item's description.
+     * The description of the item that was purchased by the company.
      * @type {string}
      * @memberof ExpenseLineRequest
      */
@@ -97,6 +103,7 @@ export function ExpenseLineRequestFromJSONTyped(json: JSONValue): ExpenseLineReq
         'item': !exists(json, 'item') ? undefined : json['item'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'description': !exists(json, 'description') ? undefined : json['description'],
@@ -116,6 +123,7 @@ export function ExpenseLineRequestToJSON(value?: ExpenseLineRequest): JSONValue 
         'item': value.item,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
+        'tracking_categories': value.tracking_categories,
         'company': value.company,
         'account': value.account,
         'description': value.description,

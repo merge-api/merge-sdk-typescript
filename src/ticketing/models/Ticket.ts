@@ -177,7 +177,7 @@ export interface Ticket {
      */
     ticket_url?: string | null;
     /**
-     * The priority or urgency of the Ticket. Possible values include: URGENT, HIGH, NORMAL, LOW - in cases where there is no clear mapping - the original value passed through.
+     * The priority or urgency of the Ticket.
      * @type {PriorityEnum}
      * @memberof Ticket
      */

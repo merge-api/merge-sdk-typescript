@@ -39,7 +39,7 @@ export interface JournalLine {
      */
     account?: string | JSONValue | null;
     /**
-     * The line's net amount.
+     * The value of the line item including taxes and other fees.
      * @type {number}
      * @memberof JournalLine
      */
@@ -50,6 +50,12 @@ export interface JournalLine {
      * @memberof JournalLine
      */
     tracking_category?: string | JSONValue | null;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof JournalLine
+     */
+    tracking_categories?: Array<string> | JSONValue;
     /**
      * 
      * @type {string}
@@ -79,6 +85,7 @@ export function JournalLineFromJSONTyped(json: JSONValue): JournalLine | undefin
         'account': !exists(json, 'account') ? undefined : json['account'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'description': !exists(json, 'description') ? undefined : json['description'],
     };
@@ -95,6 +102,7 @@ export function JournalLineToJSON(value?: JournalLine): JSONValue {
         'account': value.account,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
+        'tracking_categories': value.tracking_categories,
         'contact': value.contact,
         'description': value.description,
     };

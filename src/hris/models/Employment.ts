@@ -48,9 +48,9 @@ import {
 /**
  * # The Employment Object
  * ### Description
- * The `Employment` object is used to represent an employment position at a company. These are associated with the employee filling the role.
+ * The `Employment` object is used to represent a job position at a company.
  * 
- * Please note: Employment objects are constructed if the object does not exist in the remote system.
+ * Please note: When there is a change in pay or title, integrations with historical data will create new Employment objects while integrations without historical data will update existing ones.
  * 
  * ### Usage Example
  * Fetch from the `LIST Employments` endpoint and filter by `ID` to show all employees.

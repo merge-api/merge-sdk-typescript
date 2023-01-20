@@ -32,7 +32,7 @@ import {
 /**
  * # The Attachment Object
  * ### Description
- * The `Attachment` object is used to represent a attachment for a candidate.
+ * The `Attachment` object is used to represent a file attached to a candidate.
  * ### Usage Example
  * Fetch from the `LIST Attachments` endpoint and view attachments accessible by a company.
  * @export

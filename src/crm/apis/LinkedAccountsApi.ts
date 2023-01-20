@@ -149,5 +149,6 @@ export enum LinkedAccountsListCategoryEnum {
     Ats = 'ats',
     Crm = 'crm',
     Hris = 'hris',
+    Mktg = 'mktg',
     Ticketing = 'ticketing'
 }

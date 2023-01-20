@@ -36,7 +36,7 @@ import {
 /**
  * # The PayrollRun Object
  * ### Description
- * The `PayrollRun` object is used to represent a payroll run. This payroll run is not specific to an employee.
+ * The `PayrollRun` object is used to represent a group of pay statements for a specific pay schedule.
  * 
  * ### Usage Example
  * Fetch from the `LIST PayrollRuns` endpoint and filter by `ID` to show all payroll runs.

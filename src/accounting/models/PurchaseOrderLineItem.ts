@@ -34,7 +34,7 @@ import {
  */
 export interface PurchaseOrderLineItem {
     /**
-     * The line item's description.
+     * A description of the good being purchased.
      * @type {string}
      * @memberof PurchaseOrderLineItem
      */
@@ -69,6 +69,12 @@ export interface PurchaseOrderLineItem {
      * @memberof PurchaseOrderLineItem
      */
     tracking_category?: string | null;
+    /**
+     * The purchase order line item's associated tracking categories.
+     * @type {Array<string>}
+     * @memberof PurchaseOrderLineItem
+     */
+    tracking_categories: Array<string>;
     /**
      * The purchase order line item's tax amount.
      * @type {string}
@@ -118,6 +124,7 @@ export function PurchaseOrderLineItemFromJSONTyped(json: JSONValue): PurchaseOrd
         'item': !exists(json, 'item') ? undefined : json['item'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'tracking_categories': json['tracking_categories'],
         'tax_amount': !exists(json, 'tax_amount') ? undefined : json['tax_amount'],
         'total_line_amount': !exists(json, 'total_line_amount') ? undefined : json['total_line_amount'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
@@ -139,6 +146,7 @@ export function PurchaseOrderLineItemToJSON(value?: PurchaseOrderLineItem): JSON
         'item': value.item,
         'account': value.account,
         'tracking_category': value.tracking_category,
+        'tracking_categories': value.tracking_categories,
         'tax_amount': value.tax_amount,
         'total_line_amount': value.total_line_amount,
         'currency': CurrencyEnumToJSON(value.currency),

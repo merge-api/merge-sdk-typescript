@@ -35,7 +35,7 @@ export interface AccountIntegration {
      */
     name: string;
     /**
-     * Category or categories this integration belongs to. Multiple categories should be comma separated.<br/><br>Example: For [ats, hris], enter <i>ats,hris</i>
+     * Category or categories this integration belongs to. Multiple categories should be comma separated, i.e. [ats, hris].
      * @type {Array<CategoriesEnum>}
      * @memberof AccountIntegration
      */

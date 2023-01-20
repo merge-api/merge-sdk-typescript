@@ -28,7 +28,7 @@ import {
 /**
  * # The JobInterviewStage Object
  * ### Description
- * The `JobInterviewStage` object is used to represent the stage that a job application is in.
+ * The `JobInterviewStage` object is used to represent a particular recruiting stage for an `Application`. A given `Application` typically has the `JobInterviewStage` object represented in the current_stage field.
  * ### Usage Example
  * Fetch from the `LIST JobInterviewStages` endpoint and view the job interview stages used by a company.
  * @export
@@ -48,7 +48,7 @@ export interface JobInterviewStage {
      */
     remote_id?: string | null;
     /**
-     * The stage's name.
+     * Standard stage names are offered by ATS systems but can be modified by users.
      * @type {string}
      * @memberof JobInterviewStage
      */

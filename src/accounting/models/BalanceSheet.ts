@@ -36,7 +36,7 @@ import {
 /**
  * # The BalanceSheet Object
  * ### Description
- * The `BalanceSheet` object is used to represent a company's balance sheet.
+ * The `BalanceSheet` object shows a company’s assets, liabilities, and equity. Assets should be equal to liability and equity combined. This shows the company’s financial health at a specific point in time.
  * 
  * ### Usage Example
  * Fetch from the `LIST BalanceSheets` endpoint and view a company's balance sheets.

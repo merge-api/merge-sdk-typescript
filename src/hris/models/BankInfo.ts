@@ -32,7 +32,7 @@ import {
 /**
  * # The BankInfo Object
  * ### Description
- * The `BankInfo` object is used to represent the Bank Account information for an Employee. This is often referenced with an Employee object.
+ * The `BankInfo` object is used to represent the Bank Account information for an Employee.
  * 
  * ### Usage Example
  * Fetch from the `LIST BankInfo` endpoint and filter by `ID` to show all bank information.

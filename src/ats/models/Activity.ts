@@ -36,7 +36,7 @@ import {
 /**
  * # The Activity Object
  * ### Description
- * The `Activity` object is used to represent an activity performed by a user.
+ * The `Activity` object is used to represent an activity for a candidate performed by a user.
  * ### Usage Example
  * Fetch from the `LIST Activities` endpoint and filter by `ID` to show all activities.
  * @export

@@ -18,7 +18,7 @@ import { JSONValue } from '../../merge_json';
 /**
  * # The Tax Object
  * ### Description
- * The `Tax` object is used to represent a tax for a given employee's payroll run. One run could include several taxes.
+ * The `Tax` object is used to represent an array of the tax deductions for a given employee's payroll run.
  * 
  * ### Usage Example
  * Fetch from the `LIST Taxes` endpoint and filter by `ID` to show all taxes.

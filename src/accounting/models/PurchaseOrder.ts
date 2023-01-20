@@ -40,7 +40,7 @@ import {
 /**
  * # The PurchaseOrder Object
  * ### Description
- * The `PurchaseOrder` object is used to represent a company's purchase orders.
+ * The `PurchaseOrder` object is a record of request for a product or service between a buyer and seller.
  * 
  * ### Usage Example
  * Fetch from the `LIST PurchaseOrders` endpoint and view a company's purchase orders.
@@ -91,13 +91,13 @@ export interface PurchaseOrder {
      */
     delivery_address?: string | JSONValue | null;
     /**
-     * The purchase order's customer.
+     * The contact making the purchase order.
      * @type {string}
      * @memberof PurchaseOrder
      */
     customer?: string | null;
     /**
-     * The purchase_order's vendor.
+     * The party fulfilling the purchase order.
      * @type {string}
      * @memberof PurchaseOrder
      */
@@ -131,7 +131,7 @@ export interface PurchaseOrder {
      * @type {Array<PurchaseOrderLineItem>}
      * @memberof PurchaseOrder
      */
-    readonly line_items?: Array<PurchaseOrderLineItem> | JSONValue;
+    line_items?: Array<PurchaseOrderLineItem> | JSONValue;
     /**
      * When the third party's purchase order note was created.
      * @type {Date}
@@ -208,6 +208,7 @@ export function PurchaseOrderToJSON(value?: PurchaseOrder): JSONValue {
         'total_amount': value.total_amount,
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,
+        'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(PurchaseOrderLineItemToJSON)),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
     };

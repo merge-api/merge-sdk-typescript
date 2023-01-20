@@ -33,7 +33,7 @@ import {
 /**
  * # The TimeOff Object
  * ### Description
- * The `TimeOff` object is used to represent a Time Off Request filed by an employee.
+ * The `TimeOff` object is used to represent all employees' Time Off entries.
  * 
  * ### Usage Example
  * Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off requests.
@@ -54,7 +54,7 @@ export interface TimeOffRequest {
      */
     employee?: string | JSONValue | null;
     /**
-     * The employee approving the time off request.
+     * The Merge ID of the employee with the ability to approve the time off request.
      * @type {string}
      * @memberof TimeOffRequest
      */
@@ -72,13 +72,13 @@ export interface TimeOffRequest {
      */
     employee_note?: string | null;
     /**
-     * The unit of time requested.
+     * The measurement that the third-party integration uses to count time requested.
      * @type {UnitsEnum}
      * @memberof TimeOffRequest
      */
     units?: UnitsEnum | null;
     /**
-     * The number of time off units requested.
+     * The time off quantity measured by the prescribed “units”.
      * @type {number}
      * @memberof TimeOffRequest
      */

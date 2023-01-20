@@ -32,7 +32,7 @@ import {
 /**
  * # The ScheduledInterview Object
  * ### Description
- * The `ScheduledInterview` object is used to represent an interview.
+ * The `ScheduledInterview` object is used to represent a scheduled interview for a given candidate’s application to a job. An `Application` can have multiple `ScheduledInterview`s depending on the particular hiring process.
  * ### Usage Example
  * Fetch from the `LIST ScheduledInterviews` endpoint and filter by `interviewers` to show all office locations.
  * @export

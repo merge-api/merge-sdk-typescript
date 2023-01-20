@@ -3,7 +3,6 @@ src/apis/AccountTokenApi.ts
 src/apis/AvailableActionsApi.ts
 src/apis/BankInfoApi.ts
 src/apis/BenefitsApi.ts
-src/apis/CommonModelScopesApi.ts
 src/apis/CompaniesApi.ts
 src/apis/DeleteAccountApi.ts
 src/apis/EmployeePayrollRunsApi.ts
@@ -40,14 +39,6 @@ src/models/BankInfo.ts
 src/models/Benefit.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
-src/models/CommonModelScopes.ts
-src/models/CommonModelScopesDisabledModels.ts
-src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPutInnerDeserializerEnabledActionsEnum.ts
-src/models/CommonModelScopesPutInnerDeserializerRequest.ts
-src/models/CommonModelScopesScope.ts
-src/models/CommonModelScopesScopeTypeEnum.ts
-src/models/CommonModelScopesUpdateSerializer.ts
 src/models/Company.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts

@@ -36,7 +36,7 @@ import {
 /**
  * # The Job Object
  * ### Description
- * The `Job` object is used to represent a Job offering at a company.
+ * The `Job` object can be used to track any jobs that are currently or will be open/closed for applications.
  * ### Usage Example
  * Fetch from the `LIST Jobs` endpoint to show all job postings.
  * @export

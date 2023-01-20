@@ -28,9 +28,7 @@ import {
 /**
  * # The Application Object
  * ### Description
- * The `Application` object is used to represent an Application for a job position. This is separate from the Candidate object, although some systems may only allow a Candidate to have one Application.
- * 
- * Please note: Application objects are constructed if the object does not exist in the remote system.
+ * The Application Object is used to represent a candidate's journey through a particular Job's recruiting process. If a Candidate applies for multiple Jobs, there will be a separate Application for each Job if the third-party integration allows it.
  * 
  * ### Usage Example
  * Fetch from the `LIST Applications` endpoint and filter by `ID` to show all applications.

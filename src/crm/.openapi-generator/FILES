@@ -2,7 +2,6 @@ src/apis/AccountDetailsApi.ts
 src/apis/AccountTokenApi.ts
 src/apis/AccountsApi.ts
 src/apis/AvailableActionsApi.ts
-src/apis/CommonModelScopesApi.ts
 src/apis/ContactsApi.ts
 src/apis/CustomObjectClassesApi.ts
 src/apis/DeleteAccountApi.ts
@@ -54,13 +53,6 @@ src/models/CRMCustomObjectResponse.ts
 src/models/CardinalityEnum.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
-src/models/CommonModelScopes.ts
-src/models/CommonModelScopesDisabledModels.ts
-src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPutInnerDeserializerEnabledActionsEnum.ts
-src/models/CommonModelScopesPutInnerDeserializerRequest.ts
-src/models/CommonModelScopesScope.ts
-src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts
 src/models/Contact.ts
@@ -134,7 +126,6 @@ src/models/SyncStatus.ts
 src/models/SyncStatusStatusEnum.ts
 src/models/Task.ts
 src/models/TaskStatusEnum.ts
-src/models/TypeEnum.ts
 src/models/User.ts
 src/models/ValidationProblemSource.ts
 src/models/WarningValidationProblem.ts

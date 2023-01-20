@@ -40,7 +40,7 @@ import {
 /**
  * # The CreditNote Object
  * ### Description
- * The `CreditNote` object is used to represent a refund or credit of payment.
+ * The `CreditNote` object are an accounts payable transaction used when to represent a gift or refund to a customer. A credit note will contain information on the amount of credit owed, the customer, and the account.
  * 
  * ### Usage Example
  * Fetch from the `LIST CreditNotes` endpoint and view a company's credit notes.
@@ -103,7 +103,7 @@ export interface CreditNote {
      */
     total_amount?: number | null;
     /**
-     * The credit note's remaining credit.
+     * The amount of value remaining in the credit note that the customer can use.
      * @type {number}
      * @memberof CreditNote
      */
@@ -113,7 +113,7 @@ export interface CreditNote {
      * @type {Array<CreditNoteLineItem>}
      * @memberof CreditNote
      */
-    readonly line_items?: Array<CreditNoteLineItem>;
+    line_items?: Array<CreditNoteLineItem> | JSONValue;
     /**
      * The credit note's currency.
      * @type {CurrencyEnum}
@@ -198,6 +198,7 @@ export function CreditNoteToJSON(value?: CreditNote): JSONValue {
         'company': value.company,
         'total_amount': value.total_amount,
         'remaining_credit': value.remaining_credit,
+        'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(CreditNoteLineItemToJSON)),
         'currency': CurrencyEnumToJSON(value.currency),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),

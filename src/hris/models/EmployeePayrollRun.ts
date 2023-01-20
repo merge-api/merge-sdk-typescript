@@ -40,7 +40,7 @@ import {
 /**
  * # The EmployeePayrollRun Object
  * ### Description
- * The `EmployeePayrollRun` object is used to represent a payroll run for a specific employee.
+ * The `EmployeePayrollRun` object is used to represent an employee's pay statement for a specific payroll run.
  * 
  * ### Usage Example
  * Fetch from the `LIST EmployeePayrollRun` endpoint and filter by `ID` to show all employee payroll runs.
@@ -73,13 +73,13 @@ export interface EmployeePayrollRun {
      */
     payroll_run?: string | JSONValue | null;
     /**
-     * The gross pay from the run.
+     * The total earnings throughout a given period for an employee before any deductions are made.
      * @type {number}
      * @memberof EmployeePayrollRun
      */
     gross_pay?: number | null;
     /**
-     * The net pay from the run.
+     * The take-home pay throughout a given period for an employee after deductions are made.
      * @type {number}
      * @memberof EmployeePayrollRun
      */

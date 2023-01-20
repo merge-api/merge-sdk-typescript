@@ -157,6 +157,12 @@ export interface CustomObjectClassesCustomObjectsRetrieveRequest {
     includeRemoteData?: boolean;
 }
 
+export interface CustomObjectClassesGeneratorUpdateRequest {
+    generatorId: string;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
+
 export interface CustomObjectClassesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -922,6 +928,56 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
      */
     async customObjectClassesCustomObjectsRetrieve(requestParameters: CustomObjectClassesCustomObjectsRetrieveRequest): Promise<CustomObject | undefined> {
         const response = await this.customObjectClassesCustomObjectsRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Updates a `CustomObjectClass` object with the given `id`.
+     */
+    async customObjectClassesGeneratorUpdateRaw(requestParameters: CustomObjectClassesGeneratorUpdateRequest): Promise<runtime.ApiResponse<CustomObjectClass | undefined>> {
+        if (requestParameters.generatorId === null || requestParameters.generatorId === undefined) {
+            throw new runtime.RequiredError('generatorId','Required parameter requestParameters.generatorId was null or undefined when calling customObjectClassesGeneratorUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/custom-object-classes/generator/{generator_id}`.replace(`{${"generator_id"}}`, encodeURIComponent(String(requestParameters.generatorId))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CustomObjectClassFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a `CustomObjectClass` object with the given `id`.
+     */
+    async customObjectClassesGeneratorUpdate(requestParameters: CustomObjectClassesGeneratorUpdateRequest): Promise<CustomObjectClass | undefined> {
+        const response = await this.customObjectClassesGeneratorUpdateRaw(requestParameters);
         return await response.value();
     }
 
