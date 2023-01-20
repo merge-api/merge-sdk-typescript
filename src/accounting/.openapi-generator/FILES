@@ -6,7 +6,6 @@ src/apis/AttachmentsApi.ts
 src/apis/AvailableActionsApi.ts
 src/apis/BalanceSheetsApi.ts
 src/apis/CashFlowStatementsApi.ts
-src/apis/CommonModelScopesApi.ts
 src/apis/CompanyInfoApi.ts
 src/apis/ContactsApi.ts
 src/apis/CreditNotesApi.ts
@@ -61,14 +60,6 @@ src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
 src/models/CategoryTypeEnum.ts
 src/models/ClassificationEnum.ts
-src/models/CommonModelScopes.ts
-src/models/CommonModelScopesDisabledModels.ts
-src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPutInnerDeserializerEnabledActionsEnum.ts
-src/models/CommonModelScopesPutInnerDeserializerRequest.ts
-src/models/CommonModelScopesScope.ts
-src/models/CommonModelScopesScopeTypeEnum.ts
-src/models/CommonModelScopesUpdateSerializer.ts
 src/models/CompanyInfo.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts

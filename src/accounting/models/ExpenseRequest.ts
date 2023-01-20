@@ -19,13 +19,17 @@ import {
     CurrencyEnumFromJSON,
     CurrencyEnumFromJSONTyped,
     CurrencyEnumToJSON,
+    ExpenseLineRequest,
+    ExpenseLineRequestFromJSON,
+    ExpenseLineRequestFromJSONTyped,
+    ExpenseLineRequestToJSON,
 } from './';
 
 
 /**
  * # The Expense Object
  * ### Description
- * The `Expense` object is used to represent a company's expenses
+ * The `Expense` object is used to represent a purchase made from a business which can be made with a check, credit card, or cash. Each expense object is dedicated to a grouping of expenses, with each expense recorded in the lines object.
  * 
  * ### Usage Example
  * Fetch from the `GET Expense` endpoint and view a company's expense.
@@ -95,6 +99,12 @@ export interface ExpenseRequest {
     memo?: string | null;
     /**
      * 
+     * @type {Array<ExpenseLineRequest>}
+     * @memberof ExpenseRequest
+     */
+    lines?: Array<ExpenseLineRequest>;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof ExpenseRequest
      */
@@ -128,6 +138,7 @@ export function ExpenseRequestFromJSONTyped(json: JSONValue): ExpenseRequest | u
         'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
+        'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(ExpenseLineRequestFromJSON)) as Array<ExpenseLineRequest>,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -150,6 +161,7 @@ export function ExpenseRequestToJSON(value?: ExpenseRequest): JSONValue {
         'exchange_rate': value.exchange_rate,
         'company': value.company,
         'memo': value.memo,
+        'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(ExpenseLineRequestToJSON)),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

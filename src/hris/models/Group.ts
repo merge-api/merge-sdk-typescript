@@ -32,9 +32,7 @@ import {
 /**
  * # The Group Object
  * ### Description
- * The `Group` object is used to represent Group information that employees belong to. This is often referenced with an Employee object.
- * 
- * Please note: The teams object will fulfill most use cases. The Groups object is for power-users that want all types of groups at a company and the optionality of pulling multiple groups for an employee.
+ * The `Group` object is used to represent any subset of employees, such as `PayGroup` or `Team`. Employees can be in multiple Groups.
  * 
  * ### Usage Example
  * Fetch from the `LIST Employee` endpoint and expand groups to view an employee's groups.

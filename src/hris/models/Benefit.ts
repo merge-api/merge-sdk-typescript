@@ -28,7 +28,7 @@ import {
 /**
  * # The Benefit Object
  * ### Description
- * The `Benefit` object is used to represent a Benefit for an employee.
+ * The `Benefit` object is used to represent a benefit that an employee has enrolled in.
  * 
  * ### Usage Example
  * Fetch from the `LIST Benefits` endpoint and filter by `ID` to show all benefits.

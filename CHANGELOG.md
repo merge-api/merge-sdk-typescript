@@ -1,3 +1,11 @@
+# Version 3.0.1
+
+# Date: 2022-01-20
+
+- Fixed an issue where certain accounting models did not allow POST'ing of line items properties
+- Removed CommonModelScopes api, previously in beta. May return in the future in a different form.
+- Various documentation / help text updates to common model fields
+
 # Version 3.0.0
 
 # Date: 2022-01-13

@@ -44,7 +44,7 @@ import {
 /**
  * # The Employee Object
  * ### Description
- * The `Employee` object is used to represent an Employee for a company.
+ * The `Employee` object is used to represent any person who has been employed by a company.
  * 
  * ### Usage Example
  * Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees.
@@ -65,7 +65,7 @@ export interface Employee {
      */
     remote_id?: string | null;
     /**
-     * The employee's number that appears in the remote UI. Note: This is distinct from the remote_id field, which is a unique identifier for the employee set by the remote API, and is not exposed to the user. This value can also change in many API providers.
+     * The employee's number that appears in the third-party integration's UI.
      * @type {string}
      * @memberof Employee
      */
@@ -179,7 +179,7 @@ export interface Employee {
      */
     ethnicity?: EthnicityEnum | null;
     /**
-     * The employee's marital status.
+     * The employee's filing status as related to marital status.
      * @type {MaritalStatusEnum}
      * @memberof Employee
      */
@@ -197,7 +197,7 @@ export interface Employee {
      */
     hire_date?: Date | null;
     /**
-     * The date that the employee started working. If an employee has multiple start dates from previous employments, this represents the most recent start date.
+     * The date that the employee started working. If an employee was rehired, the most recent start date will be returned.
      * @type {Date}
      * @memberof Employee
      */

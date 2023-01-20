@@ -39,11 +39,12 @@ import {
 
 /**
  * # The Invoice Object
- * ### Description
- * The `Invoice` object is used to represent a company's invoices.
+ *     ### Description
+ *     The `Invoice` object represents an itemized record of goods and/or services sold to a customer.
+ * If type = accounts_payable `Invoice` is a bill, if type = accounts_receivable it's an invoice.
  * 
- * ### Usage Example
- * Fetch from the `LIST Invoices` endpoint and view a company's invoices.
+ *     ### Usage Example
+ *     Fetch from the `LIST Invoices` endpoint and view a company's invoices.
  * @export
  * @interface Invoice
  */
@@ -67,7 +68,7 @@ export interface Invoice {
      */
     readonly remote_data?: Array<RemoteData> | null;
     /**
-     * The invoice's type.
+     * Whether the invoice is an accounts receivable or accounts payable. Accounts payable invoices are commonly referred to as Bills.
      * @type {InvoiceTypeEnum}
      * @memberof Invoice
      */
@@ -127,19 +128,19 @@ export interface Invoice {
      */
     exchange_rate?: string | null;
     /**
-     * The invoice's total discount.
+     * The total discounts applied to the total cost.
      * @type {number}
      * @memberof Invoice
      */
     total_discount?: number | null;
     /**
-     * The invoice's sub-total.
+     * The total amount being paid before taxes.
      * @type {number}
      * @memberof Invoice
      */
     sub_total?: number | null;
     /**
-     * The invoice's total tax amount.
+     * The total amount being paid in taxes.
      * @type {number}
      * @memberof Invoice
      */
@@ -173,7 +174,7 @@ export interface Invoice {
      * @type {Array<InvoiceLineItem>}
      * @memberof Invoice
      */
-    readonly line_items?: Array<InvoiceLineItem> | JSONValue;
+    line_items?: Array<InvoiceLineItem> | JSONValue;
     /**
      * 
      * @type {boolean}
@@ -250,6 +251,7 @@ export function InvoiceToJSON(value?: Invoice): JSONValue {
         'balance': value.balance,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'payments': value.payments,
+        'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(InvoiceLineItemToJSON)),
     };
 }
 

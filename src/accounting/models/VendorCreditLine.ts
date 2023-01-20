@@ -33,7 +33,7 @@ export interface VendorCreditLine {
      */
     remote_id?: string | null;
     /**
-     * The line's net amount.
+     * The full value of the credit.
      * @type {number}
      * @memberof VendorCreditLine
      */
@@ -44,6 +44,12 @@ export interface VendorCreditLine {
      * @memberof VendorCreditLine
      */
     tracking_category?: string | null;
+    /**
+     * The line's associated tracking categories.
+     * @type {Array<string>}
+     * @memberof VendorCreditLine
+     */
+    tracking_categories: Array<string>;
     /**
      * The line's description.
      * @type {string}
@@ -78,6 +84,7 @@ export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'tracking_categories': json['tracking_categories'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'company': !exists(json, 'company') ? undefined : json['company'],
@@ -94,6 +101,7 @@ export function VendorCreditLineToJSON(value?: VendorCreditLine): JSONValue {
         'remote_id': value.remote_id,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
+        'tracking_categories': value.tracking_categories,
         'description': value.description,
         'account': value.account,
         'company': value.company,

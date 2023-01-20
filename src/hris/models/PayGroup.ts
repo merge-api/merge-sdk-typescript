@@ -28,7 +28,7 @@ import {
 /**
  * # The PayGroup Object
  * ### Description
- * The `PayGroup` object is used to represent Pay Group information that employees belong to. This is often referenced with an Employee object.
+ * The `PayGroup` object is used to represent a subset of employees that are put together for payroll processing purposes.
  * 
  * ### Usage Example
  * Fetch from the `LIST PayGroup` endpoint and filter by `ID` to show all pay group information.

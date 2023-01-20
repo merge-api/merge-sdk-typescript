@@ -40,7 +40,7 @@ import {
 /**
  * # The Account Object
  * ### Description
- * The `Account` object is what businesses use to track transactions. Accountants often call accounts "ledgers".
+ * The `Account` object is what companies use to track transactions. They can be both bank accounts or a general ledger account (also called a chart of accounts).
  * 
  * ### Usage Example
  * Fetch from the `LIST Accounts` endpoint and view a company's accounts.
@@ -79,13 +79,13 @@ export interface Account {
      */
     description?: string | null;
     /**
-     * The account's classification.
+     * The account's broadest grouping.
      * @type {ClassificationEnum}
      * @memberof Account
      */
     classification?: ClassificationEnum | null;
     /**
-     * The account's type.
+     * The account's type is a narrower and more specific grouping within the account's classification.
      * @type {string}
      * @memberof Account
      */

@@ -63,6 +63,12 @@ export interface CustomObjectClass {
      */
     readonly fields?: Array<RemoteFieldClass> | JSONValue;
     /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof CustomObjectClass
+     */
+    readonly association_types?: Array<{ [key: string]: any; }> | null;
+    /**
      * The third-party API ID of the matching object.
      * @type {string}
      * @memberof CustomObjectClass
@@ -86,6 +92,7 @@ export function CustomObjectClassFromJSONTyped(json: JSONValue): CustomObjectCla
         'description': !exists(json, 'description') ? undefined : json['description'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
         'fields': !exists(json, 'fields') ? undefined : ((json['fields'] as Array<JSONValue>).map(RemoteFieldClassFromJSON)) as Array<RemoteFieldClass>,
+        'association_types': !exists(json, 'association_types') ? undefined : json['association_types'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }

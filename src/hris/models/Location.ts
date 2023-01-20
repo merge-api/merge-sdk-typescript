@@ -36,7 +36,7 @@ import {
 /**
  * # The Location Object
  * ### Description
- * The `Location` object is used to represent a Location for a Company or Employee address. This is shared across many models and is referenced whenever a location is stored.
+ * The `Location` object is used to represent an address that can be associated with an employee.
  * 
  * ### Usage Example
  * Fetch from the `LIST Locations` endpoint and filter by `ID` to show all office locations.

@@ -19,6 +19,10 @@ import {
     CurrencyEnumFromJSON,
     CurrencyEnumFromJSONTyped,
     CurrencyEnumToJSON,
+    InvoiceLineItemRequest,
+    InvoiceLineItemRequestFromJSON,
+    InvoiceLineItemRequestFromJSONTyped,
+    InvoiceLineItemRequestToJSON,
     InvoiceTypeEnum,
     InvoiceTypeEnumFromJSON,
     InvoiceTypeEnumFromJSONTyped,
@@ -28,11 +32,12 @@ import {
 
 /**
  * # The Invoice Object
- * ### Description
- * The `Invoice` object is used to represent a company's invoices.
+ *     ### Description
+ *     The `Invoice` object represents an itemized record of goods and/or services sold to a customer.
+ * If type = accounts_payable `Invoice` is a bill, if type = accounts_receivable it's an invoice.
  * 
- * ### Usage Example
- * Fetch from the `LIST Invoices` endpoint and view a company's invoices.
+ *     ### Usage Example
+ *     Fetch from the `LIST Invoices` endpoint and view a company's invoices.
  * @export
  * @interface InvoiceRequest
  */
@@ -44,7 +49,7 @@ export interface InvoiceRequest {
      */
     remote_id?: string | null;
     /**
-     * The invoice's type.
+     * Whether the invoice is an accounts receivable or accounts payable. Accounts payable invoices are commonly referred to as Bills.
      * @type {InvoiceTypeEnum}
      * @memberof InvoiceRequest
      */
@@ -104,19 +109,19 @@ export interface InvoiceRequest {
      */
     exchange_rate?: string | null;
     /**
-     * The invoice's total discount.
+     * The total discounts applied to the total cost.
      * @type {number}
      * @memberof InvoiceRequest
      */
     total_discount?: number | null;
     /**
-     * The invoice's sub-total.
+     * The total amount being paid before taxes.
      * @type {number}
      * @memberof InvoiceRequest
      */
     sub_total?: number | null;
     /**
-     * The invoice's total tax amount.
+     * The total amount being paid in taxes.
      * @type {number}
      * @memberof InvoiceRequest
      */
@@ -145,6 +150,12 @@ export interface InvoiceRequest {
      * @memberof InvoiceRequest
      */
     payments?: Array<string> | JSONValue;
+    /**
+     * 
+     * @type {Array<InvoiceLineItemRequest>}
+     * @memberof InvoiceRequest
+     */
+    line_items?: Array<InvoiceLineItemRequest> | JSONValue;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -188,6 +199,7 @@ export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | u
         'balance': !exists(json, 'balance') ? undefined : json['balance'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
+        'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(InvoiceLineItemRequestFromJSON)) as Array<InvoiceLineItemRequest>,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -218,6 +230,7 @@ export function InvoiceRequestToJSON(value?: InvoiceRequest): JSONValue {
         'balance': value.balance,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'payments': value.payments,
+        'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(InvoiceLineItemRequestToJSON)),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

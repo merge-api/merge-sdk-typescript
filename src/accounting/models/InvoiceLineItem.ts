@@ -25,7 +25,7 @@ import {
 /**
  * # The InvoiceLineItem Object
  * ### Description
- * The `InvoiceLineItem` object is used to represent an invoice's line items.
+ * The `InvoiceLineItem` object represents an itemized record of goods and/or services sold to a customer. If type = accounts_payable, invoice is a bill, if type = accounts_receivable it's an invoice.
  * 
  * ### Usage Example
  * Fetch from the `GET Invoice` endpoint and view the invoice's line items.
@@ -100,6 +100,12 @@ export interface InvoiceLineItem {
      */
     tracking_category?: string | JSONValue | null;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof InvoiceLineItem
+     */
+    tracking_categories?: Array<string> | JSONValue;
+    /**
      * The company the line item belongs to.
      * @type {string}
      * @memberof InvoiceLineItem
@@ -135,6 +141,7 @@ export function InvoiceLineItemFromJSONTyped(json: JSONValue): InvoiceLineItem |
         'item': !exists(json, 'item') ? undefined : json['item'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
@@ -157,6 +164,7 @@ export function InvoiceLineItemToJSON(value?: InvoiceLineItem): JSONValue {
         'item': value.item,
         'account': value.account,
         'tracking_category': value.tracking_category,
+        'tracking_categories': value.tracking_categories,
         'company': value.company,
     };
 }

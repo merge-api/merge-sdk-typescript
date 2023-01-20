@@ -36,7 +36,7 @@ import {
 /**
  * # The IncomeStatement Object
  * ### Description
- * The `IncomeStatement` object is used to represent a company's income statements.
+ * The `IncomeStatement` object is used to represent a company’s income, the cost of sales, operating expenses, and other non-operating expenses. The object also includes other important values like gross profit, gross operating profit, and net income. This represents a period of time (month, quarter, or year).
  * 
  * ### Usage Example
  * Fetch from the `GET IncomeStatement` endpoint and view a company's income statement for a given period.
@@ -105,7 +105,7 @@ export interface IncomeStatement {
      */
     readonly cost_of_sales?: Array<ReportItem>;
     /**
-     * The income statement's gross profit.
+     * The revenue minus the cost of sale.
      * @type {number}
      * @memberof IncomeStatement
      */
@@ -117,7 +117,7 @@ export interface IncomeStatement {
      */
     readonly operating_expenses?: Array<ReportItem>;
     /**
-     * The income statement's net operating profit.
+     * The revenue minus the operating expenses.
      * @type {number}
      * @memberof IncomeStatement
      */
@@ -129,7 +129,7 @@ export interface IncomeStatement {
      */
     readonly non_operating_expenses?: Array<ReportItem>;
     /**
-     * The income statement's net income.
+     * The gross profit minus the total expenses.
      * @type {number}
      * @memberof IncomeStatement
      */

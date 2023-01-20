@@ -7,7 +7,6 @@ export * from './AttachmentsApi';
 export * from './AvailableActionsApi';
 export * from './CollectionsApi';
 export * from './CommentsApi';
-export * from './CommonModelScopesApi';
 export * from './ContactsApi';
 export * from './DeleteAccountApi';
 export * from './ForceResyncApi';

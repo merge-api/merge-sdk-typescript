@@ -25,7 +25,7 @@ import {
 /**
  * # The Payment Object
  * ### Description
- * The `Payment` object is used to represent a invoice's payment.
+ * The `Payment` object represents general payments made towards a specific transaction.
  * 
  * ### Usage Example
  * Fetch from the `GET Payment` endpoint and view an invoice's payment.
@@ -46,13 +46,13 @@ export interface PaymentRequest {
      */
     transaction_date?: Date | null;
     /**
-     * The payment's contact.
+     * The supplier, or customer involved in the payment.
      * @type {string}
      * @memberof PaymentRequest
      */
     contact?: string | JSONValue | null;
     /**
-     * The payment's account.
+     * The supplier’s or customer’s account in which the payment is made.
      * @type {string}
      * @memberof PaymentRequest
      */
@@ -76,7 +76,7 @@ export interface PaymentRequest {
      */
     company?: string | null;
     /**
-     * The payment's total amount.
+     * The total amount of money being paid to the supplier, or customer, after taxes.
      * @type {number}
      * @memberof PaymentRequest
      */

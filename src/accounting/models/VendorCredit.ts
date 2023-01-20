@@ -36,7 +36,7 @@ import {
 /**
  * # The VendorCredit Object
  * ### Description
- * The `VendorCredit` object is used to represent a company's vendor credits.
+ * The `VendorCredit` object is an accounts receivable transaction used to show that a customer is owed a gift or refund. A vendor credit will contain information on the amount of credit owed to the customer, the vendor that owes the credit, and the account.
  * 
  * ### Usage Example
  * Fetch from the `GET VendorCredit` endpoint and view a company's vendor credits.
@@ -75,7 +75,7 @@ export interface VendorCredit {
      */
     transaction_date?: Date | null;
     /**
-     * The vendor credit's vendor.
+     * The vendor that owes the gift or refund.
      * @type {string}
      * @memberof VendorCredit
      */
@@ -109,7 +109,7 @@ export interface VendorCredit {
      * @type {Array<VendorCreditLine>}
      * @memberof VendorCredit
      */
-    readonly lines?: Array<VendorCreditLine> | JSONValue;
+    lines?: Array<VendorCreditLine> | JSONValue;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
@@ -166,6 +166,7 @@ export function VendorCreditToJSON(value?: VendorCredit): JSONValue {
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,
         'company': value.company,
+        'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(VendorCreditLineToJSON)),
     };
 }
 

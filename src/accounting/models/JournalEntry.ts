@@ -36,7 +36,7 @@ import {
 /**
  * # The JournalEntry Object
  * ### Description
- * The `JournalEntry` object is used to represent a company's journey entries.
+ * The `JournalEntry` object is used to get a record of all manually created entries made in a company’s general ledger. The journal line items for each journal entry should sum to zero.
  * 
  * ### Usage Example
  * Fetch from the `GET JournalEntry` endpoint and view a company's journey entry.
@@ -115,7 +115,7 @@ export interface JournalEntry {
      * @type {Array<JournalLine>}
      * @memberof JournalEntry
      */
-    readonly lines?: Array<JournalLine> | JSONValue;
+    lines?: Array<JournalLine> | JSONValue;
     /**
      * 
      * @type {boolean}
@@ -174,6 +174,7 @@ export function JournalEntryToJSON(value?: JournalEntry): JSONValue {
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,
         'company': value.company,
+        'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(JournalLineToJSON)),
     };
 }
 

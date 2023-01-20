@@ -36,7 +36,7 @@ import {
 /**
  * # The Transaction Object
  * ### Description
- * The `Transaction` object is used to represent a company's transactions.
+ * The `Transaction` includes different types of transactions. The Transactions object does not cover expenses, credit notes, vendor credit, invoices, purchase orders, and journal entries. See the “transaction_type” field for more information.
  * 
  * ### Usage Example
  * Fetch from the `GET Transaction` endpoint and view a company's transactions.
@@ -51,7 +51,7 @@ export interface Transaction {
      */
     readonly id?: string;
     /**
-     * The type of general transaction.
+     * The type of transaction, which can by any transaction object not already included in Merge’s common model.
      * @type {string}
      * @memberof Transaction
      */
@@ -69,13 +69,13 @@ export interface Transaction {
      */
     readonly remote_data?: Array<RemoteData> | null;
     /**
-     * The transaction number.
+     * The transaction's number used for identifying purposes.
      * @type {string}
      * @memberof Transaction
      */
     number?: string | null;
     /**
-     * The transaction date.
+     * The date upon which the transaction occurred.
      * @type {Date}
      * @memberof Transaction
      */
@@ -87,13 +87,13 @@ export interface Transaction {
      */
     account?: string | null;
     /**
-     * The transaction's contact.
+     * The contact to whom the transaction relates to.
      * @type {string}
      * @memberof Transaction
      */
     contact?: string | null;
     /**
-     * The transaction's total amount.
+     * The total amount being paid after taxes.
      * @type {string}
      * @memberof Transaction
      */
@@ -121,7 +121,7 @@ export interface Transaction {
      * @type {Array<TransactionLineItem>}
      * @memberof Transaction
      */
-    readonly line_items?: Array<TransactionLineItem> | JSONValue;
+    line_items?: Array<TransactionLineItem> | JSONValue;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
@@ -182,6 +182,7 @@ export function TransactionToJSON(value?: Transaction): JSONValue {
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,
         'company': value.company,
+        'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(TransactionLineItemToJSON)),
     };
 }
 

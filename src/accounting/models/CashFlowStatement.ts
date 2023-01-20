@@ -36,7 +36,7 @@ import {
 /**
  * # The CashFlowStatement Object
  * ### Description
- * The `CashFlowStatement` object is used to represent a company's cash flow statement.
+ * The `CashFlowStatement` object shows operating activities, investing activities, and financing activities over a period of time (month, quarter, or year).
  * 
  * ### Usage Example
  * Fetch from the `LIST CashFlowStatements` endpoint and view a company's cash flow statements.

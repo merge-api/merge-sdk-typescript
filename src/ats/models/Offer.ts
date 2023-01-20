@@ -32,7 +32,7 @@ import {
 /**
  * # The Offer Object
  * ### Description
- * The `Offer` object is used to represent an offer for an application.
+ * The `Offer` object is used to represent an offer for a candidate's application specific to a job.
  * ### Usage Example
  * Fetch from the `LIST Offers` endpoint and filter by `ID` to show all offers.
  * @export

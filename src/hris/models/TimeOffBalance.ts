@@ -32,7 +32,7 @@ import {
 /**
  * # The TimeOffBalance Object
  * ### Description
- * The `TimeOffBalance` object is used to represent a Time Off Balance for an employee.
+ * The `TimeOffBalance` object is used to represent current balances for an employee's Time Off plan.
  * 
  * ### Usage Example
  * Fetch from the `LIST TimeOffBalances` endpoint and filter by `ID` to show all time off balances.
@@ -59,7 +59,7 @@ export interface TimeOffBalance {
      */
     employee?: string | JSONValue | null;
     /**
-     * The current remaining PTO balance in terms of hours. This does not represent the starting PTO balance. If the API provider only provides PTO balance in terms of days, we estimate 8 hours per day.
+     * The current remaining PTO balance, always measured in terms of hours.
      * @type {number}
      * @memberof TimeOffBalance
      */

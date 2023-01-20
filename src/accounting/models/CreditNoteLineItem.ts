@@ -34,7 +34,7 @@ export interface CreditNoteLineItem {
      */
     name?: string | null;
     /**
-     * The credit note line item's description.
+     * The description of the item that is owed.
      * @type {string}
      * @memberof CreditNoteLineItem
      */
@@ -70,11 +70,17 @@ export interface CreditNoteLineItem {
      */
     total_line_amount?: string | null;
     /**
-     * The purchase order line item's associated tracking category.
+     * The credit note line item's associated tracking category.
      * @type {string}
      * @memberof CreditNoteLineItem
      */
     tracking_category?: string | null;
+    /**
+     * The credit note line item's associated tracking categories.
+     * @type {Array<string>}
+     * @memberof CreditNoteLineItem
+     */
+    tracking_categories: Array<string>;
     /**
      * The credit note line item's account.
      * @type {string}
@@ -115,6 +121,7 @@ export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLine
         'tax_rate': !exists(json, 'tax_rate') ? undefined : json['tax_rate'],
         'total_line_amount': !exists(json, 'total_line_amount') ? undefined : json['total_line_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
+        'tracking_categories': json['tracking_categories'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
@@ -137,6 +144,7 @@ export function CreditNoteLineItemToJSON(value?: CreditNoteLineItem): JSONValue 
         'tax_rate': value.tax_rate,
         'total_line_amount': value.total_line_amount,
         'tracking_category': value.tracking_category,
+        'tracking_categories': value.tracking_categories,
         'account': value.account,
         'company': value.company,
         'remote_id': value.remote_id,

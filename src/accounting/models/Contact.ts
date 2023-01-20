@@ -36,7 +36,7 @@ import {
 /**
  * # The Contact Object
  * ### Description
- * The `Contact` object is used to represent a Contact. This can be either a supplier or a customer.
+ * The `Contact` object refers to either a supplier or a customer.
  * 
  * ### Usage Example
  * Fetch from the `LIST Contacts` endpoint and view a company's contacts.
