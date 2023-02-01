@@ -88,9 +88,21 @@ export class BaseAPI {
             }
         }
         let response = await (this.configuration.fetchApi || fetch)(fetchParams.input, fetchParams.init);
-        let response_for_post_processing = response.clone()
+
+        /**
+         * Node-fetch package has a `highwatermark` setting which in some versions defaults to 16kb,
+         * which is far too low for many server contexts and causes response.clone() to freeze the app.
+         * For this reason, be very careful about using post-processing middlewares below node version
+         * 18 when you can use a fetch API built into the node server without that limitation.
+         */
+        let response_for_post_processing: Response | null = null;
         for (const middleware of this.middleware) {
             if (middleware.post) {
+                // Only clone once, and use the clone for all post-processing middlewares
+                if (response_for_post_processing === null) {
+                    response_for_post_processing = response.clone()
+                }
+
                 response = await middleware.post({
                     fetch: this.fetchApi,
                     input,

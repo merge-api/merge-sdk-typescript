@@ -1,3 +1,9 @@
+# Version 3.0.2
+
+# Date: 2022-01-31
+
+- Updated response.clone() fix from version 3.0.0 to not run response.clone() AT ALL unless a middleware exists that needs it (previously always doing clone once and only once)
+
 # Version 3.0.1
 
 # Date: 2022-01-20
