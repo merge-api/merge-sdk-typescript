@@ -29,76 +29,64 @@ import {
 /**
  * 
  * @export
- * @interface RemoteFieldClass
+ * @interface RemoteFieldClassForCustomObjectClass
  */
-export interface RemoteFieldClass {
+export interface RemoteFieldClassForCustomObjectClass {
     /**
      * 
      * @type {string}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     display_name?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     remote_key_name?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     description?: string | null;
     /**
      * 
      * @type {boolean}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     is_required?: boolean;
     /**
      * 
      * @type {boolean}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     is_nested_list?: boolean;
     /**
      * 
      * @type {ItemTypeEnum}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     item_type?: ItemTypeEnum | null;
     /**
      * 
      * @type {ItemFormatEnum}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     item_format?: ItemFormatEnum | null;
     /**
      * 
      * @type {Array<string>}
-     * @memberof RemoteFieldClass
+     * @memberof RemoteFieldClassForCustomObjectClass
      */
     item_choices?: Array<string> | null;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof RemoteFieldClass
-     */
-    is_custom?: boolean | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof RemoteFieldClass
-     */
-    readonly id?: string;
 }
 
-export function RemoteFieldClassFromJSON(json: JSONValue): RemoteFieldClass | undefined {
-    return RemoteFieldClassFromJSONTyped(json);
+export function RemoteFieldClassForCustomObjectClassFromJSON(json: JSONValue): RemoteFieldClassForCustomObjectClass | undefined {
+    return RemoteFieldClassForCustomObjectClassFromJSONTyped(json);
 }
 
-export function RemoteFieldClassFromJSONTyped(json: JSONValue): RemoteFieldClass | undefined {
+export function RemoteFieldClassForCustomObjectClassFromJSONTyped(json: JSONValue): RemoteFieldClassForCustomObjectClass | undefined {
     if ((json === undefined) || (json === null)) {
         return undefined;
     }
@@ -113,12 +101,10 @@ export function RemoteFieldClassFromJSONTyped(json: JSONValue): RemoteFieldClass
         'item_type': !exists(json, 'item_type') ? undefined : ItemTypeEnumFromJSON(json['item_type']) as ItemTypeEnum,
         'item_format': !exists(json, 'item_format') ? undefined : ItemFormatEnumFromJSON(json['item_format']) as ItemFormatEnum,
         'item_choices': !exists(json, 'item_choices') ? undefined : json['item_choices'],
-        'is_custom': !exists(json, 'is_custom') ? undefined : json['is_custom'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
     };
 }
 
-export function RemoteFieldClassToJSON(value?: RemoteFieldClass): JSONValue {
+export function RemoteFieldClassForCustomObjectClassToJSON(value?: RemoteFieldClassForCustomObjectClass): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }
@@ -133,7 +119,6 @@ export function RemoteFieldClassToJSON(value?: RemoteFieldClass): JSONValue {
         'item_type': ItemTypeEnumToJSON(value.item_type),
         'item_format': ItemFormatEnumToJSON(value.item_format),
         'item_choices': value.item_choices,
-        'is_custom': value.is_custom,
     };
 }
 

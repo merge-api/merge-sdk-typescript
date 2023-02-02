@@ -40,18 +40,6 @@ import {
  */
 export interface Engagement {
     /**
-     * 
-     * @type {string}
-     * @memberof Engagement
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Engagement
-     */
-    remote_id?: string | null;
-    /**
      * The engagement's owner.
      * @type {string}
      * @memberof Engagement
@@ -101,6 +89,12 @@ export interface Engagement {
     account?: string | JSONValue | null;
     /**
      * 
+     * @type {Array<string>}
+     * @memberof Engagement
+     */
+    contacts?: Array<string> | JSONValue;
+    /**
+     * 
      * @type {Array<RemoteData>}
      * @memberof Engagement
      */
@@ -111,6 +105,18 @@ export interface Engagement {
      * @memberof Engagement
      */
     readonly remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof Engagement
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Engagement
+     */
+    remote_id?: string | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -130,8 +136,6 @@ export function EngagementFromJSONTyped(json: JSONValue): Engagement | undefined
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'content': !exists(json, 'content') ? undefined : json['content'],
         'subject': !exists(json, 'subject') ? undefined : json['subject'],
@@ -140,8 +144,11 @@ export function EngagementFromJSONTyped(json: JSONValue): Engagement | undefined
         'start_time': !exists(json, 'start_time') ? undefined : (json['start_time'] === null ? null : new Date(json['start_time'])),
         'end_time': !exists(json, 'end_time') ? undefined : (json['end_time'] === null ? null : new Date(json['end_time'])),
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'contacts': !exists(json, 'contacts') ? undefined : json['contacts'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -153,7 +160,6 @@ export function EngagementToJSON(value?: Engagement): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'owner': value.owner,
         'content': value.content,
         'subject': value.subject,
@@ -162,6 +168,8 @@ export function EngagementToJSON(value?: Engagement): JSONValue {
         'start_time': value.start_time === undefined ? undefined : (value.start_time === null ? null : value.start_time.toISOString()),
         'end_time': value.end_time === undefined ? undefined : (value.end_time === null ? null : value.end_time.toISOString()),
         'account': value.account,
+        'contacts': value.contacts,
+        'remote_id': value.remote_id,
     };
 }
 

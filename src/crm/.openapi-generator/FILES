@@ -109,12 +109,15 @@ src/models/OpportunityStatusEnum.ts
 src/models/OriginTypeEnum.ts
 src/models/PatchedAccountRequest.ts
 src/models/PatchedCRMAccountEndpointRequest.ts
+src/models/PatchedCRMContactEndpointRequest.ts
 src/models/PatchedCRMCustomObjectEndpointRequest.ts
+src/models/PatchedContactRequest.ts
 src/models/PatchedOpportunityEndpointRequest.ts
 src/models/PatchedOpportunityRequest.ts
 src/models/PhoneNumber.ts
 src/models/PhoneNumberRequest.ts
 src/models/RemoteFieldClass.ts
+src/models/RemoteFieldClassForCustomObjectClass.ts
 src/models/RemoteKey.ts
 src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts

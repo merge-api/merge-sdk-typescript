@@ -27,12 +27,6 @@ import { JSONValue } from '../../merge_json';
  */
 export interface JournalLineRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof JournalLineRequest
-     */
-    remote_id?: string | null;
-    /**
      * 
      * @type {string}
      * @memberof JournalLineRequest
@@ -69,6 +63,12 @@ export interface JournalLineRequest {
      */
     description?: string | null;
     /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof JournalLineRequest
+     */
+    remote_id?: string | null;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof JournalLineRequest
@@ -93,13 +93,13 @@ export function JournalLineRequestFromJSONTyped(json: JSONValue): JournalLineReq
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -112,13 +112,13 @@ export function JournalLineRequestToJSON(value?: JournalLineRequest): JSONValue 
 
     return {
         
-        'remote_id': value.remote_id,
         'account': value.account,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
         'tracking_categories': value.tracking_categories,
         'contact': value.contact,
         'description': value.description,
+        'remote_id': value.remote_id,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

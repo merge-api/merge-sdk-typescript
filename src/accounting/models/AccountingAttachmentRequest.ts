@@ -27,12 +27,6 @@ import { JSONValue } from '../../merge_json';
  */
 export interface AccountingAttachmentRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof AccountingAttachmentRequest
-     */
-    remote_id?: string | null;
-    /**
      * The attachment's name.
      * @type {string}
      * @memberof AccountingAttachmentRequest
@@ -75,7 +69,6 @@ export function AccountingAttachmentRequestFromJSONTyped(json: JSONValue): Accou
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'company': !exists(json, 'company') ? undefined : json['company'],
@@ -91,7 +84,6 @@ export function AccountingAttachmentRequestToJSON(value?: AccountingAttachmentRe
 
     return {
         
-        'remote_id': value.remote_id,
         'file_name': value.file_name,
         'file_url': value.file_url,
         'company': value.company,

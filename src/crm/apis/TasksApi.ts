@@ -15,10 +15,10 @@
 
 import * as runtime from '../../runtime';
 import {
-    
     Task,
     TaskFromJSON,
     TaskToJSON,
+    RemoteFieldClass
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -41,6 +41,13 @@ export interface TasksListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+}
+
+export interface TasksRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
 }
 
 export interface TasksRetrieveRequest {
@@ -129,6 +136,60 @@ export class TasksApi extends runtime.BaseAPI {
      */
     async tasksList(requestParameters: TasksListRequest): Promise<MergePaginatedResponse<Task> | undefined> {
         const response = await this.tasksListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async tasksRemoteFieldClassesListRaw(requestParameters: TasksRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/tasks/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async tasksRemoteFieldClassesList(requestParameters: TasksRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.tasksRemoteFieldClassesListRaw(requestParameters);
         return await response.value();
     }
 

@@ -38,12 +38,6 @@ import {
  */
 export interface TicketRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof TicketRequest
-     */
-    remote_id?: string | null;
-    /**
      * The ticket's name.
      * @type {string}
      * @memberof TicketRequest
@@ -128,18 +122,6 @@ export interface TicketRequest {
      */
     tags?: Array<string>;
     /**
-     * When the third party's ticket was created.
-     * @type {Date}
-     * @memberof TicketRequest
-     */
-    remote_created_at?: Date | null;
-    /**
-     * When the third party's ticket was updated.
-     * @type {Date}
-     * @memberof TicketRequest
-     */
-    remote_updated_at?: Date | null;
-    /**
      * When the ticket was completed.
      * @type {Date}
      * @memberof TicketRequest
@@ -182,7 +164,6 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | und
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'assignees': !exists(json, 'assignees') ? undefined : json['assignees'],
         'creator': !exists(json, 'creator') ? undefined : json['creator'],
@@ -197,8 +178,6 @@ export function TicketRequestFromJSONTyped(json: JSONValue): TicketRequest | und
         'parent_ticket': !exists(json, 'parent_ticket') ? undefined : json['parent_ticket'],
         'attachments': !exists(json, 'attachments') ? undefined : json['attachments'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'completed_at': !exists(json, 'completed_at') ? undefined : (json['completed_at'] === null ? null : new Date(json['completed_at'])),
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
@@ -214,7 +193,6 @@ export function TicketRequestToJSON(value?: TicketRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
         'assignees': value.assignees,
         'creator': value.creator,
@@ -229,8 +207,6 @@ export function TicketRequestToJSON(value?: TicketRequest): JSONValue {
         'parent_ticket': value.parent_ticket,
         'attachments': value.attachments,
         'tags': value.tags,
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'completed_at': value.completed_at === undefined ? undefined : (value.completed_at === null ? null : value.completed_at.toISOString()),
         'ticket_url': value.ticket_url,
         'priority': PriorityEnumToJSON(value.priority),

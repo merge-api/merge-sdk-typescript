@@ -328,7 +328,8 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 */
 export enum PurchaseOrdersListExpandEnum {
     DeliveryAddress = 'delivery_address',
-    LineItems = 'line_items'
+    LineItems = 'line_items',
+    Vendor = 'vendor'
 }
 /**
 * @export
@@ -350,7 +351,8 @@ export enum PurchaseOrdersListShowEnumOriginsEnum {
 */
 export enum PurchaseOrdersRetrieveExpandEnum {
     DeliveryAddress = 'delivery_address',
-    LineItems = 'line_items'
+    LineItems = 'line_items',
+    Vendor = 'vendor'
 }
 /**
 * @export

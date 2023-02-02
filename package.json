@@ -1,6 +1,6 @@
 {
   "name": "@mergeapi/merge-sdk-typescript",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "NodeJS client for Merge API, Inc's unified API's.",
   "author": "hello@merge.dev",
   "main": "./dist/index.js",
@@ -25,5 +25,10 @@
   },
   "dependencies": {
     "ts-node": "^10.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/merge-api/merge-sdk-typescript"
   }
 }
+

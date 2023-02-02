@@ -18,6 +18,7 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
@@ -30,6 +31,7 @@ import {
     TicketResponse,
     TicketResponseFromJSON,
     TicketResponseToJSON,
+    RemoteFieldClass,
     User,
 } from '../models';
 import {
@@ -100,6 +102,13 @@ export interface TicketsPartialUpdateRequest {
     patchedTicketEndpointRequest: PatchedTicketEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
+}
+
+export interface TicketsRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
 }
 
 export interface TicketsRetrieveRequest {
@@ -535,6 +544,60 @@ export class TicketsApi extends runtime.BaseAPI {
      */
     async ticketsPartialUpdate(requestParameters: TicketsPartialUpdateRequest): Promise<TicketResponse | undefined> {
         const response = await this.ticketsPartialUpdateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async ticketsRemoteFieldClassesListRaw(requestParameters: TicketsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ticketing/v1/tickets/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async ticketsRemoteFieldClassesList(requestParameters: TicketsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.ticketsRemoteFieldClassesListRaw(requestParameters);
         return await response.value();
     }
 

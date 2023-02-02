@@ -38,12 +38,6 @@ import {
  */
 export interface ContactRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof ContactRequest
-     */
-    remote_id?: string | null;
-    /**
      * The contact's name.
      * @type {string}
      * @memberof ContactRequest
@@ -85,12 +79,6 @@ export interface ContactRequest {
      * @memberof ContactRequest
      */
     currency?: string | null;
-    /**
-     * When the third party's contact was updated.
-     * @type {Date}
-     * @memberof ContactRequest
-     */
-    remote_updated_at?: Date | null;
     /**
      * The company the contact belongs to.
      * @type {string}
@@ -134,7 +122,6 @@ export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | u
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'is_supplier': !exists(json, 'is_supplier') ? undefined : json['is_supplier'],
         'is_customer': !exists(json, 'is_customer') ? undefined : json['is_customer'],
@@ -142,7 +129,6 @@ export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | u
         'tax_number': !exists(json, 'tax_number') ? undefined : json['tax_number'],
         'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
         'currency': !exists(json, 'currency') ? undefined : json['currency'],
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'company': !exists(json, 'company') ? undefined : json['company'],
         'addresses': !exists(json, 'addresses') ? undefined : json['addresses'],
         'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(AccountingPhoneNumberRequestFromJSON)) as Array<AccountingPhoneNumberRequest>,
@@ -158,7 +144,6 @@ export function ContactRequestToJSON(value?: ContactRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
         'is_supplier': value.is_supplier,
         'is_customer': value.is_customer,
@@ -166,7 +151,6 @@ export function ContactRequestToJSON(value?: ContactRequest): JSONValue {
         'tax_number': value.tax_number,
         'status': Status7d1EnumToJSON(value.status),
         'currency': value.currency,
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'company': value.company,
         'addresses': value.addresses,
         'phone_numbers': value.phone_numbers === undefined ? undefined : ((value.phone_numbers as Array<any>).map(AccountingPhoneNumberRequestToJSON)),

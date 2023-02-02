@@ -48,18 +48,6 @@ import {
  */
 export interface Lead {
     /**
-     * 
-     * @type {string}
-     * @memberof Lead
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Lead
-     */
-    remote_id?: string | null;
-    /**
      * The lead's owner.
      * @type {string}
      * @memberof Lead
@@ -157,6 +145,18 @@ export interface Lead {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Lead
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Lead
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Lead
      */
@@ -174,8 +174,6 @@ export function LeadFromJSONTyped(json: JSONValue): Lead | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'lead_source': !exists(json, 'lead_source') ? undefined : json['lead_source'],
         'title': !exists(json, 'title') ? undefined : json['title'],
@@ -192,6 +190,8 @@ export function LeadFromJSONTyped(json: JSONValue): Lead | undefined {
         'converted_account': !exists(json, 'converted_account') ? undefined : json['converted_account'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -203,7 +203,6 @@ export function LeadToJSON(value?: Lead): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'owner': value.owner,
         'lead_source': value.lead_source,
         'title': value.title,
@@ -215,6 +214,7 @@ export function LeadToJSON(value?: Lead): JSONValue {
         'converted_date': value.converted_date === undefined ? undefined : (value.converted_date === null ? null : value.converted_date.toISOString()),
         'converted_contact': value.converted_contact,
         'converted_account': value.converted_account,
+        'remote_id': value.remote_id,
     };
 }
 

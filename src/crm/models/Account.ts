@@ -44,18 +44,6 @@ import {
  */
 export interface Account {
     /**
-     * 
-     * @type {string}
-     * @memberof Account
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Account
-     */
-    remote_id?: string | null;
-    /**
      * The account's owner.
      * @type {string}
      * @memberof Account
@@ -135,6 +123,18 @@ export interface Account {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Account
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Account
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Account
      */
@@ -152,8 +152,6 @@ export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
@@ -167,6 +165,8 @@ export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -178,7 +178,6 @@ export function AccountToJSON(value?: Account): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'owner': value.owner,
         'name': value.name,
         'description': value.description,
@@ -188,6 +187,7 @@ export function AccountToJSON(value?: Account): JSONValue {
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'remote_id': value.remote_id,
     };
 }
 

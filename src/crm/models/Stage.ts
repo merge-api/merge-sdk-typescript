@@ -36,18 +36,6 @@ import {
  */
 export interface Stage {
     /**
-     * 
-     * @type {string}
-     * @memberof Stage
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Stage
-     */
-    remote_id?: string | null;
-    /**
      * The stage's name.
      * @type {string}
      * @memberof Stage
@@ -67,6 +55,18 @@ export interface Stage {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Stage
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Stage
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Stage
      */
@@ -84,11 +84,11 @@ export function StageFromJSONTyped(json: JSONValue): Stage | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -100,8 +100,8 @@ export function StageToJSON(value?: Stage): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
+        'remote_id': value.remote_id,
     };
 }
 

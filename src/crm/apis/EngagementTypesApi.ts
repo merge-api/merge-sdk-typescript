@@ -18,6 +18,7 @@ import {
     EngagementType,
     EngagementTypeFromJSON,
     EngagementTypeToJSON,
+    RemoteFieldClass
     
 } from '../models';
 import {
@@ -40,6 +41,13 @@ export interface EngagementTypesListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+}
+
+export interface EngagementTypesRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
 }
 
 export interface EngagementTypesRetrieveRequest {
@@ -123,6 +131,60 @@ export class EngagementTypesApi extends runtime.BaseAPI {
      */
     async engagementTypesList(requestParameters: EngagementTypesListRequest): Promise<MergePaginatedResponse<EngagementType> | undefined> {
         const response = await this.engagementTypesListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async engagementTypesRemoteFieldClassesListRaw(requestParameters: EngagementTypesRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/engagement-types/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async engagementTypesRemoteFieldClassesList(requestParameters: EngagementTypesRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.engagementTypesRemoteFieldClassesListRaw(requestParameters);
         return await response.value();
     }
 

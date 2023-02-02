@@ -27,6 +27,7 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    RemoteFieldClass
     
 } from '../models';
 import {
@@ -62,6 +63,13 @@ export interface LeadsListRequest {
 }
 
 // extends MergeMetaRequest
+export interface LeadsRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
+}
+
 export interface LeadsRetrieveRequest {
     id: string;
     expand?: Array<LeadsRetrieveExpandEnum>;
@@ -257,6 +265,60 @@ export class LeadsApi extends runtime.BaseAPI {
      */
     async leadsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
         const response = await this.leadsMetaPostRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async leadsRemoteFieldClassesListRaw(requestParameters: LeadsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/leads/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async leadsRemoteFieldClassesList(requestParameters: LeadsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.leadsRemoteFieldClassesListRaw(requestParameters);
         return await response.value();
     }
 

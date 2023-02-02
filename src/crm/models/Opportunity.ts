@@ -40,18 +40,6 @@ import {
  */
 export interface Opportunity {
     /**
-     * 
-     * @type {string}
-     * @memberof Opportunity
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Opportunity
-     */
-    remote_id?: string | null;
-    /**
      * The opportunity's name.
      * @type {string}
      * @memberof Opportunity
@@ -125,6 +113,18 @@ export interface Opportunity {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Opportunity
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Opportunity
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Opportunity
      */
@@ -142,8 +142,6 @@ export function OpportunityFromJSONTyped(json: JSONValue): Opportunity | undefin
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
@@ -156,6 +154,8 @@ export function OpportunityFromJSONTyped(json: JSONValue): Opportunity | undefin
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -167,7 +167,6 @@ export function OpportunityToJSON(value?: Opportunity): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
         'description': value.description,
         'amount': value.amount,
@@ -178,6 +177,7 @@ export function OpportunityToJSON(value?: Opportunity): JSONValue {
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'close_date': value.close_date === undefined ? undefined : (value.close_date === null ? null : value.close_date.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'remote_id': value.remote_id,
     };
 }
 

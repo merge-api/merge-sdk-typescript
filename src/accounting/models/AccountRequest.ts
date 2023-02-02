@@ -42,12 +42,6 @@ import {
  */
 export interface AccountRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof AccountRequest
-     */
-    remote_id?: string | null;
-    /**
      * The account's name.
      * @type {string}
      * @memberof AccountRequest
@@ -132,7 +126,6 @@ export function AccountRequestFromJSONTyped(json: JSONValue): AccountRequest | u
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'classification': !exists(json, 'classification') ? undefined : ClassificationEnumFromJSON(json['classification']) as ClassificationEnum,
@@ -155,7 +148,6 @@ export function AccountRequestToJSON(value?: AccountRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
         'description': value.description,
         'classification': ClassificationEnumToJSON(value.classification),

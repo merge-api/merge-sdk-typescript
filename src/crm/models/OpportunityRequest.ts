@@ -33,12 +33,6 @@ import {
  */
 export interface OpportunityRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof OpportunityRequest
-     */
-    remote_id?: string | null;
-    /**
      * The opportunity's name.
      * @type {string}
      * @memberof OpportunityRequest
@@ -93,12 +87,6 @@ export interface OpportunityRequest {
      */
     close_date?: Date | null;
     /**
-     * When the third party's opportunity was created.
-     * @type {Date}
-     * @memberof OpportunityRequest
-     */
-    remote_created_at?: Date | null;
-    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof OpportunityRequest
@@ -123,7 +111,6 @@ export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityReq
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
@@ -133,7 +120,6 @@ export function OpportunityRequestFromJSONTyped(json: JSONValue): OpportunityReq
         'status': !exists(json, 'status') ? undefined : OpportunityStatusEnumFromJSON(json['status']) as OpportunityStatusEnum,
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'close_date': !exists(json, 'close_date') ? undefined : (json['close_date'] === null ? null : new Date(json['close_date'])),
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -146,7 +132,6 @@ export function OpportunityRequestToJSON(value?: OpportunityRequest): JSONValue 
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
         'description': value.description,
         'amount': value.amount,
@@ -156,7 +141,6 @@ export function OpportunityRequestToJSON(value?: OpportunityRequest): JSONValue 
         'status': OpportunityStatusEnumToJSON(value.status),
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'close_date': value.close_date === undefined ? undefined : (value.close_date === null ? null : value.close_date.toISOString()),
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

@@ -51,18 +51,6 @@ import {
 export interface Invoice {
     /**
      * 
-     * @type {string}
-     * @memberof Invoice
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Invoice
-     */
-    remote_id?: string | null;
-    /**
-     * 
      * @type {Array<RemoteData>}
      * @memberof Invoice
      */
@@ -183,6 +171,18 @@ export interface Invoice {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Invoice
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Invoice
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Invoice
      */
@@ -200,8 +200,6 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']) as InvoiceTypeEnum,
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
@@ -222,6 +220,8 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(InvoiceLineItemFromJSON)) as Array<InvoiceLineItem>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -233,7 +233,6 @@ export function InvoiceToJSON(value?: Invoice): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'type': InvoiceTypeEnumToJSON(value.type),
         'contact': value.contact,
         'number': value.number,
@@ -252,6 +251,7 @@ export function InvoiceToJSON(value?: Invoice): JSONValue {
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'payments': value.payments,
         'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(InvoiceLineItemToJSON)),
+        'remote_id': value.remote_id,
     };
 }
 

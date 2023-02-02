@@ -116,18 +116,6 @@ export interface PatchedTicketRequest {
      */
     tags?: Array<string>;
     /**
-     * When the third party's ticket was created.
-     * @type {Date}
-     * @memberof PatchedTicketRequest
-     */
-    remote_created_at?: Date | null;
-    /**
-     * When the third party's ticket was updated.
-     * @type {Date}
-     * @memberof PatchedTicketRequest
-     */
-    remote_updated_at?: Date | null;
-    /**
      * When the ticket was completed.
      * @type {Date}
      * @memberof PatchedTicketRequest
@@ -183,8 +171,6 @@ export function PatchedTicketRequestFromJSONTyped(json: JSONValue): PatchedTicke
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'parent_ticket': !exists(json, 'parent_ticket') ? undefined : json['parent_ticket'],
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'completed_at': !exists(json, 'completed_at') ? undefined : (json['completed_at'] === null ? null : new Date(json['completed_at'])),
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
@@ -213,8 +199,6 @@ export function PatchedTicketRequestToJSON(value?: PatchedTicketRequest): JSONVa
         'contact': value.contact,
         'parent_ticket': value.parent_ticket,
         'tags': value.tags,
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'completed_at': value.completed_at === undefined ? undefined : (value.completed_at === null ? null : value.completed_at.toISOString()),
         'ticket_url': value.ticket_url,
         'priority': PriorityEnumToJSON(value.priority),

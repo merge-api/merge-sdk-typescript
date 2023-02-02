@@ -26,12 +26,6 @@ import { JSONValue } from '../../merge_json';
  */
 export interface LeadRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof LeadRequest
-     */
-    remote_id?: string | null;
-    /**
      * The lead's owner.
      * @type {string}
      * @memberof LeadRequest
@@ -67,18 +61,6 @@ export interface LeadRequest {
      * @memberof LeadRequest
      */
     last_name?: string | null;
-    /**
-     * When the third party's lead was updated.
-     * @type {Date}
-     * @memberof LeadRequest
-     */
-    remote_updated_at?: Date | null;
-    /**
-     * When the third party's lead was created.
-     * @type {Date}
-     * @memberof LeadRequest
-     */
-    remote_created_at?: Date | null;
     /**
      * When the lead was converted.
      * @type {Date}
@@ -122,15 +104,12 @@ export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest | undefin
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'lead_source': !exists(json, 'lead_source') ? undefined : json['lead_source'],
         'title': !exists(json, 'title') ? undefined : json['title'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
         'last_name': !exists(json, 'last_name') ? undefined : json['last_name'],
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'converted_date': !exists(json, 'converted_date') ? undefined : (json['converted_date'] === null ? null : new Date(json['converted_date'])),
         'converted_contact': !exists(json, 'converted_contact') ? undefined : json['converted_contact'],
         'converted_account': !exists(json, 'converted_account') ? undefined : json['converted_account'],
@@ -146,15 +125,12 @@ export function LeadRequestToJSON(value?: LeadRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'owner': value.owner,
         'lead_source': value.lead_source,
         'title': value.title,
         'company': value.company,
         'first_name': value.first_name,
         'last_name': value.last_name,
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'converted_date': value.converted_date === undefined ? undefined : (value.converted_date === null ? null : value.converted_date.toISOString()),
         'converted_contact': value.converted_contact,
         'converted_account': value.converted_account,

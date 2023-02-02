@@ -36,18 +36,6 @@ import {
  */
 export interface Note {
     /**
-     * 
-     * @type {string}
-     * @memberof Note
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Note
-     */
-    remote_id?: string | null;
-    /**
      * The note's owner.
      * @type {string}
      * @memberof Note
@@ -103,6 +91,18 @@ export interface Note {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Note
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Note
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Note
      */
@@ -120,8 +120,6 @@ export function NoteFromJSONTyped(json: JSONValue): Note | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'content': !exists(json, 'content') ? undefined : json['content'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
@@ -131,6 +129,8 @@ export function NoteFromJSONTyped(json: JSONValue): Note | undefined {
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -142,7 +142,6 @@ export function NoteToJSON(value?: Note): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'owner': value.owner,
         'content': value.content,
         'contact': value.contact,
@@ -150,6 +149,7 @@ export function NoteToJSON(value?: Note): JSONValue {
         'opportunity': value.opportunity,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'remote_id': value.remote_id,
     };
 }
 

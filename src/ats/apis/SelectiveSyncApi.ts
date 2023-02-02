@@ -15,13 +15,14 @@
 
 import * as runtime from '../../runtime';
 import {
-    ConditionSchema,
     LinkedAccountSelectiveSyncConfiguration,
     LinkedAccountSelectiveSyncConfigurationFromJSON,
     LinkedAccountSelectiveSyncConfigurationToJSON,
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
+    ConditionSchema
+    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -29,6 +30,11 @@ import {
 	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
+import {
+    MergeMetaRequest
+} from '../../merge_meta_request';
+
+//
 export interface SelectiveSyncConfigurationsUpdateRequest {
     linkedAccountSelectiveSyncConfigurationListRequest: LinkedAccountSelectiveSyncConfigurationListRequest;
 }
@@ -49,6 +55,9 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
      */
     async selectiveSyncConfigurationsListRaw(): Promise<runtime.ApiResponse<Array<LinkedAccountSelectiveSyncConfiguration> | undefined>> {
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -88,6 +97,9 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -138,6 +150,9 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
+
+
+        
 
         const headerParameters: runtime.HTTPHeaders = {};
 

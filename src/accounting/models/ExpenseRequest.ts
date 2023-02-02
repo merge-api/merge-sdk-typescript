@@ -38,23 +38,11 @@ import {
  */
 export interface ExpenseRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof ExpenseRequest
-     */
-    remote_id?: string | null;
-    /**
      * When the transaction occurred.
      * @type {Date}
      * @memberof ExpenseRequest
      */
     transaction_date?: Date | null;
-    /**
-     * When the expense was created.
-     * @type {Date}
-     * @memberof ExpenseRequest
-     */
-    remote_created_at?: Date | null;
     /**
      * The expense's payment account.
      * @type {string}
@@ -128,9 +116,7 @@ export function ExpenseRequestFromJSONTyped(json: JSONValue): ExpenseRequest | u
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'account': !exists(json, 'account') ? undefined : json['account'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
@@ -151,9 +137,7 @@ export function ExpenseRequestToJSON(value?: ExpenseRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'transaction_date': value.transaction_date === undefined ? undefined : (value.transaction_date === null ? null : value.transaction_date.toISOString()),
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'account': value.account,
         'contact': value.contact,
         'total_amount': value.total_amount,

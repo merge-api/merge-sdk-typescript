@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Merge CRM API
- * The unified API for building rich integrations with multiple CRM platforms.
+ * Merge Ticketing API
+ * The unified API for building rich integrations with multiple Ticketing platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev

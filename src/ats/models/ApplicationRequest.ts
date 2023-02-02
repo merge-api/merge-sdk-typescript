@@ -27,12 +27,6 @@ import { JSONValue } from '../../merge_json';
  */
 export interface ApplicationRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof ApplicationRequest
-     */
-    remote_id?: string | null;
-    /**
      * The candidate applying.
      * @type {string}
      * @memberof ApplicationRequest
@@ -111,7 +105,6 @@ export function ApplicationRequestFromJSONTyped(json: JSONValue): ApplicationReq
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
         'job': !exists(json, 'job') ? undefined : json['job'],
         'applied_at': !exists(json, 'applied_at') ? undefined : (json['applied_at'] === null ? null : new Date(json['applied_at'])),
@@ -133,7 +126,6 @@ export function ApplicationRequestToJSON(value?: ApplicationRequest): JSONValue 
 
     return {
         
-        'remote_id': value.remote_id,
         'candidate': value.candidate,
         'job': value.job,
         'applied_at': value.applied_at === undefined ? undefined : (value.applied_at === null ? null : value.applied_at.toISOString()),
