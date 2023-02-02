@@ -15,10 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON,
-    RemoteFieldClassFromJSONTyped,
-    RemoteFieldClassToJSON,
+    RemoteFieldClassForCustomObjectClass,
+    RemoteFieldClassForCustomObjectClassFromJSON,
+    RemoteFieldClassForCustomObjectClassFromJSONTyped,
+    RemoteFieldClassForCustomObjectClassToJSON,
 } from './';
 
 
@@ -32,12 +32,6 @@ import {
  * @interface CustomObjectClass
  */
 export interface CustomObjectClass {
-    /**
-     * 
-     * @type {string}
-     * @memberof CustomObjectClass
-     */
-    readonly id?: string;
     /**
      * 
      * @type {string}
@@ -58,16 +52,22 @@ export interface CustomObjectClass {
     readonly labels?: { [key: string]: string; };
     /**
      * 
-     * @type {Array<RemoteFieldClass>}
+     * @type {Array<RemoteFieldClassForCustomObjectClass>}
      * @memberof CustomObjectClass
      */
-    readonly fields?: Array<RemoteFieldClass> | JSONValue;
+    readonly fields?: Array<RemoteFieldClassForCustomObjectClass> | JSONValue;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
      * @memberof CustomObjectClass
      */
     readonly association_types?: Array<{ [key: string]: any; }> | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof CustomObjectClass
+     */
+    readonly id?: string;
     /**
      * The third-party API ID of the matching object.
      * @type {string}
@@ -87,12 +87,12 @@ export function CustomObjectClassFromJSONTyped(json: JSONValue): CustomObjectCla
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'labels': !exists(json, 'labels') ? undefined : json['labels'],
-        'fields': !exists(json, 'fields') ? undefined : ((json['fields'] as Array<JSONValue>).map(RemoteFieldClassFromJSON)) as Array<RemoteFieldClass>,
+        'fields': !exists(json, 'fields') ? undefined : ((json['fields'] as Array<JSONValue>).map(RemoteFieldClassForCustomObjectClassFromJSON)) as Array<RemoteFieldClassForCustomObjectClass>,
         'association_types': !exists(json, 'association_types') ? undefined : json['association_types'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }

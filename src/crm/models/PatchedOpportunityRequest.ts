@@ -87,12 +87,6 @@ export interface PatchedOpportunityRequest {
      */
     close_date?: Date | null;
     /**
-     * When the third party's opportunity was created.
-     * @type {Date}
-     * @memberof PatchedOpportunityRequest
-     */
-    remote_created_at?: Date | null;
-    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof PatchedOpportunityRequest
@@ -126,7 +120,6 @@ export function PatchedOpportunityRequestFromJSONTyped(json: JSONValue): Patched
         'status': !exists(json, 'status') ? undefined : OpportunityStatusEnumFromJSON(json['status']) as OpportunityStatusEnum,
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'close_date': !exists(json, 'close_date') ? undefined : (json['close_date'] === null ? null : new Date(json['close_date'])),
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -148,7 +141,6 @@ export function PatchedOpportunityRequestToJSON(value?: PatchedOpportunityReques
         'status': OpportunityStatusEnumToJSON(value.status),
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'close_date': value.close_date === undefined ? undefined : (value.close_date === null ? null : value.close_date.toISOString()),
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

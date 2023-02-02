@@ -40,18 +40,6 @@ import {
  */
 export interface Task {
     /**
-     * 
-     * @type {string}
-     * @memberof Task
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Task
-     */
-    remote_id?: string | null;
-    /**
      * The task's subject.
      * @type {string}
      * @memberof Task
@@ -107,6 +95,18 @@ export interface Task {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Task
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Task
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Task
      */
@@ -124,8 +124,6 @@ export function TaskFromJSONTyped(json: JSONValue): Task | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'subject': !exists(json, 'subject') ? undefined : json['subject'],
         'content': !exists(json, 'content') ? undefined : json['content'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
@@ -135,6 +133,8 @@ export function TaskFromJSONTyped(json: JSONValue): Task | undefined {
         'status': !exists(json, 'status') ? undefined : TaskStatusEnumFromJSON(json['status']) as TaskStatusEnum,
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -146,7 +146,6 @@ export function TaskToJSON(value?: Task): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'subject': value.subject,
         'content': value.content,
         'owner': value.owner,
@@ -154,6 +153,7 @@ export function TaskToJSON(value?: Task): JSONValue {
         'completed_date': value.completed_date === undefined ? undefined : (value.completed_date === null ? null : value.completed_date.toISOString()),
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'status': TaskStatusEnumToJSON(value.status),
+        'remote_id': value.remote_id,
     };
 }
 

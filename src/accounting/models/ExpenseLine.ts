@@ -27,12 +27,6 @@ import { JSONValue } from '../../merge_json';
  */
 export interface ExpenseLine {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof ExpenseLine
-     */
-    remote_id?: string | null;
-    /**
      * The line's item.
      * @type {string}
      * @memberof ExpenseLine
@@ -74,6 +68,12 @@ export interface ExpenseLine {
      * @memberof ExpenseLine
      */
     description?: string | null;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof ExpenseLine
+     */
+    remote_id?: string | null;
 }
 
 export function ExpenseLineFromJSON(json: JSONValue): ExpenseLine | undefined {
@@ -87,7 +87,6 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | undefin
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'item': !exists(json, 'item') ? undefined : json['item'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
@@ -95,6 +94,7 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | undefin
         'company': !exists(json, 'company') ? undefined : json['company'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }
 
@@ -105,7 +105,6 @@ export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'item': value.item,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
@@ -113,6 +112,7 @@ export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
         'company': value.company,
         'account': value.account,
         'description': value.description,
+        'remote_id': value.remote_id,
     };
 }
 

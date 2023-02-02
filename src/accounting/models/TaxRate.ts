@@ -38,18 +38,6 @@ import {
 export interface TaxRate {
     /**
      * 
-     * @type {string}
-     * @memberof TaxRate
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof TaxRate
-     */
-    remote_id?: string | null;
-    /**
-     * 
      * @type {Array<RemoteData>}
      * @memberof TaxRate
      */
@@ -86,6 +74,18 @@ export interface TaxRate {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof TaxRate
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof TaxRate
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof TaxRate
      */
@@ -103,14 +103,14 @@ export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'description': !exists(json, 'description') ? undefined : json['description'],
         'total_tax_rate': !exists(json, 'total_tax_rate') ? undefined : json['total_tax_rate'],
         'effective_tax_rate': !exists(json, 'effective_tax_rate') ? undefined : json['effective_tax_rate'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -122,11 +122,11 @@ export function TaxRateToJSON(value?: TaxRate): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'description': value.description,
         'total_tax_rate': value.total_tax_rate,
         'effective_tax_rate': value.effective_tax_rate,
         'company': value.company,
+        'remote_id': value.remote_id,
     };
 }
 

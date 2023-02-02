@@ -1,3 +1,9 @@
+# Version 3.0.3
+
+# Date: 2022-02-02
+
+- Add PurchaseOrderObject to accounting models
+
 # Version 3.0.2
 
 # Date: 2022-01-31

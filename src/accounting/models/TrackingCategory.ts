@@ -46,18 +46,6 @@ import {
 export interface TrackingCategory {
     /**
      * 
-     * @type {string}
-     * @memberof TrackingCategory
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof TrackingCategory
-     */
-    remote_id?: string | null;
-    /**
-     * 
      * @type {Array<RemoteData>}
      * @memberof TrackingCategory
      */
@@ -100,6 +88,18 @@ export interface TrackingCategory {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof TrackingCategory
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof TrackingCategory
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof TrackingCategory
      */
@@ -117,8 +117,6 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
@@ -126,6 +124,8 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
         'parent_category': !exists(json, 'parent_category') ? undefined : json['parent_category'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -137,12 +137,12 @@ export function TrackingCategoryToJSON(value?: TrackingCategory): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
         'status': Status7d1EnumToJSON(value.status),
         'category_type': CategoryTypeEnumToJSON(value.category_type),
         'parent_category': value.parent_category,
         'company': value.company,
+        'remote_id': value.remote_id,
     };
 }
 

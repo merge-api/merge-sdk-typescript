@@ -41,12 +41,6 @@ import {
  */
 export interface CandidateRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof CandidateRequest
-     */
-    remote_id?: string | null;
-    /**
      * The candidate's first name.
      * @type {string}
      * @memberof CandidateRequest
@@ -70,18 +64,6 @@ export interface CandidateRequest {
      * @memberof CandidateRequest
      */
     title?: string | null;
-    /**
-     * When the third party's candidate was created.
-     * @type {Date}
-     * @memberof CandidateRequest
-     */
-    remote_created_at?: Date | null;
-    /**
-     * When the third party's candidate was updated.
-     * @type {Date}
-     * @memberof CandidateRequest
-     */
-    remote_updated_at?: Date | null;
     /**
      * When the most recent interaction with the candidate occurred.
      * @type {Date}
@@ -173,13 +155,10 @@ export function CandidateRequestFromJSONTyped(json: JSONValue): CandidateRequest
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
         'last_name': !exists(json, 'last_name') ? undefined : json['last_name'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'title': !exists(json, 'title') ? undefined : json['title'],
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'last_interaction_at': !exists(json, 'last_interaction_at') ? undefined : (json['last_interaction_at'] === null ? null : new Date(json['last_interaction_at'])),
         'is_private': !exists(json, 'is_private') ? undefined : json['is_private'],
         'can_email': !exists(json, 'can_email') ? undefined : json['can_email'],
@@ -203,13 +182,10 @@ export function CandidateRequestToJSON(value?: CandidateRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'first_name': value.first_name,
         'last_name': value.last_name,
         'company': value.company,
         'title': value.title,
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'last_interaction_at': value.last_interaction_at === undefined ? undefined : (value.last_interaction_at === null ? null : value.last_interaction_at.toISOString()),
         'is_private': value.is_private,
         'can_email': value.can_email,

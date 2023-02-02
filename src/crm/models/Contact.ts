@@ -48,18 +48,6 @@ import {
  */
 export interface Contact {
     /**
-     * 
-     * @type {string}
-     * @memberof Contact
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Contact
-     */
-    remote_id?: string | null;
-    /**
      * The contact's first name.
      * @type {string}
      * @memberof Contact
@@ -121,6 +109,18 @@ export interface Contact {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Contact
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Contact
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Contact
      */
@@ -138,8 +138,6 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
         'last_name': !exists(json, 'last_name') ? undefined : json['last_name'],
         'account': !exists(json, 'account') ? undefined : json['account'],
@@ -150,6 +148,8 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -161,7 +161,6 @@ export function ContactToJSON(value?: Contact): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'first_name': value.first_name,
         'last_name': value.last_name,
         'account': value.account,
@@ -170,6 +169,7 @@ export function ContactToJSON(value?: Contact): JSONValue {
         'phone_numbers': value.phone_numbers === undefined ? undefined : ((value.phone_numbers as Array<any>).map(PhoneNumberToJSON)),
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'remote_id': value.remote_id,
     };
 }
 

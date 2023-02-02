@@ -105,12 +105,6 @@ export interface TransactionLineItem {
      * @memberof TransactionLineItem
      */
     company?: string | null;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof TransactionLineItem
-     */
-    remote_id?: string | null;
 }
 
 export function TransactionLineItemFromJSON(json: JSONValue): TransactionLineItem | undefined {
@@ -136,7 +130,6 @@ export function TransactionLineItemFromJSONTyped(json: JSONValue): TransactionLi
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'company': !exists(json, 'company') ? undefined : json['company'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }
 
@@ -159,7 +152,6 @@ export function TransactionLineItemToJSON(value?: TransactionLineItem): JSONValu
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,
         'company': value.company,
-        'remote_id': value.remote_id,
     };
 }
 

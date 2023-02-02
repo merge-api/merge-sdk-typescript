@@ -34,12 +34,6 @@ import {
  */
 export interface InvoiceLineItemRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof InvoiceLineItemRequest
-     */
-    remote_id?: string | null;
-    /**
      * The line item's description.
      * @type {string}
      * @memberof InvoiceLineItemRequest
@@ -106,6 +100,12 @@ export interface InvoiceLineItemRequest {
      */
     company?: string | null;
     /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof InvoiceLineItemRequest
+     */
+    remote_id?: string | null;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof InvoiceLineItemRequest
@@ -130,7 +130,6 @@ export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLin
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'unit_price': !exists(json, 'unit_price') ? undefined : json['unit_price'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
@@ -142,6 +141,7 @@ export function InvoiceLineItemRequestFromJSONTyped(json: JSONValue): InvoiceLin
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'company': !exists(json, 'company') ? undefined : json['company'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -154,7 +154,6 @@ export function InvoiceLineItemRequestToJSON(value?: InvoiceLineItemRequest): JS
 
     return {
         
-        'remote_id': value.remote_id,
         'description': value.description,
         'unit_price': value.unit_price,
         'quantity': value.quantity,
@@ -166,6 +165,7 @@ export function InvoiceLineItemRequestToJSON(value?: InvoiceLineItemRequest): JS
         'tracking_category': value.tracking_category,
         'tracking_categories': value.tracking_categories,
         'company': value.company,
+        'remote_id': value.remote_id,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

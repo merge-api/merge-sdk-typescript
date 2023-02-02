@@ -42,12 +42,6 @@ import {
  */
 export interface PurchaseOrderRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof PurchaseOrderRequest
-     */
-    remote_id?: string | null;
-    /**
      * The purchase order's status.
      * @type {PurchaseOrderStatusEnum}
      * @memberof PurchaseOrderRequest
@@ -82,7 +76,7 @@ export interface PurchaseOrderRequest {
      * @type {string}
      * @memberof PurchaseOrderRequest
      */
-    vendor?: string | null;
+    vendor?: string | JSONValue | null;
     /**
      * A memo attached to the purchase order.
      * @type {string}
@@ -114,18 +108,6 @@ export interface PurchaseOrderRequest {
      */
     line_items?: Array<PurchaseOrderLineItemRequest> | JSONValue;
     /**
-     * When the third party's purchase order note was created.
-     * @type {Date}
-     * @memberof PurchaseOrderRequest
-     */
-    remote_created_at?: Date | null;
-    /**
-     * When the third party's purchase order note was updated.
-     * @type {Date}
-     * @memberof PurchaseOrderRequest
-     */
-    remote_updated_at?: Date | null;
-    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof PurchaseOrderRequest
@@ -150,7 +132,6 @@ export function PurchaseOrderRequestFromJSONTyped(json: JSONValue): PurchaseOrde
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'status': !exists(json, 'status') ? undefined : PurchaseOrderStatusEnumFromJSON(json['status']) as PurchaseOrderStatusEnum,
         'issue_date': !exists(json, 'issue_date') ? undefined : (json['issue_date'] === null ? null : new Date(json['issue_date'])),
         'delivery_date': !exists(json, 'delivery_date') ? undefined : (json['delivery_date'] === null ? null : new Date(json['delivery_date'])),
@@ -162,8 +143,6 @@ export function PurchaseOrderRequestFromJSONTyped(json: JSONValue): PurchaseOrde
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(PurchaseOrderLineItemRequestFromJSON)) as Array<PurchaseOrderLineItemRequest>,
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -176,7 +155,6 @@ export function PurchaseOrderRequestToJSON(value?: PurchaseOrderRequest): JSONVa
 
     return {
         
-        'remote_id': value.remote_id,
         'status': PurchaseOrderStatusEnumToJSON(value.status),
         'issue_date': value.issue_date === undefined ? undefined : (value.issue_date === null ? null : value.issue_date.toISOString()),
         'delivery_date': value.delivery_date === undefined ? undefined : (value.delivery_date === null ? null : value.delivery_date.toISOString()),
@@ -188,8 +166,6 @@ export function PurchaseOrderRequestToJSON(value?: PurchaseOrderRequest): JSONVa
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,
         'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(PurchaseOrderLineItemRequestToJSON)),
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

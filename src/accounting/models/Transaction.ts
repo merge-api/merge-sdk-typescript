@@ -45,23 +45,11 @@ import {
  */
 export interface Transaction {
     /**
-     * 
-     * @type {string}
-     * @memberof Transaction
-     */
-    readonly id?: string;
-    /**
      * The type of transaction, which can by any transaction object not already included in Merge’s common model.
      * @type {string}
      * @memberof Transaction
      */
     transaction_type?: string | null;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Transaction
-     */
-    remote_id?: string | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -85,13 +73,13 @@ export interface Transaction {
      * @type {string}
      * @memberof Transaction
      */
-    account?: string | null;
+    account?: string | JSONValue | null;
     /**
      * The contact to whom the transaction relates to.
      * @type {string}
      * @memberof Transaction
      */
-    contact?: string | null;
+    contact?: string | JSONValue | null;
     /**
      * The total amount being paid after taxes.
      * @type {string}
@@ -130,6 +118,18 @@ export interface Transaction {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Transaction
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Transaction
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Transaction
      */
@@ -147,9 +147,7 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction | undefin
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'transaction_type': !exists(json, 'transaction_type') ? undefined : json['transaction_type'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'number': !exists(json, 'number') ? undefined : json['number'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
@@ -161,6 +159,8 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction | undefin
         'company': !exists(json, 'company') ? undefined : json['company'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(TransactionLineItemFromJSON)) as Array<TransactionLineItem>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -173,7 +173,6 @@ export function TransactionToJSON(value?: Transaction): JSONValue {
     return {
         
         'transaction_type': value.transaction_type,
-        'remote_id': value.remote_id,
         'number': value.number,
         'transaction_date': value.transaction_date === undefined ? undefined : (value.transaction_date === null ? null : value.transaction_date.toISOString()),
         'account': value.account,
@@ -183,6 +182,7 @@ export function TransactionToJSON(value?: Transaction): JSONValue {
         'exchange_rate': value.exchange_rate,
         'company': value.company,
         'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(TransactionLineItemToJSON)),
+        'remote_id': value.remote_id,
     };
 }
 

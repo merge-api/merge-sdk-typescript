@@ -33,18 +33,6 @@ import {
  */
 export interface EngagementType {
     /**
-     * 
-     * @type {string}
-     * @memberof EngagementType
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof EngagementType
-     */
-    remote_id?: string | null;
-    /**
      * The engagement type's activity type.
      * @type {ActivityTypeEnum}
      * @memberof EngagementType
@@ -56,6 +44,18 @@ export interface EngagementType {
      * @memberof EngagementType
      */
     name?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof EngagementType
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof EngagementType
+     */
+    remote_id?: string | null;
 }
 
 export function EngagementTypeFromJSON(json: JSONValue): EngagementType | undefined {
@@ -69,10 +69,10 @@ export function EngagementTypeFromJSONTyped(json: JSONValue): EngagementType | u
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'activity_type': !exists(json, 'activity_type') ? undefined : ActivityTypeEnumFromJSON(json['activity_type']) as ActivityTypeEnum,
         'name': !exists(json, 'name') ? undefined : json['name'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }
 
@@ -83,9 +83,9 @@ export function EngagementTypeToJSON(value?: EngagementType): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'activity_type': ActivityTypeEnumToJSON(value.activity_type),
         'name': value.name,
+        'remote_id': value.remote_id,
     };
 }
 

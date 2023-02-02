@@ -33,12 +33,6 @@ import {
  */
 export interface AttachmentRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof AttachmentRequest
-     */
-    remote_id?: string | null;
-    /**
      * The attachment's name.
      * @type {string}
      * @memberof AttachmentRequest
@@ -87,7 +81,6 @@ export function AttachmentRequestFromJSONTyped(json: JSONValue): AttachmentReque
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
@@ -104,7 +97,6 @@ export function AttachmentRequestToJSON(value?: AttachmentRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'file_name': value.file_name,
         'file_url': value.file_url,
         'candidate': value.candidate,

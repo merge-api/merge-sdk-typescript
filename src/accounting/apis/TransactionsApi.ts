@@ -194,6 +194,8 @@ export class TransactionsApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum TransactionsListExpandEnum {
+    Account = 'account',
+    Contact = 'contact',
     LineItems = 'line_items'
 }
 /**
@@ -201,5 +203,7 @@ export enum TransactionsListExpandEnum {
 * @enum {string}
 */
 export enum TransactionsRetrieveExpandEnum {
+    Account = 'account',
+    Contact = 'contact',
     LineItems = 'line_items'
 }

@@ -37,70 +37,70 @@ import {
  * ### Usage Example
  * TODO
  * @export
- * @interface ContactRequest
+ * @interface PatchedContactRequest
  */
-export interface ContactRequest {
+export interface PatchedContactRequest {
     /**
      * The contact's first name.
      * @type {string}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     first_name?: string | null;
     /**
      * The contact's last name.
      * @type {string}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     last_name?: string | null;
     /**
      * The contact's account.
      * @type {string}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
-    account?: string | JSONValue | null;
+    account?: string | null;
     /**
      * 
      * @type {Array<AddressRequest>}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     addresses?: Array<AddressRequest>;
     /**
      * 
      * @type {Array<EmailAddressRequest>}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     email_addresses?: Array<EmailAddressRequest>;
     /**
      * 
      * @type {Array<PhoneNumberRequest>}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     phone_numbers?: Array<PhoneNumberRequest>;
     /**
      * When the contact's last activity occurred.
      * @type {Date}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     last_activity_at?: Date | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     integration_params?: { [key: string]: any; } | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
-     * @memberof ContactRequest
+     * @memberof PatchedContactRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
 }
 
-export function ContactRequestFromJSON(json: JSONValue): ContactRequest | undefined {
-    return ContactRequestFromJSONTyped(json);
+export function PatchedContactRequestFromJSON(json: JSONValue): PatchedContactRequest | undefined {
+    return PatchedContactRequestFromJSONTyped(json);
 }
 
-export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | undefined {
+export function PatchedContactRequestFromJSONTyped(json: JSONValue): PatchedContactRequest | undefined {
     if ((json === undefined) || (json === null)) {
         return undefined;
     }
@@ -119,7 +119,7 @@ export function ContactRequestFromJSONTyped(json: JSONValue): ContactRequest | u
     };
 }
 
-export function ContactRequestToJSON(value?: ContactRequest): JSONValue {
+export function PatchedContactRequestToJSON(value?: PatchedContactRequest): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }

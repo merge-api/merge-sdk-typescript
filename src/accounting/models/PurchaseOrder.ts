@@ -50,18 +50,6 @@ import {
 export interface PurchaseOrder {
     /**
      * 
-     * @type {string}
-     * @memberof PurchaseOrder
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof PurchaseOrder
-     */
-    remote_id?: string | null;
-    /**
-     * 
      * @type {Array<RemoteData>}
      * @memberof PurchaseOrder
      */
@@ -101,7 +89,7 @@ export interface PurchaseOrder {
      * @type {string}
      * @memberof PurchaseOrder
      */
-    vendor?: string | null;
+    vendor?: string | JSONValue | null;
     /**
      * A memo attached to the purchase order.
      * @type {string}
@@ -152,6 +140,18 @@ export interface PurchaseOrder {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof PurchaseOrder
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof PurchaseOrder
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof PurchaseOrder
      */
@@ -169,8 +169,6 @@ export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | und
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'status': !exists(json, 'status') ? undefined : PurchaseOrderStatusEnumFromJSON(json['status']) as PurchaseOrderStatusEnum,
         'issue_date': !exists(json, 'issue_date') ? undefined : (json['issue_date'] === null ? null : new Date(json['issue_date'])),
@@ -186,6 +184,8 @@ export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | und
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -197,7 +197,6 @@ export function PurchaseOrderToJSON(value?: PurchaseOrder): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'status': PurchaseOrderStatusEnumToJSON(value.status),
         'issue_date': value.issue_date === undefined ? undefined : (value.issue_date === null ? null : value.issue_date.toISOString()),
         'delivery_date': value.delivery_date === undefined ? undefined : (value.delivery_date === null ? null : value.delivery_date.toISOString()),
@@ -211,6 +210,7 @@ export function PurchaseOrderToJSON(value?: PurchaseOrder): JSONValue {
         'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(PurchaseOrderLineItemToJSON)),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
+        'remote_id': value.remote_id,
     };
 }
 

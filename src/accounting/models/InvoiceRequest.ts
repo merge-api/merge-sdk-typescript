@@ -43,12 +43,6 @@ import {
  */
 export interface InvoiceRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof InvoiceRequest
-     */
-    remote_id?: string | null;
-    /**
      * Whether the invoice is an accounts receivable or accounts payable. Accounts payable invoices are commonly referred to as Bills.
      * @type {InvoiceTypeEnum}
      * @memberof InvoiceRequest
@@ -139,12 +133,6 @@ export interface InvoiceRequest {
      */
     balance?: number | null;
     /**
-     * When the third party's invoice entry was updated.
-     * @type {Date}
-     * @memberof InvoiceRequest
-     */
-    remote_updated_at?: Date | null;
-    /**
      * Array of `Payment` object IDs.
      * @type {Array<string>}
      * @memberof InvoiceRequest
@@ -181,7 +169,6 @@ export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | u
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']) as InvoiceTypeEnum,
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'number': !exists(json, 'number') ? undefined : json['number'],
@@ -197,7 +184,6 @@ export function InvoiceRequestFromJSONTyped(json: JSONValue): InvoiceRequest | u
         'total_tax_amount': !exists(json, 'total_tax_amount') ? undefined : json['total_tax_amount'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'balance': !exists(json, 'balance') ? undefined : json['balance'],
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(InvoiceLineItemRequestFromJSON)) as Array<InvoiceLineItemRequest>,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
@@ -212,7 +198,6 @@ export function InvoiceRequestToJSON(value?: InvoiceRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'type': InvoiceTypeEnumToJSON(value.type),
         'contact': value.contact,
         'number': value.number,
@@ -228,7 +213,6 @@ export function InvoiceRequestToJSON(value?: InvoiceRequest): JSONValue {
         'total_tax_amount': value.total_tax_amount,
         'total_amount': value.total_amount,
         'balance': value.balance,
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'payments': value.payments,
         'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(InvoiceLineItemRequestToJSON)),
         'integration_params': value.integration_params,

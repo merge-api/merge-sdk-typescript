@@ -33,18 +33,6 @@ import {
  */
 export interface AssociationType {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof AssociationType
-     */
-    remote_id?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof AssociationType
-     */
-    readonly id?: string;
-    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof AssociationType
@@ -80,6 +68,18 @@ export interface AssociationType {
      * @memberof AssociationType
      */
     is_required?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssociationType
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof AssociationType
+     */
+    remote_id?: string | null;
 }
 
 export function AssociationTypeFromJSON(json: JSONValue): AssociationType | undefined {
@@ -93,14 +93,14 @@ export function AssociationTypeFromJSONTyped(json: JSONValue): AssociationType |
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'source_object_class': !exists(json, 'source_object_class') ? undefined : json['source_object_class'],
         'target_object_classes': !exists(json, 'target_object_classes') ? undefined : ((json['target_object_classes'] as Array<JSONValue>).map(AssociationSubTypeFromJSON)) as Array<AssociationSubType>,
         'remote_key_name': !exists(json, 'remote_key_name') ? undefined : json['remote_key_name'],
         'display_name': !exists(json, 'display_name') ? undefined : json['display_name'],
         'cardinality': !exists(json, 'cardinality') ? undefined : CardinalityEnumFromJSON(json['cardinality']) as CardinalityEnum,
         'is_required': !exists(json, 'is_required') ? undefined : json['is_required'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
 }
 
@@ -111,11 +111,11 @@ export function AssociationTypeToJSON(value?: AssociationType): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'remote_key_name': value.remote_key_name,
         'display_name': value.display_name,
         'cardinality': CardinalityEnumToJSON(value.cardinality),
         'is_required': value.is_required,
+        'remote_id': value.remote_id,
     };
 }
 

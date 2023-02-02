@@ -42,12 +42,6 @@ import {
  */
 export interface TimeOffRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof TimeOffRequest
-     */
-    remote_id?: string | null;
-    /**
      * The employee requesting time off.
      * @type {string}
      * @memberof TimeOffRequest
@@ -126,7 +120,6 @@ export function TimeOffRequestFromJSONTyped(json: JSONValue): TimeOffRequest | u
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'employee': !exists(json, 'employee') ? undefined : json['employee'],
         'approver': !exists(json, 'approver') ? undefined : json['approver'],
         'status': !exists(json, 'status') ? undefined : TimeOffStatusEnumFromJSON(json['status']) as TimeOffStatusEnum,
@@ -148,7 +141,6 @@ export function TimeOffRequestToJSON(value?: TimeOffRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'employee': value.employee,
         'approver': value.approver,
         'status': TimeOffStatusEnumToJSON(value.status),

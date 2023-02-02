@@ -46,12 +46,6 @@ import {
  */
 export interface EmployeeRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof EmployeeRequest
-     */
-    remote_id?: string | null;
-    /**
      * The employee's number that appears in the third-party integration's UI.
      * @type {string}
      * @memberof EmployeeRequest
@@ -190,12 +184,6 @@ export interface EmployeeRequest {
      */
     start_date?: Date | null;
     /**
-     * When the third party's employee was created.
-     * @type {Date}
-     * @memberof EmployeeRequest
-     */
-    remote_created_at?: Date | null;
-    /**
      * The employment status of the employee.
      * @type {EmploymentStatusEnum}
      * @memberof EmployeeRequest
@@ -213,12 +201,6 @@ export interface EmployeeRequest {
      * @memberof EmployeeRequest
      */
     avatar?: string | null;
-    /**
-     * Custom fields configured for a given model.
-     * @type {{ [key: string]: any; }}
-     * @memberof EmployeeRequest
-     */
-    custom_fields?: { [key: string]: any; } | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -244,7 +226,6 @@ export function EmployeeRequestFromJSONTyped(json: JSONValue): EmployeeRequest |
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'employee_number': !exists(json, 'employee_number') ? undefined : json['employee_number'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
@@ -268,11 +249,9 @@ export function EmployeeRequestFromJSONTyped(json: JSONValue): EmployeeRequest |
         'date_of_birth': !exists(json, 'date_of_birth') ? undefined : (json['date_of_birth'] === null ? null : new Date(json['date_of_birth'])),
         'hire_date': !exists(json, 'hire_date') ? undefined : (json['hire_date'] === null ? null : new Date(json['hire_date'])),
         'start_date': !exists(json, 'start_date') ? undefined : (json['start_date'] === null ? null : new Date(json['start_date'])),
-        'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'employment_status': !exists(json, 'employment_status') ? undefined : EmploymentStatusEnumFromJSON(json['employment_status']) as EmploymentStatusEnum,
         'termination_date': !exists(json, 'termination_date') ? undefined : (json['termination_date'] === null ? null : new Date(json['termination_date'])),
         'avatar': !exists(json, 'avatar') ? undefined : json['avatar'],
-        'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -285,7 +264,6 @@ export function EmployeeRequestToJSON(value?: EmployeeRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'employee_number': value.employee_number,
         'company': value.company,
         'first_name': value.first_name,
@@ -309,11 +287,9 @@ export function EmployeeRequestToJSON(value?: EmployeeRequest): JSONValue {
         'date_of_birth': value.date_of_birth === undefined ? undefined : (value.date_of_birth === null ? null : value.date_of_birth.toISOString()),
         'hire_date': value.hire_date === undefined ? undefined : (value.hire_date === null ? null : value.hire_date.toISOString()),
         'start_date': value.start_date === undefined ? undefined : (value.start_date === null ? null : value.start_date.toISOString()),
-        'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'employment_status': EmploymentStatusEnumToJSON(value.employment_status),
         'termination_date': value.termination_date === undefined ? undefined : (value.termination_date === null ? null : value.termination_date.toISOString()),
         'avatar': value.avatar,
-        'custom_fields': value.custom_fields,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

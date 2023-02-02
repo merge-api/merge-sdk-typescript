@@ -36,18 +36,6 @@ import {
  */
 export interface User {
     /**
-     * 
-     * @type {string}
-     * @memberof User
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof User
-     */
-    remote_id?: string | null;
-    /**
      * The user's name.
      * @type {string}
      * @memberof User
@@ -79,6 +67,18 @@ export interface User {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof User
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof User
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof User
      */
@@ -96,13 +96,13 @@ export function UserFromJSONTyped(json: JSONValue): User | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'email': !exists(json, 'email') ? undefined : json['email'],
         'is_active': !exists(json, 'is_active') ? undefined : json['is_active'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -114,10 +114,10 @@ export function UserToJSON(value?: User): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'name': value.name,
         'email': value.email,
         'is_active': value.is_active,
+        'remote_id': value.remote_id,
     };
 }
 

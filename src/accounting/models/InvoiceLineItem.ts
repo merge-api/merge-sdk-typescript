@@ -34,18 +34,6 @@ import {
  */
 export interface InvoiceLineItem {
     /**
-     * 
-     * @type {string}
-     * @memberof InvoiceLineItem
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof InvoiceLineItem
-     */
-    remote_id?: string | null;
-    /**
      * The line item's description.
      * @type {string}
      * @memberof InvoiceLineItem
@@ -113,6 +101,18 @@ export interface InvoiceLineItem {
     company?: string | null;
     /**
      * 
+     * @type {string}
+     * @memberof InvoiceLineItem
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof InvoiceLineItem
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof InvoiceLineItem
      */
@@ -130,8 +130,6 @@ export function InvoiceLineItemFromJSONTyped(json: JSONValue): InvoiceLineItem |
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'unit_price': !exists(json, 'unit_price') ? undefined : json['unit_price'],
         'quantity': !exists(json, 'quantity') ? undefined : json['quantity'],
@@ -143,6 +141,8 @@ export function InvoiceLineItemFromJSONTyped(json: JSONValue): InvoiceLineItem |
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'company': !exists(json, 'company') ? undefined : json['company'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -154,7 +154,6 @@ export function InvoiceLineItemToJSON(value?: InvoiceLineItem): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'description': value.description,
         'unit_price': value.unit_price,
         'quantity': value.quantity,
@@ -166,6 +165,7 @@ export function InvoiceLineItemToJSON(value?: InvoiceLineItem): JSONValue {
         'tracking_category': value.tracking_category,
         'tracking_categories': value.tracking_categories,
         'company': value.company,
+        'remote_id': value.remote_id,
     };
 }
 

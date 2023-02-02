@@ -27,10 +27,10 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
     PatchedCRMAccountEndpointRequest,
     PatchedCRMAccountEndpointRequestFromJSON,
     PatchedCRMAccountEndpointRequestToJSON,
+    RemoteFieldClass
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -72,6 +72,13 @@ export interface AccountsPartialUpdateRequest {
     patchedCRMAccountEndpointRequest: PatchedCRMAccountEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
+}
+
+export interface AccountsRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
 }
 
 export interface AccountsRetrieveRequest {
@@ -367,6 +374,60 @@ export class AccountsApi extends runtime.BaseAPI {
      */
     async accountsPartialUpdate(requestParameters: AccountsPartialUpdateRequest): Promise<CRMAccountResponse | undefined> {
         const response = await this.accountsPartialUpdateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async accountsRemoteFieldClassesListRaw(requestParameters: AccountsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/accounts/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async accountsRemoteFieldClassesList(requestParameters: AccountsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.accountsRemoteFieldClassesListRaw(requestParameters);
         return await response.value();
     }
 

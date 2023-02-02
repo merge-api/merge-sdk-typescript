@@ -27,12 +27,6 @@ import { JSONValue } from '../../merge_json';
  */
 export interface ExpenseLineRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof ExpenseLineRequest
-     */
-    remote_id?: string | null;
-    /**
      * The line's item.
      * @type {string}
      * @memberof ExpenseLineRequest
@@ -75,6 +69,12 @@ export interface ExpenseLineRequest {
      */
     description?: string | null;
     /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof ExpenseLineRequest
+     */
+    remote_id?: string | null;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof ExpenseLineRequest
@@ -99,7 +99,6 @@ export function ExpenseLineRequestFromJSONTyped(json: JSONValue): ExpenseLineReq
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'item': !exists(json, 'item') ? undefined : json['item'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
@@ -107,6 +106,7 @@ export function ExpenseLineRequestFromJSONTyped(json: JSONValue): ExpenseLineReq
         'company': !exists(json, 'company') ? undefined : json['company'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -119,7 +119,6 @@ export function ExpenseLineRequestToJSON(value?: ExpenseLineRequest): JSONValue 
 
     return {
         
-        'remote_id': value.remote_id,
         'item': value.item,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
@@ -127,6 +126,7 @@ export function ExpenseLineRequestToJSON(value?: ExpenseLineRequest): JSONValue 
         'company': value.company,
         'account': value.account,
         'description': value.description,
+        'remote_id': value.remote_id,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

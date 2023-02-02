@@ -25,7 +25,8 @@ export enum CategoryEnumValues {
     Ats = 'ats',
     Accounting = 'accounting',
     Ticketing = 'ticketing',
-    Crm = 'crm'
+    Crm = 'crm',
+    Mktg = 'mktg'
 }
 
 export interface CategoryEnum {

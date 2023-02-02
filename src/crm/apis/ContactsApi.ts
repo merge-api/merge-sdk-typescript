@@ -27,7 +27,11 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
+
+    PatchedCRMContactEndpointRequest,
+    PatchedCRMContactEndpointRequestFromJSON,
+    PatchedCRMContactEndpointRequestToJSON,
+    RemoteFieldClass,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -59,7 +63,25 @@ export interface ContactsListRequest {
     remoteId?: string | null;
 }
 
+export interface ContactsMetaPatchRetrieveRequest extends MergeMetaRequest {
+    id: string;
+}
+
 // extends MergeMetaRequest
+export interface ContactsPartialUpdateRequest {
+    id: string;
+    patchedCRMContactEndpointRequest: PatchedCRMContactEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
+
+export interface ContactsRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
+}
+
 export interface ContactsRetrieveRequest {
     id: string;
     expand?: Array<ContactsRetrieveExpandEnum>;
@@ -207,6 +229,55 @@ export class ContactsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns metadata for `CRMContact` PATCHs.
+     */
+    async contactsMetaPatchRetrieveRaw(requestParameters: ContactsMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling contactsMetaPatchRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/contacts/meta/patch/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `CRMContact` PATCHs.
+     */
+    async contactsMetaPatchRetrieve(requestParameters: ContactsMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.contactsMetaPatchRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns metadata for `CRMContact` POSTs.
      */
     async contactsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
@@ -247,6 +318,117 @@ export class ContactsApi extends runtime.BaseAPI {
      */
     async contactsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
         const response = await this.contactsMetaPostRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Updates a `Contact` object with the given `id`.
+     */
+    async contactsPartialUpdateRaw(requestParameters: ContactsPartialUpdateRequest): Promise<runtime.ApiResponse<CRMContactResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling contactsPartialUpdate.');
+        }
+
+        if (requestParameters.patchedCRMContactEndpointRequest === null || requestParameters.patchedCRMContactEndpointRequest === undefined) {
+            throw new runtime.RequiredError('patchedCRMContactEndpointRequest','Required parameter requestParameters.patchedCRMContactEndpointRequest was null or undefined when calling contactsPartialUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/contacts/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchedCRMContactEndpointRequestToJSON(requestParameters.patchedCRMContactEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CRMContactResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a `Contact` object with the given `id`.
+     */
+    async contactsPartialUpdate(requestParameters: ContactsPartialUpdateRequest): Promise<CRMContactResponse | undefined> {
+        const response = await this.contactsPartialUpdateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async contactsRemoteFieldClassesListRaw(requestParameters: ContactsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/contacts/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async contactsRemoteFieldClassesList(requestParameters: ContactsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.contactsRemoteFieldClassesListRaw(requestParameters);
         return await response.value();
     }
 

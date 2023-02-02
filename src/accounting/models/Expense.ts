@@ -46,18 +46,6 @@ import {
 export interface Expense {
     /**
      * 
-     * @type {string}
-     * @memberof Expense
-     */
-    readonly id?: string;
-    /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof Expense
-     */
-    remote_id?: string | null;
-    /**
-     * 
      * @type {Array<RemoteData>}
      * @memberof Expense
      */
@@ -130,6 +118,18 @@ export interface Expense {
     readonly remote_was_deleted?: boolean;
     /**
      * 
+     * @type {string}
+     * @memberof Expense
+     */
+    readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Expense
+     */
+    remote_id?: string | null;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof Expense
      */
@@ -147,8 +147,6 @@ export function ExpenseFromJSONTyped(json: JSONValue): Expense | undefined {
 
     return {
         
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
@@ -161,6 +159,8 @@ export function ExpenseFromJSONTyped(json: JSONValue): Expense | undefined {
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(ExpenseLineFromJSON)) as Array<ExpenseLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
@@ -172,7 +172,6 @@ export function ExpenseToJSON(value?: Expense): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'transaction_date': value.transaction_date === undefined ? undefined : (value.transaction_date === null ? null : value.transaction_date.toISOString()),
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'account': value.account,
@@ -183,6 +182,7 @@ export function ExpenseToJSON(value?: Expense): JSONValue {
         'company': value.company,
         'memo': value.memo,
         'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(ExpenseLineToJSON)),
+        'remote_id': value.remote_id,
     };
 }
 

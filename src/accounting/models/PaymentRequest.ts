@@ -34,12 +34,6 @@ import {
  */
 export interface PaymentRequest {
     /**
-     * The third-party API ID of the matching object.
-     * @type {string}
-     * @memberof PaymentRequest
-     */
-    remote_id?: string | null;
-    /**
      * The payment's transaction date.
      * @type {Date}
      * @memberof PaymentRequest
@@ -82,12 +76,6 @@ export interface PaymentRequest {
      */
     total_amount?: number | null;
     /**
-     * When the third party's payment entry was updated.
-     * @type {Date}
-     * @memberof PaymentRequest
-     */
-    remote_updated_at?: Date | null;
-    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof PaymentRequest
@@ -112,7 +100,6 @@ export function PaymentRequestFromJSONTyped(json: JSONValue): PaymentRequest | u
 
     return {
         
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'account': !exists(json, 'account') ? undefined : json['account'],
@@ -120,7 +107,6 @@ export function PaymentRequestFromJSONTyped(json: JSONValue): PaymentRequest | u
         'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
-        'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -133,7 +119,6 @@ export function PaymentRequestToJSON(value?: PaymentRequest): JSONValue {
 
     return {
         
-        'remote_id': value.remote_id,
         'transaction_date': value.transaction_date === undefined ? undefined : (value.transaction_date === null ? null : value.transaction_date.toISOString()),
         'contact': value.contact,
         'account': value.account,
@@ -141,7 +126,6 @@ export function PaymentRequestToJSON(value?: PaymentRequest): JSONValue {
         'exchange_rate': value.exchange_rate,
         'company': value.company,
         'total_amount': value.total_amount,
-        'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };
