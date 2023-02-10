@@ -174,7 +174,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @mergeapi/merge-sdk-typescript@3.0.3 --save
+npm install @mergeapi/merge-sdk-typescript@3.0.4 --save
 ```
 
 _unPublished (not recommended):_
