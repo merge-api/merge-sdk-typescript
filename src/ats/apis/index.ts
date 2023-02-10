@@ -7,6 +7,7 @@ export * from './ApplicationsApi';
 export * from './AttachmentsApi';
 export * from './AvailableActionsApi';
 export * from './CandidatesApi';
+export * from './CommonModelScopesApi';
 export * from './DeleteAccountApi';
 export * from './DepartmentsApi';
 export * from './EeocsApi';

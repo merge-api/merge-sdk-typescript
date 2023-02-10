@@ -55,6 +55,7 @@ export interface LeadsListRequest {
     expand?: Array<LeadsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     ownerId?: string;
@@ -67,6 +68,7 @@ export interface LeadsRemoteFieldClassesListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     pageSize?: number;
 }
 
@@ -74,6 +76,7 @@ export interface LeadsRetrieveRequest {
     id: string;
     expand?: Array<LeadsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
 }
 
 /**
@@ -170,6 +173,10 @@ export class LeadsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -286,6 +293,10 @@ export class LeadsApi extends runtime.BaseAPI {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
 
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
+        }
+
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
@@ -338,6 +349,10 @@ export class LeadsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

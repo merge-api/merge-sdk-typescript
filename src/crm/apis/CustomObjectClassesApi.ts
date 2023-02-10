@@ -129,6 +129,7 @@ export interface CustomObjectClassesCustomObjectsListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -156,6 +157,7 @@ export interface CustomObjectClassesCustomObjectsRetrieveRequest {
     customObjectClassId: string;
     id: string;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
 }
 
 export interface CustomObjectClassesGeneratorUpdateRequest {
@@ -672,6 +674,10 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
 
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
+        }
+
         if (requestParameters.modifiedAfter !== undefined) {
             queryParameters['modified_after'] = (requestParameters.modifiedAfter as any).toISOString();
         }
@@ -898,6 +904,10 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

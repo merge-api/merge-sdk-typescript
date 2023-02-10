@@ -16,6 +16,10 @@ import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
     
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -71,6 +75,12 @@ export interface Stage {
      * @memberof Stage
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof Stage
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function StageFromJSON(json: JSONValue): Stage | undefined {
@@ -90,6 +100,7 @@ export function StageFromJSONTyped(json: JSONValue): Stage | undefined {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

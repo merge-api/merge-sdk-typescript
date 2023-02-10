@@ -37,6 +37,7 @@ export interface EngagementTypesListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -47,12 +48,14 @@ export interface EngagementTypesRemoteFieldClassesListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     pageSize?: number;
 }
 
 export interface EngagementTypesRetrieveRequest {
     id: string;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
 }
 
 /**
@@ -84,6 +87,10 @@ export class EngagementTypesApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -152,6 +159,10 @@ export class EngagementTypesApi extends runtime.BaseAPI {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
 
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
+        }
+
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
@@ -200,6 +211,10 @@ export class EngagementTypesApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

@@ -27,7 +27,7 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-
+    
     PatchedCRMContactEndpointRequest,
     PatchedCRMContactEndpointRequestFromJSON,
     PatchedCRMContactEndpointRequestToJSON,
@@ -57,6 +57,7 @@ export interface ContactsListRequest {
     expand?: Array<ContactsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -79,6 +80,7 @@ export interface ContactsRemoteFieldClassesListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     pageSize?: number;
 }
 
@@ -86,6 +88,7 @@ export interface ContactsRetrieveRequest {
     id: string;
     expand?: Array<ContactsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
 }
 
 /**
@@ -178,6 +181,10 @@ export class ContactsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -396,6 +403,10 @@ export class ContactsApi extends runtime.BaseAPI {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
 
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
+        }
+
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
@@ -448,6 +459,10 @@ export class ContactsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

@@ -15,14 +15,22 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
-    ItemFormatEnum,
-    ItemFormatEnumFromJSON,
-    ItemFormatEnumFromJSONTyped,
-    ItemFormatEnumToJSON,
-    ItemTypeEnum,
-    ItemTypeEnumFromJSON,
-    ItemTypeEnumFromJSONTyped,
-    ItemTypeEnumToJSON,
+    FieldFormatEnum,
+    FieldFormatEnumFromJSON,
+    FieldFormatEnumFromJSONTyped,
+    FieldFormatEnumToJSON,
+    FieldTypeEnum,
+    FieldTypeEnumFromJSON,
+    FieldTypeEnumFromJSONTyped,
+    FieldTypeEnumToJSON,
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
+    RemoteFieldClassItemSchema,
+    RemoteFieldClassItemSchemaFromJSON,
+    RemoteFieldClassItemSchemaFromJSONTyped,
+    RemoteFieldClassItemSchemaToJSON,
 } from './';
 
 
@@ -58,28 +66,28 @@ export interface RemoteFieldClass {
     is_required?: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {FieldTypeEnum}
      * @memberof RemoteFieldClass
      */
-    is_nested_list?: boolean;
+    readonly field_type?: FieldTypeEnum | null;
     /**
      * 
-     * @type {ItemTypeEnum}
+     * @type {FieldFormatEnum}
      * @memberof RemoteFieldClass
      */
-    item_type?: ItemTypeEnum | null;
-    /**
-     * 
-     * @type {ItemFormatEnum}
-     * @memberof RemoteFieldClass
-     */
-    item_format?: ItemFormatEnum | null;
+    readonly field_format?: FieldFormatEnum | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof RemoteFieldClass
      */
-    item_choices?: Array<string> | null;
+    readonly field_choices?: Array<string> | null;
+    /**
+     * 
+     * @type {RemoteFieldClassItemSchema}
+     * @memberof RemoteFieldClass
+     */
+    item_schema?: RemoteFieldClassItemSchema | null;
     /**
      * 
      * @type {boolean}
@@ -92,6 +100,12 @@ export interface RemoteFieldClass {
      * @memberof RemoteFieldClass
      */
     readonly id?: string;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof RemoteFieldClass
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function RemoteFieldClassFromJSON(json: JSONValue): RemoteFieldClass | undefined {
@@ -109,12 +123,13 @@ export function RemoteFieldClassFromJSONTyped(json: JSONValue): RemoteFieldClass
         'remote_key_name': !exists(json, 'remote_key_name') ? undefined : json['remote_key_name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'is_required': !exists(json, 'is_required') ? undefined : json['is_required'],
-        'is_nested_list': !exists(json, 'is_nested_list') ? undefined : json['is_nested_list'],
-        'item_type': !exists(json, 'item_type') ? undefined : ItemTypeEnumFromJSON(json['item_type']) as ItemTypeEnum,
-        'item_format': !exists(json, 'item_format') ? undefined : ItemFormatEnumFromJSON(json['item_format']) as ItemFormatEnum,
-        'item_choices': !exists(json, 'item_choices') ? undefined : json['item_choices'],
+        'field_type': !exists(json, 'field_type') ? undefined : FieldTypeEnumFromJSON(json['field_type']) as FieldTypeEnum,
+        'field_format': !exists(json, 'field_format') ? undefined : FieldFormatEnumFromJSON(json['field_format']) as FieldFormatEnum,
+        'field_choices': !exists(json, 'field_choices') ? undefined : json['field_choices'],
+        'item_schema': !exists(json, 'item_schema') ? undefined : RemoteFieldClassItemSchemaFromJSON(json['item_schema']) as RemoteFieldClassItemSchema,
         'is_custom': !exists(json, 'is_custom') ? undefined : json['is_custom'],
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 
@@ -129,10 +144,7 @@ export function RemoteFieldClassToJSON(value?: RemoteFieldClass): JSONValue {
         'remote_key_name': value.remote_key_name,
         'description': value.description,
         'is_required': value.is_required,
-        'is_nested_list': value.is_nested_list,
-        'item_type': ItemTypeEnumToJSON(value.item_type),
-        'item_format': ItemFormatEnumToJSON(value.item_format),
-        'item_choices': value.item_choices,
+        'item_schema': RemoteFieldClassItemSchemaToJSON(value.item_schema ?? undefined),
         'is_custom': value.is_custom,
     };
 }

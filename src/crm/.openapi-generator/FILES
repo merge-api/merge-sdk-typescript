@@ -2,6 +2,7 @@ src/apis/AccountDetailsApi.ts
 src/apis/AccountTokenApi.ts
 src/apis/AccountsApi.ts
 src/apis/AvailableActionsApi.ts
+src/apis/CommonModelScopesApi.ts
 src/apis/ContactsApi.ts
 src/apis/CustomObjectClassesApi.ts
 src/apis/DeleteAccountApi.ts
@@ -53,6 +54,13 @@ src/models/CRMCustomObjectResponse.ts
 src/models/CardinalityEnum.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
+src/models/CommonModelScopeData.ts
+src/models/CommonModelScopes.ts
+src/models/CommonModelScopesBodyRequest.ts
+src/models/CommonModelScopesDisabledModels.ts
+src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
+src/models/CommonModelScopesPostInnerDeserializerRequest.ts
+src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts
 src/models/Contact.ts
@@ -67,6 +75,7 @@ src/models/DebugModelLogSummary.ts
 src/models/DirectionEnum.ts
 src/models/EmailAddress.ts
 src/models/EmailAddressRequest.ts
+src/models/EnabledActionsA91Enum.ts
 src/models/EncodingEnum.ts
 src/models/EndUserDetailsRequest.ts
 src/models/Engagement.ts
@@ -75,11 +84,11 @@ src/models/EngagementRequest.ts
 src/models/EngagementResponse.ts
 src/models/EngagementType.ts
 src/models/ErrorValidationProblem.ts
+src/models/FieldFormatEnum.ts
+src/models/FieldTypeEnum.ts
 src/models/GenerateRemoteKeyRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
-src/models/ItemFormatEnum.ts
-src/models/ItemTypeEnum.ts
 src/models/Lead.ts
 src/models/LeadEndpointRequest.ts
 src/models/LeadRequest.ts
@@ -116,8 +125,11 @@ src/models/PatchedOpportunityEndpointRequest.ts
 src/models/PatchedOpportunityRequest.ts
 src/models/PhoneNumber.ts
 src/models/PhoneNumberRequest.ts
+src/models/RemoteField.ts
 src/models/RemoteFieldClass.ts
 src/models/RemoteFieldClassForCustomObjectClass.ts
+src/models/RemoteFieldClassItemSchema.ts
+src/models/RemoteFieldRemoteFieldClass.ts
 src/models/RemoteKey.ts
 src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts

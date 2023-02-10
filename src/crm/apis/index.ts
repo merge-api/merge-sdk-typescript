@@ -4,6 +4,7 @@ export * from './AccountDetailsApi';
 export * from './AccountTokenApi';
 export * from './AccountsApi';
 export * from './AvailableActionsApi';
+export * from './CommonModelScopesApi';
 export * from './ContactsApi';
 export * from './CustomObjectClassesApi';
 export * from './DeleteAccountApi';

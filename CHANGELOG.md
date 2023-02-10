@@ -1,3 +1,12 @@
+# Version 3.0.4
+
+# Date: 2022-02-10
+
+- Add scopes API back for linked account overrides
+- Add RemoteFields models to CRM category (beta)
+- Adds collections/{id}/users endpoint to ticketing category
+- various documentation additions and field additions
+
 # Version 3.0.3
 
 # Date: 2022-02-02
