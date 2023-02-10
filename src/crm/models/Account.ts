@@ -24,6 +24,10 @@ import {
     PhoneNumberFromJSONTyped,
     PhoneNumberToJSON,
     
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -139,6 +143,12 @@ export interface Account {
      * @memberof Account
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof Account
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function AccountFromJSON(json: JSONValue): Account | undefined {
@@ -168,6 +178,7 @@ export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

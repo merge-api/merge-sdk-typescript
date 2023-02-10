@@ -18,7 +18,7 @@ import {
     Collection,
     CollectionFromJSON,
     CollectionToJSON,
-    
+    User,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -53,6 +53,15 @@ export interface CollectionsRetrieveRequest {
     includeRemoteData?: boolean;
     remoteFields?: CollectionsRetrieveRemoteFieldsEnum;
     showEnumOrigins?: CollectionsRetrieveShowEnumOriginsEnum;
+}
+
+export interface CollectionsUsersListRequest {
+    parentId: string;
+    cursor?: string;
+    expand?: Array<CollectionsUsersListExpandEnum>;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
 }
 
 /**
@@ -212,6 +221,68 @@ export class CollectionsApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+    /**
+     * Returns a list of `User` objects.
+     */
+    async collectionsUsersListRaw(requestParameters: CollectionsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
+        if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
+            throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling collectionsUsersList.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ticketing/v1/collections/{parent_id}/users`.replace(`{${"parent_id"}}`, encodeURIComponent(String(requestParameters.parentId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `User` objects.
+     */
+    async collectionsUsersList(requestParameters: CollectionsUsersListRequest): Promise<MergePaginatedResponse<User> | undefined> {
+        const response = await this.collectionsUsersListRaw(requestParameters);
+        return await response.value();
+    }
+
 }
 
 /**
@@ -263,4 +334,11 @@ export enum CollectionsRetrieveRemoteFieldsEnum {
 */
 export enum CollectionsRetrieveShowEnumOriginsEnum {
     CollectionType = 'collection_type'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum CollectionsUsersListExpandEnum {
+    Teams = 'teams'
 }

@@ -16,6 +16,10 @@ import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
     
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -83,6 +87,12 @@ export interface User {
      * @memberof User
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof User
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function UserFromJSON(json: JSONValue): User | undefined {
@@ -104,6 +114,7 @@ export function UserFromJSONTyped(json: JSONValue): User | undefined {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

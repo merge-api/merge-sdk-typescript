@@ -20,6 +20,10 @@ import {
     OpportunityStatusEnumFromJSONTyped,
     OpportunityStatusEnumToJSON,
     
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -129,6 +133,12 @@ export interface Opportunity {
      * @memberof Opportunity
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof Opportunity
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function OpportunityFromJSON(json: JSONValue): Opportunity | undefined {
@@ -157,6 +167,7 @@ export function OpportunityFromJSONTyped(json: JSONValue): Opportunity | undefin
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

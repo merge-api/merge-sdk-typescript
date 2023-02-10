@@ -15,10 +15,19 @@
 
 import * as runtime from '../../runtime';
 import {
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
     ScheduledInterview,
     ScheduledInterviewFromJSON,
     ScheduledInterviewToJSON,
+    ScheduledInterviewEndpointRequest,
+    ScheduledInterviewEndpointRequestFromJSON,
+    ScheduledInterviewEndpointRequestToJSON,
+    ScheduledInterviewResponse,
+    ScheduledInterviewResponseFromJSON,
+    ScheduledInterviewResponseToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -29,6 +38,12 @@ import {
 import {
     MergeMetaRequest
 } from '../../merge_meta_request';
+
+export interface InterviewsCreateRequest {
+    scheduledInterviewEndpointRequest: ScheduledInterviewEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface InterviewsListRequest {
     applicationId?: string;
@@ -48,6 +63,7 @@ export interface InterviewsListRequest {
     showEnumOrigins?: InterviewsListShowEnumOriginsEnum;
 }
 
+// extends MergeMetaRequest
 export interface InterviewsRetrieveRequest {
     id: string;
     expand?: Array<InterviewsRetrieveExpandEnum>;
@@ -60,6 +76,59 @@ export interface InterviewsRetrieveRequest {
  * 
  */
 export class InterviewsApi extends runtime.BaseAPI {
+
+    /**
+     * Creates a `ScheduledInterview` object with the given values.
+     */
+    async interviewsCreateRaw(requestParameters: InterviewsCreateRequest): Promise<runtime.ApiResponse<ScheduledInterviewResponse | undefined>> {
+        if (requestParameters.scheduledInterviewEndpointRequest === null || requestParameters.scheduledInterviewEndpointRequest === undefined) {
+            throw new runtime.RequiredError('scheduledInterviewEndpointRequest','Required parameter requestParameters.scheduledInterviewEndpointRequest was null or undefined when calling interviewsCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/interviews`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ScheduledInterviewEndpointRequestToJSON(requestParameters.scheduledInterviewEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ScheduledInterviewResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a `ScheduledInterview` object with the given values.
+     */
+    async interviewsCreate(requestParameters: InterviewsCreateRequest): Promise<ScheduledInterviewResponse | undefined> {
+        const response = await this.interviewsCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `ScheduledInterview` objects.
@@ -156,6 +225,50 @@ export class InterviewsApi extends runtime.BaseAPI {
      */
     async interviewsList(requestParameters: InterviewsListRequest): Promise<MergePaginatedResponse<ScheduledInterview> | undefined> {
         const response = await this.interviewsListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `ScheduledInterview` POSTs.
+     */
+    async interviewsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/interviews/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `ScheduledInterview` POSTs.
+     */
+    async interviewsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.interviewsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 

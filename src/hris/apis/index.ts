@@ -5,6 +5,7 @@ export * from './AccountTokenApi';
 export * from './AvailableActionsApi';
 export * from './BankInfoApi';
 export * from './BenefitsApi';
+export * from './CommonModelScopesApi';
 export * from './CompaniesApi';
 export * from './DeleteAccountApi';
 export * from './EmployeePayrollRunsApi';

@@ -20,6 +20,10 @@ import {
     PriorityEnumFromJSONTyped,
     PriorityEnumToJSON,
     
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
     TicketStatusEnum,
     TicketStatusEnumFromJSON,
     TicketStatusEnumFromJSONTyped,
@@ -188,6 +192,12 @@ export interface Ticket {
      * @memberof Ticket
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof Ticket
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function TicketFromJSON(json: JSONValue): Ticket | undefined {
@@ -225,6 +235,7 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 
