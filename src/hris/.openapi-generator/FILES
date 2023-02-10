@@ -42,9 +42,9 @@ src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
 src/models/CommonModelScopeData.ts
 src/models/CommonModelScopes.ts
+src/models/CommonModelScopesBodyRequest.ts
 src/models/CommonModelScopesDisabledModels.ts
 src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPostInnerDeserializerEnabledActionsEnum.ts
 src/models/CommonModelScopesPostInnerDeserializerRequest.ts
 src/models/CommonModelScopesUpdateSerializer.ts
 src/models/Company.ts
@@ -65,6 +65,7 @@ src/models/EmployeeResponse.ts
 src/models/Employment.ts
 src/models/EmploymentStatusEnum.ts
 src/models/EmploymentTypeEnum.ts
+src/models/EnabledActionsA91Enum.ts
 src/models/EncodingEnum.ts
 src/models/EndUserDetailsRequest.ts
 src/models/ErrorValidationProblem.ts

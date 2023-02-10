@@ -19,6 +19,10 @@ import {
     CategoriesEnumFromJSON,
     CategoriesEnumFromJSONTyped,
     CategoriesEnumToJSON,
+    CommonModelScopesBodyRequest,
+    CommonModelScopesBodyRequestFromJSON,
+    CommonModelScopesBodyRequestFromJSONTyped,
+    CommonModelScopesBodyRequestToJSON,
 } from './';
 
 
@@ -72,10 +76,10 @@ export interface EndUserDetailsRequest {
     should_create_magic_link_url?: boolean | null;
     /**
      * An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.
-     * @type {{ [key: string]: any; }}
+     * @type {Array<CommonModelScopesBodyRequest>}
      * @memberof EndUserDetailsRequest
      */
-    common_models?: { [key: string]: any; } | null;
+    common_models?: Array<CommonModelScopesBodyRequest>;
 }
 
 export function EndUserDetailsRequestFromJSON(json: JSONValue): EndUserDetailsRequest | undefined {
@@ -96,7 +100,7 @@ export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDeta
         'integration': !exists(json, 'integration') ? undefined : json['integration'],
         'link_expiry_mins': !exists(json, 'link_expiry_mins') ? undefined : json['link_expiry_mins'],
         'should_create_magic_link_url': !exists(json, 'should_create_magic_link_url') ? undefined : json['should_create_magic_link_url'],
-        'common_models': !exists(json, 'common_models') ? undefined : json['common_models'],
+        'common_models': !exists(json, 'common_models') ? undefined : ((json['common_models'] as Array<JSONValue>).map(CommonModelScopesBodyRequestFromJSON)) as Array<CommonModelScopesBodyRequest>,
     };
 }
 
@@ -114,7 +118,7 @@ export function EndUserDetailsRequestToJSON(value?: EndUserDetailsRequest): JSON
         'integration': value.integration,
         'link_expiry_mins': value.link_expiry_mins,
         'should_create_magic_link_url': value.should_create_magic_link_url,
-        'common_models': value.common_models,
+        'common_models': value.common_models === undefined ? undefined : ((value.common_models as Array<any>).map(CommonModelScopesBodyRequestToJSON)),
     };
 }
 

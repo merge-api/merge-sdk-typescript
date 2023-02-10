@@ -57,9 +57,9 @@ src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
 src/models/CommonModelScopeData.ts
 src/models/CommonModelScopes.ts
+src/models/CommonModelScopesBodyRequest.ts
 src/models/CommonModelScopesDisabledModels.ts
 src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPostInnerDeserializerEnabledActionsEnum.ts
 src/models/CommonModelScopesPostInnerDeserializerRequest.ts
 src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
@@ -73,6 +73,7 @@ src/models/EEOC.ts
 src/models/EmailAddress.ts
 src/models/EmailAddressRequest.ts
 src/models/EmailAddressTypeEnum.ts
+src/models/EnabledActionsA91Enum.ts
 src/models/EncodingEnum.ts
 src/models/EndUserDetailsRequest.ts
 src/models/ErrorValidationProblem.ts

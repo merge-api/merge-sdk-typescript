@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Merge ATS API
- * The unified API for building rich integrations with multiple Applicant Tracking System platforms.
+ * Merge Accounting API
+ * The unified API for building rich integrations with multiple Accounting & Finance platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev
@@ -25,34 +25,34 @@ import {
 /**
  * 
  * @export
- * @interface CommonModelScopesPostInnerDeserializerRequest
+ * @interface CommonModelScopesBodyRequest
  */
-export interface CommonModelScopesPostInnerDeserializerRequest {
+export interface CommonModelScopesBodyRequest {
     /**
      * 
      * @type {string}
-     * @memberof CommonModelScopesPostInnerDeserializerRequest
+     * @memberof CommonModelScopesBodyRequest
      */
     model_id: string;
     /**
      * 
      * @type {Array<EnabledActionsA91Enum>}
-     * @memberof CommonModelScopesPostInnerDeserializerRequest
+     * @memberof CommonModelScopesBodyRequest
      */
     enabled_actions: Array<EnabledActionsA91Enum>;
     /**
      * 
      * @type {Array<string>}
-     * @memberof CommonModelScopesPostInnerDeserializerRequest
+     * @memberof CommonModelScopesBodyRequest
      */
     disabled_fields: Array<string>;
 }
 
-export function CommonModelScopesPostInnerDeserializerRequestFromJSON(json: JSONValue): CommonModelScopesPostInnerDeserializerRequest | undefined {
-    return CommonModelScopesPostInnerDeserializerRequestFromJSONTyped(json);
+export function CommonModelScopesBodyRequestFromJSON(json: JSONValue): CommonModelScopesBodyRequest | undefined {
+    return CommonModelScopesBodyRequestFromJSONTyped(json);
 }
 
-export function CommonModelScopesPostInnerDeserializerRequestFromJSONTyped(json: JSONValue): CommonModelScopesPostInnerDeserializerRequest | undefined {
+export function CommonModelScopesBodyRequestFromJSONTyped(json: JSONValue): CommonModelScopesBodyRequest | undefined {
     if ((json === undefined) || (json === null)) {
         return undefined;
     }
@@ -65,7 +65,7 @@ export function CommonModelScopesPostInnerDeserializerRequestFromJSONTyped(json:
     };
 }
 
-export function CommonModelScopesPostInnerDeserializerRequestToJSON(value?: CommonModelScopesPostInnerDeserializerRequest): JSONValue {
+export function CommonModelScopesBodyRequestToJSON(value?: CommonModelScopesBodyRequest): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }
