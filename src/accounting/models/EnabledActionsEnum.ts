@@ -31,11 +31,11 @@ export interface EnabledActionsEnum {
 }
 
 
-export function EnabledActionsA91EnumFromJSON(json: any): EnabledActionsEnum {
-    return EnabledActionsA91EnumFromJSONTyped(json, false);
+export function EnabledActionsEnumFromJSON(json: any): EnabledActionsEnum {
+    return EnabledActionsEnumFromJSONTyped(json, false);
 }
 
-export function EnabledActionsA91EnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnabledActionsEnum {
+export function EnabledActionsEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): EnabledActionsEnum {
     if ((<any>Object).values(EnabledActionsEnumValues).includes(json)) {
         return {
             value: json as EnabledActionsEnumValues,
@@ -48,7 +48,7 @@ export function EnabledActionsA91EnumFromJSONTyped(json: any, ignoreDiscriminato
     }
 }
 
-export function EnabledActionsA91EnumToJSON(value?: EnabledActionsEnum | null): JSONValue {
+export function EnabledActionsEnumToJSON(value?: EnabledActionsEnum | null): JSONValue {
     return value && value.value != EnabledActionsEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

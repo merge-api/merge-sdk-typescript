@@ -41,7 +41,7 @@ export * from './EEOC';
 export * from './EmailAddress';
 export * from './EmailAddressRequest';
 export * from './EmailAddressTypeEnum';
-export * from './EnabledActionsA91Enum';
+export * from './EnabledActionsEnum';
 export * from './EncodingEnum';
 export * from './EndUserDetailsRequest';
 export * from './ErrorValidationProblem';

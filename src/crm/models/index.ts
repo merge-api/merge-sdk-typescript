@@ -47,7 +47,7 @@ export * from './DebugModelLogSummary';
 export * from './DirectionEnum';
 export * from './EmailAddress';
 export * from './EmailAddressRequest';
-export * from './EnabledActionsA91Enum';
+export * from './EnabledActionsEnum';
 export * from './EncodingEnum';
 export * from './EndUserDetailsRequest';
 export * from './Engagement';

@@ -46,7 +46,7 @@ export * from './CurrencyEnum';
 export * from './DataPassthroughRequest';
 export * from './DebugModeLog';
 export * from './DebugModelLogSummary';
-export * from './EnabledActionsA91Enum';
+export * from './EnabledActionsEnum';
 export * from './EncodingEnum';
 export * from './EndUserDetailsRequest';
 export * from './ErrorValidationProblem';

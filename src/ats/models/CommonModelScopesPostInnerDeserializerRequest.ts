@@ -15,10 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
-    EnabledActionsA91Enum,
-    EnabledActionsA91EnumFromJSON,
-    EnabledActionsA91EnumFromJSONTyped,
-    EnabledActionsA91EnumToJSON,
+    EnabledActionsEnum,
+    EnabledActionsEnumFromJSON,
+    EnabledActionsEnumFromJSONTyped,
+    EnabledActionsEnumToJSON,
 } from './';
 
 
@@ -36,10 +36,10 @@ export interface CommonModelScopesPostInnerDeserializerRequest {
     model_id: string;
     /**
      * 
-     * @type {Array<EnabledActionsA91Enum>}
+     * @type {Array<EnabledActionsEnum>}
      * @memberof CommonModelScopesPostInnerDeserializerRequest
      */
-    enabled_actions: Array<EnabledActionsA91Enum>;
+    enabled_actions: Array<EnabledActionsEnum>;
     /**
      * 
      * @type {Array<string>}
@@ -60,7 +60,7 @@ export function CommonModelScopesPostInnerDeserializerRequestFromJSONTyped(json:
     return {
         
         'model_id': json['model_id'],
-        'enabled_actions': ((json['enabled_actions'] as Array<JSONValue>).map(EnabledActionsA91EnumFromJSON)) as Array<EnabledActionsA91Enum>,
+        'enabled_actions': ((json['enabled_actions'] as Array<JSONValue>).map(EnabledActionsEnumFromJSON)) as Array<EnabledActionsEnum>,
         'disabled_fields': json['disabled_fields'],
     };
 }
@@ -73,7 +73,7 @@ export function CommonModelScopesPostInnerDeserializerRequestToJSON(value?: Comm
     return {
         
         'model_id': value.model_id,
-        'enabled_actions': ((value.enabled_actions as Array<any>).map(EnabledActionsA91EnumToJSON)),
+        'enabled_actions': ((value.enabled_actions as Array<any>).map(EnabledActionsEnumToJSON)),
         'disabled_fields': value.disabled_fields,
     };
 }
