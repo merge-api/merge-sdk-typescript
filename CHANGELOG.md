@@ -1,3 +1,9 @@
+# Version 3.0.5
+
+# Date: 2022-02-14
+
+- The base APIClient was failing to serialize array-type query params in a way our server understood. This is now fixed.
+
 # Version 3.0.4
 
 # Date: 2022-02-10
