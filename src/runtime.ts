@@ -239,7 +239,7 @@ export function querystring(params: HTTPQuery, prefix: string = ''): string {
             const value = params[key];
             if (value instanceof Array) {
                 const multiValue = value.map(singleValue => encodeURIComponent(String(singleValue)))
-                    .join(`&${encodeURIComponent(fullKey)}=`);
+                    .join(',');
                 return `${encodeURIComponent(fullKey)}=${multiValue}`;
             }
             if (value instanceof Date) {
