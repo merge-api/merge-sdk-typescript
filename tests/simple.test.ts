@@ -1,5 +1,5 @@
 import * as merge_sdk from '../src/index'
-import { Configuration, JSONValue } from '../src/index';
+import { Configuration, JSONValue, querystring } from '../src/index';
 import fetch from 'node-fetch'
 
 // note this is skipped for CI, just here for reference
@@ -124,4 +124,13 @@ test("can deserialize known enum values", async () => {
     expect(employment_deserialized?.employment_type).toBeDefined()
     expect(employment_deserialized?.employment_type?.value).toEqual(merge_sdk.HRIS.EmploymentTypeEnumValues.FullTime)
     expect(employment_deserialized?.employment_type?.rawValue).toEqual(merge_sdk.HRIS.EmploymentTypeEnumValues.FullTime)
+})
+
+test("query params use comma-separated-value format", async() => {
+    let serialized_query_params = querystring({
+        "expand": ["a", "b", "c"],
+        "single": 1
+    });
+
+    expect(serialized_query_params).toEqual("expand=a,b,c&single=1");
 })
