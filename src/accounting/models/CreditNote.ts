@@ -61,12 +61,6 @@ export interface CreditNote {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof CreditNote
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The credit note's transaction date.
      * @type {Date}
      * @memberof CreditNote
@@ -150,6 +144,12 @@ export interface CreditNote {
      * @memberof CreditNote
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof CreditNote
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function CreditNoteFromJSON(json: JSONValue): CreditNote | undefined {
@@ -165,7 +165,6 @@ export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | undefined
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'status': !exists(json, 'status') ? undefined : CreditNoteStatusEnumFromJSON(json['status']) as CreditNoteStatusEnum,
         'number': !exists(json, 'number') ? undefined : json['number'],
@@ -180,6 +179,7 @@ export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | undefined
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

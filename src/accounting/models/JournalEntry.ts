@@ -23,6 +23,10 @@ import {
     JournalLineFromJSON,
     JournalLineFromJSONTyped,
     JournalLineToJSON,
+    PostingStatusEnum,
+    PostingStatusEnumFromJSON,
+    PostingStatusEnumFromJSONTyped,
+    PostingStatusEnumToJSON,
     
 } from './';
 import {
@@ -44,12 +48,6 @@ import {
  * @interface JournalEntry
  */
 export interface JournalEntry {
-    /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof JournalEntry
-     */
-    readonly remote_data?: Array<RemoteData> | null;
     /**
      * The journal entry's transaction date.
      * @type {Date}
@@ -111,6 +109,12 @@ export interface JournalEntry {
      */
     readonly remote_was_deleted?: boolean;
     /**
+     * The journal's posting status.
+     * @type {PostingStatusEnum}
+     * @memberof JournalEntry
+     */
+    posting_status?: PostingStatusEnum | null;
+    /**
      * 
      * @type {string}
      * @memberof JournalEntry
@@ -128,6 +132,12 @@ export interface JournalEntry {
      * @memberof JournalEntry
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof JournalEntry
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function JournalEntryFromJSON(json: JSONValue): JournalEntry | undefined {
@@ -141,7 +151,6 @@ export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry | undef
 
     return {
         
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
@@ -152,9 +161,11 @@ export function JournalEntryFromJSONTyped(json: JSONValue): JournalEntry | undef
         'company': !exists(json, 'company') ? undefined : json['company'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(JournalLineFromJSON)) as Array<JournalLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'posting_status': !exists(json, 'posting_status') ? undefined : PostingStatusEnumFromJSON(json['posting_status']) as PostingStatusEnum,
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 
@@ -174,6 +185,7 @@ export function JournalEntryToJSON(value?: JournalEntry): JSONValue {
         'exchange_rate': value.exchange_rate,
         'company': value.company,
         'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(JournalLineToJSON)),
+        'posting_status': PostingStatusEnumToJSON(value.posting_status),
         'remote_id': value.remote_id,
     };
 }

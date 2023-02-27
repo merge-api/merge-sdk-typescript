@@ -51,12 +51,6 @@ export interface Transaction {
      */
     transaction_type?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Transaction
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The transaction's number used for identifying purposes.
      * @type {string}
      * @memberof Transaction
@@ -134,6 +128,12 @@ export interface Transaction {
      * @memberof Transaction
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Transaction
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function TransactionFromJSON(json: JSONValue): Transaction | undefined {
@@ -148,7 +148,6 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction | undefin
     return {
         
         'transaction_type': !exists(json, 'transaction_type') ? undefined : json['transaction_type'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'number': !exists(json, 'number') ? undefined : json['number'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'account': !exists(json, 'account') ? undefined : json['account'],
@@ -162,6 +161,7 @@ export function TransactionFromJSONTyped(json: JSONValue): Transaction | undefin
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -57,12 +57,6 @@ export interface BalanceSheet {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof BalanceSheet
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The balance sheet's name.
      * @type {string}
      * @memberof BalanceSheet
@@ -128,6 +122,12 @@ export interface BalanceSheet {
      * @memberof BalanceSheet
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof BalanceSheet
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function BalanceSheetFromJSON(json: JSONValue): BalanceSheet | undefined {
@@ -143,7 +143,6 @@ export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | undef
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'company': !exists(json, 'company') ? undefined : json['company'],
@@ -155,6 +154,7 @@ export function BalanceSheetFromJSONTyped(json: JSONValue): BalanceSheet | undef
         'remote_generated_at': !exists(json, 'remote_generated_at') ? undefined : (json['remote_generated_at'] === null ? null : new Date(json['remote_generated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

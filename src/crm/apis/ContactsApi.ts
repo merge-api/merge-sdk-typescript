@@ -31,7 +31,6 @@ import {
     PatchedCRMContactEndpointRequest,
     PatchedCRMContactEndpointRequestFromJSON,
     PatchedCRMContactEndpointRequestToJSON,
-    RemoteFieldClass,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -57,7 +56,6 @@ export interface ContactsListRequest {
     expand?: Array<ContactsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -76,19 +74,10 @@ export interface ContactsPartialUpdateRequest {
     runAsync?: boolean;
 }
 
-export interface ContactsRemoteFieldClassesListRequest {
-    cursor?: string;
-    includeDeletedData?: boolean;
-    includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
-    pageSize?: number;
-}
-
 export interface ContactsRetrieveRequest {
     id: string;
     expand?: Array<ContactsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
 }
 
 /**
@@ -181,10 +170,6 @@ export class ContactsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -386,64 +371,6 @@ export class ContactsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of `RemoteFieldClass` objects.
-     */
-    async contactsRemoteFieldClassesListRaw(requestParameters: ContactsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
-        const queryParameters: any = {};
-
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
-        }
-
-        if (requestParameters.includeDeletedData !== undefined) {
-            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
-        }
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
-        }
-
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['page_size'] = requestParameters.pageSize;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/contacts/remote-field-classes`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns a list of `RemoteFieldClass` objects.
-     */
-    async contactsRemoteFieldClassesList(requestParameters: ContactsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
-        const response = await this.contactsRemoteFieldClassesListRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
      * Returns a `Contact` object with the given `id`.
      */
     async contactsRetrieveRaw(requestParameters: ContactsRetrieveRequest): Promise<runtime.ApiResponse<Contact | undefined>> {
@@ -459,10 +386,6 @@ export class ContactsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

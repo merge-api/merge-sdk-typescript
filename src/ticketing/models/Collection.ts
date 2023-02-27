@@ -78,12 +78,6 @@ export interface Collection {
      */
     parent_collection?: string | JSONValue | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Collection
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Collection
@@ -95,6 +89,12 @@ export interface Collection {
      * @memberof Collection
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Collection
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function CollectionFromJSON(json: JSONValue): Collection | undefined {
@@ -114,9 +114,9 @@ export function CollectionFromJSONTyped(json: JSONValue): Collection | undefined
         'description': !exists(json, 'description') ? undefined : json['description'],
         'collection_type': !exists(json, 'collection_type') ? undefined : CollectionTypeEnumFromJSON(json['collection_type']) as CollectionTypeEnum,
         'parent_collection': !exists(json, 'parent_collection') ? undefined : json['parent_collection'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

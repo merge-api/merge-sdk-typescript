@@ -79,12 +79,6 @@ export interface Benefit {
      */
     company_contribution?: number | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Benefit
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Benefit
@@ -96,6 +90,12 @@ export interface Benefit {
      * @memberof Benefit
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Benefit
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function BenefitFromJSON(json: JSONValue): Benefit | undefined {
@@ -116,9 +116,9 @@ export function BenefitFromJSONTyped(json: JSONValue): Benefit | undefined {
         'benefit_plan_type': !exists(json, 'benefit_plan_type') ? undefined : json['benefit_plan_type'],
         'employee_contribution': !exists(json, 'employee_contribution') ? undefined : json['employee_contribution'],
         'company_contribution': !exists(json, 'company_contribution') ? undefined : json['company_contribution'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

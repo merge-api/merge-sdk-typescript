@@ -100,12 +100,6 @@ export interface EEOC {
      */
     disability_status?: DisabilityStatusEnum | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof EEOC
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof EEOC
@@ -117,6 +111,12 @@ export interface EEOC {
      * @memberof EEOC
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof EEOC
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function EEOCFromJSON(json: JSONValue): EEOC | undefined {
@@ -138,9 +138,9 @@ export function EEOCFromJSONTyped(json: JSONValue): EEOC | undefined {
         'gender': !exists(json, 'gender') ? undefined : GenderEnumFromJSON(json['gender']) as GenderEnum,
         'veteran_status': !exists(json, 'veteran_status') ? undefined : VeteranStatusEnumFromJSON(json['veteran_status']) as VeteranStatusEnum,
         'disability_status': !exists(json, 'disability_status') ? undefined : DisabilityStatusEnumFromJSON(json['disability_status']) as DisabilityStatusEnum,
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

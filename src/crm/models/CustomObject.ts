@@ -14,13 +14,6 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
-import {
-    RemoteField,
-    RemoteFieldFromJSON,
-    RemoteFieldFromJSONTyped,
-    RemoteFieldToJSON,
-} from './';
-
 
 /**
  * 
@@ -52,12 +45,6 @@ export interface CustomObject {
      * @memberof CustomObject
      */
     readonly id?: string;
-    /**
-     * 
-     * @type {Array<RemoteField>}
-     * @memberof CustomObject
-     */
-    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function CustomObjectFromJSON(json: JSONValue): CustomObject | undefined {
@@ -75,7 +62,6 @@ export function CustomObjectFromJSONTyped(json: JSONValue): CustomObject | undef
         'fields': !exists(json, 'fields') ? undefined : json['fields'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

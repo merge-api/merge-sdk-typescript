@@ -63,6 +63,12 @@ export interface ExpenseLine {
      */
     account?: string | JSONValue | null;
     /**
+     * The expense's contact.
+     * @type {string}
+     * @memberof ExpenseLine
+     */
+    contact?: string | JSONValue | null;
+    /**
      * The description of the item that was purchased by the company.
      * @type {string}
      * @memberof ExpenseLine
@@ -93,6 +99,7 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | undefin
         'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
     };
@@ -111,6 +118,7 @@ export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
         'tracking_categories': value.tracking_categories,
         'company': value.company,
         'account': value.account,
+        'contact': value.contact,
         'description': value.description,
         'remote_id': value.remote_id,
     };

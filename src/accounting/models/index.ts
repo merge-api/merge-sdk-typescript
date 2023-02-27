@@ -90,6 +90,7 @@ export * from './Payment';
 export * from './PaymentEndpointRequest';
 export * from './PaymentRequest';
 export * from './PaymentResponse';
+export * from './PostingStatusEnum';
 export * from './PurchaseOrder';
 export * from './PurchaseOrderEndpointRequest';
 export * from './PurchaseOrderLineItem';

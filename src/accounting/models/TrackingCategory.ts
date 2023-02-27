@@ -45,12 +45,6 @@ import {
  */
 export interface TrackingCategory {
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof TrackingCategory
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The tracking category's name.
      * @type {string}
      * @memberof TrackingCategory
@@ -104,6 +98,12 @@ export interface TrackingCategory {
      * @memberof TrackingCategory
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof TrackingCategory
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function TrackingCategoryFromJSON(json: JSONValue): TrackingCategory | undefined {
@@ -117,7 +117,6 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
 
     return {
         
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
         'category_type': !exists(json, 'category_type') ? undefined : CategoryTypeEnumFromJSON(json['category_type']) as CategoryTypeEnum,
@@ -127,6 +126,7 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -38,12 +38,6 @@ export interface Tag {
      */
     name?: string | null;
     /**
-     * 
-     * @type {Array<{ [key: string]: any; }>}
-     * @memberof Tag
-     */
-    remote_data?: Array<{ [key: string]: any; }> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Tag
@@ -55,6 +49,12 @@ export interface Tag {
      * @memberof Tag
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof Tag
+     */
+    remote_data?: Array<{ [key: string]: any; }> | null;
 }
 
 export function TagFromJSON(json: JSONValue): Tag | undefined {
@@ -70,9 +70,9 @@ export function TagFromJSONTyped(json: JSONValue): Tag | undefined {
         
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
 
@@ -85,8 +85,8 @@ export function TagToJSON(value?: Tag): JSONValue {
         
         'remote_id': value.remote_id,
         'name': value.name,
-        'remote_data': value.remote_data,
         'remote_was_deleted': value.remote_was_deleted,
+        'remote_data': value.remote_data,
     };
 }
 

@@ -73,7 +73,7 @@ src/models/EEOC.ts
 src/models/EmailAddress.ts
 src/models/EmailAddressRequest.ts
 src/models/EmailAddressTypeEnum.ts
-src/models/EnabledActionsA91Enum.ts
+src/models/EnabledActionsEnum.ts
 src/models/EncodingEnum.ts
 src/models/EndUserDetailsRequest.ts
 src/models/ErrorValidationProblem.ts

@@ -19,10 +19,6 @@ import {
     ActivityTypeEnumFromJSON,
     ActivityTypeEnumFromJSONTyped,
     ActivityTypeEnumToJSON,
-    RemoteField,
-    RemoteFieldFromJSON,
-    RemoteFieldFromJSONTyped,
-    RemoteFieldToJSON,
 } from './';
 
 
@@ -60,12 +56,6 @@ export interface EngagementType {
      * @memberof EngagementType
      */
     remote_id?: string | null;
-    /**
-     * 
-     * @type {Array<RemoteField>}
-     * @memberof EngagementType
-     */
-    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function EngagementTypeFromJSON(json: JSONValue): EngagementType | undefined {
@@ -83,7 +73,6 @@ export function EngagementTypeFromJSONTyped(json: JSONValue): EngagementType | u
         'name': !exists(json, 'name') ? undefined : json['name'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

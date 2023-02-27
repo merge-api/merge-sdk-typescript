@@ -50,12 +50,6 @@ import {
  */
 export interface Invoice {
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Invoice
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Whether the invoice is an accounts receivable or accounts payable. Accounts payable invoices are commonly referred to as Bills.
      * @type {InvoiceTypeEnum}
      * @memberof Invoice
@@ -187,6 +181,12 @@ export interface Invoice {
      * @memberof Invoice
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Invoice
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function InvoiceFromJSON(json: JSONValue): Invoice | undefined {
@@ -200,7 +200,6 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
 
     return {
         
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']) as InvoiceTypeEnum,
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'number': !exists(json, 'number') ? undefined : json['number'],
@@ -223,6 +222,7 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -79,12 +79,6 @@ export interface User {
      */
     avatar?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof User
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof User
@@ -96,6 +90,12 @@ export interface User {
      * @memberof User
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof User
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function UserFromJSON(json: JSONValue): User | undefined {
@@ -116,9 +116,9 @@ export function UserFromJSONTyped(json: JSONValue): User | undefined {
         'is_active': !exists(json, 'is_active') ? undefined : json['is_active'],
         'teams': !exists(json, 'teams') ? undefined : json['teams'],
         'avatar': !exists(json, 'avatar') ? undefined : json['avatar'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

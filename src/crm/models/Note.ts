@@ -16,10 +16,6 @@ import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
     
-    RemoteField,
-    RemoteFieldFromJSON,
-    RemoteFieldFromJSONTyped,
-    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -83,12 +79,6 @@ export interface Note {
     remote_created_at?: Date | null;
     /**
      * 
-     * @type {Array<RemoteData>}
-     * @memberof Note
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof Note
      */
@@ -113,10 +103,10 @@ export interface Note {
     readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {Array<RemoteField>}
+     * @type {Array<RemoteData>}
      * @memberof Note
      */
-    readonly remote_fields?: Array<RemoteField>;
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function NoteFromJSON(json: JSONValue): Note | undefined {
@@ -137,12 +127,11 @@ export function NoteFromJSONTyped(json: JSONValue): Note | undefined {
         'opportunity': !exists(json, 'opportunity') ? undefined : json['opportunity'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
-        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -79,12 +79,6 @@ export interface Contact {
      */
     account?: string | JSONValue | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Contact
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Contact
@@ -96,6 +90,12 @@ export interface Contact {
      * @memberof Contact
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Contact
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function ContactFromJSON(json: JSONValue): Contact | undefined {
@@ -116,9 +116,9 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
         'phone_number': !exists(json, 'phone_number') ? undefined : json['phone_number'],
         'details': !exists(json, 'details') ? undefined : json['details'],
         'account': !exists(json, 'account') ? undefined : json['account'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -27,7 +27,6 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    RemoteFieldClass
     
 } from '../models';
 import {
@@ -53,7 +52,6 @@ export interface EngagementsListRequest {
     expand?: Array<EngagementsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -61,19 +59,10 @@ export interface EngagementsListRequest {
 }
 
 // extends MergeMetaRequest
-export interface EngagementsRemoteFieldClassesListRequest {
-    cursor?: string;
-    includeDeletedData?: boolean;
-    includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
-    pageSize?: number;
-}
-
 export interface EngagementsRetrieveRequest {
     id: string;
     expand?: Array<EngagementsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
 }
 
 /**
@@ -162,10 +151,6 @@ export class EngagementsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -261,64 +246,6 @@ export class EngagementsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns a list of `RemoteFieldClass` objects.
-     */
-    async engagementsRemoteFieldClassesListRaw(requestParameters: EngagementsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
-        const queryParameters: any = {};
-
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
-        }
-
-        if (requestParameters.includeDeletedData !== undefined) {
-            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
-        }
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
-        }
-
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['page_size'] = requestParameters.pageSize;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/engagements/remote-field-classes`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns a list of `RemoteFieldClass` objects.
-     */
-    async engagementsRemoteFieldClassesList(requestParameters: EngagementsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
-        const response = await this.engagementsRemoteFieldClassesListRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
      * Returns an `Engagement` object with the given `id`.
      */
     async engagementsRetrieveRaw(requestParameters: EngagementsRetrieveRequest): Promise<runtime.ApiResponse<Engagement | undefined>> {
@@ -334,10 +261,6 @@ export class EngagementsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

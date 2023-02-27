@@ -28,10 +28,6 @@ import {
     PhoneNumberFromJSONTyped,
     PhoneNumberToJSON,
     
-    RemoteField,
-    RemoteFieldFromJSON,
-    RemoteFieldFromJSONTyped,
-    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -137,12 +133,6 @@ export interface Lead {
     converted_account?: string | JSONValue | null;
     /**
      * 
-     * @type {Array<RemoteData>}
-     * @memberof Lead
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof Lead
      */
@@ -167,10 +157,10 @@ export interface Lead {
     readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {Array<RemoteField>}
+     * @type {Array<RemoteData>}
      * @memberof Lead
      */
-    readonly remote_fields?: Array<RemoteField>;
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function LeadFromJSON(json: JSONValue): Lead | undefined {
@@ -198,12 +188,11 @@ export function LeadFromJSONTyped(json: JSONValue): Lead | undefined {
         'converted_date': !exists(json, 'converted_date') ? undefined : (json['converted_date'] === null ? null : new Date(json['converted_date'])),
         'converted_contact': !exists(json, 'converted_contact') ? undefined : json['converted_contact'],
         'converted_account': !exists(json, 'converted_account') ? undefined : json['converted_account'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
-        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

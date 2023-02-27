@@ -53,12 +53,6 @@ export interface Item {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Item
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The item's name.
      * @type {string}
      * @memberof Item
@@ -118,6 +112,12 @@ export interface Item {
      * @memberof Item
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Item
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function ItemFromJSON(json: JSONValue): Item | undefined {
@@ -133,7 +133,6 @@ export function ItemFromJSONTyped(json: JSONValue): Item | undefined {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'status': !exists(json, 'status') ? undefined : Status7d1EnumFromJSON(json['status']) as Status7d1Enum,
         'unit_price': !exists(json, 'unit_price') ? undefined : json['unit_price'],
@@ -144,6 +143,7 @@ export function ItemFromJSONTyped(json: JSONValue): Item | undefined {
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

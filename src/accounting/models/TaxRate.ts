@@ -37,12 +37,6 @@ import {
  */
 export interface TaxRate {
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof TaxRate
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The tax rate's description.
      * @type {string}
      * @memberof TaxRate
@@ -90,6 +84,12 @@ export interface TaxRate {
      * @memberof TaxRate
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof TaxRate
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function TaxRateFromJSON(json: JSONValue): TaxRate | undefined {
@@ -103,7 +103,6 @@ export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | undefined {
 
     return {
         
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'description': !exists(json, 'description') ? undefined : json['description'],
         'total_tax_rate': !exists(json, 'total_tax_rate') ? undefined : json['total_tax_rate'],
         'effective_tax_rate': !exists(json, 'effective_tax_rate') ? undefined : json['effective_tax_rate'],
@@ -112,6 +111,7 @@ export function TaxRateFromJSONTyped(json: JSONValue): TaxRate | undefined {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

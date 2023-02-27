@@ -23,10 +23,9 @@ import {
     FieldTypeEnumFromJSON,
     FieldTypeEnumFromJSONTyped,
     FieldTypeEnumToJSON,
-    RemoteFieldClassItemSchema,
-    RemoteFieldClassItemSchemaFromJSON,
-    RemoteFieldClassItemSchemaFromJSONTyped,
-    RemoteFieldClassItemSchemaToJSON,
+    RemoteFieldClassForCustomObjectClassItemSchema,
+    RemoteFieldClassForCustomObjectClassItemSchemaToJSON,
+    RemoteFieldClassForCustomObjectClassItemSchemaFromJSON,
 } from './';
 
 
@@ -80,10 +79,10 @@ export interface RemoteFieldClassForCustomObjectClass {
     readonly field_choices?: Array<string> | null;
     /**
      * 
-     * @type {RemoteFieldClassItemSchema}
+     * @type {RemoteFieldClassForCustomObjectClassItemSchema}
      * @memberof RemoteFieldClassForCustomObjectClass
      */
-    item_schema?: RemoteFieldClassItemSchema | null;
+    item_schema?: RemoteFieldClassForCustomObjectClassItemSchema | null;
 }
 
 export function RemoteFieldClassForCustomObjectClassFromJSON(json: JSONValue): RemoteFieldClassForCustomObjectClass | undefined {
@@ -104,7 +103,7 @@ export function RemoteFieldClassForCustomObjectClassFromJSONTyped(json: JSONValu
         'field_type': !exists(json, 'field_type') ? undefined : FieldTypeEnumFromJSON(json['field_type']) as FieldTypeEnum,
         'field_format': !exists(json, 'field_format') ? undefined : FieldFormatEnumFromJSON(json['field_format']) as FieldFormatEnum,
         'field_choices': !exists(json, 'field_choices') ? undefined : json['field_choices'],
-        'item_schema': !exists(json, 'item_schema') ? undefined : RemoteFieldClassItemSchemaFromJSON(json['item_schema']) as RemoteFieldClassItemSchema,
+        'item_schema': !exists(json, 'item_schema') ? undefined : RemoteFieldClassForCustomObjectClassItemSchemaFromJSON(json['item_schema']) as RemoteFieldClassForCustomObjectClassItemSchema,
     };
 }
 
@@ -119,7 +118,7 @@ export function RemoteFieldClassForCustomObjectClassToJSON(value?: RemoteFieldCl
         'remote_key_name': value.remote_key_name,
         'description': value.description,
         'is_required': value.is_required,
-        'item_schema': RemoteFieldClassItemSchemaToJSON(value.item_schema ?? undefined),
+        'item_schema': RemoteFieldClassForCustomObjectClassItemSchemaToJSON(value.item_schema ?? undefined),
     };
 }
 

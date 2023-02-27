@@ -57,12 +57,6 @@ export interface VendorCredit {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof VendorCredit
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The vendor credit's number.
      * @type {string}
      * @memberof VendorCredit
@@ -122,6 +116,12 @@ export interface VendorCredit {
      * @memberof VendorCredit
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof VendorCredit
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function VendorCreditFromJSON(json: JSONValue): VendorCredit | undefined {
@@ -137,7 +137,6 @@ export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit | undef
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'number': !exists(json, 'number') ? undefined : json['number'],
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'vendor': !exists(json, 'vendor') ? undefined : json['vendor'],
@@ -148,6 +147,7 @@ export function VendorCreditFromJSONTyped(json: JSONValue): VendorCredit | undef
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(VendorCreditLineFromJSON)) as Array<VendorCreditLine>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

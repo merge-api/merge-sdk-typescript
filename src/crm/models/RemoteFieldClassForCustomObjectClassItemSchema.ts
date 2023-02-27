@@ -18,34 +18,34 @@ import { JSONValue } from '../../merge_json';
 /**
  * 
  * @export
- * @interface RemoteFieldClassItemSchema
+ * @interface RemoteFieldClassForCustomObjectClassItemSchema
  */
-export interface RemoteFieldClassItemSchema {
+export interface RemoteFieldClassForCustomObjectClassItemSchema {
     /**
      * 
      * @type {string}
-     * @memberof RemoteFieldClassItemSchema
+     * @memberof RemoteFieldClassForCustomObjectClassItemSchema
      */
     item_type?: string | null;
     /**
      * 
      * @type {string}
-     * @memberof RemoteFieldClassItemSchema
+     * @memberof RemoteFieldClassForCustomObjectClassItemSchema
      */
     item_format?: string | null;
     /**
      * 
      * @type {Array<string>}
-     * @memberof RemoteFieldClassItemSchema
+     * @memberof RemoteFieldClassForCustomObjectClassItemSchema
      */
     item_choices?: Array<string> | null;
 }
 
-export function RemoteFieldClassItemSchemaFromJSON(json: JSONValue): RemoteFieldClassItemSchema | undefined {
-    return RemoteFieldClassItemSchemaFromJSONTyped(json);
+export function RemoteFieldClassForCustomObjectClassItemSchemaFromJSON(json: JSONValue): RemoteFieldClassForCustomObjectClassItemSchema | undefined {
+    return RemoteFieldClassForCustomObjectClassItemSchemaFromJSONTyped(json);
 }
 
-export function RemoteFieldClassItemSchemaFromJSONTyped(json: JSONValue): RemoteFieldClassItemSchema | undefined {
+export function RemoteFieldClassForCustomObjectClassItemSchemaFromJSONTyped(json: JSONValue): RemoteFieldClassForCustomObjectClassItemSchema | undefined {
     if ((json === undefined) || (json === null)) {
         return undefined;
     }
@@ -58,7 +58,7 @@ export function RemoteFieldClassItemSchemaFromJSONTyped(json: JSONValue): Remote
     };
 }
 
-export function RemoteFieldClassItemSchemaToJSON(value?: RemoteFieldClassItemSchema): JSONValue {
+export function RemoteFieldClassForCustomObjectClassItemSchemaToJSON(value?: RemoteFieldClassForCustomObjectClassItemSchema): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }

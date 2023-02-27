@@ -227,12 +227,6 @@ export interface Employee {
      */
     avatar?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Employee
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Custom fields configured for a given model.
      * @type {{ [key: string]: any; }}
      * @memberof Employee
@@ -250,6 +244,12 @@ export interface Employee {
      * @memberof Employee
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Employee
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function EmployeeFromJSON(json: JSONValue): Employee | undefined {
@@ -292,10 +292,10 @@ export function EmployeeFromJSONTyped(json: JSONValue): Employee | undefined {
         'employment_status': !exists(json, 'employment_status') ? undefined : EmploymentStatusEnumFromJSON(json['employment_status']) as EmploymentStatusEnum,
         'termination_date': !exists(json, 'termination_date') ? undefined : (json['termination_date'] === null ? null : new Date(json['termination_date'])),
         'avatar': !exists(json, 'avatar') ? undefined : json['avatar'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

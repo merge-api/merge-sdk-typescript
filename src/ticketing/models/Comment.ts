@@ -92,12 +92,6 @@ export interface Comment {
     remote_created_at?: Date | null;
     /**
      * 
-     * @type {Array<RemoteData>}
-     * @memberof Comment
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof Comment
      */
@@ -108,6 +102,12 @@ export interface Comment {
      * @memberof Comment
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Comment
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function CommentFromJSON(json: JSONValue): Comment | undefined {
@@ -130,9 +130,9 @@ export function CommentFromJSONTyped(json: JSONValue): Comment | undefined {
         'ticket': !exists(json, 'ticket') ? undefined : json['ticket'],
         'is_private': !exists(json, 'is_private') ? undefined : json['is_private'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 
