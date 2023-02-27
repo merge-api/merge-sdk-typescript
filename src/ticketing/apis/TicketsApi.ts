@@ -21,6 +21,8 @@ import {
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
+    RemoteField,
+    RemoteFieldClass,
     Ticket,
     TicketFromJSON,
     TicketToJSON,
@@ -43,7 +45,6 @@ import {
 } from '../../merge_meta_request';
 
 export interface TicketsCollaboratorsListRequest {
-    xAccountToken: string;
     parentId: string;
     cursor?: string;
     expand?: Array<TicketsCollaboratorsListExpandEnum>;
@@ -53,14 +54,12 @@ export interface TicketsCollaboratorsListRequest {
 }
 
 export interface TicketsCreateRequest {
-    xAccountToken: string;
     ticketEndpointRequest: TicketEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface TicketsListRequest {
-    xAccountToken: string;
     accountId?: string;
     assigneeIds?: string;
     collectionIds?: string;
@@ -75,6 +74,7 @@ export interface TicketsListRequest {
     expand?: Array<TicketsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -94,27 +94,29 @@ export interface TicketsListRequest {
 }
 
 export interface TicketsMetaPatchRetrieveRequest extends MergeMetaRequest {
-    xAccountToken: string;
     id: string;
 }
 
-export interface TicketsMetaPostRetrieveRequest extends MergeMetaRequest {
-    xAccountToken: string;
-}
-
+// extends MergeMetaRequest
 export interface TicketsPartialUpdateRequest {
-    xAccountToken: string;
     id: string;
     patchedTicketEndpointRequest: PatchedTicketEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
+export interface TicketsRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    pageSize?: number;
+}
+
 export interface TicketsRetrieveRequest {
-    xAccountToken: string;
     id: string;
     expand?: Array<TicketsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     remoteFields?: TicketsRetrieveRemoteFieldsEnum;
     showEnumOrigins?: TicketsRetrieveShowEnumOriginsEnum;
 }
@@ -128,10 +130,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Returns a list of `User` objects.
      */
     async ticketsCollaboratorsListRaw(requestParameters: TicketsCollaboratorsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsCollaboratorsList.');
-        }
-
         if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
             throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling ticketsCollaboratorsList.');
         }
@@ -163,11 +161,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -195,10 +192,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Creates a `Ticket` object with the given values.
      */
     async ticketsCreateRaw(requestParameters: TicketsCreateRequest): Promise<runtime.ApiResponse<TicketResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsCreate.');
-        }
-
         if (requestParameters.ticketEndpointRequest === null || requestParameters.ticketEndpointRequest === undefined) {
             throw new runtime.RequiredError('ticketEndpointRequest','Required parameter requestParameters.ticketEndpointRequest was null or undefined when calling ticketsCreate.');
         }
@@ -220,11 +213,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -253,10 +245,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Returns a list of `Ticket` objects.
      */
     async ticketsListRaw(requestParameters: TicketsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Ticket> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.accountId !== undefined) {
@@ -313,6 +301,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -384,11 +376,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -416,10 +407,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Returns metadata for `Ticket` PATCHs.
      */
     async ticketsMetaPatchRetrieveRaw(requestParameters: TicketsMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsMetaPatchRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsMetaPatchRetrieve.');
         }
@@ -438,11 +425,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -469,11 +455,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieveRaw(requestParameters: TicketsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsMetaPostRetrieve.');
-        }
-
+    async ticketsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
 
@@ -487,11 +469,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -510,7 +491,7 @@ export class TicketsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Ticket` POSTs.
      */
-    async ticketsMetaPostRetrieve(requestParameters: TicketsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
+    async ticketsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
         const response = await this.ticketsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -519,10 +500,6 @@ export class TicketsApi extends runtime.BaseAPI {
      * Updates a `Ticket` object with the given `id`.
      */
     async ticketsPartialUpdateRaw(requestParameters: TicketsPartialUpdateRequest): Promise<runtime.ApiResponse<TicketResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsPartialUpdate.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsPartialUpdate.');
         }
@@ -548,11 +525,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -578,13 +554,63 @@ export class TicketsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async ticketsRemoteFieldClassesListRaw(requestParameters: TicketsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ticketing/v1/tickets/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async ticketsRemoteFieldClassesList(requestParameters: TicketsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.ticketsRemoteFieldClassesListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns a `Ticket` object with the given `id`.
      */
     async ticketsRetrieveRaw(requestParameters: TicketsRetrieveRequest): Promise<runtime.ApiResponse<Ticket | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling ticketsRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling ticketsRetrieve.');
         }
@@ -597,6 +623,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.remoteFields !== undefined) {
@@ -612,11 +642,10 @@ export class TicketsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

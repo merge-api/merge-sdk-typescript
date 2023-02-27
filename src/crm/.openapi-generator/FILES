@@ -84,11 +84,12 @@ src/models/EngagementRequest.ts
 src/models/EngagementResponse.ts
 src/models/EngagementType.ts
 src/models/ErrorValidationProblem.ts
-src/models/FieldFormatEnum.ts
-src/models/FieldTypeEnum.ts
+src/models/FieldFormat556Enum.ts
+src/models/FieldType556Enum.ts
 src/models/GenerateRemoteKeyRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
+src/models/ItemSchema.ts
 src/models/Lead.ts
 src/models/LeadEndpointRequest.ts
 src/models/LeadRequest.ts
@@ -125,6 +126,8 @@ src/models/PatchedOpportunityEndpointRequest.ts
 src/models/PatchedOpportunityRequest.ts
 src/models/PhoneNumber.ts
 src/models/PhoneNumberRequest.ts
+src/models/RemoteField.ts
+src/models/RemoteFieldClass.ts
 src/models/RemoteFieldClassForCustomObjectClass.ts
 src/models/RemoteFieldClassForCustomObjectClassItemSchema.ts
 src/models/RemoteKey.ts

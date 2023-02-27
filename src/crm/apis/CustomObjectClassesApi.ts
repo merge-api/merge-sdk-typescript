@@ -42,10 +42,10 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
     PatchedCRMCustomObjectEndpointRequest,
     PatchedCRMCustomObjectEndpointRequestFromJSON,
     PatchedCRMCustomObjectEndpointRequestToJSON,
+    RemoteFieldClass,
 } from '../models';
 import {
 	MergePaginatedResponse,

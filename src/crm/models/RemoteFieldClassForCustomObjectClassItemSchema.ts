@@ -58,7 +58,7 @@ export function RemoteFieldClassForCustomObjectClassItemSchemaFromJSONTyped(json
     };
 }
 
-export function RemoteFieldClassForCustomObjectClassItemSchemaToJSON(value?: RemoteFieldClassForCustomObjectClassItemSchema): JSONValue {
+export function RemoteFieldClassForCustomObjectClassItemSchemaToJSON(value?: RemoteFieldClassForCustomObjectClassItemSchema | null): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }

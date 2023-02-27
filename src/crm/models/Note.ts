@@ -16,6 +16,10 @@ import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
     
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -107,6 +111,12 @@ export interface Note {
      * @memberof Note
      */
     readonly remote_data?: Array<RemoteData> | null;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof Note
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function NoteFromJSON(json: JSONValue): Note | undefined {
@@ -132,6 +142,7 @@ export function NoteFromJSONTyped(json: JSONValue): Note | undefined {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

@@ -27,10 +27,10 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
     PatchedCRMAccountEndpointRequest,
     PatchedCRMAccountEndpointRequestFromJSON,
     PatchedCRMAccountEndpointRequestToJSON,
+    RemoteFieldClass,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -55,6 +55,7 @@ export interface AccountsListRequest {
     expand?: Array<AccountsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     ownerId?: string;
@@ -74,10 +75,19 @@ export interface AccountsPartialUpdateRequest {
     runAsync?: boolean;
 }
 
+export interface AccountsRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
+    pageSize?: number;
+}
+
 export interface AccountsRetrieveRequest {
     id: string;
     expand?: Array<AccountsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
 }
 
 /**
@@ -166,6 +176,10 @@ export class AccountsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -371,6 +385,64 @@ export class AccountsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async accountsRemoteFieldClassesListRaw(requestParameters: AccountsRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/accounts/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async accountsRemoteFieldClassesList(requestParameters: AccountsRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.accountsRemoteFieldClassesListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns an `Account` object with the given `id`.
      */
     async accountsRetrieveRaw(requestParameters: AccountsRetrieveRequest): Promise<runtime.ApiResponse<Account | undefined>> {
@@ -386,6 +458,10 @@ export class AccountsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

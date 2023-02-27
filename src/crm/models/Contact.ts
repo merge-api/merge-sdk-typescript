@@ -28,6 +28,10 @@ import {
     PhoneNumberFromJSONTyped,
     PhoneNumberToJSON,
     
+    RemoteField,
+    RemoteFieldFromJSON,
+    RemoteFieldFromJSONTyped,
+    RemoteFieldToJSON,
 } from './';
 import {
 	RemoteData,
@@ -125,6 +129,12 @@ export interface Contact {
      * @memberof Contact
      */
     readonly remote_data?: Array<RemoteData> | null;
+    /**
+     * 
+     * @type {Array<RemoteField>}
+     * @memberof Contact
+     */
+    readonly remote_fields?: Array<RemoteField>;
 }
 
 export function ContactFromJSON(json: JSONValue): Contact | undefined {
@@ -151,6 +161,7 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }
 

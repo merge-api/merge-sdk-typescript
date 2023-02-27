@@ -63,6 +63,7 @@ src/models/ErrorValidationProblem.ts
 src/models/GenerateRemoteKeyRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
+src/models/ItemSchema.ts
 src/models/LinkToken.ts
 src/models/LinkedAccountCondition.ts
 src/models/LinkedAccountConditionRequest.ts
@@ -79,6 +80,8 @@ src/models/PatchedTicketEndpointRequest.ts
 src/models/PatchedTicketRequest.ts
 src/models/PriorityEnum.ts
 src/models/Project.ts
+src/models/RemoteField.ts
+src/models/RemoteFieldClass.ts
 src/models/RemoteKey.ts
 src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts

@@ -1,3 +1,10 @@
+# Version 3.0.6
+
+# Date: 2022-02-28
+
+- Added Marketing Automation (MKTG) category
+- Many RemoteField feature class names were changed backwards incompatibly (beta feature)
+
 # Version 3.0.5
 
 # Date: 2022-02-14

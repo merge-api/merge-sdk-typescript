@@ -27,10 +27,10 @@ import {
     OpportunityResponse,
     OpportunityResponseFromJSON,
     OpportunityResponseToJSON,
-    
     PatchedOpportunityEndpointRequest,
     PatchedOpportunityEndpointRequestFromJSON,
     PatchedOpportunityEndpointRequestToJSON,
+    RemoteFieldClass,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -56,6 +56,7 @@ export interface OpportunitiesListRequest {
     expand?: Array<OpportunitiesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     ownerId?: string;
@@ -79,10 +80,19 @@ export interface OpportunitiesPartialUpdateRequest {
     runAsync?: boolean;
 }
 
+export interface OpportunitiesRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
+    pageSize?: number;
+}
+
 export interface OpportunitiesRetrieveRequest {
     id: string;
     expand?: Array<OpportunitiesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     remoteFields?: OpportunitiesRetrieveRemoteFieldsEnum;
     showEnumOrigins?: OpportunitiesRetrieveShowEnumOriginsEnum;
 }
@@ -177,6 +187,10 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -398,6 +412,64 @@ export class OpportunitiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async opportunitiesRemoteFieldClassesListRaw(requestParameters: OpportunitiesRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/opportunities/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async opportunitiesRemoteFieldClassesList(requestParameters: OpportunitiesRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.opportunitiesRemoteFieldClassesListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns an `Opportunity` object with the given `id`.
      */
     async opportunitiesRetrieveRaw(requestParameters: OpportunitiesRetrieveRequest): Promise<runtime.ApiResponse<Opportunity | undefined>> {
@@ -413,6 +485,10 @@ export class OpportunitiesApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.remoteFields !== undefined) {

@@ -15,6 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
+    Contact,
     List,
     ListFromJSON,
     ListToJSON,
@@ -27,10 +28,6 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    PaginatedContactList,
-    PaginatedContactListFromJSON,
-    PaginatedContactListToJSON,
-    
 } from '../models';
 import {
 	MergePaginatedResponse,

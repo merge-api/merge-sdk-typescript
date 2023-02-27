@@ -15,7 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
-    
+    RemoteFieldClass,
     Task,
     TaskFromJSON,
     TaskToJSON,
@@ -37,16 +37,26 @@ export interface TasksListRequest {
     expand?: Array<TasksListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
 }
 
+export interface TasksRemoteFieldClassesListRequest {
+    cursor?: string;
+    includeDeletedData?: boolean;
+    includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
+    pageSize?: number;
+}
+
 export interface TasksRetrieveRequest {
     id: string;
     expand?: Array<TasksRetrieveExpandEnum>;
     includeRemoteData?: boolean;
+    includeRemoteFields?: boolean;
 }
 
 /**
@@ -82,6 +92,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -133,6 +147,64 @@ export class TasksApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async tasksRemoteFieldClassesListRaw(requestParameters: TasksRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        const queryParameters: any = {};
+
+        if (requestParameters.cursor !== undefined) {
+            queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.includeDeletedData !== undefined) {
+            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
+        }
+
+        if (requestParameters.includeRemoteData !== undefined) {
+            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
+        }
+
+        if (requestParameters.pageSize !== undefined) {
+            queryParameters['page_size'] = requestParameters.pageSize;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/tasks/remote-field-classes`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns a list of `RemoteFieldClass` objects.
+     */
+    async tasksRemoteFieldClassesList(requestParameters: TasksRemoteFieldClassesListRequest): Promise<MergePaginatedResponse<RemoteFieldClass> | undefined> {
+        const response = await this.tasksRemoteFieldClassesListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns a `Task` object with the given `id`.
      */
     async tasksRetrieveRaw(requestParameters: TasksRetrieveRequest): Promise<runtime.ApiResponse<Task | undefined>> {
@@ -148,6 +220,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.includeRemoteFields !== undefined) {
+            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
 

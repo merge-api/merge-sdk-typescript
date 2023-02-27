@@ -18,6 +18,7 @@ import {
     Automation,
     AutomationFromJSON,
     AutomationToJSON,
+    Contact,
     MKTGAutomationEndpointRequest,
     MKTGAutomationEndpointRequestFromJSON,
     MKTGAutomationEndpointRequestToJSON,
@@ -27,10 +28,6 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    PaginatedAutomationList,
-    PaginatedAutomationListFromJSON,
-    PaginatedAutomationListToJSON,
-    
 } from '../models';
 import {
 	MergePaginatedResponse,
