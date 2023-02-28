@@ -88,12 +88,6 @@ export interface Scorecard {
      */
     overall_recommendation?: OverallRecommendationEnum | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Scorecard
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Scorecard
@@ -105,6 +99,12 @@ export interface Scorecard {
      * @memberof Scorecard
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Scorecard
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function ScorecardFromJSON(json: JSONValue): Scorecard | undefined {
@@ -126,9 +126,9 @@ export function ScorecardFromJSONTyped(json: JSONValue): Scorecard | undefined {
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'submitted_at': !exists(json, 'submitted_at') ? undefined : (json['submitted_at'] === null ? null : new Date(json['submitted_at'])),
         'overall_recommendation': !exists(json, 'overall_recommendation') ? undefined : OverallRecommendationEnumFromJSON(json['overall_recommendation']) as OverallRecommendationEnum,
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

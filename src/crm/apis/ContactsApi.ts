@@ -27,7 +27,6 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
     PatchedCRMContactEndpointRequest,
     PatchedCRMContactEndpointRequestFromJSON,
     PatchedCRMContactEndpointRequestToJSON,

@@ -45,12 +45,6 @@ import {
  */
 export interface Expense {
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Expense
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * When the transaction occurred.
      * @type {Date}
      * @memberof Expense
@@ -134,6 +128,12 @@ export interface Expense {
      * @memberof Expense
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Expense
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function ExpenseFromJSON(json: JSONValue): Expense | undefined {
@@ -147,7 +147,6 @@ export function ExpenseFromJSONTyped(json: JSONValue): Expense | undefined {
 
     return {
         
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'transaction_date': !exists(json, 'transaction_date') ? undefined : (json['transaction_date'] === null ? null : new Date(json['transaction_date'])),
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'account': !exists(json, 'account') ? undefined : json['account'],
@@ -162,6 +161,7 @@ export function ExpenseFromJSONTyped(json: JSONValue): Expense | undefined {
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -131,12 +131,6 @@ export interface Employment {
      */
     employment_type?: EmploymentTypeEnum | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Employment
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Employment
@@ -148,6 +142,12 @@ export interface Employment {
      * @memberof Employment
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Employment
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function EmploymentFromJSON(json: JSONValue): Employment | undefined {
@@ -173,9 +173,9 @@ export function EmploymentFromJSONTyped(json: JSONValue): Employment | undefined
         'flsa_status': !exists(json, 'flsa_status') ? undefined : FlsaStatusEnumFromJSON(json['flsa_status']) as FlsaStatusEnum,
         'effective_date': !exists(json, 'effective_date') ? undefined : (json['effective_date'] === null ? null : new Date(json['effective_date'])),
         'employment_type': !exists(json, 'employment_type') ? undefined : EmploymentTypeEnumFromJSON(json['employment_type']) as EmploymentTypeEnum,
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -15,7 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
-    RemoteFieldClass,   
+    RemoteFieldClass,
     User,
     UserFromJSON,
     UserToJSON,

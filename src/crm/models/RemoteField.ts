@@ -15,10 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
-    RemoteFieldRemoteFieldClass,
-    RemoteFieldRemoteFieldClassFromJSON,
-    RemoteFieldRemoteFieldClassFromJSONTyped,
-    RemoteFieldRemoteFieldClassToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON,
+    RemoteFieldClassFromJSONTyped,
+    RemoteFieldClassToJSON,
 } from './';
 
 
@@ -30,16 +30,16 @@ import {
 export interface RemoteField {
     /**
      * 
+     * @type {RemoteFieldClass}
+     * @memberof RemoteField
+     */
+    remote_field_class: RemoteFieldClass;
+    /**
+     * 
      * @type {{ [key: string]: any; }}
      * @memberof RemoteField
      */
-    value?: { [key: string]: any; } | null;
-    /**
-     * 
-     * @type {RemoteFieldRemoteFieldClass}
-     * @memberof RemoteField
-     */
-    remote_field_class?: RemoteFieldRemoteFieldClass | JSONValue;
+    value?: { [key: string]: any; };
 }
 
 export function RemoteFieldFromJSON(json: JSONValue): RemoteField | undefined {
@@ -53,8 +53,8 @@ export function RemoteFieldFromJSONTyped(json: JSONValue): RemoteField | undefin
 
     return {
         
+        'remote_field_class': RemoteFieldClassFromJSON(json['remote_field_class']) as RemoteFieldClass,
         'value': !exists(json, 'value') ? undefined : json['value'],
-        'remote_field_class': !exists(json, 'remote_field_class') ? undefined : RemoteFieldRemoteFieldClassFromJSON(json['remote_field_class']) as RemoteFieldRemoteFieldClass,
     };
 }
 
@@ -65,8 +65,8 @@ export function RemoteFieldToJSON(value?: RemoteField): JSONValue {
 
     return {
         
+        'remote_field_class': RemoteFieldClassToJSON(value.remote_field_class),
         'value': value.value,
-        'remote_field_class': RemoteFieldRemoteFieldClassToJSON(value.remote_field_class as RemoteFieldRemoteFieldClass),
     };
 }
 

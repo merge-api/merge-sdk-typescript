@@ -15,18 +15,18 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
-    FieldFormatEnum,
-    FieldFormatEnumFromJSON,
-    FieldFormatEnumFromJSONTyped,
-    FieldFormatEnumToJSON,
-    FieldTypeEnum,
-    FieldTypeEnumFromJSON,
-    FieldTypeEnumFromJSONTyped,
-    FieldTypeEnumToJSON,
-    RemoteFieldClassItemSchema,
-    RemoteFieldClassItemSchemaFromJSON,
-    RemoteFieldClassItemSchemaFromJSONTyped,
-    RemoteFieldClassItemSchemaToJSON,
+    FieldFormat556Enum,
+    FieldFormat556EnumFromJSON,
+    FieldFormat556EnumFromJSONTyped,
+    FieldFormat556EnumToJSON,
+    FieldType556Enum,
+    FieldType556EnumFromJSON,
+    FieldType556EnumFromJSONTyped,
+    FieldType556EnumToJSON,
+    RemoteFieldClassForCustomObjectClassItemSchema,
+    RemoteFieldClassForCustomObjectClassItemSchemaFromJSON,
+    RemoteFieldClassForCustomObjectClassItemSchemaFromJSONTyped,
+    RemoteFieldClassForCustomObjectClassItemSchemaToJSON,
 } from './';
 
 
@@ -62,16 +62,16 @@ export interface RemoteFieldClassForCustomObjectClass {
     is_required?: boolean;
     /**
      * 
-     * @type {FieldTypeEnum}
+     * @type {FieldType556Enum}
      * @memberof RemoteFieldClassForCustomObjectClass
      */
-    readonly field_type?: FieldTypeEnum | null;
+    readonly field_type?: FieldType556Enum | null;
     /**
      * 
-     * @type {FieldFormatEnum}
+     * @type {FieldFormat556Enum}
      * @memberof RemoteFieldClassForCustomObjectClass
      */
-    readonly field_format?: FieldFormatEnum | null;
+    readonly field_format?: FieldFormat556Enum | null;
     /**
      * 
      * @type {Array<string>}
@@ -80,10 +80,10 @@ export interface RemoteFieldClassForCustomObjectClass {
     readonly field_choices?: Array<string> | null;
     /**
      * 
-     * @type {RemoteFieldClassItemSchema}
+     * @type {RemoteFieldClassForCustomObjectClassItemSchema}
      * @memberof RemoteFieldClassForCustomObjectClass
      */
-    item_schema?: RemoteFieldClassItemSchema | null;
+    item_schema?: RemoteFieldClassForCustomObjectClassItemSchema | null;
 }
 
 export function RemoteFieldClassForCustomObjectClassFromJSON(json: JSONValue): RemoteFieldClassForCustomObjectClass | undefined {
@@ -101,10 +101,10 @@ export function RemoteFieldClassForCustomObjectClassFromJSONTyped(json: JSONValu
         'remote_key_name': !exists(json, 'remote_key_name') ? undefined : json['remote_key_name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'is_required': !exists(json, 'is_required') ? undefined : json['is_required'],
-        'field_type': !exists(json, 'field_type') ? undefined : FieldTypeEnumFromJSON(json['field_type']) as FieldTypeEnum,
-        'field_format': !exists(json, 'field_format') ? undefined : FieldFormatEnumFromJSON(json['field_format']) as FieldFormatEnum,
+        'field_type': !exists(json, 'field_type') ? undefined : FieldType556EnumFromJSON(json['field_type']) as FieldType556Enum,
+        'field_format': !exists(json, 'field_format') ? undefined : FieldFormat556EnumFromJSON(json['field_format']) as FieldFormat556Enum,
         'field_choices': !exists(json, 'field_choices') ? undefined : json['field_choices'],
-        'item_schema': !exists(json, 'item_schema') ? undefined : RemoteFieldClassItemSchemaFromJSON(json['item_schema']) as RemoteFieldClassItemSchema,
+        'item_schema': !exists(json, 'item_schema') ? undefined : RemoteFieldClassForCustomObjectClassItemSchemaFromJSON(json['item_schema']) as RemoteFieldClassForCustomObjectClassItemSchema,
     };
 }
 
@@ -119,7 +119,7 @@ export function RemoteFieldClassForCustomObjectClassToJSON(value?: RemoteFieldCl
         'remote_key_name': value.remote_key_name,
         'description': value.description,
         'is_required': value.is_required,
-        'item_schema': RemoteFieldClassItemSchemaToJSON(value.item_schema ?? undefined),
+        'item_schema': RemoteFieldClassForCustomObjectClassItemSchemaToJSON(value.item_schema),
     };
 }
 

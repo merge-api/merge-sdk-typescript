@@ -61,12 +61,6 @@ export interface Team {
      */
     parent_team?: string | JSONValue | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Team
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Team
@@ -78,6 +72,12 @@ export interface Team {
      * @memberof Team
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Team
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function TeamFromJSON(json: JSONValue): Team | undefined {
@@ -95,9 +95,9 @@ export function TeamFromJSONTyped(json: JSONValue): Team | undefined {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'parent_team': !exists(json, 'parent_team') ? undefined : json['parent_team'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

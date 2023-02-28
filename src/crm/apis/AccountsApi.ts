@@ -27,11 +27,10 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
     PatchedCRMAccountEndpointRequest,
     PatchedCRMAccountEndpointRequestFromJSON,
     PatchedCRMAccountEndpointRequestToJSON,
-    RemoteFieldClass
+    RemoteFieldClass,
 } from '../models';
 import {
 	MergePaginatedResponse,

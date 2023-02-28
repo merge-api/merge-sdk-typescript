@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Merge CRM API
- * The unified API for building rich integrations with multiple CRM platforms.
+ * Merge Ticketing API
+ * The unified API for building rich integrations with multiple Ticketing platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev
@@ -18,34 +18,34 @@ import { JSONValue } from '../../merge_json';
 /**
  * 
  * @export
- * @interface RemoteFieldClassItemSchema
+ * @interface ItemSchema
  */
-export interface RemoteFieldClassItemSchema {
+export interface ItemSchema {
     /**
      * 
-     * @type {string}
-     * @memberof RemoteFieldClassItemSchema
+     * @type {boolean}
+     * @memberof ItemSchema
      */
-    item_type?: string | null;
+    item_type?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof RemoteFieldClassItemSchema
+     * @type {boolean}
+     * @memberof ItemSchema
      */
-    item_format?: string | null;
+    item_format?: boolean;
     /**
      * 
      * @type {Array<string>}
-     * @memberof RemoteFieldClassItemSchema
+     * @memberof ItemSchema
      */
-    item_choices?: Array<string> | null;
+    item_choices?: Array<string>;
 }
 
-export function RemoteFieldClassItemSchemaFromJSON(json: JSONValue): RemoteFieldClassItemSchema | undefined {
-    return RemoteFieldClassItemSchemaFromJSONTyped(json);
+export function ItemSchemaFromJSON(json: JSONValue): ItemSchema | undefined {
+    return ItemSchemaFromJSONTyped(json);
 }
 
-export function RemoteFieldClassItemSchemaFromJSONTyped(json: JSONValue): RemoteFieldClassItemSchema | undefined {
+export function ItemSchemaFromJSONTyped(json: JSONValue): ItemSchema | undefined {
     if ((json === undefined) || (json === null)) {
         return undefined;
     }
@@ -58,7 +58,7 @@ export function RemoteFieldClassItemSchemaFromJSONTyped(json: JSONValue): Remote
     };
 }
 
-export function RemoteFieldClassItemSchemaToJSON(value?: RemoteFieldClassItemSchema): JSONValue {
+export function ItemSchemaToJSON(value?: ItemSchema): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }

@@ -164,12 +164,6 @@ export interface Ticket {
     completed_at?: Date | null;
     /**
      * 
-     * @type {Array<RemoteData>}
-     * @memberof Ticket
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof Ticket
      */
@@ -192,6 +186,12 @@ export interface Ticket {
      * @memberof Ticket
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Ticket
+     */
+    readonly remote_data?: Array<RemoteData> | null;
     /**
      * 
      * @type {Array<RemoteField>}
@@ -230,11 +230,11 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'completed_at': !exists(json, 'completed_at') ? undefined : (json['completed_at'] === null ? null : new Date(json['completed_at'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }

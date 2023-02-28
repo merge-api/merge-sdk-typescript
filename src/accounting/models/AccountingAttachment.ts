@@ -49,12 +49,6 @@ export interface AccountingAttachment {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof AccountingAttachment
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The attachment's name.
      * @type {string}
      * @memberof AccountingAttachment
@@ -84,6 +78,12 @@ export interface AccountingAttachment {
      * @memberof AccountingAttachment
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof AccountingAttachment
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function AccountingAttachmentFromJSON(json: JSONValue): AccountingAttachment | undefined {
@@ -99,12 +99,12 @@ export function AccountingAttachmentFromJSONTyped(json: JSONValue): AccountingAt
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'file_name': !exists(json, 'file_name') ? undefined : json['file_name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

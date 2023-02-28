@@ -157,12 +157,6 @@ export interface Candidate {
     attachments?: Array<string> | JSONValue;
     /**
      * 
-     * @type {Array<RemoteData>}
-     * @memberof Candidate
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof Candidate
      */
@@ -173,6 +167,12 @@ export interface Candidate {
      * @memberof Candidate
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Candidate
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function CandidateFromJSON(json: JSONValue): Candidate | undefined {
@@ -204,9 +204,9 @@ export function CandidateFromJSONTyped(json: JSONValue): Candidate | undefined {
         'tags': !exists(json, 'tags') ? undefined : json['tags'],
         'applications': !exists(json, 'applications') ? undefined : json['applications'],
         'attachments': !exists(json, 'attachments') ? undefined : json['attachments'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

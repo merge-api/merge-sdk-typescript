@@ -46,12 +46,6 @@ export interface Stage {
      */
     name?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Stage
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Stage
@@ -77,6 +71,12 @@ export interface Stage {
     readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
+     * @type {Array<RemoteData>}
+     * @memberof Stage
+     */
+    readonly remote_data?: Array<RemoteData> | null;
+    /**
+     * 
      * @type {Array<RemoteField>}
      * @memberof Stage
      */
@@ -95,11 +95,11 @@ export function StageFromJSONTyped(json: JSONValue): Stage | undefined {
     return {
         
         'name': !exists(json, 'name') ? undefined : json['name'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }

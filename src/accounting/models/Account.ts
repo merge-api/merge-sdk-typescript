@@ -61,12 +61,6 @@ export interface Account {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Account
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The account's name.
      * @type {string}
      * @memberof Account
@@ -138,6 +132,12 @@ export interface Account {
      * @memberof Account
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Account
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function AccountFromJSON(json: JSONValue): Account | undefined {
@@ -153,7 +153,6 @@ export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'classification': !exists(json, 'classification') ? undefined : ClassificationEnumFromJSON(json['classification']) as ClassificationEnum,
@@ -166,6 +165,7 @@ export function AccountFromJSONTyped(json: JSONValue): Account | undefined {
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

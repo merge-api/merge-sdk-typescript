@@ -128,12 +128,6 @@ export interface Job {
      */
     recruiters?: Array<string> | JSONValue;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Job
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Job
@@ -145,6 +139,12 @@ export interface Job {
      * @memberof Job
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Job
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function JobFromJSON(json: JSONValue): Job | undefined {
@@ -172,9 +172,9 @@ export function JobFromJSONTyped(json: JSONValue): Job | undefined {
         'offices': !exists(json, 'offices') ? undefined : json['offices'],
         'hiring_managers': !exists(json, 'hiring_managers') ? undefined : json['hiring_managers'],
         'recruiters': !exists(json, 'recruiters') ? undefined : json['recruiters'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

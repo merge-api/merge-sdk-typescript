@@ -27,11 +27,10 @@ import {
     OpportunityResponse,
     OpportunityResponseFromJSON,
     OpportunityResponseToJSON,
-    
     PatchedOpportunityEndpointRequest,
     PatchedOpportunityEndpointRequestFromJSON,
     PatchedOpportunityEndpointRequestToJSON,
-    RemoteFieldClass
+    RemoteFieldClass,
 } from '../models';
 import {
 	MergePaginatedResponse,

@@ -61,12 +61,6 @@ export interface CompanyInfo {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof CompanyInfo
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The company's name.
      * @type {string}
      * @memberof CompanyInfo
@@ -138,6 +132,12 @@ export interface CompanyInfo {
      * @memberof CompanyInfo
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof CompanyInfo
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function CompanyInfoFromJSON(json: JSONValue): CompanyInfo | undefined {
@@ -153,7 +153,6 @@ export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo | undefin
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'legal_name': !exists(json, 'legal_name') ? undefined : json['legal_name'],
         'tax_number': !exists(json, 'tax_number') ? undefined : json['tax_number'],
@@ -166,6 +165,7 @@ export function CompanyInfoFromJSONTyped(json: JSONValue): CompanyInfo | undefin
         'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(AccountingPhoneNumberFromJSON)) as Array<AccountingPhoneNumber>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

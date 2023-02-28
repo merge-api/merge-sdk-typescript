@@ -57,12 +57,6 @@ export interface CashFlowStatement {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof CashFlowStatement
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The cash flow statement's name.
      * @type {string}
      * @memberof CashFlowStatement
@@ -140,6 +134,12 @@ export interface CashFlowStatement {
      * @memberof CashFlowStatement
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof CashFlowStatement
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function CashFlowStatementFromJSON(json: JSONValue): CashFlowStatement | undefined {
@@ -155,7 +155,6 @@ export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStateme
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'company': !exists(json, 'company') ? undefined : json['company'],
@@ -169,6 +168,7 @@ export function CashFlowStatementFromJSONTyped(json: JSONValue): CashFlowStateme
         'remote_generated_at': !exists(json, 'remote_generated_at') ? undefined : (json['remote_generated_at'] === null ? null : new Date(json['remote_generated_at'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

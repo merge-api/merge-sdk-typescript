@@ -77,12 +77,6 @@ export interface Attachment {
     attachment_type?: AttachmentTypeEnum | null;
     /**
      * 
-     * @type {Array<RemoteData>}
-     * @memberof Attachment
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof Attachment
      */
@@ -93,6 +87,12 @@ export interface Attachment {
      * @memberof Attachment
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Attachment
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function AttachmentFromJSON(json: JSONValue): Attachment | undefined {
@@ -112,9 +112,9 @@ export function AttachmentFromJSONTyped(json: JSONValue): Attachment | undefined
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
         'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
         'attachment_type': !exists(json, 'attachment_type') ? undefined : AttachmentTypeEnumFromJSON(json['attachment_type']) as AttachmentTypeEnum,
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

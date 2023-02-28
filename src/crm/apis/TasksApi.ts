@@ -15,10 +15,10 @@
 
 import * as runtime from '../../runtime';
 import {
+    RemoteFieldClass,
     Task,
     TaskFromJSON,
     TaskToJSON,
-    RemoteFieldClass
 } from '../models';
 import {
 	MergePaginatedResponse,

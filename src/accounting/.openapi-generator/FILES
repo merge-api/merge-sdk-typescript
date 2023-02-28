@@ -83,7 +83,7 @@ src/models/CurrencyEnum.ts
 src/models/DataPassthroughRequest.ts
 src/models/DebugModeLog.ts
 src/models/DebugModelLogSummary.ts
-src/models/EnabledActionsA91Enum.ts
+src/models/EnabledActionsEnum.ts
 src/models/EncodingEnum.ts
 src/models/EndUserDetailsRequest.ts
 src/models/ErrorValidationProblem.ts
@@ -127,6 +127,7 @@ src/models/Payment.ts
 src/models/PaymentEndpointRequest.ts
 src/models/PaymentRequest.ts
 src/models/PaymentResponse.ts
+src/models/PostingStatusEnum.ts
 src/models/PurchaseOrder.ts
 src/models/PurchaseOrderEndpointRequest.ts
 src/models/PurchaseOrderLineItem.ts

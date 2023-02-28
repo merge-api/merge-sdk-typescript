@@ -116,12 +116,6 @@ export interface TimeOff {
     end_time?: Date | null;
     /**
      * 
-     * @type {Array<RemoteData>}
-     * @memberof TimeOff
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
-     * 
      * @type {boolean}
      * @memberof TimeOff
      */
@@ -132,6 +126,12 @@ export interface TimeOff {
      * @memberof TimeOff
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof TimeOff
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function TimeOffFromJSON(json: JSONValue): TimeOff | undefined {
@@ -156,9 +156,9 @@ export function TimeOffFromJSONTyped(json: JSONValue): TimeOff | undefined {
         'request_type': !exists(json, 'request_type') ? undefined : RequestTypeEnumFromJSON(json['request_type']) as RequestTypeEnum,
         'start_time': !exists(json, 'start_time') ? undefined : (json['start_time'] === null ? null : new Date(json['start_time'])),
         'end_time': !exists(json, 'end_time') ? undefined : (json['end_time'] === null ? null : new Date(json['end_time'])),
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

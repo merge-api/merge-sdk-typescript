@@ -1,3 +1,11 @@
+# Version 3.0.6
+
+# Date: 2022-02-28
+
+- Added Marketing Automation (MKTG) category
+- Many RemoteField feature class names were changed backwards incompatibly (beta feature)
+- MergePaginatedResponse was not applying per-result-item deserialization in full, trying out a new optional parameter to allow that for Employees model for now, if that looks ok we'll add it to all list endpoints across the board.
+
 # Version 3.0.5
 
 # Date: 2022-02-14

@@ -86,12 +86,6 @@ export interface Task {
      */
     status?: TaskStatusEnum | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Task
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Task
@@ -115,6 +109,12 @@ export interface Task {
      * @memberof Task
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Task
+     */
+    readonly remote_data?: Array<RemoteData> | null;
     /**
      * 
      * @type {Array<RemoteField>}
@@ -141,11 +141,11 @@ export function TaskFromJSONTyped(json: JSONValue): Task | undefined {
         'completed_date': !exists(json, 'completed_date') ? undefined : (json['completed_date'] === null ? null : new Date(json['completed_date'])),
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'status': !exists(json, 'status') ? undefined : TaskStatusEnumFromJSON(json['status']) as TaskStatusEnum,
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }

@@ -23,6 +23,10 @@ import {
     JournalLineRequestFromJSON,
     JournalLineRequestFromJSONTyped,
     JournalLineRequestToJSON,
+    PostingStatusEnum,
+    PostingStatusEnumFromJSON,
+    PostingStatusEnumFromJSONTyped,
+    PostingStatusEnumToJSON,
 } from './';
 
 
@@ -80,6 +84,12 @@ export interface JournalEntryRequest {
      */
     lines?: Array<JournalLineRequest> | JSONValue;
     /**
+     * The journal's posting status.
+     * @type {PostingStatusEnum}
+     * @memberof JournalEntryRequest
+     */
+    posting_status?: PostingStatusEnum | null;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof JournalEntryRequest
@@ -111,6 +121,7 @@ export function JournalEntryRequestFromJSONTyped(json: JSONValue): JournalEntryR
         'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'lines': !exists(json, 'lines') ? undefined : ((json['lines'] as Array<JSONValue>).map(JournalLineRequestFromJSON)) as Array<JournalLineRequest>,
+        'posting_status': !exists(json, 'posting_status') ? undefined : PostingStatusEnumFromJSON(json['posting_status']) as PostingStatusEnum,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -130,6 +141,7 @@ export function JournalEntryRequestToJSON(value?: JournalEntryRequest): JSONValu
         'exchange_rate': value.exchange_rate,
         'company': value.company,
         'lines': value.lines === undefined ? undefined : ((value.lines as Array<any>).map(JournalLineRequestToJSON)),
+        'posting_status': PostingStatusEnumToJSON(value.posting_status),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

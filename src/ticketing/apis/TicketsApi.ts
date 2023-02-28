@@ -18,10 +18,11 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
+    RemoteField,
+    RemoteFieldClass,
     Ticket,
     TicketFromJSON,
     TicketToJSON,
@@ -31,7 +32,6 @@ import {
     TicketResponse,
     TicketResponseFromJSON,
     TicketResponseToJSON,
-    RemoteFieldClass,
     User,
 } from '../models';
 import {
@@ -109,7 +109,6 @@ export interface TicketsRemoteFieldClassesListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
     pageSize?: number;
 }
 
@@ -570,10 +569,6 @@ export class TicketsApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
         }
 
         if (requestParameters.pageSize !== undefined) {

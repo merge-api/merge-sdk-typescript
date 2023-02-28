@@ -57,12 +57,6 @@ export interface Contact {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof Contact
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * The contact's name.
      * @type {string}
      * @memberof Contact
@@ -140,6 +134,12 @@ export interface Contact {
      * @memberof Contact
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Contact
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function ContactFromJSON(json: JSONValue): Contact | undefined {
@@ -155,7 +155,6 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'name': !exists(json, 'name') ? undefined : json['name'],
         'is_supplier': !exists(json, 'is_supplier') ? undefined : json['is_supplier'],
         'is_customer': !exists(json, 'is_customer') ? undefined : json['is_customer'],
@@ -169,6 +168,7 @@ export function ContactFromJSONTyped(json: JSONValue): Contact | undefined {
         'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(AccountingPhoneNumberFromJSON)) as Array<AccountingPhoneNumber>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

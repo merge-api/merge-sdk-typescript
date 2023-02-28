@@ -121,12 +121,6 @@ export interface EmployeePayrollRun {
      */
     readonly taxes?: Array<Tax>;
     /**
-     * 
-     * @type {Array<RemoteData>}
-     * @memberof EmployeePayrollRun
-     */
-    readonly remote_data?: Array<RemoteData> | null;
-    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof EmployeePayrollRun
@@ -138,6 +132,12 @@ export interface EmployeePayrollRun {
      * @memberof EmployeePayrollRun
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof EmployeePayrollRun
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function EmployeePayrollRunFromJSON(json: JSONValue): EmployeePayrollRun | undefined {
@@ -163,9 +163,9 @@ export function EmployeePayrollRunFromJSONTyped(json: JSONValue): EmployeePayrol
         'earnings': !exists(json, 'earnings') ? undefined : ((json['earnings'] as Array<JSONValue>).map(EarningFromJSON)) as Array<Earning>,
         'deductions': !exists(json, 'deductions') ? undefined : ((json['deductions'] as Array<JSONValue>).map(DeductionFromJSON)) as Array<Deduction>,
         'taxes': !exists(json, 'taxes') ? undefined : ((json['taxes'] as Array<JSONValue>).map(TaxFromJSON)) as Array<Tax>,
-        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 
