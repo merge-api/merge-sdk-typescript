@@ -1,6 +1,7 @@
 import * as merge_sdk from '../src/index'
-import { Configuration, JSONValue, querystring } from '../src/index';
+import { Configuration, JSONValue, MergePaginatedResponseFromJSON, querystring } from '../src/index';
 import fetch from 'node-fetch'
+import { EmployeeFromJSON } from '../src/hris';
 
 // note this is skipped for CI, just here for reference
 test.skip("can call ATS api", async () => {
@@ -157,4 +158,27 @@ test("query params use comma-separated-value format", async() => {
     });
 
     expect(serialized_query_params).toEqual("expand=a,b,c&single=1");
+})
+
+test("deserializing paginated values runs per-item deserialize function", async() => {
+    const employee_list_json: JSONValue = {
+        "next": "cursor_next",
+        "previous": "cursor_previous",
+        "results": [{
+            "id": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+            "remote_id": "19202938",
+            "employee_number": "2",
+            "company": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+            "first_name": "Greg",
+            "start_date": "2020-10-11T00:00:00Z",
+            "remote_created_at": "2020-10-11T00:00:00Z",
+            "employment_status": "INACTIVE",
+        }]
+    }
+
+    const deserialized_page = MergePaginatedResponseFromJSON(employee_list_json, EmployeeFromJSON)
+
+    expect(deserialized_page?.results).toBeDefined()
+    expect(deserialized_page?.results?.length).toBe(1)
+    expect(deserialized_page?.results?.[0]?.start_date instanceof Date).toBe(true)
 })
