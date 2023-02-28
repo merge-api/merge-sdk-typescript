@@ -17,7 +17,7 @@
  */
 
 import { exists, mapValues } from './runtime';
-import { JSONValue } from './merge_json'
+import { JSONArray, JSONObject, JSONValue } from './merge_json'
 
 /**
  * 
@@ -45,20 +45,29 @@ export interface MergePaginatedResponse<T> {
     results?: Array<T>;
 }
 
-export function MergePaginatedResponseFromJSON<T>(json: JSONValue): MergePaginatedResponse<T> | undefined {
-    return MergePaginatedResponseFromJSONTyped(json);
+export function MergePaginatedResponseFromJSON<T>(json: JSONValue, deserializeFn?: (j: JSONValue) => T | undefined): MergePaginatedResponse<T> | undefined {
+    return MergePaginatedResponseFromJSONTyped(json, deserializeFn);
 }
 
-export function MergePaginatedResponseFromJSONTyped<T>(json: JSONValue): MergePaginatedResponse<T> | undefined {
+export function MergePaginatedResponseFromJSONTyped<T>(json: JSONValue, deserializeFn?: (j: JSONValue) => T | undefined): MergePaginatedResponse<T> | undefined {
     if ((json === undefined) || (json === null)) {
         return undefined;
     }
 
-    return {
-        
+    let rawResults = !exists(json, 'results') ? undefined : json['results']
+    let finalResults: Array<T> | undefined = undefined
+    if (rawResults !== undefined) {
+        if (deserializeFn !== undefined && deserializeFn !== null) {
+            finalResults = rawResults.map((r: JSONValue) => deserializeFn(r))
+        } else {
+            finalResults = rawResults as Array<T>
+        }
+    }
+
+    return {        
         'next': !exists(json, 'next') ? undefined : json['next'],
         'previous': !exists(json, 'previous') ? undefined : json['previous'],
-        'results': !exists(json, 'results') ? undefined : ((json['results'] as Array<T>)),
+        'results': finalResults,
     };
 }
 

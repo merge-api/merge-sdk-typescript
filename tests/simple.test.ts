@@ -3,24 +3,12 @@ import { Configuration, JSONValue, querystring } from '../src/index';
 import fetch from 'node-fetch'
 
 // note this is skipped for CI, just here for reference
-test.skip("can call account details api", async () => {
+test.skip("can call ATS api", async () => {
     /*
     REDACTED TEST CONFS
     */
 
     let test_conf = new Configuration({
-        apiKey: "REDACTED",
-        accessToken: "REDACTED"
-    });
-    let test_conf_crm = new Configuration({
-        apiKey: "REDACTED",
-        accessToken: "REDACTED"
-    });
-    let test_conf_hris = new Configuration({
-        apiKey: "REDACTED",
-        accessToken: "REDACTED"
-    });
-    let test_conf_ticketing = new Configuration({
         apiKey: "REDACTED",
         accessToken: "REDACTED"
     });
@@ -44,6 +32,39 @@ test.skip("can call account details api", async () => {
     console.log(response2?.results)
     
     expect(response2).toBeDefined()
+});
+
+// note this is skipped for CI, just here for reference
+test.skip("can call CRM api", async () => {
+    /*
+    REDACTED TEST CONFS
+    */
+
+    let test_conf_crm = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED"
+    });
+
+    // crm call
+    let con_api = new merge_sdk.CRM.ContactsApi(test_conf_crm)
+
+    let response4 = await con_api.contactsList({
+    })
+
+    console.log(response4)
+    expect(response4).toBeDefined()
+});
+
+// note this is skipped for CI, just here for reference
+test.skip("can call HRIS api", async () => {
+    /*
+    REDACTED TEST CONFS
+    */
+
+    let test_conf_hris = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED"
+    });
 
     // hris employees call w query
     let emp_api = new merge_sdk.HRIS.EmployeesApi(test_conf_hris)
@@ -54,15 +75,18 @@ test.skip("can call account details api", async () => {
 
     expect(response3).toBeDefined()
     console.log(response3?.results?.[0]?.company)
+});
 
-    // crm call
-    let con_api = new merge_sdk.CRM.ContactsApi(test_conf_crm)
+// note this is skipped for CI, just here for reference
+test.skip("can call ticketing api", async () => {
+    /*
+    REDACTED TEST CONFS
+    */
 
-    let response4 = await con_api.contactsList({
-    })
-
-    console.log(response4)
-    expect(response4).toBeDefined()
+    let test_conf_ticketing = new Configuration({
+        apiKey: "REDACTED",
+        accessToken: "REDACTED"
+    });
 
     // ticketing call
     let tick_api = new merge_sdk.Ticketing.TicketsApi(test_conf_ticketing)
