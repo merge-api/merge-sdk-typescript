@@ -1,3 +1,10 @@
+# Version 3.0.7
+
+# Date: 2022-03-08
+
+- Added ignore-contacts and ignore-users api to the CRM category
+- Fixed list deserialization for all models whereby sub fields were not always deserialized to the right type
+
 # Version 3.0.6
 
 # Date: 2022-02-28
