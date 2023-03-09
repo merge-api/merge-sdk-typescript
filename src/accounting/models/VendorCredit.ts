@@ -97,7 +97,7 @@ export interface VendorCredit {
      * @type {string}
      * @memberof VendorCredit
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * 
      * @type {Array<VendorCreditLine>}

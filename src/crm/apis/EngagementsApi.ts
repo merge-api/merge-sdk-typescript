@@ -27,7 +27,11 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    PatchedEngagementEndpointRequest,
+    PatchedEngagementEndpointRequestFromJSON,
+    PatchedEngagementEndpointRequestToJSON,
     RemoteFieldClass,
+    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -59,7 +63,18 @@ export interface EngagementsListRequest {
     remoteId?: string | null;
 }
 
+export interface EngagementsMetaPatchRetrieveRequest extends MergeMetaRequest {
+    id: string;
+}
+
 // extends MergeMetaRequest
+export interface EngagementsPartialUpdateRequest {
+    id: string;
+    patchedEngagementEndpointRequest: PatchedEngagementEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
+
 export interface EngagementsRemoteFieldClassesListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
@@ -204,7 +219,7 @@ export class EngagementsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, EngagementFromJSON));
     }
 
     /**
@@ -212,6 +227,55 @@ export class EngagementsApi extends runtime.BaseAPI {
      */
     async engagementsList(requestParameters: EngagementsListRequest): Promise<MergePaginatedResponse<Engagement> | undefined> {
         const response = await this.engagementsListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `Engagement` PATCHs.
+     */
+    async engagementsMetaPatchRetrieveRaw(requestParameters: EngagementsMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling engagementsMetaPatchRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/engagements/meta/patch/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Engagement` PATCHs.
+     */
+    async engagementsMetaPatchRetrieve(requestParameters: EngagementsMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.engagementsMetaPatchRetrieveRaw(requestParameters);
         return await response.value();
     }
 
@@ -256,6 +320,63 @@ export class EngagementsApi extends runtime.BaseAPI {
      */
     async engagementsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
         const response = await this.engagementsMetaPostRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Updates an `Engagement` object with the given `id`.
+     */
+    async engagementsPartialUpdateRaw(requestParameters: EngagementsPartialUpdateRequest): Promise<runtime.ApiResponse<EngagementResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling engagementsPartialUpdate.');
+        }
+
+        if (requestParameters.patchedEngagementEndpointRequest === null || requestParameters.patchedEngagementEndpointRequest === undefined) {
+            throw new runtime.RequiredError('patchedEngagementEndpointRequest','Required parameter requestParameters.patchedEngagementEndpointRequest was null or undefined when calling engagementsPartialUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/engagements/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchedEngagementEndpointRequestToJSON(requestParameters.patchedEngagementEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => EngagementResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates an `Engagement` object with the given `id`.
+     */
+    async engagementsPartialUpdate(requestParameters: EngagementsPartialUpdateRequest): Promise<EngagementResponse | undefined> {
+        const response = await this.engagementsPartialUpdateRaw(requestParameters);
         return await response.value();
     }
 
@@ -306,7 +427,7 @@ export class EngagementsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, RemoteFieldClassFromJSON));
     }
 
     /**

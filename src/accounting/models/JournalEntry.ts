@@ -95,7 +95,7 @@ export interface JournalEntry {
      * @type {string}
      * @memberof JournalEntry
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * 
      * @type {Array<JournalLine>}

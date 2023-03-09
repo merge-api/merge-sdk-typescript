@@ -42,6 +42,8 @@ export interface VendorCreditsListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+    transactionDateAfter?: Date | null;
+    transactionDateBefore?: Date | null;
 }
 
 export interface VendorCreditsRetrieveRequest {
@@ -105,6 +107,14 @@ export class VendorCreditsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.transactionDateAfter !== undefined) {
+            queryParameters['transaction_date_after'] = (requestParameters.transactionDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.transactionDateBefore !== undefined) {
+            queryParameters['transaction_date_before'] = (requestParameters.transactionDateBefore as any).toISOString();
+        }
+
 
         
 
@@ -126,7 +136,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, VendorCreditFromJSON));
     }
 
     /**
@@ -194,6 +204,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum VendorCreditsListExpandEnum {
+    Company = 'company',
     Lines = 'lines',
     Vendor = 'vendor'
 }
@@ -202,6 +213,7 @@ export enum VendorCreditsListExpandEnum {
 * @enum {string}
 */
 export enum VendorCreditsRetrieveExpandEnum {
+    Company = 'company',
     Lines = 'lines',
     Vendor = 'vendor'
 }

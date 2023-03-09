@@ -31,6 +31,7 @@ import {
     PatchedOpportunityEndpointRequestFromJSON,
     PatchedOpportunityEndpointRequestToJSON,
     RemoteFieldClass,
+    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -250,7 +251,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, OpportunityFromJSON));
     }
 
     /**
@@ -458,7 +459,7 @@ export class OpportunitiesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, RemoteFieldClassFromJSON));
     }
 
     /**

@@ -27,7 +27,7 @@ import { JSONValue } from '../../merge_json';
  */
 export interface AttachmentRequest {
     /**
-     * The attachment's name.
+     * The attachment's name. It is required to include the file extension in the attachment's name.
      * @type {string}
      * @memberof AttachmentRequest
      */
@@ -39,7 +39,7 @@ export interface AttachmentRequest {
      */
     ticket?: string | JSONValue | null;
     /**
-     * The attachment's url.
+     * The attachment's url. It is required to include the file extension in the file's URL.
      * @type {string}
      * @memberof AttachmentRequest
      */

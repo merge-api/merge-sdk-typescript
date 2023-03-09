@@ -16,6 +16,7 @@
 import * as runtime from '../../runtime';
 import {
     Contact,
+    ContactFromJSON,
     List,
     ListFromJSON,
     ListToJSON,
@@ -192,7 +193,7 @@ export class ListsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ListFromJSON));
     }
 
     /**
@@ -340,7 +341,7 @@ export class ListsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ContactFromJSON));
     }
 
     /**

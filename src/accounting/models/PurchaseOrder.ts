@@ -91,6 +91,12 @@ export interface PurchaseOrder {
      */
     memo?: string | null;
     /**
+     * The company the purchase order belongs to.
+     * @type {string}
+     * @memberof PurchaseOrder
+     */
+    company?: string | JSONValue | null;
+    /**
      * The purchase order's total amount.
      * @type {number}
      * @memberof PurchaseOrder
@@ -176,6 +182,7 @@ export function PurchaseOrderFromJSONTyped(json: JSONValue): PurchaseOrder | und
         'customer': !exists(json, 'customer') ? undefined : json['customer'],
         'vendor': !exists(json, 'vendor') ? undefined : json['vendor'],
         'memo': !exists(json, 'memo') ? undefined : json['memo'],
+        'company': !exists(json, 'company') ? undefined : json['company'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'currency': !exists(json, 'currency') ? undefined : CurrencyEnumFromJSON(json['currency']) as CurrencyEnum,
         'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
@@ -204,6 +211,7 @@ export function PurchaseOrderToJSON(value?: PurchaseOrder): JSONValue {
         'customer': value.customer,
         'vendor': value.vendor,
         'memo': value.memo,
+        'company': value.company,
         'total_amount': value.total_amount,
         'currency': CurrencyEnumToJSON(value.currency),
         'exchange_rate': value.exchange_rate,

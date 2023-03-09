@@ -26,7 +26,8 @@ export enum CategoryEnumValues {
     Accounting = 'accounting',
     Ticketing = 'ticketing',
     Crm = 'crm',
-    Mktg = 'mktg'
+    Mktg = 'mktg',
+    Filestorage = 'filestorage'
 }
 
 export interface CategoryEnum {

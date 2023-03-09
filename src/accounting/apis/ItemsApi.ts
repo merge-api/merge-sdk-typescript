@@ -138,7 +138,7 @@ export class ItemsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ItemFromJSON));
     }
 
     /**
@@ -214,6 +214,7 @@ export class ItemsApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum ItemsListExpandEnum {
+    Company = 'company',
     PurchaseAccount = 'purchase_account',
     SalesAccount = 'sales_account'
 }
@@ -236,6 +237,7 @@ export enum ItemsListShowEnumOriginsEnum {
 * @enum {string}
 */
 export enum ItemsRetrieveExpandEnum {
+    Company = 'company',
     PurchaseAccount = 'purchase_account',
     SalesAccount = 'sales_account'
 }

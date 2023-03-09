@@ -21,8 +21,8 @@ import {
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
-    RemoteField,
     RemoteFieldClass,
+    RemoteFieldClassFromJSON,
     Ticket,
     TicketFromJSON,
     TicketToJSON,
@@ -33,6 +33,7 @@ import {
     TicketResponseFromJSON,
     TicketResponseToJSON,
     User,
+    UserFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -177,7 +178,7 @@ export class TicketsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, UserFromJSON));
     }
 
     /**
@@ -392,7 +393,7 @@ export class TicketsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, TicketFromJSON));
     }
 
     /**
@@ -596,7 +597,7 @@ export class TicketsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, RemoteFieldClassFromJSON));
     }
 
     /**

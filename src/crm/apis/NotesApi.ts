@@ -28,6 +28,7 @@ import {
     NoteResponseFromJSON,
     NoteResponseToJSON,
     RemoteFieldClass,
+    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -224,7 +225,7 @@ export class NotesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, NoteFromJSON));
     }
 
     /**
@@ -326,7 +327,7 @@ export class NotesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, RemoteFieldClassFromJSON));
     }
 
     /**

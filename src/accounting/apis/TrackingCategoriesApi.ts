@@ -35,6 +35,7 @@ export interface TrackingCategoriesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: Array<TrackingCategoriesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -47,6 +48,7 @@ export interface TrackingCategoriesListRequest {
 
 export interface TrackingCategoriesRetrieveRequest {
     id: string;
+    expand?: Array<TrackingCategoriesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: TrackingCategoriesRetrieveRemoteFieldsEnum;
     showEnumOrigins?: TrackingCategoriesRetrieveShowEnumOriginsEnum;
@@ -77,6 +79,10 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -132,7 +138,7 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, TrackingCategoryFromJSON));
     }
 
     /**
@@ -152,6 +158,10 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
@@ -203,6 +213,13 @@ export class TrackingCategoriesApi extends runtime.BaseAPI {
 * @export
 * @enum {string}
 */
+export enum TrackingCategoriesListExpandEnum {
+    Company = 'company'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum TrackingCategoriesListRemoteFieldsEnum {
     Status = 'status'
 }
@@ -212,6 +229,13 @@ export enum TrackingCategoriesListRemoteFieldsEnum {
 */
 export enum TrackingCategoriesListShowEnumOriginsEnum {
     Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum TrackingCategoriesRetrieveExpandEnum {
+    Company = 'company'
 }
 /**
 * @export

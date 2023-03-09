@@ -42,6 +42,8 @@ export interface TransactionsListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+    transactionDateAfter?: Date | null;
+    transactionDateBefore?: Date | null;
 }
 
 export interface TransactionsRetrieveRequest {
@@ -105,6 +107,14 @@ export class TransactionsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.transactionDateAfter !== undefined) {
+            queryParameters['transaction_date_after'] = (requestParameters.transactionDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.transactionDateBefore !== undefined) {
+            queryParameters['transaction_date_before'] = (requestParameters.transactionDateBefore as any).toISOString();
+        }
+
 
         
 
@@ -126,7 +136,7 @@ export class TransactionsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, TransactionFromJSON));
     }
 
     /**

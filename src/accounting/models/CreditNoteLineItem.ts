@@ -88,11 +88,11 @@ export interface CreditNoteLineItem {
      */
     account?: string | null;
     /**
-     * The company the credit note line item belongs to.
+     * The company the credit note belongs to.
      * @type {string}
      * @memberof CreditNoteLineItem
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The third-party API ID of the matching object.
      * @type {string}

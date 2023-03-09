@@ -93,7 +93,7 @@ export interface Item {
      * @type {string}
      * @memberof Item
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * When the third party's item note was updated.
      * @type {Date}

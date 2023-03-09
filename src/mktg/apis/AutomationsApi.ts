@@ -17,8 +17,9 @@ import * as runtime from '../../runtime';
 import {
     Automation,
     AutomationFromJSON,
-    AutomationToJSON,
     Contact,
+    ContactFromJSON,
+    AutomationToJSON,
     MKTGAutomationEndpointRequest,
     MKTGAutomationEndpointRequestFromJSON,
     MKTGAutomationEndpointRequestToJSON,
@@ -27,7 +28,7 @@ import {
     MKTGAutomationResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON,
+    MetaResponseToJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -192,7 +193,7 @@ export class AutomationsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, AutomationFromJSON));
     }
 
     /**
@@ -294,7 +295,7 @@ export class AutomationsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ContactFromJSON));
     }
 
     /**

@@ -15,7 +15,8 @@
 
 import * as runtime from '../../runtime';
 import {
-	AccountDetailsAndActions
+	AccountDetailsAndActions,
+    AccountDetailsAndActionsFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -127,7 +128,7 @@ export class LinkedAccountsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, AccountDetailsAndActionsFromJSON));
     }
 
     /**

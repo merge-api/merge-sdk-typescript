@@ -35,6 +35,7 @@ export interface TaxRatesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: Array<TaxRatesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -45,6 +46,7 @@ export interface TaxRatesListRequest {
 
 export interface TaxRatesRetrieveRequest {
     id: string;
+    expand?: Array<TaxRatesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
 }
 
@@ -73,6 +75,10 @@ export class TaxRatesApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -120,7 +126,7 @@ export class TaxRatesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, TaxRateFromJSON));
     }
 
     /**
@@ -140,6 +146,10 @@ export class TaxRatesApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
@@ -177,4 +187,19 @@ export class TaxRatesApi extends runtime.BaseAPI {
         return await response.value();
     }
 
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum TaxRatesListExpandEnum {
+    Company = 'company'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum TaxRatesRetrieveExpandEnum {
+    Company = 'company'
 }

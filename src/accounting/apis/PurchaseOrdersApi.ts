@@ -207,7 +207,7 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, PurchaseOrderFromJSON));
     }
 
     /**
@@ -327,6 +327,7 @@ export class PurchaseOrdersApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum PurchaseOrdersListExpandEnum {
+    Company = 'company',
     DeliveryAddress = 'delivery_address',
     LineItems = 'line_items',
     Vendor = 'vendor'
@@ -350,6 +351,7 @@ export enum PurchaseOrdersListShowEnumOriginsEnum {
 * @enum {string}
 */
 export enum PurchaseOrdersRetrieveExpandEnum {
+    Company = 'company',
     DeliveryAddress = 'delivery_address',
     LineItems = 'line_items',
     Vendor = 'vendor'
