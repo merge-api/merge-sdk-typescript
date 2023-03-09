@@ -76,7 +76,7 @@ export interface JournalEntryRequest {
      * @type {string}
      * @memberof JournalEntryRequest
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * 
      * @type {Array<JournalLineRequest>}

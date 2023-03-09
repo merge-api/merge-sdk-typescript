@@ -50,6 +50,7 @@ export interface AccountsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: Array<AccountsListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
@@ -63,6 +64,7 @@ export interface AccountsListRequest {
 // extends MergeMetaRequest
 export interface AccountsRetrieveRequest {
     id: string;
+    expand?: Array<AccountsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
     remoteFields?: AccountsRetrieveRemoteFieldsEnum;
     showEnumOrigins?: AccountsRetrieveShowEnumOriginsEnum;
@@ -148,6 +150,10 @@ export class AccountsApi extends runtime.BaseAPI {
             queryParameters['cursor'] = requestParameters.cursor;
         }
 
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeDeletedData !== undefined) {
             queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
         }
@@ -201,7 +207,7 @@ export class AccountsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, AccountFromJSON));
     }
 
     /**
@@ -266,6 +272,10 @@ export class AccountsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
         }
@@ -316,6 +326,13 @@ export class AccountsApi extends runtime.BaseAPI {
 * @export
 * @enum {string}
 */
+export enum AccountsListExpandEnum {
+    Company = 'company'
+}
+/**
+* @export
+* @enum {string}
+*/
 export enum AccountsListRemoteFieldsEnum {
     Classification = 'classification',
     Classificationstatus = 'classification,status',
@@ -329,6 +346,13 @@ export enum AccountsListShowEnumOriginsEnum {
     Classification = 'classification',
     Classificationstatus = 'classification,status',
     Status = 'status'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum AccountsRetrieveExpandEnum {
+    Company = 'company'
 }
 /**
 * @export

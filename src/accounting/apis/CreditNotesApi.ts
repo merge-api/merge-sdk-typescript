@@ -44,6 +44,8 @@ export interface CreditNotesListRequest {
     remoteFields?: CreditNotesListRemoteFieldsEnum;
     remoteId?: string | null;
     showEnumOrigins?: CreditNotesListShowEnumOriginsEnum;
+    transactionDateAfter?: Date | null;
+    transactionDateBefore?: Date | null;
 }
 
 export interface CreditNotesRetrieveRequest {
@@ -117,6 +119,14 @@ export class CreditNotesApi extends runtime.BaseAPI {
             queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
         }
 
+        if (requestParameters.transactionDateAfter !== undefined) {
+            queryParameters['transaction_date_after'] = (requestParameters.transactionDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.transactionDateBefore !== undefined) {
+            queryParameters['transaction_date_before'] = (requestParameters.transactionDateBefore as any).toISOString();
+        }
+
 
         
 
@@ -138,7 +148,7 @@ export class CreditNotesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, CreditNoteFromJSON));
     }
 
     /**

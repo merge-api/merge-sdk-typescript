@@ -19,6 +19,7 @@ import {
     CollectionFromJSON,
     CollectionToJSON,
     User,
+    UserFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -152,7 +153,7 @@ export class CollectionsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, CollectionFromJSON));
     }
 
     /**
@@ -272,7 +273,7 @@ export class CollectionsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, UserFromJSON));
     }
 
     /**

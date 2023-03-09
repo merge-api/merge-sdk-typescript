@@ -57,6 +57,8 @@ export interface JournalEntriesListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+    transactionDateAfter?: Date | null;
+    transactionDateBefore?: Date | null;
 }
 
 // extends MergeMetaRequest
@@ -174,6 +176,14 @@ export class JournalEntriesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.transactionDateAfter !== undefined) {
+            queryParameters['transaction_date_after'] = (requestParameters.transactionDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.transactionDateBefore !== undefined) {
+            queryParameters['transaction_date_before'] = (requestParameters.transactionDateBefore as any).toISOString();
+        }
+
 
         
 
@@ -195,7 +205,7 @@ export class JournalEntriesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, JournalEntryFromJSON));
     }
 
     /**
@@ -307,6 +317,7 @@ export class JournalEntriesApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum JournalEntriesListExpandEnum {
+    Company = 'company',
     Lines = 'lines',
     Payments = 'payments'
 }
@@ -315,6 +326,7 @@ export enum JournalEntriesListExpandEnum {
 * @enum {string}
 */
 export enum JournalEntriesRetrieveExpandEnum {
+    Company = 'company',
     Lines = 'lines',
     Payments = 'payments'
 }

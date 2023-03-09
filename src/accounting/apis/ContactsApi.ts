@@ -207,7 +207,7 @@ export class ContactsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ContactFromJSON));
     }
 
     /**
@@ -328,6 +328,7 @@ export class ContactsApi extends runtime.BaseAPI {
 */
 export enum ContactsListExpandEnum {
     Addresses = 'addresses',
+    Company = 'company',
     PhoneNumbers = 'phone_numbers'
 }
 /**
@@ -350,6 +351,7 @@ export enum ContactsListShowEnumOriginsEnum {
 */
 export enum ContactsRetrieveExpandEnum {
     Addresses = 'addresses',
+    Company = 'company',
     PhoneNumbers = 'phone_numbers'
 }
 /**

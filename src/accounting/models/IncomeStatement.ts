@@ -73,7 +73,7 @@ export interface IncomeStatement {
      * @type {string}
      * @memberof IncomeStatement
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The income statement's start period.
      * @type {Date}

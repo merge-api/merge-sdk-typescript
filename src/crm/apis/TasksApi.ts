@@ -15,10 +15,11 @@
 
 import * as runtime from '../../runtime';
 import {
-    RemoteFieldClass,
     Task,
     TaskFromJSON,
     TaskToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -135,7 +136,7 @@ export class TasksApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, TaskFromJSON));
     }
 
     /**
@@ -193,7 +194,7 @@ export class TasksApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, RemoteFieldClassFromJSON));
     }
 
     /**

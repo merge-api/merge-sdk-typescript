@@ -78,7 +78,7 @@ export interface ExpenseRequest {
      * @type {string}
      * @memberof ExpenseRequest
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The expense's private note.
      * @type {string}

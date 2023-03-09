@@ -87,6 +87,8 @@ src/models/ErrorValidationProblem.ts
 src/models/FieldFormat556Enum.ts
 src/models/FieldType556Enum.ts
 src/models/GenerateRemoteKeyRequest.ts
+src/models/IgnoreCommonModel.ts
+src/models/IgnoreCommonModelRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
 src/models/ItemSchema.ts
@@ -122,10 +124,13 @@ src/models/PatchedCRMAccountEndpointRequest.ts
 src/models/PatchedCRMContactEndpointRequest.ts
 src/models/PatchedCRMCustomObjectEndpointRequest.ts
 src/models/PatchedContactRequest.ts
+src/models/PatchedEngagementEndpointRequest.ts
+src/models/PatchedEngagementRequest.ts
 src/models/PatchedOpportunityEndpointRequest.ts
 src/models/PatchedOpportunityRequest.ts
 src/models/PhoneNumber.ts
 src/models/PhoneNumberRequest.ts
+src/models/ReasonEnum.ts
 src/models/RemoteField.ts
 src/models/RemoteFieldClass.ts
 src/models/RemoteFieldClassForCustomObjectClass.ts

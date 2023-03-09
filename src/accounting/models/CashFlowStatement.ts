@@ -73,7 +73,7 @@ export interface CashFlowStatement {
      * @type {string}
      * @memberof CashFlowStatement
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The cash flow statement's start period.
      * @type {Date}

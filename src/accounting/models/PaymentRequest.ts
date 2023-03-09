@@ -68,7 +68,7 @@ export interface PaymentRequest {
      * @type {string}
      * @memberof PaymentRequest
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The total amount of money being paid to the supplier, or customer, after taxes.
      * @type {number}

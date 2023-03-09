@@ -69,11 +69,11 @@ export interface BalanceSheet {
      */
     currency?: CurrencyEnum | null;
     /**
-     * The company the balance sheet belongs to.
+     * `Company` object for the given `BalanceSheet` object.
      * @type {string}
      * @memberof BalanceSheet
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * The balance sheet's date. The balance sheet data will reflect the company's financial position this point in time.
      * @type {Date}

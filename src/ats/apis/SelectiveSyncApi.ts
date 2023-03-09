@@ -15,14 +15,14 @@
 
 import * as runtime from '../../runtime';
 import {
+    ConditionSchema,
+    ConditionSchemaFromJSON,
     LinkedAccountSelectiveSyncConfiguration,
     LinkedAccountSelectiveSyncConfigurationFromJSON,
     LinkedAccountSelectiveSyncConfigurationToJSON,
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
-    ConditionSchema
-    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -172,7 +172,7 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ConditionSchemaFromJSON));
     }
 
     /**

@@ -72,10 +72,10 @@ export interface Issue {
     readonly is_muted?: boolean;
     /**
      * 
-     * @type {{ [key: string]: any; }}
+     * @type {Array<string>}
      * @memberof Issue
      */
-    readonly error_details?: { [key: string]: any; };
+    readonly error_details?: Array<string>;
 }
 
 export function IssueFromJSON(json: JSONValue): Issue | undefined {

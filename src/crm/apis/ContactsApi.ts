@@ -24,6 +24,12 @@ import {
     Contact,
     ContactFromJSON,
     ContactToJSON,
+    IgnoreCommonModel,
+    IgnoreCommonModelFromJSON,
+    IgnoreCommonModelToJSON,
+    IgnoreCommonModelRequest,
+    IgnoreCommonModelRequestFromJSON,
+    IgnoreCommonModelRequestToJSON,
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
@@ -31,6 +37,7 @@ import {
     PatchedCRMContactEndpointRequestFromJSON,
     PatchedCRMContactEndpointRequestToJSON,
     RemoteFieldClass,
+    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -46,6 +53,11 @@ export interface ContactsCreateRequest {
     cRMContactEndpointRequest: CRMContactEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
+}
+
+export interface ContactsIgnoreCreateRequest {
+    modelId: string;
+    ignoreCommonModelRequest: IgnoreCommonModelRequest;
 }
 
 export interface ContactsListRequest {
@@ -149,6 +161,55 @@ export class ContactsApi extends runtime.BaseAPI {
     }
 
     /**
+     * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
+     */
+    async contactsIgnoreCreateRaw(requestParameters: ContactsIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
+        if (requestParameters.modelId === null || requestParameters.modelId === undefined) {
+            throw new runtime.RequiredError('modelId','Required parameter requestParameters.modelId was null or undefined when calling contactsIgnoreCreate.');
+        }
+
+        if (requestParameters.ignoreCommonModelRequest === null || requestParameters.ignoreCommonModelRequest === undefined) {
+            throw new runtime.RequiredError('ignoreCommonModelRequest','Required parameter requestParameters.ignoreCommonModelRequest was null or undefined when calling contactsIgnoreCreate.');
+        }
+
+        const queryParameters: any = {};
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/contacts/ignore/{model_id}`.replace(`{${"model_id"}}`, encodeURIComponent(String(requestParameters.modelId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: IgnoreCommonModelRequestToJSON(requestParameters.ignoreCommonModelRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => IgnoreCommonModelFromJSON(jsonValue));
+    }
+
+    /**
+     * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
+     */
+    async contactsIgnoreCreate(requestParameters: ContactsIgnoreCreateRequest): Promise<IgnoreCommonModel | undefined> {
+        const response = await this.contactsIgnoreCreateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns a list of `Contact` objects.
      */
     async contactsListRaw(requestParameters: ContactsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
@@ -223,7 +284,7 @@ export class ContactsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ContactFromJSON));
     }
 
     /**
@@ -431,7 +492,7 @@ export class ContactsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, RemoteFieldClassFromJSON));
     }
 
     /**

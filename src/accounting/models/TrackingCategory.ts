@@ -73,7 +73,7 @@ export interface TrackingCategory {
      * @type {string}
      * @memberof TrackingCategory
      */
-    company?: string | null;
+    company?: string | JSONValue | null;
     /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}

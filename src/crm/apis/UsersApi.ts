@@ -15,7 +15,14 @@
 
 import * as runtime from '../../runtime';
 import {
+    IgnoreCommonModel,
+    IgnoreCommonModelFromJSON,
+    IgnoreCommonModelToJSON,
+    IgnoreCommonModelRequest,
+    IgnoreCommonModelRequestFromJSON,
+    IgnoreCommonModelRequestToJSON,
     RemoteFieldClass,
+    RemoteFieldClassFromJSON,
     User,
     UserFromJSON,
     UserToJSON,
@@ -29,6 +36,11 @@ import {
 import {
     MergeMetaRequest
 } from '../../merge_meta_request';
+
+export interface UsersIgnoreCreateRequest {
+    modelId: string;
+    ignoreCommonModelRequest: IgnoreCommonModelRequest;
+}
 
 export interface UsersListRequest {
     createdAfter?: Date;
@@ -61,6 +73,55 @@ export interface UsersRetrieveRequest {
  * 
  */
 export class UsersApi extends runtime.BaseAPI {
+
+    /**
+     * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
+     */
+    async usersIgnoreCreateRaw(requestParameters: UsersIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
+        if (requestParameters.modelId === null || requestParameters.modelId === undefined) {
+            throw new runtime.RequiredError('modelId','Required parameter requestParameters.modelId was null or undefined when calling usersIgnoreCreate.');
+        }
+
+        if (requestParameters.ignoreCommonModelRequest === null || requestParameters.ignoreCommonModelRequest === undefined) {
+            throw new runtime.RequiredError('ignoreCommonModelRequest','Required parameter requestParameters.ignoreCommonModelRequest was null or undefined when calling usersIgnoreCreate.');
+        }
+
+        const queryParameters: any = {};
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/users/ignore/{model_id}`.replace(`{${"model_id"}}`, encodeURIComponent(String(requestParameters.modelId))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: IgnoreCommonModelRequestToJSON(requestParameters.ignoreCommonModelRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => IgnoreCommonModelFromJSON(jsonValue));
+    }
+
+    /**
+     * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
+     */
+    async usersIgnoreCreate(requestParameters: UsersIgnoreCreateRequest): Promise<IgnoreCommonModel | undefined> {
+        const response = await this.usersIgnoreCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `User` objects.
@@ -129,7 +190,7 @@ export class UsersApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, UserFromJSON));
     }
 
     /**
@@ -187,7 +248,7 @@ export class UsersApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, RemoteFieldClassFromJSON));
     }
 
     /**

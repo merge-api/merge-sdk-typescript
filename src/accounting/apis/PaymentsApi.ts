@@ -59,6 +59,8 @@ export interface PaymentsListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+    transactionDateAfter?: Date | null;
+    transactionDateBefore?: Date | null;
 }
 
 // extends MergeMetaRequest
@@ -184,6 +186,14 @@ export class PaymentsApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.transactionDateAfter !== undefined) {
+            queryParameters['transaction_date_after'] = (requestParameters.transactionDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.transactionDateBefore !== undefined) {
+            queryParameters['transaction_date_before'] = (requestParameters.transactionDateBefore as any).toISOString();
+        }
+
 
         
 
@@ -205,7 +215,7 @@ export class PaymentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, PaymentFromJSON));
     }
 
     /**
@@ -318,6 +328,7 @@ export class PaymentsApi extends runtime.BaseAPI {
 */
 export enum PaymentsListExpandEnum {
     Account = 'account',
+    Company = 'company',
     Contact = 'contact'
 }
 /**
@@ -326,5 +337,6 @@ export enum PaymentsListExpandEnum {
 */
 export enum PaymentsRetrieveExpandEnum {
     Account = 'account',
+    Company = 'company',
     Contact = 'contact'
 }

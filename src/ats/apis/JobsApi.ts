@@ -40,6 +40,7 @@ export interface JobsListRequest {
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
+    offices?: string;
     pageSize?: number;
     remoteFields?: JobsListRemoteFieldsEnum;
     remoteId?: string | null;
@@ -102,6 +103,10 @@ export class JobsApi extends runtime.BaseAPI {
             queryParameters['modified_before'] = (requestParameters.modifiedBefore as any).toISOString();
         }
 
+        if (requestParameters.offices !== undefined) {
+            queryParameters['offices'] = requestParameters.offices;
+        }
+
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
@@ -143,7 +148,7 @@ export class JobsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, JobFromJSON));
     }
 
     /**

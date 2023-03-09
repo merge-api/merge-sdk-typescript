@@ -57,6 +57,8 @@ export interface ExpensesListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+    transactionDateAfter?: Date | null;
+    transactionDateBefore?: Date | null;
 }
 
 // extends MergeMetaRequest
@@ -174,6 +176,14 @@ export class ExpensesApi extends runtime.BaseAPI {
             queryParameters['remote_id'] = requestParameters.remoteId;
         }
 
+        if (requestParameters.transactionDateAfter !== undefined) {
+            queryParameters['transaction_date_after'] = (requestParameters.transactionDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.transactionDateBefore !== undefined) {
+            queryParameters['transaction_date_before'] = (requestParameters.transactionDateBefore as any).toISOString();
+        }
+
 
         
 
@@ -195,7 +205,7 @@ export class ExpensesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ExpenseFromJSON));
     }
 
     /**
@@ -308,6 +318,7 @@ export class ExpensesApi extends runtime.BaseAPI {
 */
 export enum ExpensesListExpandEnum {
     Account = 'account',
+    Company = 'company',
     Contact = 'contact'
 }
 /**
@@ -316,5 +327,6 @@ export enum ExpensesListExpandEnum {
 */
 export enum ExpensesRetrieveExpandEnum {
     Account = 'account',
+    Company = 'company',
     Contact = 'contact'
 }
