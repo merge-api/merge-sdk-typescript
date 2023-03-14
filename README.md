@@ -1,4 +1,4 @@
-## @mergeapi/merge-sdk-typescript@3.0.7
+## @mergeapi/merge-sdk-typescript@3.0.8
 
 This is the Merge API, Inc. SDK client for Typescript. It utilizes [Fetch API](https://fetch.spec.whatwg.org/) to
 make requests to Merge on behalf of customers. We recommend only using this module in NodeJS server environments.
@@ -174,7 +174,7 @@ navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install @mergeapi/merge-sdk-typescript@3.0.7 --save
+npm install @mergeapi/merge-sdk-typescript@3.0.8 --save
 ```
 
 _unPublished (not recommended):_
