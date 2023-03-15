@@ -1,6 +1,7 @@
 export * as Accounting from './accounting';
 export * as ATS from './ats';
 export * as CRM from './crm';
+export * as FileStorage from './filestorage';
 export * as HRIS from './hris';
 export * as MKTG from './mktg';
 export * as Ticketing from './ticketing';

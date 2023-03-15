@@ -1,3 +1,9 @@
+# Version 3.0.8
+
+# Date: 2022-03-14
+
+- Added FileStorage category (in Beta)
+
 # Version 3.0.7
 
 # Date: 2022-03-08
