@@ -16,7 +16,11 @@ import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 
 /**
- * 
+ * # The Association Object
+ * ### Description
+ * The `Association` record refers to an instance of an Association Type.
+ * ### Usage Example
+ * TODO
  * @export
  * @interface Association
  */

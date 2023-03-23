@@ -1,10 +1,13 @@
 src/apis/AccountDetailsApi.ts
 src/apis/AccountTokenApi.ts
 src/apis/AccountsApi.ts
+src/apis/AssociationTypesApi.ts
+src/apis/AssociationsApi.ts
 src/apis/AvailableActionsApi.ts
 src/apis/CommonModelScopesApi.ts
 src/apis/ContactsApi.ts
 src/apis/CustomObjectClassesApi.ts
+src/apis/CustomObjectsApi.ts
 src/apis/DeleteAccountApi.ts
 src/apis/EngagementTypesApi.ts
 src/apis/EngagementsApi.ts
@@ -128,6 +131,8 @@ src/models/PatchedEngagementEndpointRequest.ts
 src/models/PatchedEngagementRequest.ts
 src/models/PatchedOpportunityEndpointRequest.ts
 src/models/PatchedOpportunityRequest.ts
+src/models/PatchedTaskEndpointRequest.ts
+src/models/PatchedTaskRequest.ts
 src/models/PhoneNumber.ts
 src/models/PhoneNumberRequest.ts
 src/models/ReasonEnum.ts
@@ -145,6 +150,9 @@ src/models/Stage.ts
 src/models/SyncStatus.ts
 src/models/SyncStatusStatusEnum.ts
 src/models/Task.ts
+src/models/TaskEndpointRequest.ts
+src/models/TaskRequest.ts
+src/models/TaskResponse.ts
 src/models/TaskStatusEnum.ts
 src/models/User.ts
 src/models/ValidationProblemSource.ts

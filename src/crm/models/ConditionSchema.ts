@@ -63,11 +63,11 @@ export interface ConditionSchema {
      */
     is_unique?: boolean;
     /**
-     * 
+     * The type of value(s) that can be set for this condition.
      * @type {ConditionTypeEnum}
      * @memberof ConditionSchema
      */
-    condition_type: ConditionTypeEnum;
+    condition_type: ConditionTypeEnum | null;
     /**
      * The schemas for the operators that can be used on a condition.
      * @type {Array<OperatorSchema>}

@@ -16,7 +16,7 @@
 import * as runtime from '../../runtime';
 import {
 	SyncStatus,
-    SyncStatusFromJSON
+    SyncStatusFromJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -29,6 +29,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface SyncStatusListRequest {
+    xAccountToken: string;
     cursor?: string;
     pageSize?: number;
 }
@@ -42,6 +43,10 @@ export class SyncStatusApi extends runtime.BaseAPI {
      * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
      */
     async syncStatusListRaw(requestParameters: SyncStatusListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<SyncStatus> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling syncStatusList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.cursor !== undefined) {
@@ -57,10 +62,11 @@ export class SyncStatusApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
