@@ -1,3 +1,9 @@
+# Version 3.0.9
+
+# Date: 2022-03-24
+
+- Added POST Task object APIs in CRM category
+
 # Version 3.0.8
 
 # Date: 2022-03-14
