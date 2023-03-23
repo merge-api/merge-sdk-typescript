@@ -18,11 +18,11 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON,
     PatchedTaskEndpointRequest,
     PatchedTaskEndpointRequestFromJSON,
     PatchedTaskEndpointRequestToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON,
     Task,
     TaskFromJSON,
     TaskToJSON,
@@ -44,14 +44,12 @@ import {
 } from '../../merge_meta_request';
 
 export interface TasksCreateRequest {
-    xAccountToken: string;
     taskEndpointRequest: TaskEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface TasksListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -66,16 +64,11 @@ export interface TasksListRequest {
 }
 
 export interface TasksMetaPatchRetrieveRequest extends MergeMetaRequest {
-    xAccountToken: string;
     id: string;
 }
 
-export interface TasksMetaPostRetrieveRequest extends MergeMetaRequest {
-    xAccountToken: string;
-}
-
+// extends MergeMetaRequest
 export interface TasksPartialUpdateRequest {
-    xAccountToken: string;
     id: string;
     patchedTaskEndpointRequest: PatchedTaskEndpointRequest;
     isDebugMode?: boolean;
@@ -83,7 +76,6 @@ export interface TasksPartialUpdateRequest {
 }
 
 export interface TasksRemoteFieldClassesListRequest {
-    xAccountToken: string;
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
@@ -92,7 +84,6 @@ export interface TasksRemoteFieldClassesListRequest {
 }
 
 export interface TasksRetrieveRequest {
-    xAccountToken: string;
     id: string;
     expand?: Array<TasksRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -108,10 +99,6 @@ export class TasksApi extends runtime.BaseAPI {
      * Creates a `Task` object with the given values.
      */
     async tasksCreateRaw(requestParameters: TasksCreateRequest): Promise<runtime.ApiResponse<TaskResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tasksCreate.');
-        }
-
         if (requestParameters.taskEndpointRequest === null || requestParameters.taskEndpointRequest === undefined) {
             throw new runtime.RequiredError('taskEndpointRequest','Required parameter requestParameters.taskEndpointRequest was null or undefined when calling tasksCreate.');
         }
@@ -133,11 +120,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -166,10 +152,6 @@ export class TasksApi extends runtime.BaseAPI {
      * Returns a list of `Task` objects.
      */
     async tasksListRaw(requestParameters: TasksListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Task> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tasksList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -221,11 +203,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -253,10 +234,6 @@ export class TasksApi extends runtime.BaseAPI {
      * Returns metadata for `Task` PATCHs.
      */
     async tasksMetaPatchRetrieveRaw(requestParameters: TasksMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tasksMetaPatchRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling tasksMetaPatchRetrieve.');
         }
@@ -275,11 +252,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -306,11 +282,7 @@ export class TasksApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Task` POSTs.
      */
-    async tasksMetaPostRetrieveRaw(requestParameters: TasksMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tasksMetaPostRetrieve.');
-        }
-
+    async tasksMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
 
@@ -324,11 +296,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -347,7 +318,7 @@ export class TasksApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Task` POSTs.
      */
-    async tasksMetaPostRetrieve(requestParameters: TasksMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
+    async tasksMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
         const response = await this.tasksMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -356,10 +327,6 @@ export class TasksApi extends runtime.BaseAPI {
      * Updates a `Task` object with the given `id`.
      */
     async tasksPartialUpdateRaw(requestParameters: TasksPartialUpdateRequest): Promise<runtime.ApiResponse<TaskResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tasksPartialUpdate.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling tasksPartialUpdate.');
         }
@@ -385,11 +352,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -418,10 +384,6 @@ export class TasksApi extends runtime.BaseAPI {
      * Returns a list of `RemoteFieldClass` objects.
      */
     async tasksRemoteFieldClassesListRaw(requestParameters: TasksRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tasksRemoteFieldClassesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.cursor !== undefined) {
@@ -449,11 +411,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -481,10 +442,6 @@ export class TasksApi extends runtime.BaseAPI {
      * Returns a `Task` object with the given `id`.
      */
     async tasksRetrieveRaw(requestParameters: TasksRetrieveRequest): Promise<runtime.ApiResponse<Task | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tasksRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling tasksRetrieve.');
         }
@@ -508,11 +465,10 @@ export class TasksApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

@@ -23,7 +23,6 @@ import {
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
-    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -35,17 +34,12 @@ import {
     MergeMetaRequest
 } from '../../merge_meta_request';
 
-export interface SelectiveSyncConfigurationsListRequest {
-    xAccountToken: string;
-}
-
+//
 export interface SelectiveSyncConfigurationsUpdateRequest {
-    xAccountToken: string;
     linkedAccountSelectiveSyncConfigurationListRequest: LinkedAccountSelectiveSyncConfigurationListRequest;
 }
 
 export interface SelectiveSyncMetaListRequest {
-    xAccountToken: string;
     commonModel?: string;
     cursor?: string;
     pageSize?: number;
@@ -59,11 +53,7 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
     /**
      * Get a linked account\'s selective syncs.
      */
-    async selectiveSyncConfigurationsListRaw(requestParameters: SelectiveSyncConfigurationsListRequest): Promise<runtime.ApiResponse<Array<LinkedAccountSelectiveSyncConfiguration> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling selectiveSyncConfigurationsList.');
-        }
-
+    async selectiveSyncConfigurationsListRaw(): Promise<runtime.ApiResponse<Array<LinkedAccountSelectiveSyncConfiguration> | undefined>> {
         const queryParameters: any = {};
 
 
@@ -71,11 +61,10 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -94,8 +83,8 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
     /**
      * Get a linked account\'s selective syncs.
      */
-    async selectiveSyncConfigurationsList(requestParameters: SelectiveSyncConfigurationsListRequest): Promise<Array<LinkedAccountSelectiveSyncConfiguration> | undefined> {
-        const response = await this.selectiveSyncConfigurationsListRaw(requestParameters);
+    async selectiveSyncConfigurationsList(): Promise<Array<LinkedAccountSelectiveSyncConfiguration> | undefined> {
+        const response = await this.selectiveSyncConfigurationsListRaw();
         return await response.value();
     }
 
@@ -103,10 +92,6 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
      * Replace a linked account\'s selective syncs.
      */
     async selectiveSyncConfigurationsUpdateRaw(requestParameters: SelectiveSyncConfigurationsUpdateRequest): Promise<runtime.ApiResponse<Array<LinkedAccountSelectiveSyncConfiguration> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling selectiveSyncConfigurationsUpdate.');
-        }
-
         if (requestParameters.linkedAccountSelectiveSyncConfigurationListRequest === null || requestParameters.linkedAccountSelectiveSyncConfigurationListRequest === undefined) {
             throw new runtime.RequiredError('linkedAccountSelectiveSyncConfigurationListRequest','Required parameter requestParameters.linkedAccountSelectiveSyncConfigurationListRequest was null or undefined when calling selectiveSyncConfigurationsUpdate.');
         }
@@ -120,11 +105,10 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -153,10 +137,6 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
      * Get metadata for the conditions available to a linked account.
      */
     async selectiveSyncMetaListRaw(requestParameters: SelectiveSyncMetaListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<ConditionSchema> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling selectiveSyncMetaList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.commonModel !== undefined) {
@@ -176,11 +156,10 @@ export class SelectiveSyncApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

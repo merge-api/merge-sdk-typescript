@@ -24,10 +24,7 @@ import {
     MergeMetaRequest
 } from '../../merge_meta_request';
 
-export interface SyncStatusResyncCreateRequest {
-    xAccountToken: string;
-}
-
+//
 /**
  * 
  */
@@ -36,11 +33,7 @@ export class ForceResyncApi extends runtime.BaseAPI {
     /**
      * Force re-sync of all models. This is only available for organizations on Merge\'s Grow and Expand plans.
      */
-    async syncStatusResyncCreateRaw(requestParameters: SyncStatusResyncCreateRequest): Promise<runtime.ApiResponse<Array<SyncStatus> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling syncStatusResyncCreate.');
-        }
-
+    async syncStatusResyncCreateRaw(): Promise<runtime.ApiResponse<Array<SyncStatus> | undefined>> {
         const queryParameters: any = {};
 
 
@@ -48,11 +41,10 @@ export class ForceResyncApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -71,8 +63,8 @@ export class ForceResyncApi extends runtime.BaseAPI {
     /**
      * Force re-sync of all models. This is only available for organizations on Merge\'s Grow and Expand plans.
      */
-    async syncStatusResyncCreate(requestParameters: SyncStatusResyncCreateRequest): Promise<Array<SyncStatus> | undefined> {
-        const response = await this.syncStatusResyncCreateRaw(requestParameters);
+    async syncStatusResyncCreate(): Promise<Array<SyncStatus> | undefined> {
+        const response = await this.syncStatusResyncCreateRaw();
         return await response.value();
     }
 

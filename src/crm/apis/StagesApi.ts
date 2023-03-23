@@ -15,11 +15,11 @@
 
 import * as runtime from '../../runtime';
 import {
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON,
     Stage,
     StageFromJSON,
     StageToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -32,7 +32,6 @@ import {
 } from '../../merge_meta_request';
 
 export interface StagesListRequest {
-    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -46,7 +45,6 @@ export interface StagesListRequest {
 }
 
 export interface StagesRemoteFieldClassesListRequest {
-    xAccountToken: string;
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
@@ -55,7 +53,6 @@ export interface StagesRemoteFieldClassesListRequest {
 }
 
 export interface StagesRetrieveRequest {
-    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     includeRemoteFields?: boolean;
@@ -70,10 +67,6 @@ export class StagesApi extends runtime.BaseAPI {
      * Returns a list of `Stage` objects.
      */
     async stagesListRaw(requestParameters: StagesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Stage> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling stagesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -121,11 +114,10 @@ export class StagesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -153,10 +145,6 @@ export class StagesApi extends runtime.BaseAPI {
      * Returns a list of `RemoteFieldClass` objects.
      */
     async stagesRemoteFieldClassesListRaw(requestParameters: StagesRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling stagesRemoteFieldClassesList.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.cursor !== undefined) {
@@ -184,11 +172,10 @@ export class StagesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -216,10 +203,6 @@ export class StagesApi extends runtime.BaseAPI {
      * Returns a `Stage` object with the given `id`.
      */
     async stagesRetrieveRaw(requestParameters: StagesRetrieveRequest): Promise<runtime.ApiResponse<Stage | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling stagesRetrieve.');
-        }
-
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling stagesRetrieve.');
         }
@@ -239,11 +222,10 @@ export class StagesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

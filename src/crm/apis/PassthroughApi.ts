@@ -28,7 +28,6 @@ import {
 } from '../../merge_meta_request';
 
 export interface PassthroughCreateRequest {
-    xAccountToken: string;
     dataPassthroughRequest: DataPassthroughRequest;
 }
 
@@ -41,10 +40,6 @@ export class PassthroughApi extends runtime.BaseAPI {
      * Pull data from an endpoint not currently supported by Merge.
      */
     async passthroughCreateRaw(requestParameters: PassthroughCreateRequest): Promise<runtime.ApiResponse<RemoteResponse | undefined>> {
-        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
-            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling passthroughCreate.');
-        }
-
         if (requestParameters.dataPassthroughRequest === null || requestParameters.dataPassthroughRequest === undefined) {
             throw new runtime.RequiredError('dataPassthroughRequest','Required parameter requestParameters.dataPassthroughRequest was null or undefined when calling passthroughCreate.');
         }
@@ -58,11 +53,10 @@ export class PassthroughApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
-            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
         }
-
-
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

@@ -54,6 +54,9 @@ export class GenerateKeyApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
 
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
