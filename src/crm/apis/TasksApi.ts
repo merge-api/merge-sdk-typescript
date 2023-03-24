@@ -15,11 +15,23 @@
 
 import * as runtime from '../../runtime';
 import {
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON,
+    PatchedTaskEndpointRequest,
+    PatchedTaskEndpointRequestFromJSON,
+    PatchedTaskEndpointRequestToJSON,
     Task,
     TaskFromJSON,
     TaskToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON
+    TaskEndpointRequest,
+    TaskEndpointRequestFromJSON,
+    TaskEndpointRequestToJSON,
+    TaskResponse,
+    TaskResponseFromJSON,
+    TaskResponseToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -30,6 +42,12 @@ import {
 import {
     MergeMetaRequest
 } from '../../merge_meta_request';
+
+export interface TasksCreateRequest {
+    taskEndpointRequest: TaskEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface TasksListRequest {
     createdAfter?: Date;
@@ -43,6 +61,18 @@ export interface TasksListRequest {
     modifiedBefore?: Date;
     pageSize?: number;
     remoteId?: string | null;
+}
+
+export interface TasksMetaPatchRetrieveRequest extends MergeMetaRequest {
+    id: string;
+}
+
+// extends MergeMetaRequest
+export interface TasksPartialUpdateRequest {
+    id: string;
+    patchedTaskEndpointRequest: PatchedTaskEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
 }
 
 export interface TasksRemoteFieldClassesListRequest {
@@ -64,6 +94,59 @@ export interface TasksRetrieveRequest {
  * 
  */
 export class TasksApi extends runtime.BaseAPI {
+
+    /**
+     * Creates a `Task` object with the given values.
+     */
+    async tasksCreateRaw(requestParameters: TasksCreateRequest): Promise<runtime.ApiResponse<TaskResponse | undefined>> {
+        if (requestParameters.taskEndpointRequest === null || requestParameters.taskEndpointRequest === undefined) {
+            throw new runtime.RequiredError('taskEndpointRequest','Required parameter requestParameters.taskEndpointRequest was null or undefined when calling tasksCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/tasks`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: TaskEndpointRequestToJSON(requestParameters.taskEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TaskResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates a `Task` object with the given values.
+     */
+    async tasksCreate(requestParameters: TasksCreateRequest): Promise<TaskResponse | undefined> {
+        const response = await this.tasksCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `Task` objects.
@@ -144,6 +227,156 @@ export class TasksApi extends runtime.BaseAPI {
      */
     async tasksList(requestParameters: TasksListRequest): Promise<MergePaginatedResponse<Task> | undefined> {
         const response = await this.tasksListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `Task` PATCHs.
+     */
+    async tasksMetaPatchRetrieveRaw(requestParameters: TasksMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling tasksMetaPatchRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/tasks/meta/patch/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Task` PATCHs.
+     */
+    async tasksMetaPatchRetrieve(requestParameters: TasksMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.tasksMetaPatchRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `Task` POSTs.
+     */
+    async tasksMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/tasks/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Task` POSTs.
+     */
+    async tasksMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.tasksMetaPostRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Updates a `Task` object with the given `id`.
+     */
+    async tasksPartialUpdateRaw(requestParameters: TasksPartialUpdateRequest): Promise<runtime.ApiResponse<TaskResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling tasksPartialUpdate.');
+        }
+
+        if (requestParameters.patchedTaskEndpointRequest === null || requestParameters.patchedTaskEndpointRequest === undefined) {
+            throw new runtime.RequiredError('patchedTaskEndpointRequest','Required parameter requestParameters.patchedTaskEndpointRequest was null or undefined when calling tasksPartialUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/crm/v1/tasks/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchedTaskEndpointRequestToJSON(requestParameters.patchedTaskEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => TaskResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a `Task` object with the given `id`.
+     */
+    async tasksPartialUpdate(requestParameters: TasksPartialUpdateRequest): Promise<TaskResponse | undefined> {
+        const response = await this.tasksPartialUpdateRaw(requestParameters);
         return await response.value();
     }
 

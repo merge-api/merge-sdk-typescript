@@ -23,9 +23,9 @@ import {
 
 
 /**
- * # The CustomObjectClass Object
+ * # The Custom Object Class Object
  * ### Description
- * The Custom Object Class object is used to represent a Custom Object Schema in the remote system.
+ * The `Custom Object Class` object is used to represent a Custom Object Schema in the remote system.
  * ### Usage Example
  * TODO
  * @export
