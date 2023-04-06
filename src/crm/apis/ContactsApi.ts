@@ -33,11 +33,13 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    PaginatedContactList,
+    PaginatedContactListFromJSON,
+    PaginatedContactListToJSON,
+    
     PatchedCRMContactEndpointRequest,
     PatchedCRMContactEndpointRequestFromJSON,
     PatchedCRMContactEndpointRequestToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,

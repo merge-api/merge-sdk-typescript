@@ -31,7 +31,7 @@ import {
 export class ForceResyncApi extends runtime.BaseAPI {
 
     /**
-     * Force re-sync of all models. This is only available for organizations on Merge\'s Grow and Expand plans.
+     * Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available for monthly and quarterly sync frequency customers on the Core, Professional, or Enterprise plans.
      */
     async syncStatusResyncCreateRaw(): Promise<runtime.ApiResponse<Array<SyncStatus> | undefined>> {
         const queryParameters: any = {};
@@ -61,7 +61,7 @@ export class ForceResyncApi extends runtime.BaseAPI {
     }
 
     /**
-     * Force re-sync of all models. This is only available for organizations on Merge\'s Grow and Expand plans.
+     * Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available for monthly and quarterly sync frequency customers on the Core, Professional, or Enterprise plans.
      */
     async syncStatusResyncCreate(): Promise<Array<SyncStatus> | undefined> {
         const response = await this.syncStatusResyncCreateRaw();

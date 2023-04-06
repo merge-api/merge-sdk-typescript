@@ -15,7 +15,9 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `RAW` - RAW
+ * * `BASE64` - BASE64
+ * * `GZIP_BASE64` - GZIP_BASE64
  * @export
  * @enum {string}
  */

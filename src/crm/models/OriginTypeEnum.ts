@@ -15,7 +15,9 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `CUSTOM_OBJECT` - CUSTOM_OBJECT
+ * * `COMMON_MODEL` - COMMON_MODEL
+ * * `REMOTE_ONLY_MODEL` - REMOTE_ONLY_MODEL
  * @export
  * @enum {string}
  */

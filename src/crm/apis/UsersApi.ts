@@ -21,8 +21,10 @@ import {
     IgnoreCommonModelRequest,
     IgnoreCommonModelRequestFromJSON,
     IgnoreCommonModelRequestToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON,
+    PaginatedRemoteFieldClassList,
+    PaginatedRemoteFieldClassListFromJSON,
+    PaginatedRemoteFieldClassListToJSON,
+    
     User,
     UserFromJSON,
     UserToJSON,
