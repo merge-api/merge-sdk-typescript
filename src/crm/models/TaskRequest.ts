@@ -70,6 +70,9 @@ export interface TaskRequest {
     due_date?: Date | null;
     /**
      * The task's status.
+     * 
+     * * `OPEN` - OPEN
+     * * `CLOSED` - CLOSED
      * @type {TaskStatusEnum}
      * @memberof TaskRequest
      */

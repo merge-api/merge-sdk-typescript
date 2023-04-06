@@ -70,6 +70,10 @@ export interface PatchedOpportunityRequest {
     stage?: string | null;
     /**
      * The opportunity's status.
+     * 
+     * * `OPEN` - OPEN
+     * * `WON` - WON
+     * * `LOST` - LOST
      * @type {OpportunityStatusEnum}
      * @memberof PatchedOpportunityRequest
      */

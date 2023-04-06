@@ -81,6 +81,10 @@ export interface Opportunity {
     stage?: string | JSONValue | null;
     /**
      * The opportunity's status.
+     * 
+     * * `OPEN` - OPEN
+     * * `WON` - WON
+     * * `LOST` - LOST
      * @type {OpportunityStatusEnum}
      * @memberof Opportunity
      */

@@ -26,13 +26,13 @@ export interface ItemSchema {
      * @type {boolean}
      * @memberof ItemSchema
      */
-    item_type?: boolean;
+    item_type?: boolean | null;
     /**
      * 
      * @type {boolean}
      * @memberof ItemSchema
      */
-    item_format?: boolean;
+    item_format?: boolean | null;
     /**
      * 
      * @type {Array<string>}

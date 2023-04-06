@@ -18,8 +18,10 @@ import {
     EngagementType,
     EngagementTypeFromJSON,
     EngagementTypeToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON
+    PaginatedEngagementTypeList,
+    PaginatedEngagementTypeListFromJSON,
+    PaginatedEngagementTypeListToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -32,6 +34,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface EngagementTypesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -45,6 +48,7 @@ export interface EngagementTypesListRequest {
 }
 
 export interface EngagementTypesRemoteFieldClassesListRequest {
+    xAccountToken: string;
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
@@ -53,6 +57,7 @@ export interface EngagementTypesRemoteFieldClassesListRequest {
 }
 
 export interface EngagementTypesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     includeRemoteFields?: boolean;
@@ -67,6 +72,10 @@ export class EngagementTypesApi extends runtime.BaseAPI {
      * Returns a list of `EngagementType` objects.
      */
     async engagementTypesListRaw(requestParameters: EngagementTypesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EngagementType> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling engagementTypesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -114,10 +123,11 @@ export class EngagementTypesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -145,6 +155,10 @@ export class EngagementTypesApi extends runtime.BaseAPI {
      * Returns a list of `RemoteFieldClass` objects.
      */
     async engagementTypesRemoteFieldClassesListRaw(requestParameters: EngagementTypesRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling engagementTypesRemoteFieldClassesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.cursor !== undefined) {
@@ -172,10 +186,11 @@ export class EngagementTypesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -203,6 +218,10 @@ export class EngagementTypesApi extends runtime.BaseAPI {
      * Returns an `EngagementType` object with the given `id`.
      */
     async engagementTypesRetrieveRaw(requestParameters: EngagementTypesRetrieveRequest): Promise<runtime.ApiResponse<EngagementType | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling engagementTypesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling engagementTypesRetrieve.');
         }
@@ -222,10 +241,11 @@ export class EngagementTypesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

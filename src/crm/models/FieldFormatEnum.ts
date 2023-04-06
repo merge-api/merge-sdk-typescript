@@ -15,11 +15,16 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `string` - uuid
+ * * `number` - url
+ * * `date` - email
+ * * `datetime` - phone
+ * * `bool` - currency
+ * * `list` - decimal
  * @export
  * @enum {string}
  */
-export enum FieldFormatEnumValues {
+export enum FieldFormat556EnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     String = 'string',
     Number = 'number',
@@ -29,30 +34,30 @@ export enum FieldFormatEnumValues {
     List = 'list'
 }
 
-export interface FieldFormatEnum {
-    value: FieldFormatEnumValues,
+export interface FieldFormat556Enum {
+    value: FieldFormat556EnumValues,
     rawValue: string
 }
 
 
-export function FieldFormatEnumFromJSON(json: any): FieldFormatEnum {
-    return FieldFormatEnumFromJSONTyped(json, false);
+export function FieldFormat556EnumFromJSON(json: any): FieldFormat556Enum {
+    return FieldFormat556EnumFromJSONTyped(json, false);
 }
 
-export function FieldFormatEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): FieldFormatEnum {
-    if ((<any>Object).values(FieldFormatEnumValues).includes(json)) {
+export function FieldFormat556EnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): FieldFormat556Enum {
+    if ((<any>Object).values(FieldFormat556EnumValues).includes(json)) {
         return {
-            value: json as FieldFormatEnumValues,
+            value: json as FieldFormat556EnumValues,
             rawValue: json as string
         }
     }
     return {
-        value: FieldFormatEnumValues.MERGE_NONSTANDARD_VALUE,
+        value: FieldFormat556EnumValues.MERGE_NONSTANDARD_VALUE,
         rawValue: json as string
     }
 }
 
-export function FieldFormatEnumToJSON(value?: FieldFormatEnum | null): JSONValue {
-    return value && value.value != FieldFormatEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
+export function FieldFormat556EnumToJSON(value?: FieldFormat556Enum | null): JSONValue {
+    return value && value.value != FieldFormat556EnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 
