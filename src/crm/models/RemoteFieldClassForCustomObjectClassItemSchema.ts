@@ -26,19 +26,19 @@ export interface RemoteFieldClassForCustomObjectClassItemSchema {
      * @type {string}
      * @memberof RemoteFieldClassForCustomObjectClassItemSchema
      */
-    item_type?: string | null;
+    item_type: string | null;
     /**
      * 
      * @type {string}
      * @memberof RemoteFieldClassForCustomObjectClassItemSchema
      */
-    item_format?: string | null;
+    item_format: string | null;
     /**
      * 
      * @type {Array<string>}
      * @memberof RemoteFieldClassForCustomObjectClassItemSchema
      */
-    item_choices?: Array<string> | null;
+    item_choices: Array<string> | null;
 }
 
 export function RemoteFieldClassForCustomObjectClassItemSchemaFromJSON(json: JSONValue): RemoteFieldClassForCustomObjectClassItemSchema | undefined {
@@ -52,13 +52,13 @@ export function RemoteFieldClassForCustomObjectClassItemSchemaFromJSONTyped(json
 
     return {
         
-        'item_type': !exists(json, 'item_type') ? undefined : json['item_type'],
-        'item_format': !exists(json, 'item_format') ? undefined : json['item_format'],
-        'item_choices': !exists(json, 'item_choices') ? undefined : json['item_choices'],
+        'item_type': json['item_type'],
+        'item_format': json['item_format'],
+        'item_choices': json['item_choices'],
     };
 }
 
-export function RemoteFieldClassForCustomObjectClassItemSchemaToJSON(value?: RemoteFieldClassForCustomObjectClassItemSchema | null): JSONValue {
+export function RemoteFieldClassForCustomObjectClassItemSchemaToJSON(value?: RemoteFieldClassForCustomObjectClassItemSchema): JSONValue {
     if (value === undefined || value === null) {
         return undefined;
     }

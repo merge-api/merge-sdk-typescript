@@ -69,13 +69,13 @@ export interface RemoteFieldClass {
      * @type {boolean}
      * @memberof RemoteFieldClass
      */
-    field_type?: boolean;
+    field_type?: boolean | null;
     /**
      * 
      * @type {boolean}
      * @memberof RemoteFieldClass
      */
-    field_format?: boolean;
+    field_format?: boolean | null;
     /**
      * 
      * @type {Array<string>}

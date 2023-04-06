@@ -15,7 +15,13 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `hris` - hris
+ * * `ats` - ats
+ * * `accounting` - accounting
+ * * `ticketing` - ticketing
+ * * `crm` - crm
+ * * `mktg` - mktg
+ * * `filestorage` - filestorage
  * @export
  * @enum {string}
  */

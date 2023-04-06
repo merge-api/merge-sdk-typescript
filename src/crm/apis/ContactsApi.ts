@@ -39,6 +39,7 @@ import {
     RemoteFieldClass,
     RemoteFieldClassFromJSON
 } from '../models';
+
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,

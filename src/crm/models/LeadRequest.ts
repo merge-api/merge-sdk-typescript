@@ -14,6 +14,21 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    AddressRequest,
+    AddressRequestFromJSON,
+    AddressRequestFromJSONTyped,
+    AddressRequestToJSON,
+    EmailAddressRequest,
+    EmailAddressRequestFromJSON,
+    EmailAddressRequestFromJSONTyped,
+    EmailAddressRequestToJSON,
+    PhoneNumberRequest,
+    PhoneNumberRequestFromJSON,
+    PhoneNumberRequestFromJSONTyped,
+    PhoneNumberRequestToJSON,
+} from './';
+
 
 /**
  * # The Lead Object
@@ -61,6 +76,24 @@ export interface LeadRequest {
      * @memberof LeadRequest
      */
     last_name?: string | null;
+    /**
+     * 
+     * @type {Array<AddressRequest>}
+     * @memberof LeadRequest
+     */
+    addresses?: Array<AddressRequest>;
+    /**
+     * 
+     * @type {Array<EmailAddressRequest>}
+     * @memberof LeadRequest
+     */
+    email_addresses?: Array<EmailAddressRequest>;
+    /**
+     * 
+     * @type {Array<PhoneNumberRequest>}
+     * @memberof LeadRequest
+     */
+    phone_numbers?: Array<PhoneNumberRequest>;
     /**
      * When the lead was converted.
      * @type {Date}
@@ -110,6 +143,9 @@ export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest | undefin
         'company': !exists(json, 'company') ? undefined : json['company'],
         'first_name': !exists(json, 'first_name') ? undefined : json['first_name'],
         'last_name': !exists(json, 'last_name') ? undefined : json['last_name'],
+        'addresses': !exists(json, 'addresses') ? undefined : ((json['addresses'] as Array<JSONValue>).map(AddressRequestFromJSON)) as Array<AddressRequest>,
+        'email_addresses': !exists(json, 'email_addresses') ? undefined : ((json['email_addresses'] as Array<JSONValue>).map(EmailAddressRequestFromJSON)) as Array<EmailAddressRequest>,
+        'phone_numbers': !exists(json, 'phone_numbers') ? undefined : ((json['phone_numbers'] as Array<JSONValue>).map(PhoneNumberRequestFromJSON)) as Array<PhoneNumberRequest>,
         'converted_date': !exists(json, 'converted_date') ? undefined : (json['converted_date'] === null ? null : new Date(json['converted_date'])),
         'converted_contact': !exists(json, 'converted_contact') ? undefined : json['converted_contact'],
         'converted_account': !exists(json, 'converted_account') ? undefined : json['converted_account'],
@@ -131,6 +167,9 @@ export function LeadRequestToJSON(value?: LeadRequest): JSONValue {
         'company': value.company,
         'first_name': value.first_name,
         'last_name': value.last_name,
+        'addresses': value.addresses === undefined ? undefined : ((value.addresses as Array<any>).map(AddressRequestToJSON)),
+        'email_addresses': value.email_addresses === undefined ? undefined : ((value.email_addresses as Array<any>).map(EmailAddressRequestToJSON)),
+        'phone_numbers': value.phone_numbers === undefined ? undefined : ((value.phone_numbers as Array<any>).map(PhoneNumberRequestToJSON)),
         'converted_date': value.converted_date === undefined ? undefined : (value.converted_date === null ? null : value.converted_date.toISOString()),
         'converted_contact': value.converted_contact,
         'converted_account': value.converted_account,

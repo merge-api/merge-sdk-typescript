@@ -52,6 +52,9 @@ export interface PatchedEngagementRequest {
     subject?: string | null;
     /**
      * The engagement's direction.
+     * 
+     * * `INBOUND` - INBOUND
+     * * `OUTBOUND` - OUTBOUND
      * @type {DirectionEnum}
      * @memberof PatchedEngagementRequest
      */

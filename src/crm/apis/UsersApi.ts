@@ -23,6 +23,7 @@ import {
     IgnoreCommonModelRequestToJSON,
     RemoteFieldClass,
     RemoteFieldClassFromJSON,
+    
     User,
     UserFromJSON,
     UserToJSON,

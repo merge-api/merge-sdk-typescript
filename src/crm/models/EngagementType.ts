@@ -38,6 +38,10 @@ import {
 export interface EngagementType {
     /**
      * The engagement type's activity type.
+     * 
+     * * `CALL` - CALL
+     * * `MEETING` - MEETING
+     * * `EMAIL` - EMAIL
      * @type {ActivityTypeEnum}
      * @memberof EngagementType
      */

@@ -15,7 +15,9 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `OPEN` - OPEN
+ * * `WON` - WON
+ * * `LOST` - LOST
  * @export
  * @enum {string}
  */

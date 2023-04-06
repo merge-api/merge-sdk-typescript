@@ -70,6 +70,10 @@ export interface OpportunityRequest {
     stage?: string | JSONValue | null;
     /**
      * The opportunity's status.
+     * 
+     * * `OPEN` - OPEN
+     * * `WON` - WON
+     * * `LOST` - LOST
      * @type {OpportunityStatusEnum}
      * @memberof OpportunityRequest
      */

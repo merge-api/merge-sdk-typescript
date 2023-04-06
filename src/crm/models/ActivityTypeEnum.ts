@@ -15,7 +15,9 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `CALL` - CALL
+ * * `MEETING` - MEETING
+ * * `EMAIL` - EMAIL
  * @export
  * @enum {string}
  */

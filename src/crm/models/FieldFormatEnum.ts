@@ -15,7 +15,12 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `string` - uuid
+ * * `number` - url
+ * * `date` - email
+ * * `datetime` - phone
+ * * `bool` - currency
+ * * `list` - decimal
  * @export
  * @enum {string}
  */
