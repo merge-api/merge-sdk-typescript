@@ -15,10 +15,8 @@
 
 import * as runtime from '../../runtime';
 import {
-    PaginatedRemoteFieldClassList,
-    PaginatedRemoteFieldClassListFromJSON,
-    PaginatedRemoteFieldClassListToJSON,
-    
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON,
     Stage,
     StageFromJSON,
     StageToJSON,

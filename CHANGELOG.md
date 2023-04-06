@@ -1,3 +1,7 @@
+# Version 3.0.10
+
+- Added email_addresses to Lead POST API in CRM Category
+
 # Version 3.0.9
 
 # Date: 2022-03-24

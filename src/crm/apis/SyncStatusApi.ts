@@ -15,7 +15,8 @@
 
 import * as runtime from '../../runtime';
 import {
-	SyncStatus
+	SyncStatus,
+    SyncStatusFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,

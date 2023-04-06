@@ -24,7 +24,7 @@ import { JSONValue } from "../../merge_json";
  * @export
  * @enum {string}
  */
-export enum FieldType556EnumValues {
+export enum FieldTypeEnumValues {
     MERGE_NONSTANDARD_VALUE = 'MERGE_NONSTANDARD_VALUE',
     String = 'string',
     Number = 'number',
@@ -34,30 +34,30 @@ export enum FieldType556EnumValues {
     List = 'list'
 }
 
-export interface FieldType556Enum {
-    value: FieldType556EnumValues,
+export interface FieldTypeEnum {
+    value: FieldTypeEnumValues,
     rawValue: string
 }
 
 
-export function FieldType556EnumFromJSON(json: any): FieldType556Enum {
-    return FieldType556EnumFromJSONTyped(json, false);
+export function FieldTypeEnumFromJSON(json: any): FieldTypeEnum {
+    return FieldTypeEnumFromJSONTyped(json, false);
 }
 
-export function FieldType556EnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): FieldType556Enum {
-    if ((<any>Object).values(FieldType556EnumValues).includes(json)) {
+export function FieldTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): FieldTypeEnum {
+    if ((<any>Object).values(FieldTypeEnumValues).includes(json)) {
         return {
-            value: json as FieldType556EnumValues,
+            value: json as FieldTypeEnumValues,
             rawValue: json as string
         }
     }
     return {
-        value: FieldType556EnumValues.MERGE_NONSTANDARD_VALUE,
+        value: FieldTypeEnumValues.MERGE_NONSTANDARD_VALUE,
         rawValue: json as string
     }
 }
 
-export function FieldType556EnumToJSON(value?: FieldType556Enum | null): JSONValue {
-    return value && value.value != FieldType556EnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
+export function FieldTypeEnumToJSON(value?: FieldTypeEnum | null): JSONValue {
+    return value && value.value != FieldTypeEnumValues.MERGE_NONSTANDARD_VALUE ? value.value as string : null;
 }
 

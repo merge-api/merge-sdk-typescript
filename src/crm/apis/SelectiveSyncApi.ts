@@ -21,6 +21,8 @@ import {
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
+    ConditionSchema,
+    ConditionSchemaFromJSON
     
 } from '../models';
 import {

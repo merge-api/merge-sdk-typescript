@@ -18,9 +18,8 @@ import {
     EngagementType,
     EngagementTypeFromJSON,
     EngagementTypeToJSON,
-    PaginatedEngagementTypeList,
-    PaginatedEngagementTypeListFromJSON,
-    PaginatedEngagementTypeListToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON
     
 } from '../models';
 import {

@@ -18,9 +18,8 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    PaginatedRemoteFieldClassList,
-    PaginatedRemoteFieldClassListFromJSON,
-    PaginatedRemoteFieldClassListToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON,
     
     PatchedTaskEndpointRequest,
     PatchedTaskEndpointRequestFromJSON,
