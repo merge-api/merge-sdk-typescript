@@ -52,10 +52,19 @@ export interface Action {
     messages: Array<string>;
     /**
      * The action's type.
+     * 
+     * * `EMAIL` - EMAIL
+     * * `MESSAGE` - MESSAGE
      * @type {TypeEnum}
      * @memberof Action
      */
     type?: TypeEnum | null;
+    /**
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
+     * @memberof Action
+     */
+    readonly remote_was_deleted?: boolean;
     /**
      * 
      * @type {string}
@@ -68,6 +77,24 @@ export interface Action {
      * @memberof Action
      */
     remote_id?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Action
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Action
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof Action
+     */
+    remote_data?: Array<{ [key: string]: any; }> | null;
 }
 
 export function ActionFromJSON(json: JSONValue): Action | undefined {
@@ -85,8 +112,12 @@ export function ActionFromJSONTyped(json: JSONValue): Action | undefined {
         'emails': json['emails'],
         'messages': json['messages'],
         'type': !exists(json, 'type') ? undefined : TypeEnumFromJSON(json['type']) as TypeEnum,
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
 
@@ -102,6 +133,7 @@ export function ActionToJSON(value?: Action): JSONValue {
         'messages': value.messages,
         'type': TypeEnumToJSON(value.type),
         'remote_id': value.remote_id,
+        'remote_data': value.remote_data,
     };
 }
 

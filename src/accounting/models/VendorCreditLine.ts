@@ -68,6 +68,18 @@ export interface VendorCreditLine {
      * @memberof VendorCreditLine
      */
     company?: string | null;
+    /**
+     * The vendor credit line item's exchange rate.
+     * @type {string}
+     * @memberof VendorCreditLine
+     */
+    exchange_rate?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof VendorCreditLine
+     */
+    readonly modified_at?: Date;
 }
 
 export function VendorCreditLineFromJSON(json: JSONValue): VendorCreditLine | undefined {
@@ -88,6 +100,8 @@ export function VendorCreditLineFromJSONTyped(json: JSONValue): VendorCreditLine
         'description': !exists(json, 'description') ? undefined : json['description'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'company': !exists(json, 'company') ? undefined : json['company'],
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 
@@ -105,6 +119,7 @@ export function VendorCreditLineToJSON(value?: VendorCreditLine): JSONValue {
         'description': value.description,
         'account': value.account,
         'company': value.company,
+        'exchange_rate': value.exchange_rate,
     };
 }
 

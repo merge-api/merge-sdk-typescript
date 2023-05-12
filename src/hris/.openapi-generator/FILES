@@ -75,7 +75,6 @@ src/models/GenderEnum.ts
 src/models/GenerateRemoteKeyRequest.ts
 src/models/Group.ts
 src/models/GroupTypeEnum.ts
-src/models/IgnoreCommonModel.ts
 src/models/IgnoreCommonModelRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts

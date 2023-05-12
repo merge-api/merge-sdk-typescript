@@ -64,6 +64,18 @@ export interface AccountIntegration {
      * @memberof AccountIntegration
      */
     readonly slug?: string;
+    /**
+     * If checked, this integration will not appear in the linking flow, and will appear elsewhere with a Beta tag.
+     * @type {boolean}
+     * @memberof AccountIntegration
+     */
+    is_in_beta?: boolean;
+    /**
+     * Mapping of API endpoints to documentation urls for support. Example: {'GET': [['/common-model-scopes', 'https://docs.merge.dev/accounting/common-model-scopes/#common_model_scopes_retrieve'],['/common-model-actions', 'https://docs.merge.dev/accounting/common-model-actions/#common_model_actions_retrieve']], 'POST': []}
+     * @type {{ [key: string]: any; }}
+     * @memberof AccountIntegration
+     */
+    api_endpoints_to_documentation_urls?: { [key: string]: any; };
 }
 
 export function AccountIntegrationFromJSON(json: JSONValue): AccountIntegration | undefined {
@@ -83,6 +95,8 @@ export function AccountIntegrationFromJSONTyped(json: JSONValue): AccountIntegra
         'square_image': !exists(json, 'square_image') ? undefined : json['square_image'],
         'color': !exists(json, 'color') ? undefined : json['color'],
         'slug': !exists(json, 'slug') ? undefined : json['slug'],
+        'is_in_beta': !exists(json, 'is_in_beta') ? undefined : json['is_in_beta'],
+        'api_endpoints_to_documentation_urls': !exists(json, 'api_endpoints_to_documentation_urls') ? undefined : json['api_endpoints_to_documentation_urls'],
     };
 }
 
@@ -98,6 +112,8 @@ export function AccountIntegrationToJSON(value?: AccountIntegration): JSONValue 
         'image': value.image,
         'square_image': value.square_image,
         'color': value.color,
+        'is_in_beta': value.is_in_beta,
+        'api_endpoints_to_documentation_urls': value.api_endpoints_to_documentation_urls,
     };
 }
 

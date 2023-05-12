@@ -58,12 +58,24 @@ export interface PayrollRun {
     remote_id?: string | null;
     /**
      * The state of the payroll run
+     * 
+     * * `PAID` - PAID
+     * * `DRAFT` - DRAFT
+     * * `APPROVED` - APPROVED
+     * * `FAILED` - FAILED
+     * * `CLOSED` - CLOSED
      * @type {RunStateEnum}
      * @memberof PayrollRun
      */
     run_state?: RunStateEnum | null;
     /**
      * The type of the payroll run
+     * 
+     * * `REGULAR` - REGULAR
+     * * `OFF_CYCLE` - OFF_CYCLE
+     * * `CORRECTION` - CORRECTION
+     * * `TERMINATION` - TERMINATION
+     * * `SIGN_ON_BONUS` - SIGN_ON_BONUS
      * @type {RunTypeEnum}
      * @memberof PayrollRun
      */
@@ -99,6 +111,12 @@ export interface PayrollRun {
      */
     readonly field_mappings?: { [key: string]: any; } | null;
     /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof PayrollRun
+     */
+    readonly modified_at?: Date;
+    /**
      * 
      * @type {Array<RemoteData>}
      * @memberof PayrollRun
@@ -126,6 +144,7 @@ export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun | undefined
         'check_date': !exists(json, 'check_date') ? undefined : (json['check_date'] === null ? null : new Date(json['check_date'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

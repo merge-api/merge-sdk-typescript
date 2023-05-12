@@ -15,7 +15,11 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `FULL_TIME` - FULL_TIME
+ * * `PART_TIME` - PART_TIME
+ * * `INTERN` - INTERN
+ * * `CONTRACTOR` - CONTRACTOR
+ * * `FREELANCE` - FREELANCE
  * @export
  * @enum {string}
  */

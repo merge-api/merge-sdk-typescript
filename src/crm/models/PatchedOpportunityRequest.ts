@@ -19,6 +19,10 @@ import {
     OpportunityStatusEnumFromJSON,
     OpportunityStatusEnumFromJSONTyped,
     OpportunityStatusEnumToJSON,
+    RemoteFieldRequest,
+    RemoteFieldRequestFromJSON,
+    RemoteFieldRequestFromJSONTyped,
+    RemoteFieldRequestToJSON,
 } from './';
 
 
@@ -102,6 +106,12 @@ export interface PatchedOpportunityRequest {
      * @memberof PatchedOpportunityRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteFieldRequest>}
+     * @memberof PatchedOpportunityRequest
+     */
+    remote_fields?: Array<RemoteFieldRequest>;
 }
 
 export function PatchedOpportunityRequestFromJSON(json: JSONValue): PatchedOpportunityRequest | undefined {
@@ -126,6 +136,7 @@ export function PatchedOpportunityRequestFromJSONTyped(json: JSONValue): Patched
         'close_date': !exists(json, 'close_date') ? undefined : (json['close_date'] === null ? null : new Date(json['close_date'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldRequestFromJSON)) as Array<RemoteFieldRequest>,
     };
 }
 
@@ -147,6 +158,7 @@ export function PatchedOpportunityRequestToJSON(value?: PatchedOpportunityReques
         'close_date': value.close_date === undefined ? undefined : (value.close_date === null ? null : value.close_date.toISOString()),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
+        'remote_fields': value.remote_fields === undefined ? undefined : ((value.remote_fields as Array<any>).map(RemoteFieldRequestToJSON)),
     };
 }
 

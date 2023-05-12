@@ -77,24 +77,47 @@ export interface EEOC {
     submitted_at?: Date | null;
     /**
      * The candidate's race.
+     * 
+     * * `AMERICAN_INDIAN_OR_ALASKAN_NATIVE` - AMERICAN_INDIAN_OR_ALASKAN_NATIVE
+     * * `ASIAN` - ASIAN
+     * * `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN
+     * * `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO
+     * * `WHITE` - WHITE
+     * * `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
+     * * `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES
+     * * `DECLINE_TO_SELF_IDENTIFY` - DECLINE_TO_SELF_IDENTIFY
      * @type {RaceEnum}
      * @memberof EEOC
      */
     race?: RaceEnum | null;
     /**
      * The candidate's gender.
+     * 
+     * * `MALE` - MALE
+     * * `FEMALE` - FEMALE
+     * * `NON-BINARY` - NON-BINARY
+     * * `OTHER` - OTHER
+     * * `DECLINE_TO_SELF_IDENTIFY` - DECLINE_TO_SELF_IDENTIFY
      * @type {GenderEnum}
      * @memberof EEOC
      */
     gender?: GenderEnum | null;
     /**
      * The candidate's veteran status.
+     * 
+     * * `I_AM_NOT_A_PROTECTED_VETERAN` - I_AM_NOT_A_PROTECTED_VETERAN
+     * * `I_IDENTIFY_AS_ONE_OR_MORE_OF_THE_CLASSIFICATIONS_OF_A_PROTECTED_VETERAN` - I_IDENTIFY_AS_ONE_OR_MORE_OF_THE_CLASSIFICATIONS_OF_A_PROTECTED_VETERAN
+     * * `I_DONT_WISH_TO_ANSWER` - I_DONT_WISH_TO_ANSWER
      * @type {VeteranStatusEnum}
      * @memberof EEOC
      */
     veteran_status?: VeteranStatusEnum | null;
     /**
      * The candidate's disability status.
+     * 
+     * * `YES_I_HAVE_A_DISABILITY_OR_PREVIOUSLY_HAD_A_DISABILITY` - YES_I_HAVE_A_DISABILITY_OR_PREVIOUSLY_HAD_A_DISABILITY
+     * * `NO_I_DONT_HAVE_A_DISABILITY` - NO_I_DONT_HAVE_A_DISABILITY
+     * * `I_DONT_WISH_TO_ANSWER` - I_DONT_WISH_TO_ANSWER
      * @type {DisabilityStatusEnum}
      * @memberof EEOC
      */
@@ -111,6 +134,12 @@ export interface EEOC {
      * @memberof EEOC
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof EEOC
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -140,6 +169,7 @@ export function EEOCFromJSONTyped(json: JSONValue): EEOC | undefined {
         'disability_status': !exists(json, 'disability_status') ? undefined : DisabilityStatusEnumFromJSON(json['disability_status']) as DisabilityStatusEnum,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

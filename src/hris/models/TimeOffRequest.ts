@@ -55,6 +55,12 @@ export interface TimeOffRequest {
     approver?: string | JSONValue | null;
     /**
      * The status of this time off request.
+     * 
+     * * `REQUESTED` - REQUESTED
+     * * `APPROVED` - APPROVED
+     * * `DECLINED` - DECLINED
+     * * `CANCELLED` - CANCELLED
+     * * `DELETED` - DELETED
      * @type {TimeOffStatusEnum}
      * @memberof TimeOffRequest
      */
@@ -67,6 +73,9 @@ export interface TimeOffRequest {
     employee_note?: string | null;
     /**
      * The measurement that the third-party integration uses to count time requested.
+     * 
+     * * `HOURS` - HOURS
+     * * `DAYS` - DAYS
      * @type {UnitsEnum}
      * @memberof TimeOffRequest
      */
@@ -79,6 +88,13 @@ export interface TimeOffRequest {
     amount?: number | null;
     /**
      * The type of time off request.
+     * 
+     * * `VACATION` - VACATION
+     * * `SICK` - SICK
+     * * `PERSONAL` - PERSONAL
+     * * `JURY_DUTY` - JURY_DUTY
+     * * `VOLUNTEER` - VOLUNTEER
+     * * `BEREAVEMENT` - BEREAVEMENT
      * @type {RequestTypeEnum}
      * @memberof TimeOffRequest
      */

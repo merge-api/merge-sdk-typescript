@@ -69,6 +69,9 @@ export interface ContactRequest {
     tax_number?: string | null;
     /**
      * The contact's status
+     * 
+     * * `ACTIVE` - ACTIVE
+     * * `ARCHIVED` - ARCHIVED
      * @type {Status7d1Enum}
      * @memberof ContactRequest
      */

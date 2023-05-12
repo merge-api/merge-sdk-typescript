@@ -15,11 +15,18 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    
     RoleEnum,
     RoleEnumFromJSON,
     RoleEnumFromJSONTyped,
     RoleEnumToJSON,
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -52,6 +59,11 @@ export interface User {
     email?: string | null;
     /**
      * The user's role.
+     * 
+     * * `ADMIN` - ADMIN
+     * * `MANAGER` - MANAGER
+     * * `CONTRIBUTOR` - CONTRIBUTOR
+     * * `VIEWER` - VIEWER
      * @type {RoleEnum}
      * @memberof User
      */
@@ -62,6 +74,12 @@ export interface User {
      * @memberof User
      */
     timezone?: string | null;
+    /**
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
+     * @memberof User
+     */
+    readonly remote_was_deleted?: boolean;
     /**
      * 
      * @type {string}
@@ -74,6 +92,24 @@ export interface User {
      * @memberof User
      */
     remote_id?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof User
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof User
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof User
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function UserFromJSON(json: JSONValue): User | undefined {
@@ -92,8 +128,12 @@ export function UserFromJSONTyped(json: JSONValue): User | undefined {
         'email': !exists(json, 'email') ? undefined : json['email'],
         'role': !exists(json, 'role') ? undefined : RoleEnumFromJSON(json['role']) as RoleEnum,
         'timezone': !exists(json, 'timezone') ? undefined : json['timezone'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

@@ -52,6 +52,9 @@ export interface ActionRequest {
     messages: Array<string>;
     /**
      * The action's type.
+     * 
+     * * `EMAIL` - EMAIL
+     * * `MESSAGE` - MESSAGE
      * @type {TypeEnum}
      * @memberof ActionRequest
      */

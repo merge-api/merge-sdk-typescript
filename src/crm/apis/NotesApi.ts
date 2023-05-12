@@ -27,8 +27,9 @@ import {
     NoteResponse,
     NoteResponseFromJSON,
     NoteResponseToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON
+    PaginatedNoteList,
+    PaginatedNoteListFromJSON,
+    PaginatedNoteListToJSON,
     
 } from '../models';
 import {

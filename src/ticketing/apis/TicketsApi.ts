@@ -18,11 +18,16 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    PaginatedRemoteFieldClassList,
+    PaginatedRemoteFieldClassListFromJSON,
+    PaginatedRemoteFieldClassListToJSON,
+    PaginatedTicketList,
+    PaginatedTicketListFromJSON,
+    PaginatedTicketListToJSON,
+    
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON,
     Ticket,
     TicketFromJSON,
     TicketToJSON,
@@ -32,8 +37,6 @@ import {
     TicketResponse,
     TicketResponseFromJSON,
     TicketResponseToJSON,
-    User,
-    UserFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,

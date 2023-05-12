@@ -74,6 +74,12 @@ export interface CustomObjectClass {
      * @memberof CustomObjectClass
      */
     remote_id?: string | null;
+    /**
+     * 
+     * @type {Date}
+     * @memberof CustomObjectClass
+     */
+    readonly modified_at?: Date;
 }
 
 export function CustomObjectClassFromJSON(json: JSONValue): CustomObjectClass | undefined {
@@ -94,6 +100,7 @@ export function CustomObjectClassFromJSONTyped(json: JSONValue): CustomObjectCla
         'association_types': !exists(json, 'association_types') ? undefined : json['association_types'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

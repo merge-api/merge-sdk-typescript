@@ -318,7 +318,8 @@ export class FoldersApi extends runtime.BaseAPI {
 */
 export enum FoldersListExpandEnum {
     Drive = 'drive',
-    ParentFolder = 'parent_folder'
+    ParentFolder = 'parent_folder',
+    Permissions = 'permissions'
 }
 /**
 * @export
@@ -326,5 +327,6 @@ export enum FoldersListExpandEnum {
 */
 export enum FoldersRetrieveExpandEnum {
     Drive = 'drive',
-    ParentFolder = 'parent_folder'
+    ParentFolder = 'parent_folder',
+    Permissions = 'permissions'
 }

@@ -40,10 +40,24 @@ export interface Url {
     value?: string | null;
     /**
      * The type of site.
+     * 
+     * * `PERSONAL` - PERSONAL
+     * * `COMPANY` - COMPANY
+     * * `PORTFOLIO` - PORTFOLIO
+     * * `BLOG` - BLOG
+     * * `SOCIAL_MEDIA` - SOCIAL_MEDIA
+     * * `OTHER` - OTHER
+     * * `JOB_POSTING` - JOB_POSTING
      * @type {UrlTypeEnum}
      * @memberof Url
      */
     url_type?: UrlTypeEnum | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Url
+     */
+    readonly modified_at?: Date;
 }
 
 export function UrlFromJSON(json: JSONValue): Url | undefined {
@@ -59,6 +73,7 @@ export function UrlFromJSONTyped(json: JSONValue): Url | undefined {
         
         'value': !exists(json, 'value') ? undefined : json['value'],
         'url_type': !exists(json, 'url_type') ? undefined : UrlTypeEnumFromJSON(json['url_type']) as UrlTypeEnum,
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

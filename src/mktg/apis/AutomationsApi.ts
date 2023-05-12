@@ -17,8 +17,6 @@ import * as runtime from '../../runtime';
 import {
     Automation,
     AutomationFromJSON,
-    Contact,
-    ContactFromJSON,
     AutomationToJSON,
     MKTGAutomationEndpointRequest,
     MKTGAutomationEndpointRequestFromJSON,
@@ -28,7 +26,11 @@ import {
     MKTGAutomationResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON
+    MetaResponseToJSON,
+    PaginatedAutomationList,
+    PaginatedAutomationListFromJSON,
+    PaginatedAutomationListToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

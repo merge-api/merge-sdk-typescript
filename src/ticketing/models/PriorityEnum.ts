@@ -15,7 +15,10 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `URGENT` - URGENT
+ * * `HIGH` - HIGH
+ * * `NORMAL` - NORMAL
+ * * `LOW` - LOW
  * @export
  * @enum {string}
  */

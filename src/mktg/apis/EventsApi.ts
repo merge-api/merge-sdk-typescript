@@ -15,11 +15,13 @@
 
 import * as runtime from '../../runtime';
 import {
-    Contact,
-    ContactFromJSON,
     Event,
     EventFromJSON,
     EventToJSON,
+    PaginatedContactList,
+    PaginatedContactListFromJSON,
+    PaginatedContactListToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

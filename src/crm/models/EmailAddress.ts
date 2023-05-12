@@ -37,6 +37,12 @@ export interface EmailAddress {
      * @memberof EmailAddress
      */
     email_address_type?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof EmailAddress
+     */
+    readonly modified_at?: Date;
 }
 
 export function EmailAddressFromJSON(json: JSONValue): EmailAddress | undefined {
@@ -52,6 +58,7 @@ export function EmailAddressFromJSONTyped(json: JSONValue): EmailAddress | undef
         
         'email_address': !exists(json, 'email_address') ? undefined : json['email_address'],
         'email_address_type': !exists(json, 'email_address_type') ? undefined : json['email_address_type'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

@@ -40,6 +40,9 @@ export interface Automation {
     name?: string | null;
     /**
      * The trigger type for running this automation.
+     * 
+     * * `TRIGGER_EVENT` - TRIGGER_EVENT
+     * * `RECURRENCE` - RECURRENCE
      * @type {TriggerTypeEnum}
      * @memberof Automation
      */
@@ -81,6 +84,12 @@ export interface Automation {
      */
     actions: Array<string>;
     /**
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
+     * @memberof Automation
+     */
+    readonly remote_was_deleted?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof Automation
@@ -92,6 +101,24 @@ export interface Automation {
      * @memberof Automation
      */
     remote_id?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Automation
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Automation
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<{ [key: string]: any; }>}
+     * @memberof Automation
+     */
+    remote_data?: Array<{ [key: string]: any; }> | null;
 }
 
 export function AutomationFromJSON(json: JSONValue): Automation | undefined {
@@ -113,8 +140,12 @@ export function AutomationFromJSONTyped(json: JSONValue): Automation | undefined
         'status': !exists(json, 'status') ? undefined : json['status'],
         'automation_trigger': !exists(json, 'automation_trigger') ? undefined : json['automation_trigger'],
         'actions': json['actions'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
 
@@ -134,6 +165,7 @@ export function AutomationToJSON(value?: Automation): JSONValue {
         'automation_trigger': value.automation_trigger,
         'actions': value.actions,
         'remote_id': value.remote_id,
+        'remote_data': value.remote_data,
     };
 }
 

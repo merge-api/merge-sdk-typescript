@@ -329,7 +329,8 @@ export class PaymentsApi extends runtime.BaseAPI {
 export enum PaymentsListExpandEnum {
     Account = 'account',
     Company = 'company',
-    Contact = 'contact'
+    Contact = 'contact',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -338,5 +339,6 @@ export enum PaymentsListExpandEnum {
 export enum PaymentsRetrieveExpandEnum {
     Account = 'account',
     Company = 'company',
-    Contact = 'contact'
+    Contact = 'contact',
+    TrackingCategories = 'tracking_categories'
 }

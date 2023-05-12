@@ -15,7 +15,8 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `ENABLED_ACTION_READ` - ENABLED_ACTION_READ
+ * * `ENABLED_ACTION_WRITE` - ENABLED_ACTION_WRITE
  * @export
  * @enum {string}
  */

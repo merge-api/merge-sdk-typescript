@@ -76,6 +76,10 @@ export interface ScheduledInterviewRequest {
     end_at?: Date | null;
     /**
      * The interview's status.
+     * 
+     * * `SCHEDULED` - SCHEDULED
+     * * `AWAITING_FEEDBACK` - AWAITING_FEEDBACK
+     * * `COMPLETE` - COMPLETE
      * @type {ScheduledInterviewStatusEnum}
      * @memberof ScheduledInterviewRequest
      */

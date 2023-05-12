@@ -15,7 +15,10 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `ADMIN` - ADMIN
+ * * `MANAGER` - MANAGER
+ * * `CONTRIBUTOR` - CONTRIBUTOR
+ * * `VIEWER` - VIEWER
  * @export
  * @enum {string}
  */

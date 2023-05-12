@@ -227,8 +227,8 @@ export enum EmploymentsListExpandEnum {
 * @enum {string}
 */
 export enum EmploymentsListOrderByEnum {
-    EffectiveDateDESC = '-effective_date',
-    EffectiveDateASC = 'effective_date'
+    EffectiveDate = '-effective_date',
+    EffectiveDate = 'effective_date'
 }
 /**
 * @export

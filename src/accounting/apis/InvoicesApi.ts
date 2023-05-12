@@ -54,6 +54,8 @@ export interface InvoicesListRequest {
     expand?: Array<InvoicesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    issueDateAfter?: Date | null;
+    issueDateBefore?: Date | null;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -166,6 +168,14 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.issueDateAfter !== undefined) {
+            queryParameters['issue_date_after'] = (requestParameters.issueDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.issueDateBefore !== undefined) {
+            queryParameters['issue_date_before'] = (requestParameters.issueDateBefore as any).toISOString();
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -340,7 +350,8 @@ export enum InvoicesListExpandEnum {
     Company = 'company',
     Contact = 'contact',
     LineItems = 'line_items',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -372,7 +383,8 @@ export enum InvoicesRetrieveExpandEnum {
     Company = 'company',
     Contact = 'contact',
     LineItems = 'line_items',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export

@@ -15,7 +15,11 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `SYNCING` - SYNCING
+ * * `DONE` - DONE
+ * * `FAILED` - FAILED
+ * * `DISABLED` - DISABLED
+ * * `PAUSED` - PAUSED
  * @export
  * @enum {string}
  */

@@ -19,7 +19,14 @@ import {
     MarketingEmailStatusEnumFromJSON,
     MarketingEmailStatusEnumFromJSONTyped,
     MarketingEmailStatusEnumToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -94,6 +101,10 @@ export interface MarketingEmail {
     remote_updated_at?: Date | null;
     /**
      * The marketing email's status.
+     * 
+     * * `DRAFT` - DRAFT
+     * * `QUEUED` - QUEUED
+     * * `SENT` - SENT
      * @type {MarketingEmailStatusEnum}
      * @memberof MarketingEmail
      */
@@ -117,6 +128,12 @@ export interface MarketingEmail {
      */
     campaigns: Array<string>;
     /**
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
+     * @memberof MarketingEmail
+     */
+    readonly remote_was_deleted?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof MarketingEmail
@@ -128,6 +145,24 @@ export interface MarketingEmail {
      * @memberof MarketingEmail
      */
     remote_id?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof MarketingEmail
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof MarketingEmail
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof MarketingEmail
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function MarketingEmailFromJSON(json: JSONValue): MarketingEmail | undefined {
@@ -155,8 +190,12 @@ export function MarketingEmailFromJSONTyped(json: JSONValue): MarketingEmail | u
         'send_date': !exists(json, 'send_date') ? undefined : (json['send_date'] === null ? null : new Date(json['send_date'])),
         'template': !exists(json, 'template') ? undefined : json['template'],
         'campaigns': json['campaigns'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

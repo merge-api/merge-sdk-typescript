@@ -15,7 +15,9 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `ADMIN_ONLY` - ADMIN_ONLY
+ * * `PUBLIC` - PUBLIC
+ * * `PRIVATE` - PRIVATE
  * @export
  * @enum {string}
  */

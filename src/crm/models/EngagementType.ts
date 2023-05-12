@@ -65,6 +65,12 @@ export interface EngagementType {
      */
     remote_id?: string | null;
     /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof EngagementType
+     */
+    readonly modified_at?: Date;
+    /**
      * 
      * @type {Array<RemoteField>}
      * @memberof EngagementType
@@ -87,6 +93,7 @@ export function EngagementTypeFromJSONTyped(json: JSONValue): EngagementType | u
         'name': !exists(json, 'name') ? undefined : json['name'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }

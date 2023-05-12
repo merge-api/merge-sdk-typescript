@@ -15,8 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
-	Tag,
-    TagFromJSON
+	Tag
 } from '../models';
 import {
 	MergePaginatedResponse,

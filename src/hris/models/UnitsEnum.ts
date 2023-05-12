@@ -15,7 +15,8 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `HOURS` - HOURS
+ * * `DAYS` - DAYS
  * @export
  * @enum {string}
  */

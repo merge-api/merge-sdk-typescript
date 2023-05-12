@@ -319,7 +319,8 @@ export class JournalEntriesApi extends runtime.BaseAPI {
 export enum JournalEntriesListExpandEnum {
     Company = 'company',
     Lines = 'lines',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -328,5 +329,6 @@ export enum JournalEntriesListExpandEnum {
 export enum JournalEntriesRetrieveExpandEnum {
     Company = 'company',
     Lines = 'lines',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }

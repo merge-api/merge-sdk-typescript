@@ -45,6 +45,10 @@ export interface FilesCreateRequest {
     runAsync?: boolean;
 }
 
+export interface FilesDownloadRetrieveRequest {
+    id: string;
+}
+
 export interface FilesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -126,9 +130,51 @@ export class FilesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns a `File` object with the given `id`.
+     */
+    async filesDownloadRetrieveRaw(requestParameters: FilesDownloadRetrieveRequest): Promise<runtime.ApiResponse<Blob | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling filesDownloadRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/filestorage/v1/files/{id}/download`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Returns a `File` object with the given `id`.
+     */
+    async filesDownloadRetrieve(requestParameters: FilesDownloadRetrieveRequest): Promise<Blob | undefined> {
+        const response = await this.filesDownloadRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns a list of `File` objects.
      */
-    async filesListRaw(requestParameters: FilesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<FileStorageFile> | undefined>> {
+    async filesListRaw(requestParameters: FilesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<File> | undefined>> {
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -200,13 +246,13 @@ export class FilesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, FileStorageFileFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, FileFromJSON));
     }
 
     /**
      * Returns a list of `File` objects.
      */
-    async filesList(requestParameters: FilesListRequest): Promise<MergePaginatedResponse<FileStorageFile> | undefined> {
+    async filesList(requestParameters: FilesListRequest): Promise<MergePaginatedResponse<File> | undefined> {
         const response = await this.filesListRaw(requestParameters);
         return await response.value();
     }
@@ -312,12 +358,16 @@ export class FilesApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum FilesListExpandEnum {
-    Folder = 'folder'
+    Drive = 'drive',
+    Folder = 'folder',
+    Permissions = 'permissions'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum FilesRetrieveExpandEnum {
-    Folder = 'folder'
+    Drive = 'drive',
+    Folder = 'folder',
+    Permissions = 'permissions'
 }

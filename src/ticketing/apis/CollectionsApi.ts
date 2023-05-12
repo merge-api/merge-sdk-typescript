@@ -18,8 +18,10 @@ import {
     Collection,
     CollectionFromJSON,
     CollectionToJSON,
-    User,
-    UserFromJSON
+    PaginatedCollectionList,
+    PaginatedCollectionListFromJSON,
+    PaginatedCollectionListToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

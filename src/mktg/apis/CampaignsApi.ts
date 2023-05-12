@@ -18,8 +18,6 @@ import {
     Campaign,
     CampaignFromJSON,
     CampaignToJSON,
-    Contact,
-    ContactFromJSON,
     MKTGCampaignEndpointRequest,
     MKTGCampaignEndpointRequestFromJSON,
     MKTGCampaignEndpointRequestToJSON,
@@ -28,7 +26,11 @@ import {
     MKTGCampaignResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON
+    MetaResponseToJSON,
+    PaginatedCampaignList,
+    PaginatedCampaignListFromJSON,
+    PaginatedCampaignListToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

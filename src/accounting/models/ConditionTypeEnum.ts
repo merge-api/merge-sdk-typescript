@@ -15,7 +15,13 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `BOOLEAN` - BOOLEAN
+ * * `DATE` - DATE
+ * * `DATE_TIME` - DATE_TIME
+ * * `INTEGER` - INTEGER
+ * * `FLOAT` - FLOAT
+ * * `STRING` - STRING
+ * * `LIST_OF_STRINGS` - LIST_OF_STRINGS
  * @export
  * @enum {string}
  */
