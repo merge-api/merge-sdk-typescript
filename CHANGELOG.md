@@ -1,3 +1,5 @@
+# Version 3.1.0
+
 # Version 3.0.10
 
 - Added email_addresses to Lead POST API in CRM Category
