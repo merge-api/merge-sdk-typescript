@@ -15,7 +15,13 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `PERSONAL` - PERSONAL
+ * * `COMPANY` - COMPANY
+ * * `PORTFOLIO` - PORTFOLIO
+ * * `BLOG` - BLOG
+ * * `SOCIAL_MEDIA` - SOCIAL_MEDIA
+ * * `OTHER` - OTHER
+ * * `JOB_POSTING` - JOB_POSTING
  * @export
  * @enum {string}
  */

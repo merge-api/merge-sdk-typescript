@@ -18,8 +18,6 @@ import {
     Campaign,
     CampaignFromJSON,
     CampaignToJSON,
-    Contact,
-    ContactFromJSON,
     MKTGCampaignEndpointRequest,
     MKTGCampaignEndpointRequestFromJSON,
     MKTGCampaignEndpointRequestToJSON,
@@ -28,7 +26,11 @@ import {
     MKTGCampaignResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON
+    MetaResponseToJSON,
+    PaginatedCampaignList,
+    PaginatedCampaignListFromJSON,
+    PaginatedCampaignListToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -41,6 +43,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface CampaignsContactsListRequest {
+    xAccountToken: string;
     parentId: string;
     cursor?: string;
     includeDeletedData?: boolean;
@@ -49,12 +52,14 @@ export interface CampaignsContactsListRequest {
 }
 
 export interface CampaignsCreateRequest {
+    xAccountToken: string;
     mKTGCampaignEndpointRequest: MKTGCampaignEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface CampaignsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -66,8 +71,12 @@ export interface CampaignsListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface CampaignsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface CampaignsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -81,6 +90,10 @@ export class CampaignsApi extends runtime.BaseAPI {
      * Returns a list of `Contact` objects.
      */
     async campaignsContactsListRaw(requestParameters: CampaignsContactsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling campaignsContactsList.');
+        }
+
         if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
             throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling campaignsContactsList.');
         }
@@ -108,10 +121,11 @@ export class CampaignsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -139,6 +153,10 @@ export class CampaignsApi extends runtime.BaseAPI {
      * Creates a `Campaign` object with the given values.
      */
     async campaignsCreateRaw(requestParameters: CampaignsCreateRequest): Promise<runtime.ApiResponse<MKTGCampaignResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling campaignsCreate.');
+        }
+
         if (requestParameters.mKTGCampaignEndpointRequest === null || requestParameters.mKTGCampaignEndpointRequest === undefined) {
             throw new runtime.RequiredError('mKTGCampaignEndpointRequest','Required parameter requestParameters.mKTGCampaignEndpointRequest was null or undefined when calling campaignsCreate.');
         }
@@ -160,10 +178,11 @@ export class CampaignsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -192,6 +211,10 @@ export class CampaignsApi extends runtime.BaseAPI {
      * Returns a list of `Campaign` objects.
      */
     async campaignsListRaw(requestParameters: CampaignsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Campaign> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling campaignsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -235,10 +258,11 @@ export class CampaignsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -265,7 +289,11 @@ export class CampaignsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGCampaign` POSTs.
      */
-    async campaignsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async campaignsMetaPostRetrieveRaw(requestParameters: CampaignsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling campaignsMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -279,10 +307,11 @@ export class CampaignsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -301,7 +330,7 @@ export class CampaignsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGCampaign` POSTs.
      */
-    async campaignsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async campaignsMetaPostRetrieve(requestParameters: CampaignsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.campaignsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -310,6 +339,10 @@ export class CampaignsApi extends runtime.BaseAPI {
      * Returns a `Campaign` object with the given `id`.
      */
     async campaignsRetrieveRaw(requestParameters: CampaignsRetrieveRequest): Promise<runtime.ApiResponse<Campaign | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling campaignsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling campaignsRetrieve.');
         }
@@ -325,10 +358,11 @@ export class CampaignsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

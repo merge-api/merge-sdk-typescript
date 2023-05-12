@@ -40,6 +40,12 @@ export interface PhoneNumberRequest {
     value?: string | null;
     /**
      * The type of phone number.
+     * 
+     * * `HOME` - HOME
+     * * `WORK` - WORK
+     * * `MOBILE` - MOBILE
+     * * `SKYPE` - SKYPE
+     * * `OTHER` - OTHER
      * @type {PhoneNumberTypeEnum}
      * @memberof PhoneNumberRequest
      */

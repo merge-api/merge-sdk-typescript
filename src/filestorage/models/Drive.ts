@@ -20,7 +20,7 @@ import { JSONValue } from '../../merge_json';
  * ### Description
  * The `Drive` object is used to represent a drive that contains the folders and files in the user's workspace.
  * ### Usage Example
- * Fetch from the `GET /api/file-storage/v1/drives` endpoint and view their drives.
+ * Fetch from the `GET /api/filestorage/v1/drives` endpoint and view their drives.
  * @export
  * @interface Drive
  */
@@ -50,11 +50,23 @@ export interface Drive {
      */
     remote_created_at?: Date | null;
     /**
+     * The drive's url.
+     * @type {string}
+     * @memberof Drive
+     */
+    drive_url?: string | null;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof Drive
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Drive
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -78,7 +90,9 @@ export function DriveFromJSONTyped(json: JSONValue): Drive | undefined {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
+        'drive_url': !exists(json, 'drive_url') ? undefined : json['drive_url'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
@@ -93,6 +107,7 @@ export function DriveToJSON(value?: Drive): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
+        'drive_url': value.drive_url,
         'remote_data': value.remote_data,
     };
 }

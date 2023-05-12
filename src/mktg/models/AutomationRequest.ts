@@ -40,6 +40,9 @@ export interface AutomationRequest {
     name?: string | null;
     /**
      * The trigger type for running this automation.
+     * 
+     * * `TRIGGER_EVENT` - TRIGGER_EVENT
+     * * `RECURRENCE` - RECURRENCE
      * @type {TriggerTypeEnum}
      * @memberof AutomationRequest
      */

@@ -15,8 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
-	Tag,
-    TagFromJSON
+	Tag
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -29,6 +28,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface TagsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -49,6 +49,10 @@ export class TagsApi extends runtime.BaseAPI {
      * Returns a list of `Tag` objects.
      */
     async tagsListRaw(requestParameters: TagsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Tag> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling tagsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -92,10 +96,11 @@ export class TagsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

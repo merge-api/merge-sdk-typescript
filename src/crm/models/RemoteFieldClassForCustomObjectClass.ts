@@ -84,6 +84,12 @@ export interface RemoteFieldClassForCustomObjectClass {
      * @memberof RemoteFieldClassForCustomObjectClass
      */
     item_schema?: RemoteFieldClassForCustomObjectClassItemSchema | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof RemoteFieldClassForCustomObjectClass
+     */
+    readonly modified_at?: Date;
 }
 
 export function RemoteFieldClassForCustomObjectClassFromJSON(json: JSONValue): RemoteFieldClassForCustomObjectClass | undefined {
@@ -105,11 +111,12 @@ export function RemoteFieldClassForCustomObjectClassFromJSONTyped(json: JSONValu
         'field_format': !exists(json, 'field_format') ? undefined : FieldFormatEnumFromJSON(json['field_format']) as FieldFormatEnum,
         'field_choices': !exists(json, 'field_choices') ? undefined : json['field_choices'],
         'item_schema': !exists(json, 'item_schema') ? undefined : RemoteFieldClassForCustomObjectClassItemSchemaFromJSON(json['item_schema']) as RemoteFieldClassForCustomObjectClassItemSchema,
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 
 export function RemoteFieldClassForCustomObjectClassToJSON(value?: RemoteFieldClassForCustomObjectClass): JSONValue {
-    if (value === undefined || value === null || value.item_schema === null) {
+    if (value === undefined || value === null) {
         return undefined;
     }
 

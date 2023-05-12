@@ -331,6 +331,12 @@ export interface Address {
      * @memberof Address
      */
     address_type?: AddressTypeEnum | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Address
+     */
+    readonly modified_at?: Date;
 }
 
 export function AddressFromJSON(json: JSONValue): Address | undefined {
@@ -351,6 +357,7 @@ export function AddressFromJSONTyped(json: JSONValue): Address | undefined {
         'postal_code': !exists(json, 'postal_code') ? undefined : json['postal_code'],
         'country': !exists(json, 'country') ? undefined : CountryEnumFromJSON(json['country']) as CountryEnum,
         'address_type': !exists(json, 'address_type') ? undefined : AddressTypeEnumFromJSON(json['address_type']) as AddressTypeEnum,
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

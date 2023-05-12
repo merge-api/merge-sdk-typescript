@@ -27,8 +27,9 @@ import {
     NoteResponse,
     NoteResponseFromJSON,
     NoteResponseToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON
+    PaginatedNoteList,
+    PaginatedNoteListFromJSON,
+    PaginatedNoteListToJSON,
     
 } from '../models';
 import {
@@ -42,12 +43,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface NotesCreateRequest {
+    xAccountToken: string;
     noteEndpointRequest: NoteEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface NotesListRequest {
+    xAccountToken: string;
     accountId?: string;
     contactId?: string;
     createdAfter?: Date;
@@ -65,8 +68,12 @@ export interface NotesListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface NotesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface NotesRemoteFieldClassesListRequest {
+    xAccountToken: string;
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
@@ -75,6 +82,7 @@ export interface NotesRemoteFieldClassesListRequest {
 }
 
 export interface NotesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<NotesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -90,6 +98,10 @@ export class NotesApi extends runtime.BaseAPI {
      * Creates a `Note` object with the given values.
      */
     async notesCreateRaw(requestParameters: NotesCreateRequest): Promise<runtime.ApiResponse<NoteResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesCreate.');
+        }
+
         if (requestParameters.noteEndpointRequest === null || requestParameters.noteEndpointRequest === undefined) {
             throw new runtime.RequiredError('noteEndpointRequest','Required parameter requestParameters.noteEndpointRequest was null or undefined when calling notesCreate.');
         }
@@ -111,10 +123,11 @@ export class NotesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -143,6 +156,10 @@ export class NotesApi extends runtime.BaseAPI {
      * Returns a list of `Note` objects.
      */
     async notesListRaw(requestParameters: NotesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Note> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.accountId !== undefined) {
@@ -210,10 +227,11 @@ export class NotesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -240,7 +258,11 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Note` POSTs.
      */
-    async notesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async notesMetaPostRetrieveRaw(requestParameters: NotesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -254,10 +276,11 @@ export class NotesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -276,7 +299,7 @@ export class NotesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Note` POSTs.
      */
-    async notesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async notesMetaPostRetrieve(requestParameters: NotesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.notesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -285,6 +308,10 @@ export class NotesApi extends runtime.BaseAPI {
      * Returns a list of `RemoteFieldClass` objects.
      */
     async notesRemoteFieldClassesListRaw(requestParameters: NotesRemoteFieldClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<RemoteFieldClass> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesRemoteFieldClassesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.cursor !== undefined) {
@@ -312,10 +339,11 @@ export class NotesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -343,6 +371,10 @@ export class NotesApi extends runtime.BaseAPI {
      * Returns a `Note` object with the given `id`.
      */
     async notesRetrieveRaw(requestParameters: NotesRetrieveRequest): Promise<runtime.ApiResponse<Note | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling notesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling notesRetrieve.');
         }
@@ -366,10 +398,11 @@ export class NotesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

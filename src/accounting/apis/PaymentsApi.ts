@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface PaymentsCreateRequest {
+    xAccountToken: string;
     paymentEndpointRequest: PaymentEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface PaymentsListRequest {
+    xAccountToken: string;
     accountId?: string;
     companyId?: string;
     contactId?: string;
@@ -63,8 +65,12 @@ export interface PaymentsListRequest {
     transactionDateBefore?: Date | null;
 }
 
-// extends MergeMetaRequest
+export interface PaymentsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface PaymentsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<PaymentsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -79,6 +85,10 @@ export class PaymentsApi extends runtime.BaseAPI {
      * Creates a `Payment` object with the given values.
      */
     async paymentsCreateRaw(requestParameters: PaymentsCreateRequest): Promise<runtime.ApiResponse<PaymentResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling paymentsCreate.');
+        }
+
         if (requestParameters.paymentEndpointRequest === null || requestParameters.paymentEndpointRequest === undefined) {
             throw new runtime.RequiredError('paymentEndpointRequest','Required parameter requestParameters.paymentEndpointRequest was null or undefined when calling paymentsCreate.');
         }
@@ -100,10 +110,11 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -132,6 +143,10 @@ export class PaymentsApi extends runtime.BaseAPI {
      * Returns a list of `Payment` objects.
      */
     async paymentsListRaw(requestParameters: PaymentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Payment> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling paymentsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.accountId !== undefined) {
@@ -199,10 +214,11 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -229,7 +245,11 @@ export class PaymentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Payment` POSTs.
      */
-    async paymentsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async paymentsMetaPostRetrieveRaw(requestParameters: PaymentsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling paymentsMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -243,10 +263,11 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -265,7 +286,7 @@ export class PaymentsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Payment` POSTs.
      */
-    async paymentsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async paymentsMetaPostRetrieve(requestParameters: PaymentsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.paymentsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -274,6 +295,10 @@ export class PaymentsApi extends runtime.BaseAPI {
      * Returns a `Payment` object with the given `id`.
      */
     async paymentsRetrieveRaw(requestParameters: PaymentsRetrieveRequest): Promise<runtime.ApiResponse<Payment | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling paymentsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling paymentsRetrieve.');
         }
@@ -293,10 +318,11 @@ export class PaymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -329,7 +355,8 @@ export class PaymentsApi extends runtime.BaseAPI {
 export enum PaymentsListExpandEnum {
     Account = 'account',
     Company = 'company',
-    Contact = 'contact'
+    Contact = 'contact',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -338,5 +365,6 @@ export enum PaymentsListExpandEnum {
 export enum PaymentsRetrieveExpandEnum {
     Account = 'account',
     Company = 'company',
-    Contact = 'contact'
+    Contact = 'contact',
+    TrackingCategories = 'tracking_categories'
 }

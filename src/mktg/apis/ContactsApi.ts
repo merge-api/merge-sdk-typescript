@@ -27,6 +27,7 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -39,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface ContactsCreateRequest {
+    xAccountToken: string;
     mKTGContactEndpointRequest: MKTGContactEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface ContactsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -56,8 +59,12 @@ export interface ContactsListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface ContactsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface ContactsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -71,6 +78,10 @@ export class ContactsApi extends runtime.BaseAPI {
      * Creates a `Contact` object with the given values.
      */
     async contactsCreateRaw(requestParameters: ContactsCreateRequest): Promise<runtime.ApiResponse<MKTGContactResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling contactsCreate.');
+        }
+
         if (requestParameters.mKTGContactEndpointRequest === null || requestParameters.mKTGContactEndpointRequest === undefined) {
             throw new runtime.RequiredError('mKTGContactEndpointRequest','Required parameter requestParameters.mKTGContactEndpointRequest was null or undefined when calling contactsCreate.');
         }
@@ -92,10 +103,11 @@ export class ContactsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -124,6 +136,10 @@ export class ContactsApi extends runtime.BaseAPI {
      * Returns a list of `Contact` objects.
      */
     async contactsListRaw(requestParameters: ContactsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling contactsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -167,10 +183,11 @@ export class ContactsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -197,7 +214,11 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGContact` POSTs.
      */
-    async contactsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async contactsMetaPostRetrieveRaw(requestParameters: ContactsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling contactsMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -211,10 +232,11 @@ export class ContactsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -233,7 +255,7 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGContact` POSTs.
      */
-    async contactsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async contactsMetaPostRetrieve(requestParameters: ContactsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.contactsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -242,6 +264,10 @@ export class ContactsApi extends runtime.BaseAPI {
      * Returns a `Contact` object with the given `id`.
      */
     async contactsRetrieveRaw(requestParameters: ContactsRetrieveRequest): Promise<runtime.ApiResponse<Contact | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling contactsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling contactsRetrieve.');
         }
@@ -257,10 +283,11 @@ export class ContactsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

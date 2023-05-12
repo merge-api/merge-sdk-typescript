@@ -43,6 +43,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface ApplicationsChangeStageCreateRequest {
+    xAccountToken: string;
     id: string;
     isDebugMode?: boolean;
     runAsync?: boolean;
@@ -50,12 +51,14 @@ export interface ApplicationsChangeStageCreateRequest {
 }
 
 export interface ApplicationsCreateRequest {
+    xAccountToken: string;
     applicationEndpointRequest: ApplicationEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface ApplicationsListRequest {
+    xAccountToken: string;
     candidateId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -75,10 +78,12 @@ export interface ApplicationsListRequest {
 }
 
 export interface ApplicationsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
     applicationRemoteTemplateId?: string;
 }
 
 export interface ApplicationsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<ApplicationsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -93,6 +98,10 @@ export class ApplicationsApi extends runtime.BaseAPI {
      * Updates the `current_stage` field of an `Application` object
      */
     async applicationsChangeStageCreateRaw(requestParameters: ApplicationsChangeStageCreateRequest): Promise<runtime.ApiResponse<ApplicationResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsChangeStageCreate.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling applicationsChangeStageCreate.');
         }
@@ -114,10 +123,11 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -146,6 +156,10 @@ export class ApplicationsApi extends runtime.BaseAPI {
      * Creates an `Application` object with the given values.
      */
     async applicationsCreateRaw(requestParameters: ApplicationsCreateRequest): Promise<runtime.ApiResponse<ApplicationResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsCreate.');
+        }
+
         if (requestParameters.applicationEndpointRequest === null || requestParameters.applicationEndpointRequest === undefined) {
             throw new runtime.RequiredError('applicationEndpointRequest','Required parameter requestParameters.applicationEndpointRequest was null or undefined when calling applicationsCreate.');
         }
@@ -167,10 +181,11 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -199,6 +214,10 @@ export class ApplicationsApi extends runtime.BaseAPI {
      * Returns a list of `Application` objects.
      */
     async applicationsListRaw(requestParameters: ApplicationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Application> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.candidateId !== undefined) {
@@ -270,10 +289,11 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -301,6 +321,10 @@ export class ApplicationsApi extends runtime.BaseAPI {
      * Returns metadata for `Application` POSTs.
      */
     async applicationsMetaPostRetrieveRaw(requestParameters: ApplicationsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.applicationRemoteTemplateId !== undefined) {
@@ -318,10 +342,11 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -349,6 +374,10 @@ export class ApplicationsApi extends runtime.BaseAPI {
      * Returns an `Application` object with the given `id`.
      */
     async applicationsRetrieveRaw(requestParameters: ApplicationsRetrieveRequest): Promise<runtime.ApiResponse<Application | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling applicationsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling applicationsRetrieve.');
         }
@@ -368,10 +397,11 @@ export class ApplicationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

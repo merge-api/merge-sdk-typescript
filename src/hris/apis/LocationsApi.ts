@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface LocationsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -45,6 +46,7 @@ export interface LocationsListRequest {
 }
 
 export interface LocationsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: LocationsRetrieveRemoteFieldsEnum;
@@ -60,6 +62,10 @@ export class LocationsApi extends runtime.BaseAPI {
      * Returns a list of `Location` objects.
      */
     async locationsListRaw(requestParameters: LocationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Location> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling locationsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -111,10 +117,11 @@ export class LocationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -142,6 +149,10 @@ export class LocationsApi extends runtime.BaseAPI {
      * Returns a `Location` object with the given `id`.
      */
     async locationsRetrieveRaw(requestParameters: LocationsRetrieveRequest): Promise<runtime.ApiResponse<Location | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling locationsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling locationsRetrieve.');
         }
@@ -165,10 +176,11 @@ export class LocationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

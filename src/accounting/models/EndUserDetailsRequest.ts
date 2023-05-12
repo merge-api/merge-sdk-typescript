@@ -79,7 +79,7 @@ export interface EndUserDetailsRequest {
      * @type {Array<CommonModelScopesBodyRequest>}
      * @memberof EndUserDetailsRequest
      */
-    common_models?: Array<CommonModelScopesBodyRequest>;
+    common_models?: Array<CommonModelScopesBodyRequest> | null;
 }
 
 export function EndUserDetailsRequestFromJSON(json: JSONValue): EndUserDetailsRequest | undefined {
@@ -100,7 +100,7 @@ export function EndUserDetailsRequestFromJSONTyped(json: JSONValue): EndUserDeta
         'integration': !exists(json, 'integration') ? undefined : json['integration'],
         'link_expiry_mins': !exists(json, 'link_expiry_mins') ? undefined : json['link_expiry_mins'],
         'should_create_magic_link_url': !exists(json, 'should_create_magic_link_url') ? undefined : json['should_create_magic_link_url'],
-        'common_models': !exists(json, 'common_models') ? undefined : ((json['common_models'] as Array<JSONValue>).map(CommonModelScopesBodyRequestFromJSON)) as Array<CommonModelScopesBodyRequest>,
+        'common_models': !exists(json, 'common_models') ? undefined : (json['common_models'] === null ? null : (json['common_models'] as Array<JSONValue>).map(CommonModelScopesBodyRequestFromJSON)) as Array<CommonModelScopesBodyRequest>,
     };
 }
 
@@ -118,7 +118,7 @@ export function EndUserDetailsRequestToJSON(value?: EndUserDetailsRequest): JSON
         'integration': value.integration,
         'link_expiry_mins': value.link_expiry_mins,
         'should_create_magic_link_url': value.should_create_magic_link_url,
-        'common_models': value.common_models === undefined ? undefined : ((value.common_models as Array<any>).map(CommonModelScopesBodyRequestToJSON)),
+        'common_models': value.common_models === undefined ? undefined : (value.common_models === null ? null : (value.common_models as Array<any>).map(CommonModelScopesBodyRequestToJSON)),
     };
 }
 

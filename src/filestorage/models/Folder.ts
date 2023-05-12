@@ -20,7 +20,7 @@ import { JSONValue } from '../../merge_json';
  * ### Description
  * The `Folder` object is used to represent a collection of files and/or folders in the workspace. Could be within a drive, if it exsts.
  * ### Usage Example
- * Fetch from the `GET /api/file-storage/v1/folders` endpoint and view their folders.
+ * Fetch from the `GET /api/filestorage/v1/folders` endpoint and view their folders.
  * @export
  * @interface Folder
  */
@@ -74,6 +74,12 @@ export interface Folder {
      */
     drive?: string | null;
     /**
+     * The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /folders`.
+     * @type {Array<string>}
+     * @memberof Folder
+     */
+    permissions: Array<string>;
+    /**
      * When the third party's folder was created.
      * @type {Date}
      * @memberof Folder
@@ -91,6 +97,12 @@ export interface Folder {
      * @memberof Folder
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Folder
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -118,9 +130,11 @@ export function FolderFromJSONTyped(json: JSONValue): Folder | undefined {
         'description': !exists(json, 'description') ? undefined : json['description'],
         'parent_folder': !exists(json, 'parent_folder') ? undefined : json['parent_folder'],
         'drive': !exists(json, 'drive') ? undefined : json['drive'],
+        'permissions': json['permissions'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
@@ -139,6 +153,7 @@ export function FolderToJSON(value?: Folder): JSONValue {
         'description': value.description,
         'parent_folder': value.parent_folder,
         'drive': value.drive,
+        'permissions': value.permissions,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'remote_data': value.remote_data,

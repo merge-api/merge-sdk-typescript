@@ -74,6 +74,12 @@ export interface TimeOff {
     approver?: string | JSONValue | null;
     /**
      * The status of this time off request.
+     * 
+     * * `REQUESTED` - REQUESTED
+     * * `APPROVED` - APPROVED
+     * * `DECLINED` - DECLINED
+     * * `CANCELLED` - CANCELLED
+     * * `DELETED` - DELETED
      * @type {TimeOffStatusEnum}
      * @memberof TimeOff
      */
@@ -86,6 +92,9 @@ export interface TimeOff {
     employee_note?: string | null;
     /**
      * The measurement that the third-party integration uses to count time requested.
+     * 
+     * * `HOURS` - HOURS
+     * * `DAYS` - DAYS
      * @type {UnitsEnum}
      * @memberof TimeOff
      */
@@ -98,6 +107,13 @@ export interface TimeOff {
     amount?: number | null;
     /**
      * The type of time off request.
+     * 
+     * * `VACATION` - VACATION
+     * * `SICK` - SICK
+     * * `PERSONAL` - PERSONAL
+     * * `JURY_DUTY` - JURY_DUTY
+     * * `VOLUNTEER` - VOLUNTEER
+     * * `BEREAVEMENT` - BEREAVEMENT
      * @type {RequestTypeEnum}
      * @memberof TimeOff
      */
@@ -126,6 +142,12 @@ export interface TimeOff {
      * @memberof TimeOff
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof TimeOff
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -158,6 +180,7 @@ export function TimeOffFromJSONTyped(json: JSONValue): TimeOff | undefined {
         'end_time': !exists(json, 'end_time') ? undefined : (json['end_time'] === null ? null : new Date(json['end_time'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

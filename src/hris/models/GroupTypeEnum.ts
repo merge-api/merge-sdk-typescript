@@ -15,7 +15,11 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `TEAM` - TEAM
+ * * `DEPARTMENT` - DEPARTMENT
+ * * `COST_CENTER` - COST_CENTER
+ * * `BUSINESS_UNIT` - BUSINESS_UNIT
+ * * `GROUP` - GROUP
  * @export
  * @enum {string}
  */
@@ -24,7 +28,8 @@ export enum GroupTypeEnumValues {
     Team = 'TEAM',
     Department = 'DEPARTMENT',
     CostCenter = 'COST_CENTER',
-    BusinessUnit = 'BUSINESS_UNIT'
+    BusinessUnit = 'BUSINESS_UNIT',
+    Group = 'GROUP'
 }
 
 export interface GroupTypeEnum {

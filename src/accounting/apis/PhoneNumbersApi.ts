@@ -25,6 +25,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface PhoneNumbersRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -38,6 +39,10 @@ export class PhoneNumbersApi extends runtime.BaseAPI {
      * Returns an `AccountingPhoneNumber` object with the given `id`.
      */
     async phoneNumbersRetrieveRaw(requestParameters: PhoneNumbersRetrieveRequest): Promise<runtime.ApiResponse<AccountingPhoneNumber | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling phoneNumbersRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling phoneNumbersRetrieve.');
         }
@@ -53,10 +58,11 @@ export class PhoneNumbersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

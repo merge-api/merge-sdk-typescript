@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface FoldersCreateRequest {
+    xAccountToken: string;
     fileStorageFolderEndpointRequest: FileStorageFolderEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface FoldersListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -61,8 +63,12 @@ export interface FoldersListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface FoldersMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface FoldersRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<FoldersRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -77,6 +83,10 @@ export class FoldersApi extends runtime.BaseAPI {
      * Creates a `Folder` object with the given values.
      */
     async foldersCreateRaw(requestParameters: FoldersCreateRequest): Promise<runtime.ApiResponse<FileStorageFolderResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling foldersCreate.');
+        }
+
         if (requestParameters.fileStorageFolderEndpointRequest === null || requestParameters.fileStorageFolderEndpointRequest === undefined) {
             throw new runtime.RequiredError('fileStorageFolderEndpointRequest','Required parameter requestParameters.fileStorageFolderEndpointRequest was null or undefined when calling foldersCreate.');
         }
@@ -98,10 +108,11 @@ export class FoldersApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -130,6 +141,10 @@ export class FoldersApi extends runtime.BaseAPI {
      * Returns a list of `Folder` objects.
      */
     async foldersListRaw(requestParameters: FoldersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Folder> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling foldersList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -189,10 +204,11 @@ export class FoldersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -219,7 +235,11 @@ export class FoldersApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `FileStorageFolder` POSTs.
      */
-    async foldersMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async foldersMetaPostRetrieveRaw(requestParameters: FoldersMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling foldersMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -233,10 +253,11 @@ export class FoldersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -255,7 +276,7 @@ export class FoldersApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `FileStorageFolder` POSTs.
      */
-    async foldersMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async foldersMetaPostRetrieve(requestParameters: FoldersMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.foldersMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -264,6 +285,10 @@ export class FoldersApi extends runtime.BaseAPI {
      * Returns a `Folder` object with the given `id`.
      */
     async foldersRetrieveRaw(requestParameters: FoldersRetrieveRequest): Promise<runtime.ApiResponse<Folder | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling foldersRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling foldersRetrieve.');
         }
@@ -283,10 +308,11 @@ export class FoldersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -318,7 +344,8 @@ export class FoldersApi extends runtime.BaseAPI {
 */
 export enum FoldersListExpandEnum {
     Drive = 'drive',
-    ParentFolder = 'parent_folder'
+    ParentFolder = 'parent_folder',
+    Permissions = 'permissions'
 }
 /**
 * @export
@@ -326,5 +353,6 @@ export enum FoldersListExpandEnum {
 */
 export enum FoldersRetrieveExpandEnum {
     Drive = 'drive',
-    ParentFolder = 'parent_folder'
+    ParentFolder = 'parent_folder',
+    Permissions = 'permissions'
 }

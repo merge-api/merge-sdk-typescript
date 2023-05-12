@@ -14,6 +14,16 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    
+} from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
+
 
 /**
  * # The Campaign Object
@@ -50,6 +60,12 @@ export interface Campaign {
      */
     emails_sent?: number | null;
     /**
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
+     * @memberof Campaign
+     */
+    readonly remote_was_deleted?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof Campaign
@@ -61,6 +77,24 @@ export interface Campaign {
      * @memberof Campaign
      */
     remote_id?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Campaign
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Campaign
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Campaign
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function CampaignFromJSON(json: JSONValue): Campaign | undefined {
@@ -78,8 +112,12 @@ export function CampaignFromJSONTyped(json: JSONValue): Campaign | undefined {
         'unique_opens': !exists(json, 'unique_opens') ? undefined : json['unique_opens'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'emails_sent': !exists(json, 'emails_sent') ? undefined : json['emails_sent'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

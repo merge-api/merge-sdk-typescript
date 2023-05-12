@@ -18,6 +18,15 @@ import {
     Activity,
     ActivityFromJSON,
     ActivityToJSON,
+    ActivityEndpointRequest,
+    ActivityEndpointRequestFromJSON,
+    ActivityEndpointRequestToJSON,
+    ActivityResponse,
+    ActivityResponseFromJSON,
+    ActivityResponseToJSON,
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
 } from '../models';
 import {
@@ -30,7 +39,15 @@ import {
     MergeMetaRequest
 } from '../../merge_meta_request';
 
+export interface ActivitiesCreateRequest {
+    xAccountToken: string;
+    activityEndpointRequest: ActivityEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
+
 export interface ActivitiesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -46,7 +63,12 @@ export interface ActivitiesListRequest {
     userId?: string;
 }
 
+export interface ActivitiesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface ActivitiesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<ActivitiesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -60,9 +82,71 @@ export interface ActivitiesRetrieveRequest {
 export class ActivitiesApi extends runtime.BaseAPI {
 
     /**
+     * Creates an `Activity` object with the given values.
+     */
+    async activitiesCreateRaw(requestParameters: ActivitiesCreateRequest): Promise<runtime.ApiResponse<ActivityResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesCreate.');
+        }
+
+        if (requestParameters.activityEndpointRequest === null || requestParameters.activityEndpointRequest === undefined) {
+            throw new runtime.RequiredError('activityEndpointRequest','Required parameter requestParameters.activityEndpointRequest was null or undefined when calling activitiesCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+        }
+
+
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/activities`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ActivityEndpointRequestToJSON(requestParameters.activityEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ActivityResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an `Activity` object with the given values.
+     */
+    async activitiesCreate(requestParameters: ActivitiesCreateRequest): Promise<ActivityResponse | undefined> {
+        const response = await this.activitiesCreateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns a list of `Activity` objects.
      */
     async activitiesListRaw(requestParameters: ActivitiesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Activity> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -122,10 +206,11 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -150,9 +235,62 @@ export class ActivitiesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns metadata for `Activity` POSTs.
+     */
+    async activitiesMetaPostRetrieveRaw(requestParameters: ActivitiesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesMetaPostRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+        }
+
+
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/activities/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Activity` POSTs.
+     */
+    async activitiesMetaPostRetrieve(requestParameters: ActivitiesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.activitiesMetaPostRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns an `Activity` object with the given `id`.
      */
     async activitiesRetrieveRaw(requestParameters: ActivitiesRetrieveRequest): Promise<runtime.ApiResponse<Activity | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling activitiesRetrieve.');
         }
@@ -180,10 +318,11 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

@@ -20,7 +20,7 @@ import { JSONValue } from '../../merge_json';
  * ### Description
  * The `File` object is used to represent a file in the workspace. The Object typically exists under a folder or drive, if it exists.
  * ### Usage Example
- * Fetch from the `GET /api/file-storage/v1/files` endpoint and view their files.
+ * Fetch from the `GET /api/filestorage/v1/files` endpoint and view their files.
  * @export
  * @interface FileStorageFile
  */
@@ -50,6 +50,12 @@ export interface FileStorageFile {
      */
     file_url?: string | null;
     /**
+     * The URL that produces a thumbnail preview of the file. Typically an image.
+     * @type {string}
+     * @memberof FileStorageFile
+     */
+    file_thumbnail_url?: string | null;
+    /**
      * The file's size, in bytes.
      * @type {number}
      * @memberof FileStorageFile
@@ -74,6 +80,18 @@ export interface FileStorageFile {
      */
     folder?: string | null;
     /**
+     * The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /files`.
+     * @type {Array<string>}
+     * @memberof FileStorageFile
+     */
+    permissions: Array<string>;
+    /**
+     * The drive that the file belongs to.
+     * @type {string}
+     * @memberof FileStorageFile
+     */
+    drive?: string | null;
+    /**
      * When the third party's file was created.
      * @type {Date}
      * @memberof FileStorageFile
@@ -91,6 +109,12 @@ export interface FileStorageFile {
      * @memberof FileStorageFile
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof FileStorageFile
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -114,13 +138,17 @@ export function FileStorageFileFromJSONTyped(json: JSONValue): FileStorageFile |
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
+        'file_thumbnail_url': !exists(json, 'file_thumbnail_url') ? undefined : json['file_thumbnail_url'],
         'size': !exists(json, 'size') ? undefined : json['size'],
         'mime_type': !exists(json, 'mime_type') ? undefined : json['mime_type'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'folder': !exists(json, 'folder') ? undefined : json['folder'],
+        'permissions': json['permissions'],
+        'drive': !exists(json, 'drive') ? undefined : json['drive'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
@@ -135,10 +163,13 @@ export function FileStorageFileToJSON(value?: FileStorageFile): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'file_url': value.file_url,
+        'file_thumbnail_url': value.file_thumbnail_url,
         'size': value.size,
         'mime_type': value.mime_type,
         'description': value.description,
         'folder': value.folder,
+        'permissions': value.permissions,
+        'drive': value.drive,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
         'remote_data': value.remote_data,

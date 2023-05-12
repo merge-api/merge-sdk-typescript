@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface DrivesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -38,11 +39,13 @@ export interface DrivesListRequest {
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
+    name?: string | null;
     pageSize?: number;
     remoteId?: string | null;
 }
 
 export interface DrivesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -56,6 +59,10 @@ export class DrivesApi extends runtime.BaseAPI {
      * Returns a list of `Drive` objects.
      */
     async drivesListRaw(requestParameters: DrivesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Drive> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling drivesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -86,6 +93,10 @@ export class DrivesApi extends runtime.BaseAPI {
             queryParameters['modified_before'] = (requestParameters.modifiedBefore as any).toISOString();
         }
 
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
+        }
+
         if (requestParameters.pageSize !== undefined) {
             queryParameters['page_size'] = requestParameters.pageSize;
         }
@@ -99,10 +110,11 @@ export class DrivesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -130,6 +142,10 @@ export class DrivesApi extends runtime.BaseAPI {
      * Returns a `Drive` object with the given `id`.
      */
     async drivesRetrieveRaw(requestParameters: DrivesRetrieveRequest): Promise<runtime.ApiResponse<Drive | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling drivesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling drivesRetrieve.');
         }
@@ -145,10 +161,11 @@ export class DrivesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

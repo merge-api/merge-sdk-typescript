@@ -20,7 +20,7 @@ import { JSONValue } from '../../merge_json';
  * ### Description
  * The `File` object is used to represent a file in the workspace. The Object typically exists under a folder or drive, if it exists.
  * ### Usage Example
- * Fetch from the `GET /api/file-storage/v1/files` endpoint and view their files.
+ * Fetch from the `GET /api/filestorage/v1/files` endpoint and view their files.
  * @export
  * @interface FileRequest
  */
@@ -37,6 +37,12 @@ export interface FileRequest {
      * @memberof FileRequest
      */
     file_url?: string | null;
+    /**
+     * The URL that produces a thumbnail preview of the file. Typically an image.
+     * @type {string}
+     * @memberof FileRequest
+     */
+    file_thumbnail_url?: string | null;
     /**
      * The file's size, in bytes.
      * @type {number}
@@ -61,6 +67,18 @@ export interface FileRequest {
      * @memberof FileRequest
      */
     folder?: string | null;
+    /**
+     * The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /files`.
+     * @type {Array<string>}
+     * @memberof FileRequest
+     */
+    permissions: Array<string>;
+    /**
+     * The drive that the file belongs to.
+     * @type {string}
+     * @memberof FileRequest
+     */
+    drive?: string | null;
     /**
      * 
      * @type {{ [key: string]: any; }}
@@ -88,10 +106,13 @@ export function FileRequestFromJSONTyped(json: JSONValue): FileRequest | undefin
         
         'name': !exists(json, 'name') ? undefined : json['name'],
         'file_url': !exists(json, 'file_url') ? undefined : json['file_url'],
+        'file_thumbnail_url': !exists(json, 'file_thumbnail_url') ? undefined : json['file_thumbnail_url'],
         'size': !exists(json, 'size') ? undefined : json['size'],
         'mime_type': !exists(json, 'mime_type') ? undefined : json['mime_type'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'folder': !exists(json, 'folder') ? undefined : json['folder'],
+        'permissions': json['permissions'],
+        'drive': !exists(json, 'drive') ? undefined : json['drive'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -106,10 +127,13 @@ export function FileRequestToJSON(value?: FileRequest): JSONValue {
         
         'name': value.name,
         'file_url': value.file_url,
+        'file_thumbnail_url': value.file_thumbnail_url,
         'size': value.size,
         'mime_type': value.mime_type,
         'description': value.description,
         'folder': value.folder,
+        'permissions': value.permissions,
+        'drive': value.drive,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

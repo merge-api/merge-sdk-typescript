@@ -87,10 +87,9 @@ src/models/EngagementRequest.ts
 src/models/EngagementResponse.ts
 src/models/EngagementType.ts
 src/models/ErrorValidationProblem.ts
-src/models/FieldFormat556Enum.ts
-src/models/FieldType556Enum.ts
+src/models/FieldFormatEnum.ts
+src/models/FieldTypeEnum.ts
 src/models/GenerateRemoteKeyRequest.ts
-src/models/IgnoreCommonModel.ts
 src/models/IgnoreCommonModelRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
@@ -140,6 +139,7 @@ src/models/RemoteField.ts
 src/models/RemoteFieldClass.ts
 src/models/RemoteFieldClassForCustomObjectClass.ts
 src/models/RemoteFieldClassForCustomObjectClassItemSchema.ts
+src/models/RemoteFieldRequest.ts
 src/models/RemoteKey.ts
 src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts

@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface InvoicesCreateRequest {
+    xAccountToken: string;
     invoiceEndpointRequest: InvoiceEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface InvoicesListRequest {
+    xAccountToken: string;
     companyId?: string;
     contactId?: string;
     createdAfter?: Date;
@@ -54,6 +56,8 @@ export interface InvoicesListRequest {
     expand?: Array<InvoicesListExpandEnum>;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    issueDateAfter?: Date | null;
+    issueDateBefore?: Date | null;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -63,8 +67,12 @@ export interface InvoicesListRequest {
     type?: InvoicesListTypeEnum;
 }
 
-// extends MergeMetaRequest
+export interface InvoicesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface InvoicesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<InvoicesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -81,6 +89,10 @@ export class InvoicesApi extends runtime.BaseAPI {
      * Creates an `Invoice` object with the given values.
      */
     async invoicesCreateRaw(requestParameters: InvoicesCreateRequest): Promise<runtime.ApiResponse<InvoiceResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesCreate.');
+        }
+
         if (requestParameters.invoiceEndpointRequest === null || requestParameters.invoiceEndpointRequest === undefined) {
             throw new runtime.RequiredError('invoiceEndpointRequest','Required parameter requestParameters.invoiceEndpointRequest was null or undefined when calling invoicesCreate.');
         }
@@ -102,10 +114,11 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -134,6 +147,10 @@ export class InvoicesApi extends runtime.BaseAPI {
      * Returns a list of `Invoice` objects.
      */
     async invoicesListRaw(requestParameters: InvoicesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Invoice> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.companyId !== undefined) {
@@ -166,6 +183,14 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.issueDateAfter !== undefined) {
+            queryParameters['issue_date_after'] = (requestParameters.issueDateAfter as any).toISOString();
+        }
+
+        if (requestParameters.issueDateBefore !== undefined) {
+            queryParameters['issue_date_before'] = (requestParameters.issueDateBefore as any).toISOString();
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
@@ -201,10 +226,11 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -231,7 +257,11 @@ export class InvoicesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Invoice` POSTs.
      */
-    async invoicesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async invoicesMetaPostRetrieveRaw(requestParameters: InvoicesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -245,10 +275,11 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -267,7 +298,7 @@ export class InvoicesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Invoice` POSTs.
      */
-    async invoicesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async invoicesMetaPostRetrieve(requestParameters: InvoicesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.invoicesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -276,6 +307,10 @@ export class InvoicesApi extends runtime.BaseAPI {
      * Returns an `Invoice` object with the given `id`.
      */
     async invoicesRetrieveRaw(requestParameters: InvoicesRetrieveRequest): Promise<runtime.ApiResponse<Invoice | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling invoicesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling invoicesRetrieve.');
         }
@@ -303,10 +338,11 @@ export class InvoicesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -340,7 +376,8 @@ export enum InvoicesListExpandEnum {
     Company = 'company',
     Contact = 'contact',
     LineItems = 'line_items',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -372,7 +409,8 @@ export enum InvoicesRetrieveExpandEnum {
     Company = 'company',
     Contact = 'contact',
     LineItems = 'line_items',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export

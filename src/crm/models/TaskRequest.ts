@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    RemoteFieldRequest,
+    RemoteFieldRequestFromJSON,
+    RemoteFieldRequestFromJSONTyped,
+    RemoteFieldRequestToJSON,
     TaskStatusEnum,
     TaskStatusEnumFromJSON,
     TaskStatusEnumFromJSONTyped,
@@ -89,6 +93,12 @@ export interface TaskRequest {
      * @memberof TaskRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteFieldRequest>}
+     * @memberof TaskRequest
+     */
+    remote_fields?: Array<RemoteFieldRequest>;
 }
 
 export function TaskRequestFromJSON(json: JSONValue): TaskRequest | undefined {
@@ -111,6 +121,7 @@ export function TaskRequestFromJSONTyped(json: JSONValue): TaskRequest | undefin
         'status': !exists(json, 'status') ? undefined : TaskStatusEnumFromJSON(json['status']) as TaskStatusEnum,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldRequestFromJSON)) as Array<RemoteFieldRequest>,
     };
 }
 
@@ -130,6 +141,7 @@ export function TaskRequestToJSON(value?: TaskRequest): JSONValue {
         'status': TaskStatusEnumToJSON(value.status),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
+        'remote_fields': value.remote_fields === undefined ? undefined : ((value.remote_fields as Array<any>).map(RemoteFieldRequestToJSON)),
     };
 }
 

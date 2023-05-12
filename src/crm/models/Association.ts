@@ -43,6 +43,12 @@ export interface Association {
      * @memberof Association
      */
     association_type?: string | JSONValue | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Association
+     */
+    readonly modified_at?: Date;
 }
 
 export function AssociationFromJSON(json: JSONValue): Association | undefined {
@@ -59,6 +65,7 @@ export function AssociationFromJSONTyped(json: JSONValue): Association | undefin
         'source_object': !exists(json, 'source_object') ? undefined : json['source_object'],
         'target_object': !exists(json, 'target_object') ? undefined : json['target_object'],
         'association_type': !exists(json, 'association_type') ? undefined : json['association_type'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface EmploymentsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -48,6 +49,7 @@ export interface EmploymentsListRequest {
 }
 
 export interface EmploymentsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<EmploymentsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -64,6 +66,10 @@ export class EmploymentsApi extends runtime.BaseAPI {
      * Returns a list of `Employment` objects.
      */
     async employmentsListRaw(requestParameters: EmploymentsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Employment> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employmentsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -127,10 +133,11 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -158,6 +165,10 @@ export class EmploymentsApi extends runtime.BaseAPI {
      * Returns an `Employment` object with the given `id`.
      */
     async employmentsRetrieveRaw(requestParameters: EmploymentsRetrieveRequest): Promise<runtime.ApiResponse<Employment | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling employmentsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling employmentsRetrieve.');
         }
@@ -185,10 +196,11 @@ export class EmploymentsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -227,8 +239,8 @@ export enum EmploymentsListExpandEnum {
 * @enum {string}
 */
 export enum EmploymentsListOrderByEnum {
-    EffectiveDateDESC = '-effective_date',
-    EffectiveDateASC = 'effective_date'
+    EffectiveDate = '-effective_date',
+    EffectiveDate = 'effective_date'
 }
 /**
 * @export

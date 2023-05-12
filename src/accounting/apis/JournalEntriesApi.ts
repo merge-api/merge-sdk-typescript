@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface JournalEntriesCreateRequest {
+    xAccountToken: string;
     journalEntryEndpointRequest: JournalEntryEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface JournalEntriesListRequest {
+    xAccountToken: string;
     companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -61,8 +63,12 @@ export interface JournalEntriesListRequest {
     transactionDateBefore?: Date | null;
 }
 
-// extends MergeMetaRequest
+export interface JournalEntriesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface JournalEntriesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<JournalEntriesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -77,6 +83,10 @@ export class JournalEntriesApi extends runtime.BaseAPI {
      * Creates a `JournalEntry` object with the given values.
      */
     async journalEntriesCreateRaw(requestParameters: JournalEntriesCreateRequest): Promise<runtime.ApiResponse<JournalEntryResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling journalEntriesCreate.');
+        }
+
         if (requestParameters.journalEntryEndpointRequest === null || requestParameters.journalEntryEndpointRequest === undefined) {
             throw new runtime.RequiredError('journalEntryEndpointRequest','Required parameter requestParameters.journalEntryEndpointRequest was null or undefined when calling journalEntriesCreate.');
         }
@@ -98,10 +108,11 @@ export class JournalEntriesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -130,6 +141,10 @@ export class JournalEntriesApi extends runtime.BaseAPI {
      * Returns a list of `JournalEntry` objects.
      */
     async journalEntriesListRaw(requestParameters: JournalEntriesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<JournalEntry> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling journalEntriesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.companyId !== undefined) {
@@ -189,10 +204,11 @@ export class JournalEntriesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -219,7 +235,11 @@ export class JournalEntriesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `JournalEntry` POSTs.
      */
-    async journalEntriesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async journalEntriesMetaPostRetrieveRaw(requestParameters: JournalEntriesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling journalEntriesMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -233,10 +253,11 @@ export class JournalEntriesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -255,7 +276,7 @@ export class JournalEntriesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `JournalEntry` POSTs.
      */
-    async journalEntriesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async journalEntriesMetaPostRetrieve(requestParameters: JournalEntriesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.journalEntriesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -264,6 +285,10 @@ export class JournalEntriesApi extends runtime.BaseAPI {
      * Returns a `JournalEntry` object with the given `id`.
      */
     async journalEntriesRetrieveRaw(requestParameters: JournalEntriesRetrieveRequest): Promise<runtime.ApiResponse<JournalEntry | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling journalEntriesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling journalEntriesRetrieve.');
         }
@@ -283,10 +308,11 @@ export class JournalEntriesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -319,7 +345,8 @@ export class JournalEntriesApi extends runtime.BaseAPI {
 export enum JournalEntriesListExpandEnum {
     Company = 'company',
     Lines = 'lines',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -328,5 +355,6 @@ export enum JournalEntriesListExpandEnum {
 export enum JournalEntriesRetrieveExpandEnum {
     Company = 'company',
     Lines = 'lines',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }

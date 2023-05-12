@@ -14,6 +14,16 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    
+} from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
+
 
 /**
  * # The Event Object
@@ -68,6 +78,12 @@ export interface Event {
      */
     end_time?: Date | null;
     /**
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
+     * @memberof Event
+     */
+    readonly remote_was_deleted?: boolean;
+    /**
      * 
      * @type {string}
      * @memberof Event
@@ -79,6 +95,24 @@ export interface Event {
      * @memberof Event
      */
     remote_id?: string | null;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Event
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Event
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Event
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function EventFromJSON(json: JSONValue): Event | undefined {
@@ -99,8 +133,12 @@ export function EventFromJSONTyped(json: JSONValue): Event | undefined {
         'messages': json['messages'],
         'start_time': !exists(json, 'start_time') ? undefined : (json['start_time'] === null ? null : new Date(json['start_time'])),
         'end_time': !exists(json, 'end_time') ? undefined : (json['end_time'] === null ? null : new Date(json['end_time'])),
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 

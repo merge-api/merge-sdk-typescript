@@ -40,6 +40,9 @@ export interface TemplateRequest {
     name?: string | null;
     /**
      * The template's type.
+     * 
+     * * `EMAIL` - EMAIL
+     * * `MESSAGE` - MESSAGE
      * @type {TypeEnum}
      * @memberof TemplateRequest
      */

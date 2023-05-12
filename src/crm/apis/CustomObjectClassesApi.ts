@@ -15,36 +15,10 @@
 
 import * as runtime from '../../runtime';
 import {
-    Association,
-    AssociationFromJSON,
-    AssociationToJSON,
-    AssociationType,
-    AssociationTypeFromJSON,
-    AssociationTypeToJSON,
-    CRMAssociationTypeEndpointRequest,
-    CRMAssociationTypeEndpointRequestFromJSON,
-    CRMAssociationTypeEndpointRequestToJSON,
-    CRMAssociationTypeResponse,
-    CRMAssociationTypeResponseFromJSON,
-    CRMAssociationTypeResponseToJSON,
-    CRMCustomObjectEndpointRequest,
-    CRMCustomObjectEndpointRequestFromJSON,
-    CRMCustomObjectEndpointRequestToJSON,
-    CRMCustomObjectResponse,
-    CRMCustomObjectResponseFromJSON,
-    CRMCustomObjectResponseToJSON,
-    CustomObject,
-    CustomObjectFromJSON,
-    CustomObjectToJSON,
     CustomObjectClass,
     CustomObjectClassFromJSON,
     CustomObjectClassToJSON,
-    MetaResponse,
-    MetaResponseFromJSON,
-    MetaResponseToJSON,
-    PatchedCRMCustomObjectEndpointRequest,
-    PatchedCRMCustomObjectEndpointRequestFromJSON,
-    PatchedCRMCustomObjectEndpointRequestToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -56,116 +30,15 @@ import {
     MergeMetaRequest
 } from '../../merge_meta_request';
 
-export interface CustomObjectClassesAssociationTypesCreateRequest {
-    customObjectClassId: string;
-    cRMAssociationTypeEndpointRequest: CRMAssociationTypeEndpointRequest;
-    isDebugMode?: boolean;
-    runAsync?: boolean;
-}
-
-export interface CustomObjectClassesAssociationTypesListRequest {
-    customObjectClassId: string;
-    createdAfter?: Date;
-    createdBefore?: Date;
-    cursor?: string;
-    expand?: Array<CustomObjectClassesAssociationTypesListExpandEnum>;
-    includeDeletedData?: boolean;
-    includeRemoteData?: boolean;
-    modifiedAfter?: Date;
-    modifiedBefore?: Date;
-    pageSize?: number;
-    remoteId?: string | null;
-}
-
-export interface CustomObjectClassesAssociationTypesMetaPostRetrieveRequest extends MergeMetaRequest {
-    customObjectClassId: string;
-}
-
-export interface CustomObjectClassesAssociationTypesRetrieveRequest {
-    customObjectClassId: string;
-    id: string;
-    expand?: Array<CustomObjectClassesAssociationTypesRetrieveExpandEnum>;
-    includeRemoteData?: boolean;
-}
-
-export interface CustomObjectClassesCustomObjectsAssociationsListRequest {
-    customObjectClassId: string;
-    objectId: string;
-    associationTypeId?: string;
-    createdAfter?: Date;
-    createdBefore?: Date;
-    cursor?: string;
-    expand?: Array<CustomObjectClassesCustomObjectsAssociationsListExpandEnum>;
-    includeDeletedData?: boolean;
-    includeRemoteData?: boolean;
-    modifiedAfter?: Date;
-    modifiedBefore?: Date;
-    pageSize?: number;
-    remoteId?: string | null;
-}
-
-export interface CustomObjectClassesCustomObjectsAssociationsUpdateRequest {
-    associationTypeId: string;
-    sourceClassId: string;
-    sourceObjectId: string;
-    targetClassId: string;
-    targetObjectId: string;
-    isDebugMode?: boolean;
-    runAsync?: boolean;
-}
-
-export interface CustomObjectClassesCustomObjectsCreateRequest {
-    customObjectClassId: string;
-    cRMCustomObjectEndpointRequest: CRMCustomObjectEndpointRequest;
-    isDebugMode?: boolean;
-    runAsync?: boolean;
-}
-
-export interface CustomObjectClassesCustomObjectsListRequest {
-    customObjectClassId: string;
-    createdAfter?: Date;
-    createdBefore?: Date;
-    cursor?: string;
-    includeDeletedData?: boolean;
-    includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
-    modifiedAfter?: Date;
-    modifiedBefore?: Date;
-    pageSize?: number;
-    remoteId?: string | null;
-}
-
-export interface CustomObjectClassesCustomObjectsMetaPatchRetrieveRequest extends MergeMetaRequest {
-    customObjectClassId: string;
-    id: string;
-}
-
-export interface CustomObjectClassesCustomObjectsMetaPostRetrieveRequest extends MergeMetaRequest {
-    customObjectClassId: string;
-}
-
-export interface CustomObjectClassesCustomObjectsPartialUpdateRequest {
-    customObjectClassId: string;
-    id: string;
-    patchedCRMCustomObjectEndpointRequest: PatchedCRMCustomObjectEndpointRequest;
-    isDebugMode?: boolean;
-    runAsync?: boolean;
-}
-
-export interface CustomObjectClassesCustomObjectsRetrieveRequest {
-    customObjectClassId: string;
-    id: string;
-    includeRemoteData?: boolean;
-    includeRemoteFields?: boolean;
-}
-
 export interface CustomObjectClassesGeneratorUpdateRequest {
+    xAccountToken: string;
     generatorId: string;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface CustomObjectClassesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -179,6 +52,7 @@ export interface CustomObjectClassesListRequest {
 }
 
 export interface CustomObjectClassesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<CustomObjectClassesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -190,761 +64,13 @@ export interface CustomObjectClassesRetrieveRequest {
 export class CustomObjectClassesApi extends runtime.BaseAPI {
 
     /**
-     * Creates an `AssociationType` object with the given values.
-     */
-    async customObjectClassesAssociationTypesCreateRaw(requestParameters: CustomObjectClassesAssociationTypesCreateRequest): Promise<runtime.ApiResponse<CRMAssociationTypeResponse | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesCreate.');
-        }
-
-        if (requestParameters.cRMAssociationTypeEndpointRequest === null || requestParameters.cRMAssociationTypeEndpointRequest === undefined) {
-            throw new runtime.RequiredError('cRMAssociationTypeEndpointRequest','Required parameter requestParameters.cRMAssociationTypeEndpointRequest was null or undefined when calling customObjectClassesAssociationTypesCreate.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.isDebugMode !== undefined) {
-            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
-        }
-
-        if (requestParameters.runAsync !== undefined) {
-            queryParameters['run_async'] = requestParameters.runAsync;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/association-types`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: CRMAssociationTypeEndpointRequestToJSON(requestParameters.cRMAssociationTypeEndpointRequest),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CRMAssociationTypeResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Creates an `AssociationType` object with the given values.
-     */
-    async customObjectClassesAssociationTypesCreate(requestParameters: CustomObjectClassesAssociationTypesCreateRequest): Promise<CRMAssociationTypeResponse | undefined> {
-        const response = await this.customObjectClassesAssociationTypesCreateRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns a list of `AssociationType` objects.
-     */
-    async customObjectClassesAssociationTypesListRaw(requestParameters: CustomObjectClassesAssociationTypesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<AssociationType> | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesList.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.createdAfter !== undefined) {
-            queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();
-        }
-
-        if (requestParameters.createdBefore !== undefined) {
-            queryParameters['created_before'] = (requestParameters.createdBefore as any).toISOString();
-        }
-
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
-        }
-
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand;
-        }
-
-        if (requestParameters.includeDeletedData !== undefined) {
-            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
-        }
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.modifiedAfter !== undefined) {
-            queryParameters['modified_after'] = (requestParameters.modifiedAfter as any).toISOString();
-        }
-
-        if (requestParameters.modifiedBefore !== undefined) {
-            queryParameters['modified_before'] = (requestParameters.modifiedBefore as any).toISOString();
-        }
-
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['page_size'] = requestParameters.pageSize;
-        }
-
-        if (requestParameters.remoteId !== undefined) {
-            queryParameters['remote_id'] = requestParameters.remoteId;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/association-types`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, AssociationTypeFromJSON));
-    }
-
-    /**
-     * Returns a list of `AssociationType` objects.
-     */
-    async customObjectClassesAssociationTypesList(requestParameters: CustomObjectClassesAssociationTypesListRequest): Promise<MergePaginatedResponse<AssociationType> | undefined> {
-        const response = await this.customObjectClassesAssociationTypesListRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns metadata for `CRMAssociationType` POSTs.
-     */
-    async customObjectClassesAssociationTypesMetaPostRetrieveRaw(requestParameters: CustomObjectClassesAssociationTypesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesMetaPostRetrieve.');
-        }
-
-        const queryParameters: any = {};
-
-
-        if (requestParameters !== undefined) {
-            Object.keys(requestParameters.misc_params_query).forEach((key) => {
-                if (requestParameters.misc_params_query[key] !== undefined) {
-                    queryParameters[key] = requestParameters.misc_params_query[key];
-                }
-            })
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/association-types/meta/post`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns metadata for `CRMAssociationType` POSTs.
-     */
-    async customObjectClassesAssociationTypesMetaPostRetrieve(requestParameters: CustomObjectClassesAssociationTypesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.customObjectClassesAssociationTypesMetaPostRetrieveRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns an `AssociationType` object with the given `id`.
-     */
-    async customObjectClassesAssociationTypesRetrieveRaw(requestParameters: CustomObjectClassesAssociationTypesRetrieveRequest): Promise<runtime.ApiResponse<AssociationType | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesRetrieve.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling customObjectClassesAssociationTypesRetrieve.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand;
-        }
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/association-types/{id}`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AssociationTypeFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns an `AssociationType` object with the given `id`.
-     */
-    async customObjectClassesAssociationTypesRetrieve(requestParameters: CustomObjectClassesAssociationTypesRetrieveRequest): Promise<AssociationType | undefined> {
-        const response = await this.customObjectClassesAssociationTypesRetrieveRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns a list of `Association` objects.
-     */
-    async customObjectClassesCustomObjectsAssociationsListRaw(requestParameters: CustomObjectClassesCustomObjectsAssociationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Association> | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsAssociationsList.');
-        }
-
-        if (requestParameters.objectId === null || requestParameters.objectId === undefined) {
-            throw new runtime.RequiredError('objectId','Required parameter requestParameters.objectId was null or undefined when calling customObjectClassesCustomObjectsAssociationsList.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.associationTypeId !== undefined) {
-            queryParameters['association_type_id'] = requestParameters.associationTypeId;
-        }
-
-        if (requestParameters.createdAfter !== undefined) {
-            queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();
-        }
-
-        if (requestParameters.createdBefore !== undefined) {
-            queryParameters['created_before'] = (requestParameters.createdBefore as any).toISOString();
-        }
-
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
-        }
-
-        if (requestParameters.expand) {
-            queryParameters['expand'] = requestParameters.expand;
-        }
-
-        if (requestParameters.includeDeletedData !== undefined) {
-            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
-        }
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.modifiedAfter !== undefined) {
-            queryParameters['modified_after'] = (requestParameters.modifiedAfter as any).toISOString();
-        }
-
-        if (requestParameters.modifiedBefore !== undefined) {
-            queryParameters['modified_before'] = (requestParameters.modifiedBefore as any).toISOString();
-        }
-
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['page_size'] = requestParameters.pageSize;
-        }
-
-        if (requestParameters.remoteId !== undefined) {
-            queryParameters['remote_id'] = requestParameters.remoteId;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/custom-objects/{object_id}/associations`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))).replace(`{${"object_id"}}`, encodeURIComponent(String(requestParameters.objectId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, AssociationFromJSON));
-    }
-
-    /**
-     * Returns a list of `Association` objects.
-     */
-    async customObjectClassesCustomObjectsAssociationsList(requestParameters: CustomObjectClassesCustomObjectsAssociationsListRequest): Promise<MergePaginatedResponse<Association> | undefined> {
-        const response = await this.customObjectClassesCustomObjectsAssociationsListRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Creates an Association between `source_object_id` and `target_object_id` of type `association_type_id`.
-     */
-    async customObjectClassesCustomObjectsAssociationsUpdateRaw(requestParameters: CustomObjectClassesCustomObjectsAssociationsUpdateRequest): Promise<runtime.ApiResponse<Association | undefined>> {
-        if (requestParameters.associationTypeId === null || requestParameters.associationTypeId === undefined) {
-            throw new runtime.RequiredError('associationTypeId','Required parameter requestParameters.associationTypeId was null or undefined when calling customObjectClassesCustomObjectsAssociationsUpdate.');
-        }
-
-        if (requestParameters.sourceClassId === null || requestParameters.sourceClassId === undefined) {
-            throw new runtime.RequiredError('sourceClassId','Required parameter requestParameters.sourceClassId was null or undefined when calling customObjectClassesCustomObjectsAssociationsUpdate.');
-        }
-
-        if (requestParameters.sourceObjectId === null || requestParameters.sourceObjectId === undefined) {
-            throw new runtime.RequiredError('sourceObjectId','Required parameter requestParameters.sourceObjectId was null or undefined when calling customObjectClassesCustomObjectsAssociationsUpdate.');
-        }
-
-        if (requestParameters.targetClassId === null || requestParameters.targetClassId === undefined) {
-            throw new runtime.RequiredError('targetClassId','Required parameter requestParameters.targetClassId was null or undefined when calling customObjectClassesCustomObjectsAssociationsUpdate.');
-        }
-
-        if (requestParameters.targetObjectId === null || requestParameters.targetObjectId === undefined) {
-            throw new runtime.RequiredError('targetObjectId','Required parameter requestParameters.targetObjectId was null or undefined when calling customObjectClassesCustomObjectsAssociationsUpdate.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.isDebugMode !== undefined) {
-            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
-        }
-
-        if (requestParameters.runAsync !== undefined) {
-            queryParameters['run_async'] = requestParameters.runAsync;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{source_class_id}/custom-objects/{source_object_id}/associations/{target_class_id}/{target_object_id}/{association_type_id}`.replace(`{${"association_type_id"}}`, encodeURIComponent(String(requestParameters.associationTypeId))).replace(`{${"source_class_id"}}`, encodeURIComponent(String(requestParameters.sourceClassId))).replace(`{${"source_object_id"}}`, encodeURIComponent(String(requestParameters.sourceObjectId))).replace(`{${"target_class_id"}}`, encodeURIComponent(String(requestParameters.targetClassId))).replace(`{${"target_object_id"}}`, encodeURIComponent(String(requestParameters.targetObjectId))),
-            method: 'PUT',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AssociationFromJSON(jsonValue));
-    }
-
-    /**
-     * Creates an Association between `source_object_id` and `target_object_id` of type `association_type_id`.
-     */
-    async customObjectClassesCustomObjectsAssociationsUpdate(requestParameters: CustomObjectClassesCustomObjectsAssociationsUpdateRequest): Promise<Association | undefined> {
-        const response = await this.customObjectClassesCustomObjectsAssociationsUpdateRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Creates a `CustomObject` object with the given values.
-     */
-    async customObjectClassesCustomObjectsCreateRaw(requestParameters: CustomObjectClassesCustomObjectsCreateRequest): Promise<runtime.ApiResponse<CRMCustomObjectResponse | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsCreate.');
-        }
-
-        if (requestParameters.cRMCustomObjectEndpointRequest === null || requestParameters.cRMCustomObjectEndpointRequest === undefined) {
-            throw new runtime.RequiredError('cRMCustomObjectEndpointRequest','Required parameter requestParameters.cRMCustomObjectEndpointRequest was null or undefined when calling customObjectClassesCustomObjectsCreate.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.isDebugMode !== undefined) {
-            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
-        }
-
-        if (requestParameters.runAsync !== undefined) {
-            queryParameters['run_async'] = requestParameters.runAsync;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/custom-objects`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: CRMCustomObjectEndpointRequestToJSON(requestParameters.cRMCustomObjectEndpointRequest),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CRMCustomObjectResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Creates a `CustomObject` object with the given values.
-     */
-    async customObjectClassesCustomObjectsCreate(requestParameters: CustomObjectClassesCustomObjectsCreateRequest): Promise<CRMCustomObjectResponse | undefined> {
-        const response = await this.customObjectClassesCustomObjectsCreateRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns a list of `CustomObject` objects.
-     */
-    async customObjectClassesCustomObjectsListRaw(requestParameters: CustomObjectClassesCustomObjectsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CustomObject> | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsList.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.createdAfter !== undefined) {
-            queryParameters['created_after'] = (requestParameters.createdAfter as any).toISOString();
-        }
-
-        if (requestParameters.createdBefore !== undefined) {
-            queryParameters['created_before'] = (requestParameters.createdBefore as any).toISOString();
-        }
-
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
-        }
-
-        if (requestParameters.includeDeletedData !== undefined) {
-            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
-        }
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
-        }
-
-        if (requestParameters.modifiedAfter !== undefined) {
-            queryParameters['modified_after'] = (requestParameters.modifiedAfter as any).toISOString();
-        }
-
-        if (requestParameters.modifiedBefore !== undefined) {
-            queryParameters['modified_before'] = (requestParameters.modifiedBefore as any).toISOString();
-        }
-
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['page_size'] = requestParameters.pageSize;
-        }
-
-        if (requestParameters.remoteId !== undefined) {
-            queryParameters['remote_id'] = requestParameters.remoteId;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/custom-objects`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, CustomObjectFromJSON));
-    }
-
-    /**
-     * Returns a list of `CustomObject` objects.
-     */
-    async customObjectClassesCustomObjectsList(requestParameters: CustomObjectClassesCustomObjectsListRequest): Promise<MergePaginatedResponse<CustomObject> | undefined> {
-        const response = await this.customObjectClassesCustomObjectsListRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns metadata for `CRMCustomObject` PATCHs.
-     */
-    async customObjectClassesCustomObjectsMetaPatchRetrieveRaw(requestParameters: CustomObjectClassesCustomObjectsMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsMetaPatchRetrieve.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling customObjectClassesCustomObjectsMetaPatchRetrieve.');
-        }
-
-        const queryParameters: any = {};
-
-
-        if (requestParameters !== undefined) {
-            Object.keys(requestParameters.misc_params_query).forEach((key) => {
-                if (requestParameters.misc_params_query[key] !== undefined) {
-                    queryParameters[key] = requestParameters.misc_params_query[key];
-                }
-            })
-        }
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/custom-objects/meta/patch/{id}`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns metadata for `CRMCustomObject` PATCHs.
-     */
-    async customObjectClassesCustomObjectsMetaPatchRetrieve(requestParameters: CustomObjectClassesCustomObjectsMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.customObjectClassesCustomObjectsMetaPatchRetrieveRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns metadata for `CRMCustomObject` POSTs.
-     */
-    async customObjectClassesCustomObjectsMetaPostRetrieveRaw(requestParameters: CustomObjectClassesCustomObjectsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsMetaPostRetrieve.');
-        }
-
-        const queryParameters: any = {};
-
-
-        if (requestParameters !== undefined) {
-            Object.keys(requestParameters.misc_params_query).forEach((key) => {
-                if (requestParameters.misc_params_query[key] !== undefined) {
-                    queryParameters[key] = requestParameters.misc_params_query[key];
-                }
-            })
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/custom-objects/meta/post`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns metadata for `CRMCustomObject` POSTs.
-     */
-    async customObjectClassesCustomObjectsMetaPostRetrieve(requestParameters: CustomObjectClassesCustomObjectsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
-        const response = await this.customObjectClassesCustomObjectsMetaPostRetrieveRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Updates a `CustomObject` object with the given `id`.
-     */
-    async customObjectClassesCustomObjectsPartialUpdateRaw(requestParameters: CustomObjectClassesCustomObjectsPartialUpdateRequest): Promise<runtime.ApiResponse<CRMCustomObjectResponse | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsPartialUpdate.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling customObjectClassesCustomObjectsPartialUpdate.');
-        }
-
-        if (requestParameters.patchedCRMCustomObjectEndpointRequest === null || requestParameters.patchedCRMCustomObjectEndpointRequest === undefined) {
-            throw new runtime.RequiredError('patchedCRMCustomObjectEndpointRequest','Required parameter requestParameters.patchedCRMCustomObjectEndpointRequest was null or undefined when calling customObjectClassesCustomObjectsPartialUpdate.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.isDebugMode !== undefined) {
-            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
-        }
-
-        if (requestParameters.runAsync !== undefined) {
-            queryParameters['run_async'] = requestParameters.runAsync;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/custom-objects/{id}`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'PATCH',
-            headers: headerParameters,
-            query: queryParameters,
-            body: PatchedCRMCustomObjectEndpointRequestToJSON(requestParameters.patchedCRMCustomObjectEndpointRequest),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CRMCustomObjectResponseFromJSON(jsonValue));
-    }
-
-    /**
-     * Updates a `CustomObject` object with the given `id`.
-     */
-    async customObjectClassesCustomObjectsPartialUpdate(requestParameters: CustomObjectClassesCustomObjectsPartialUpdateRequest): Promise<CRMCustomObjectResponse | undefined> {
-        const response = await this.customObjectClassesCustomObjectsPartialUpdateRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
-     * Returns a `CustomObject` object with the given `id`.
-     */
-    async customObjectClassesCustomObjectsRetrieveRaw(requestParameters: CustomObjectClassesCustomObjectsRetrieveRequest): Promise<runtime.ApiResponse<CustomObject | undefined>> {
-        if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
-            throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsRetrieve.');
-        }
-
-        if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling customObjectClassesCustomObjectsRetrieve.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.includeRemoteFields !== undefined) {
-            queryParameters['include_remote_fields'] = requestParameters.includeRemoteFields;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/crm/v1/custom-object-classes/{custom_object_class_id}/custom-objects/{id}`.replace(`{${"custom_object_class_id"}}`, encodeURIComponent(String(requestParameters.customObjectClassId))).replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => CustomObjectFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns a `CustomObject` object with the given `id`.
-     */
-    async customObjectClassesCustomObjectsRetrieve(requestParameters: CustomObjectClassesCustomObjectsRetrieveRequest): Promise<CustomObject | undefined> {
-        const response = await this.customObjectClassesCustomObjectsRetrieveRaw(requestParameters);
-        return await response.value();
-    }
-
-    /**
      * Updates a `CustomObjectClass` object with the given `id`.
      */
     async customObjectClassesGeneratorUpdateRaw(requestParameters: CustomObjectClassesGeneratorUpdateRequest): Promise<runtime.ApiResponse<CustomObjectClass | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesGeneratorUpdate.');
+        }
+
         if (requestParameters.generatorId === null || requestParameters.generatorId === undefined) {
             throw new runtime.RequiredError('generatorId','Required parameter requestParameters.generatorId was null or undefined when calling customObjectClassesGeneratorUpdate.');
         }
@@ -964,10 +90,11 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -995,6 +122,10 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
      * Returns a list of `CustomObjectClass` objects.
      */
     async customObjectClassesListRaw(requestParameters: CustomObjectClassesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CustomObjectClass> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -1042,10 +173,11 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -1073,6 +205,10 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
      * Returns a `CustomObjectClass` object with the given `id`.
      */
     async customObjectClassesRetrieveRaw(requestParameters: CustomObjectClassesRetrieveRequest): Promise<runtime.ApiResponse<CustomObjectClass | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling customObjectClassesRetrieve.');
         }
@@ -1092,10 +228,11 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -1121,27 +258,6 @@ export class CustomObjectClassesApi extends runtime.BaseAPI {
 
 }
 
-/**
-* @export
-* @enum {string}
-*/
-export enum CustomObjectClassesAssociationTypesListExpandEnum {
-    TargetObjectClasses = 'target_object_classes'
-}
-/**
-* @export
-* @enum {string}
-*/
-export enum CustomObjectClassesAssociationTypesRetrieveExpandEnum {
-    TargetObjectClasses = 'target_object_classes'
-}
-/**
-* @export
-* @enum {string}
-*/
-export enum CustomObjectClassesCustomObjectsAssociationsListExpandEnum {
-    AssociationType = 'association_type'
-}
 /**
 * @export
 * @enum {string}

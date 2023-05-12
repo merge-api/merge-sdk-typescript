@@ -18,8 +18,10 @@ import {
     Collection,
     CollectionFromJSON,
     CollectionToJSON,
-    User,
-    UserFromJSON
+    PaginatedCollectionList,
+    PaginatedCollectionListFromJSON,
+    PaginatedCollectionListToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -32,6 +34,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface CollectionsListRequest {
+    xAccountToken: string;
     collectionType?: CollectionsListCollectionTypeEnum;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -49,6 +52,7 @@ export interface CollectionsListRequest {
 }
 
 export interface CollectionsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<CollectionsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -57,6 +61,7 @@ export interface CollectionsRetrieveRequest {
 }
 
 export interface CollectionsUsersListRequest {
+    xAccountToken: string;
     parentId: string;
     cursor?: string;
     expand?: Array<CollectionsUsersListExpandEnum>;
@@ -74,6 +79,10 @@ export class CollectionsApi extends runtime.BaseAPI {
      * Returns a list of `Collection` objects.
      */
     async collectionsListRaw(requestParameters: CollectionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Collection> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling collectionsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.collectionType !== undefined) {
@@ -137,10 +146,11 @@ export class CollectionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -168,6 +178,10 @@ export class CollectionsApi extends runtime.BaseAPI {
      * Returns a `Collection` object with the given `id`.
      */
     async collectionsRetrieveRaw(requestParameters: CollectionsRetrieveRequest): Promise<runtime.ApiResponse<Collection | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling collectionsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling collectionsRetrieve.');
         }
@@ -195,10 +209,11 @@ export class CollectionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -226,6 +241,10 @@ export class CollectionsApi extends runtime.BaseAPI {
      * Returns a list of `User` objects.
      */
     async collectionsUsersListRaw(requestParameters: CollectionsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling collectionsUsersList.');
+        }
+
         if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
             throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling collectionsUsersList.');
         }
@@ -257,10 +276,11 @@ export class CollectionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

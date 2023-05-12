@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface TransactionsListRequest {
+    xAccountToken: string;
     companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -47,6 +48,7 @@ export interface TransactionsListRequest {
 }
 
 export interface TransactionsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<TransactionsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -61,6 +63,10 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Returns a list of `Transaction` objects.
      */
     async transactionsListRaw(requestParameters: TransactionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Transaction> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling transactionsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.companyId !== undefined) {
@@ -120,10 +126,11 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -151,6 +158,10 @@ export class TransactionsApi extends runtime.BaseAPI {
      * Returns a `Transaction` object with the given `id`.
      */
     async transactionsRetrieveRaw(requestParameters: TransactionsRetrieveRequest): Promise<runtime.ApiResponse<Transaction | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling transactionsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling transactionsRetrieve.');
         }
@@ -170,10 +181,11 @@ export class TransactionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -206,7 +218,8 @@ export class TransactionsApi extends runtime.BaseAPI {
 export enum TransactionsListExpandEnum {
     Account = 'account',
     Contact = 'contact',
-    LineItems = 'line_items'
+    LineItems = 'line_items',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -215,5 +228,6 @@ export enum TransactionsListExpandEnum {
 export enum TransactionsRetrieveExpandEnum {
     Account = 'account',
     Contact = 'contact',
-    LineItems = 'line_items'
+    LineItems = 'line_items',
+    TrackingCategories = 'tracking_categories'
 }

@@ -27,6 +27,10 @@ import {
     PhoneNumberRequestFromJSON,
     PhoneNumberRequestFromJSONTyped,
     PhoneNumberRequestToJSON,
+    RemoteFieldRequest,
+    RemoteFieldRequestFromJSON,
+    RemoteFieldRequestFromJSONTyped,
+    RemoteFieldRequestToJSON,
 } from './';
 
 
@@ -124,6 +128,12 @@ export interface LeadRequest {
      * @memberof LeadRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteFieldRequest>}
+     * @memberof LeadRequest
+     */
+    remote_fields?: Array<RemoteFieldRequest>;
 }
 
 export function LeadRequestFromJSON(json: JSONValue): LeadRequest | undefined {
@@ -151,6 +161,7 @@ export function LeadRequestFromJSONTyped(json: JSONValue): LeadRequest | undefin
         'converted_account': !exists(json, 'converted_account') ? undefined : json['converted_account'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldRequestFromJSON)) as Array<RemoteFieldRequest>,
     };
 }
 
@@ -175,6 +186,7 @@ export function LeadRequestToJSON(value?: LeadRequest): JSONValue {
         'converted_account': value.converted_account,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
+        'remote_fields': value.remote_fields === undefined ? undefined : ((value.remote_fields as Array<any>).map(RemoteFieldRequestToJSON)),
     };
 }
 

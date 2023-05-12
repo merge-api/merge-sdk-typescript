@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface OffersListRequest {
+    xAccountToken: string;
     applicationId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -48,6 +49,7 @@ export interface OffersListRequest {
 }
 
 export interface OffersRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<OffersRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -64,6 +66,10 @@ export class OffersApi extends runtime.BaseAPI {
      * Returns a list of `Offer` objects.
      */
     async offersListRaw(requestParameters: OffersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Offer> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling offersList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.applicationId !== undefined) {
@@ -127,10 +133,11 @@ export class OffersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -158,6 +165,10 @@ export class OffersApi extends runtime.BaseAPI {
      * Returns an `Offer` object with the given `id`.
      */
     async offersRetrieveRaw(requestParameters: OffersRetrieveRequest): Promise<runtime.ApiResponse<Offer | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling offersRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling offersRetrieve.');
         }
@@ -185,10 +196,11 @@ export class OffersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

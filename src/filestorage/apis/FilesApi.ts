@@ -40,12 +40,19 @@ import {
 } from '../../merge_meta_request';
 
 export interface FilesCreateRequest {
+    xAccountToken: string;
     fileStorageFileEndpointRequest: FileStorageFileEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
+export interface FilesDownloadRetrieveRequest {
+    xAccountToken: string;
+    id: string;
+}
+
 export interface FilesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -60,8 +67,12 @@ export interface FilesListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface FilesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface FilesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<FilesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -76,6 +87,10 @@ export class FilesApi extends runtime.BaseAPI {
      * Creates a `File` object with the given values.
      */
     async filesCreateRaw(requestParameters: FilesCreateRequest): Promise<runtime.ApiResponse<FileStorageFileResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling filesCreate.');
+        }
+
         if (requestParameters.fileStorageFileEndpointRequest === null || requestParameters.fileStorageFileEndpointRequest === undefined) {
             throw new runtime.RequiredError('fileStorageFileEndpointRequest','Required parameter requestParameters.fileStorageFileEndpointRequest was null or undefined when calling filesCreate.');
         }
@@ -97,10 +112,11 @@ export class FilesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -126,9 +142,60 @@ export class FilesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns a `File` object with the given `id`.
+     */
+    async filesDownloadRetrieveRaw(requestParameters: FilesDownloadRetrieveRequest): Promise<runtime.ApiResponse<Blob | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling filesDownloadRetrieve.');
+        }
+
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling filesDownloadRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
+        }
+
+
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/filestorage/v1/files/{id}/download`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Returns a `File` object with the given `id`.
+     */
+    async filesDownloadRetrieve(requestParameters: FilesDownloadRetrieveRequest): Promise<Blob | undefined> {
+        const response = await this.filesDownloadRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns a list of `File` objects.
      */
-    async filesListRaw(requestParameters: FilesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<FileStorageFile> | undefined>> {
+    async filesListRaw(requestParameters: FilesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<File> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling filesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -184,10 +251,11 @@ export class FilesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -200,13 +268,13 @@ export class FilesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, FileStorageFileFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, FileFromJSON));
     }
 
     /**
      * Returns a list of `File` objects.
      */
-    async filesList(requestParameters: FilesListRequest): Promise<MergePaginatedResponse<FileStorageFile> | undefined> {
+    async filesList(requestParameters: FilesListRequest): Promise<MergePaginatedResponse<File> | undefined> {
         const response = await this.filesListRaw(requestParameters);
         return await response.value();
     }
@@ -214,7 +282,11 @@ export class FilesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `FileStorageFile` POSTs.
      */
-    async filesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async filesMetaPostRetrieveRaw(requestParameters: FilesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling filesMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -228,10 +300,11 @@ export class FilesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -250,7 +323,7 @@ export class FilesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `FileStorageFile` POSTs.
      */
-    async filesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async filesMetaPostRetrieve(requestParameters: FilesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.filesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -259,6 +332,10 @@ export class FilesApi extends runtime.BaseAPI {
      * Returns a `File` object with the given `id`.
      */
     async filesRetrieveRaw(requestParameters: FilesRetrieveRequest): Promise<runtime.ApiResponse<FileStorageFile | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling filesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling filesRetrieve.');
         }
@@ -278,10 +355,11 @@ export class FilesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -312,12 +390,16 @@ export class FilesApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum FilesListExpandEnum {
-    Folder = 'folder'
+    Drive = 'drive',
+    Folder = 'folder',
+    Permissions = 'permissions'
 }
 /**
 * @export
 * @enum {string}
 */
 export enum FilesRetrieveExpandEnum {
-    Folder = 'folder'
+    Drive = 'drive',
+    Folder = 'folder',
+    Permissions = 'permissions'
 }

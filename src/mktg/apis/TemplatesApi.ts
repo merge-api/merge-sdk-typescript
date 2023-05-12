@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface TemplatesCreateRequest {
+    xAccountToken: string;
     mKTGTemplateEndpointRequest: MKTGTemplateEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface TemplatesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -57,8 +59,12 @@ export interface TemplatesListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface TemplatesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface TemplatesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -72,6 +78,10 @@ export class TemplatesApi extends runtime.BaseAPI {
      * Creates a `Template` object with the given values.
      */
     async templatesCreateRaw(requestParameters: TemplatesCreateRequest): Promise<runtime.ApiResponse<MKTGTemplateResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling templatesCreate.');
+        }
+
         if (requestParameters.mKTGTemplateEndpointRequest === null || requestParameters.mKTGTemplateEndpointRequest === undefined) {
             throw new runtime.RequiredError('mKTGTemplateEndpointRequest','Required parameter requestParameters.mKTGTemplateEndpointRequest was null or undefined when calling templatesCreate.');
         }
@@ -93,10 +103,11 @@ export class TemplatesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -125,6 +136,10 @@ export class TemplatesApi extends runtime.BaseAPI {
      * Returns a list of `Template` objects.
      */
     async templatesListRaw(requestParameters: TemplatesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Template> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling templatesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -168,10 +183,11 @@ export class TemplatesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -198,7 +214,11 @@ export class TemplatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGTemplate` POSTs.
      */
-    async templatesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async templatesMetaPostRetrieveRaw(requestParameters: TemplatesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling templatesMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -212,10 +232,11 @@ export class TemplatesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -234,7 +255,7 @@ export class TemplatesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGTemplate` POSTs.
      */
-    async templatesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async templatesMetaPostRetrieve(requestParameters: TemplatesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.templatesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -243,6 +264,10 @@ export class TemplatesApi extends runtime.BaseAPI {
      * Returns a `Template` object with the given `id`.
      */
     async templatesRetrieveRaw(requestParameters: TemplatesRetrieveRequest): Promise<runtime.ApiResponse<Template | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling templatesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling templatesRetrieve.');
         }
@@ -258,10 +283,11 @@ export class TemplatesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

@@ -24,7 +24,10 @@ import {
     MergeMetaRequest
 } from '../../merge_meta_request';
 
-//
+export interface AvailableActionsRetrieveRequest {
+    xAccountToken: string;
+}
+
 /**
  * 
  */
@@ -33,7 +36,11 @@ export class AvailableActionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of models and actions available for an account.
      */
-    async availableActionsRetrieveRaw(): Promise<runtime.ApiResponse<AvailableActions | undefined>> {
+    async availableActionsRetrieveRaw(requestParameters: AvailableActionsRetrieveRequest): Promise<runtime.ApiResponse<AvailableActions | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling availableActionsRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -41,10 +48,11 @@ export class AvailableActionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -63,8 +71,8 @@ export class AvailableActionsApi extends runtime.BaseAPI {
     /**
      * Returns a list of models and actions available for an account.
      */
-    async availableActionsRetrieve(): Promise<AvailableActions | undefined> {
-        const response = await this.availableActionsRetrieveRaw();
+    async availableActionsRetrieve(requestParameters: AvailableActionsRetrieveRequest): Promise<AvailableActions | undefined> {
+        const response = await this.availableActionsRetrieveRaw(requestParameters);
         return await response.value();
     }
 

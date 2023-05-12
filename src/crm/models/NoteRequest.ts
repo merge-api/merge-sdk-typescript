@@ -14,6 +14,13 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    RemoteFieldRequest,
+    RemoteFieldRequestFromJSON,
+    RemoteFieldRequestFromJSONTyped,
+    RemoteFieldRequestToJSON,
+} from './';
+
 
 /**
  * # The Note Object
@@ -67,6 +74,12 @@ export interface NoteRequest {
      * @memberof NoteRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteFieldRequest>}
+     * @memberof NoteRequest
+     */
+    remote_fields?: Array<RemoteFieldRequest>;
 }
 
 export function NoteRequestFromJSON(json: JSONValue): NoteRequest | undefined {
@@ -87,6 +100,7 @@ export function NoteRequestFromJSONTyped(json: JSONValue): NoteRequest | undefin
         'opportunity': !exists(json, 'opportunity') ? undefined : json['opportunity'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldRequestFromJSON)) as Array<RemoteFieldRequest>,
     };
 }
 
@@ -104,6 +118,7 @@ export function NoteRequestToJSON(value?: NoteRequest): JSONValue {
         'opportunity': value.opportunity,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
+        'remote_fields': value.remote_fields === undefined ? undefined : ((value.remote_fields as Array<any>).map(RemoteFieldRequestToJSON)),
     };
 }
 

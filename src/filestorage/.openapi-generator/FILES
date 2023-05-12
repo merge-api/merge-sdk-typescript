@@ -8,6 +8,7 @@ src/apis/FilesApi.ts
 src/apis/FoldersApi.ts
 src/apis/ForceResyncApi.ts
 src/apis/GenerateKeyApi.ts
+src/apis/GroupsApi.ts
 src/apis/IssuesApi.ts
 src/apis/LinkTokenApi.ts
 src/apis/LinkedAccountsApi.ts
@@ -15,6 +16,7 @@ src/apis/PassthroughApi.ts
 src/apis/RegenerateKeyApi.ts
 src/apis/SelectiveSyncApi.ts
 src/apis/SyncStatusApi.ts
+src/apis/UsersApi.ts
 src/apis/WebhookReceiversApi.ts
 src/apis/index.ts
 src/index.ts
@@ -53,6 +55,7 @@ src/models/FileStorageFolderResponse.ts
 src/models/Folder.ts
 src/models/FolderRequest.ts
 src/models/GenerateRemoteKeyRequest.ts
+src/models/Group.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
 src/models/LinkToken.ts
@@ -75,6 +78,7 @@ src/models/ResponseTypeEnum.ts
 src/models/SelectiveSyncConfigurationsUsageEnum.ts
 src/models/SyncStatus.ts
 src/models/SyncStatusStatusEnum.ts
+src/models/User.ts
 src/models/ValidationProblemSource.ts
 src/models/WarningValidationProblem.ts
 src/models/WebhookReceiver.ts

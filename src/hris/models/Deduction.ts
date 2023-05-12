@@ -14,6 +14,16 @@
 
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
+import {
+    
+} from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
+
 
 /**
  * # The Deduction Object
@@ -32,6 +42,12 @@ export interface Deduction {
      * @memberof Deduction
      */
     readonly id?: string;
+    /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Deduction
+     */
+    remote_id?: string | null;
     /**
      * 
      * @type {string}
@@ -68,6 +84,18 @@ export interface Deduction {
      * @memberof Deduction
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Deduction
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Deduction
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function DeductionFromJSON(json: JSONValue): Deduction | undefined {
@@ -82,12 +110,15 @@ export function DeductionFromJSONTyped(json: JSONValue): Deduction | undefined {
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'employee_payroll_run': !exists(json, 'employee_payroll_run') ? undefined : json['employee_payroll_run'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'employee_deduction': !exists(json, 'employee_deduction') ? undefined : json['employee_deduction'],
         'company_deduction': !exists(json, 'company_deduction') ? undefined : json['company_deduction'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 
@@ -98,6 +129,7 @@ export function DeductionToJSON(value?: Deduction): JSONValue {
 
     return {
         
+        'remote_id': value.remote_id,
         'employee_payroll_run': value.employee_payroll_run,
         'name': value.name,
         'employee_deduction': value.employee_deduction,

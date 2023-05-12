@@ -27,6 +27,12 @@ import { JSONValue } from '../../merge_json';
  */
 export interface JournalLine {
     /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof JournalLine
+     */
+    remote_id?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof JournalLine
@@ -63,11 +69,17 @@ export interface JournalLine {
      */
     description?: string | null;
     /**
-     * The third-party API ID of the matching object.
+     * The journal line item's exchange rate.
      * @type {string}
      * @memberof JournalLine
      */
-    remote_id?: string | null;
+    exchange_rate?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof JournalLine
+     */
+    readonly modified_at?: Date;
 }
 
 export function JournalLineFromJSON(json: JSONValue): JournalLine | undefined {
@@ -81,13 +93,15 @@ export function JournalLineFromJSONTyped(json: JSONValue): JournalLine | undefin
 
     return {
         
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'account': !exists(json, 'account') ? undefined : json['account'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
         'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 
@@ -98,13 +112,14 @@ export function JournalLineToJSON(value?: JournalLine): JSONValue {
 
     return {
         
+        'remote_id': value.remote_id,
         'account': value.account,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
         'tracking_categories': value.tracking_categories,
         'contact': value.contact,
         'description': value.description,
-        'remote_id': value.remote_id,
+        'exchange_rate': value.exchange_rate,
     };
 }
 
