@@ -15,6 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
+    SyncStatusFromJSON,
 	SyncStatus
 } from '../models';
 import {

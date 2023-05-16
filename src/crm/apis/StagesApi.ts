@@ -15,13 +15,11 @@
 
 import * as runtime from '../../runtime';
 import {
-    PaginatedRemoteFieldClassList,
-    PaginatedRemoteFieldClassListFromJSON,
-    PaginatedRemoteFieldClassListToJSON,
-    
     Stage,
     StageFromJSON,
     StageToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,

@@ -36,14 +36,14 @@ test.skip("can call ATS api", async () => {
 });
 
 // note this is skipped for CI, just here for reference
-test.skip("can call CRM api", async () => {
+test("can call CRM api", async () => {
     /*
     REDACTED TEST CONFS
     */
 
     let test_conf_crm = new Configuration({
         apiKey: "REDACTED",
-        accessToken: "REDACTED"
+        accessToken: "REDACTED "
     });
 
     // crm call

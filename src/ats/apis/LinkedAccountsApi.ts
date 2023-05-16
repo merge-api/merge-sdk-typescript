@@ -15,6 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
+    AccountDetailsAndActionsFromJSON,
 	AccountDetailsAndActions
 } from '../models';
 import {

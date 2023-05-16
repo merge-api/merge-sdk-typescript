@@ -15,12 +15,11 @@
 
 import * as runtime from '../../runtime';
 import {
+    Contact,
+    ContactFromJSON,
     MarketingEmail,
     MarketingEmailFromJSON,
     MarketingEmailToJSON,
-    PaginatedContactList,
-    PaginatedContactListFromJSON,
-    PaginatedContactListToJSON,
     
 } from '../models';
 import {

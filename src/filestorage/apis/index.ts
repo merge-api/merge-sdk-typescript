@@ -6,7 +6,6 @@ export * from './AvailableActionsApi';
 export * from './CommonModelScopesApi';
 export * from './DeleteAccountApi';
 export * from './DrivesApi';
-export * from './FilesApi';
 export * from './FoldersApi';
 export * from './ForceResyncApi';
 export * from './GenerateKeyApi';

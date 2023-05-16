@@ -14,7 +14,9 @@
 
 
 import * as runtime from '../../runtime';
-import {
+import { 
+    ConditionSchema,
+    ConditionSchemaFromJSON,
     LinkedAccountSelectiveSyncConfiguration,
     LinkedAccountSelectiveSyncConfigurationFromJSON,
     LinkedAccountSelectiveSyncConfigurationToJSON,

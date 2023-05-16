@@ -12,6 +12,7 @@
     "sourceMap": true,
     "noLib": false,
     "declaration": true,
+    "skipLibCheck": true,
     "lib": ["dom", "es6", "es5", "dom.iterable", "scripthost"],
     "outDir": "dist",
     "typeRoots": [

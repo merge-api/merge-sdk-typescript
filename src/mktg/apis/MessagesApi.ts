@@ -15,13 +15,12 @@
 
 import * as runtime from '../../runtime';
 import {
+    Contact,
+    ContactFromJSON,
     Message,
     MessageFromJSON,
     MessageToJSON,
-    PaginatedContactList,
-    PaginatedContactListFromJSON,
-    PaginatedContactListToJSON,
-    
+
 } from '../models';
 import {
 	MergePaginatedResponse,
