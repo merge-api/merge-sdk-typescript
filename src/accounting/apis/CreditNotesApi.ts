@@ -225,7 +225,8 @@ export class CreditNotesApi extends runtime.BaseAPI {
 */
 export enum CreditNotesListExpandEnum {
     LineItems = 'line_items',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -251,7 +252,8 @@ export enum CreditNotesListShowEnumOriginsEnum {
 */
 export enum CreditNotesRetrieveExpandEnum {
     LineItems = 'line_items',
-    Payments = 'payments'
+    Payments = 'payments',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export

@@ -15,7 +15,13 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `GET` - GET
+ * * `OPTIONS` - OPTIONS
+ * * `HEAD` - HEAD
+ * * `POST` - POST
+ * * `PUT` - PUT
+ * * `PATCH` - PATCH
+ * * `DELETE` - DELETE
  * @export
  * @enum {string}
  */

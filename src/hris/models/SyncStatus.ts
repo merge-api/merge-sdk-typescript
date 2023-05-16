@@ -78,7 +78,7 @@ export interface SyncStatus {
      * @type {SelectiveSyncConfigurationsUsageEnum}
      * @memberof SyncStatus
      */
-    selective_sync_configurations_usage?: SelectiveSyncConfigurationsUsageEnum | null;
+    selective_sync_configurations_usage?: SelectiveSyncConfigurationsUsageEnum;
 }
 
 export function SyncStatusFromJSON(json: JSONValue): SyncStatus | undefined {

@@ -27,6 +27,10 @@ import {
     PhoneNumberRequestFromJSON,
     PhoneNumberRequestFromJSONTyped,
     PhoneNumberRequestToJSON,
+    RemoteFieldRequest,
+    RemoteFieldRequestFromJSON,
+    RemoteFieldRequestFromJSONTyped,
+    RemoteFieldRequestToJSON,
 } from './';
 
 
@@ -94,6 +98,12 @@ export interface PatchedContactRequest {
      * @memberof PatchedContactRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteFieldRequest>}
+     * @memberof PatchedContactRequest
+     */
+    remote_fields?: Array<RemoteFieldRequest>;
 }
 
 export function PatchedContactRequestFromJSON(json: JSONValue): PatchedContactRequest | undefined {
@@ -116,6 +126,7 @@ export function PatchedContactRequestFromJSONTyped(json: JSONValue): PatchedCont
         'last_activity_at': !exists(json, 'last_activity_at') ? undefined : (json['last_activity_at'] === null ? null : new Date(json['last_activity_at'])),
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldRequestFromJSON)) as Array<RemoteFieldRequest>,
     };
 }
 
@@ -135,6 +146,7 @@ export function PatchedContactRequestToJSON(value?: PatchedContactRequest): JSON
         'last_activity_at': value.last_activity_at === undefined ? undefined : (value.last_activity_at === null ? null : value.last_activity_at.toISOString()),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
+        'remote_fields': value.remote_fields === undefined ? undefined : ((value.remote_fields as Array<any>).map(RemoteFieldRequestToJSON)),
     };
 }
 

@@ -29,7 +29,6 @@ import {
     NoteResponseToJSON,
     RemoteFieldClass,
     RemoteFieldClassFromJSON
-    
 } from '../models';
 import {
 	MergePaginatedResponse,

@@ -319,7 +319,8 @@ export class ExpensesApi extends runtime.BaseAPI {
 export enum ExpensesListExpandEnum {
     Account = 'account',
     Company = 'company',
-    Contact = 'contact'
+    Contact = 'contact',
+    TrackingCategories = 'tracking_categories'
 }
 /**
 * @export
@@ -328,5 +329,6 @@ export enum ExpensesListExpandEnum {
 export enum ExpensesRetrieveExpandEnum {
     Account = 'account',
     Company = 'company',
-    Contact = 'contact'
+    Contact = 'contact',
+    TrackingCategories = 'tracking_categories'
 }

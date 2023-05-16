@@ -15,7 +15,8 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `TRIGGER_EVENT` - TRIGGER_EVENT
+ * * `RECURRENCE` - RECURRENCE
  * @export
  * @enum {string}
  */

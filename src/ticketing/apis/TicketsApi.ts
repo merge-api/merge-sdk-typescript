@@ -17,7 +17,7 @@ import * as runtime from '../../runtime';
 import {
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON,
+    MetaResponseToJSON,    
     PatchedTicketEndpointRequest,
     PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
@@ -33,7 +33,7 @@ import {
     TicketResponseFromJSON,
     TicketResponseToJSON,
     User,
-    UserFromJSON
+    UserFromJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,

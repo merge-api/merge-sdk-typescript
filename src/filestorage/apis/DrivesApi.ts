@@ -38,6 +38,7 @@ export interface DrivesListRequest {
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
+    name?: string | null;
     pageSize?: number;
     remoteId?: string | null;
 }
@@ -84,6 +85,10 @@ export class DrivesApi extends runtime.BaseAPI {
 
         if (requestParameters.modifiedBefore !== undefined) {
             queryParameters['modified_before'] = (requestParameters.modifiedBefore as any).toISOString();
+        }
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
         }
 
         if (requestParameters.pageSize !== undefined) {

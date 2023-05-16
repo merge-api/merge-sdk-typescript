@@ -14,7 +14,7 @@
 
 
 import * as runtime from '../../runtime';
-import {
+import { 
     ConditionSchema,
     ConditionSchemaFromJSON,
     LinkedAccountSelectiveSyncConfiguration,
@@ -23,6 +23,7 @@ import {
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

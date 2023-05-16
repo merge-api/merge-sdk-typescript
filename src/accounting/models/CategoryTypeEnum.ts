@@ -15,7 +15,8 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `CLASS` - CLASS
+ * * `DEPARTMENT` - DEPARTMENT
  * @export
  * @enum {string}
  */

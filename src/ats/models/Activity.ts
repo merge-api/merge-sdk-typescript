@@ -56,7 +56,7 @@ export interface Activity {
      */
     remote_id?: string | null;
     /**
-     * The user the performed the action.
+     * The user that performed the action.
      * @type {string}
      * @memberof Activity
      */
@@ -69,6 +69,10 @@ export interface Activity {
     remote_created_at?: Date | null;
     /**
      * The activity's type.
+     * 
+     * * `NOTE` - NOTE
+     * * `EMAIL` - EMAIL
+     * * `OTHER` - OTHER
      * @type {ActivityTypeEnum}
      * @memberof Activity
      */
@@ -87,6 +91,10 @@ export interface Activity {
     body?: string | null;
     /**
      * The activity's visibility.
+     * 
+     * * `ADMIN_ONLY` - ADMIN_ONLY
+     * * `PUBLIC` - PUBLIC
+     * * `PRIVATE` - PRIVATE
      * @type {VisibilityEnum}
      * @memberof Activity
      */
@@ -103,6 +111,12 @@ export interface Activity {
      * @memberof Activity
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Activity
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -132,6 +146,7 @@ export function ActivityFromJSONTyped(json: JSONValue): Activity | undefined {
         'visibility': !exists(json, 'visibility') ? undefined : VisibilityEnumFromJSON(json['visibility']) as VisibilityEnum,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

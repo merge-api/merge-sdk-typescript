@@ -40,10 +40,20 @@ export interface EmailAddress {
     value?: string | null;
     /**
      * The type of email address.
+     * 
+     * * `PERSONAL` - PERSONAL
+     * * `WORK` - WORK
+     * * `OTHER` - OTHER
      * @type {EmailAddressTypeEnum}
      * @memberof EmailAddress
      */
     email_address_type?: EmailAddressTypeEnum | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof EmailAddress
+     */
+    readonly modified_at?: Date;
 }
 
 export function EmailAddressFromJSON(json: JSONValue): EmailAddress | undefined {
@@ -59,6 +69,7 @@ export function EmailAddressFromJSONTyped(json: JSONValue): EmailAddress | undef
         
         'value': !exists(json, 'value') ? undefined : json['value'],
         'email_address_type': !exists(json, 'email_address_type') ? undefined : EmailAddressTypeEnumFromJSON(json['email_address_type']) as EmailAddressTypeEnum,
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

@@ -1,3 +1,9 @@
+# Version 3.1.0
+
+# Date: 2023-05-15
+
+- Adding remote fields support for POST CRM Objects and other various improvements
+
 # Version 3.0.10
 
 - Added email_addresses to Lead POST API in CRM Category

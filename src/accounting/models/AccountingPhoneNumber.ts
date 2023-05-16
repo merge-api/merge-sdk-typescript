@@ -38,6 +38,12 @@ export interface AccountingPhoneNumber {
      * @memberof AccountingPhoneNumber
      */
     type?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof AccountingPhoneNumber
+     */
+    readonly modified_at?: Date;
 }
 
 export function AccountingPhoneNumberFromJSON(json: JSONValue): AccountingPhoneNumber | undefined {
@@ -53,6 +59,7 @@ export function AccountingPhoneNumberFromJSONTyped(json: JSONValue): AccountingP
         
         'number': !exists(json, 'number') ? undefined : json['number'],
         'type': !exists(json, 'type') ? undefined : json['type'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

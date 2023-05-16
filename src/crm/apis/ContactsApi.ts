@@ -24,9 +24,6 @@ import {
     Contact,
     ContactFromJSON,
     ContactToJSON,
-    IgnoreCommonModel,
-    IgnoreCommonModelFromJSON,
-    IgnoreCommonModelToJSON,
     IgnoreCommonModelRequest,
     IgnoreCommonModelRequestFromJSON,
     IgnoreCommonModelRequestToJSON,
@@ -39,7 +36,6 @@ import {
     RemoteFieldClass,
     RemoteFieldClassFromJSON
 } from '../models';
-
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
@@ -164,7 +160,7 @@ export class ContactsApi extends runtime.BaseAPI {
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async contactsIgnoreCreateRaw(requestParameters: ContactsIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
+    async contactsIgnoreCreateRaw(requestParameters: ContactsIgnoreCreateRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.modelId === null || requestParameters.modelId === undefined) {
             throw new runtime.RequiredError('modelId','Required parameter requestParameters.modelId was null or undefined when calling contactsIgnoreCreate.');
         }
@@ -199,15 +195,14 @@ export class ContactsApi extends runtime.BaseAPI {
             body: IgnoreCommonModelRequestToJSON(requestParameters.ignoreCommonModelRequest),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => IgnoreCommonModelFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async contactsIgnoreCreate(requestParameters: ContactsIgnoreCreateRequest): Promise<IgnoreCommonModel | undefined> {
-        const response = await this.contactsIgnoreCreateRaw(requestParameters);
-        return await response.value();
+    async contactsIgnoreCreate(requestParameters: ContactsIgnoreCreateRequest): Promise<void> {
+        await this.contactsIgnoreCreateRaw(requestParameters);
     }
 
     /**

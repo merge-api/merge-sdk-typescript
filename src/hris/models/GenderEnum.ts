@@ -15,7 +15,11 @@
 import { JSONValue } from "../../merge_json";
 
 /**
- * 
+ * * `MALE` - MALE
+ * * `FEMALE` - FEMALE
+ * * `NON-BINARY` - NON-BINARY
+ * * `OTHER` - OTHER
+ * * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
  * @export
  * @enum {string}
  */

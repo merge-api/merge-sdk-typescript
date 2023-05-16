@@ -20,6 +20,7 @@ import {
     MarketingEmail,
     MarketingEmailFromJSON,
     MarketingEmailToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

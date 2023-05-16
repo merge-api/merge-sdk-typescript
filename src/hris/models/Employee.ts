@@ -168,18 +168,39 @@ export interface Employee {
     ssn?: string | null;
     /**
      * The employee's gender.
+     * 
+     * * `MALE` - MALE
+     * * `FEMALE` - FEMALE
+     * * `NON-BINARY` - NON-BINARY
+     * * `OTHER` - OTHER
+     * * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
      * @type {GenderEnum}
      * @memberof Employee
      */
     gender?: GenderEnum | null;
     /**
      * The employee's ethnicity.
+     * 
+     * * `AMERICAN_INDIAN_OR_ALASKA_NATIVE` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
+     * * `ASIAN_OR_INDIAN_SUBCONTINENT` - ASIAN_OR_INDIAN_SUBCONTINENT
+     * * `BLACK_OR_AFRICAN_AMERICAN` - BLACK_OR_AFRICAN_AMERICAN
+     * * `HISPANIC_OR_LATINO` - HISPANIC_OR_LATINO
+     * * `NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER` - NATIVE_HAWAIIAN_OR_OTHER_PACIFIC_ISLANDER
+     * * `TWO_OR_MORE_RACES` - TWO_OR_MORE_RACES
+     * * `WHITE` - WHITE
+     * * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE
      * @type {EthnicityEnum}
      * @memberof Employee
      */
     ethnicity?: EthnicityEnum | null;
     /**
      * The employee's filing status as related to marital status.
+     * 
+     * * `SINGLE` - SINGLE
+     * * `MARRIED_FILING_JOINTLY` - MARRIED_FILING_JOINTLY
+     * * `MARRIED_FILING_SEPARATELY` - MARRIED_FILING_SEPARATELY
+     * * `HEAD_OF_HOUSEHOLD` - HEAD_OF_HOUSEHOLD
+     * * `QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD
      * @type {MaritalStatusEnum}
      * @memberof Employee
      */
@@ -210,6 +231,10 @@ export interface Employee {
     remote_created_at?: Date | null;
     /**
      * The employment status of the employee.
+     * 
+     * * `ACTIVE` - ACTIVE
+     * * `PENDING` - PENDING
+     * * `INACTIVE` - INACTIVE
      * @type {EmploymentStatusEnum}
      * @memberof Employee
      */
@@ -244,6 +269,12 @@ export interface Employee {
      * @memberof Employee
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Employee
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -295,6 +326,7 @@ export function EmployeeFromJSONTyped(json: JSONValue): Employee | undefined {
         'custom_fields': !exists(json, 'custom_fields') ? undefined : json['custom_fields'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

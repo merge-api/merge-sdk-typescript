@@ -29,7 +29,6 @@ import {
     OpportunityResponseToJSON,
     RemoteFieldClass,
     RemoteFieldClassFromJSON,
-    
     PatchedOpportunityEndpointRequest,
     PatchedOpportunityEndpointRequestFromJSON,
     PatchedOpportunityEndpointRequestToJSON,

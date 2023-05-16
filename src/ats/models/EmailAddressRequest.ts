@@ -40,6 +40,10 @@ export interface EmailAddressRequest {
     value?: string | null;
     /**
      * The type of email address.
+     * 
+     * * `PERSONAL` - PERSONAL
+     * * `WORK` - WORK
+     * * `OTHER` - OTHER
      * @type {EmailAddressTypeEnum}
      * @memberof EmailAddressRequest
      */

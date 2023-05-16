@@ -15,15 +15,11 @@
 
 import * as runtime from '../../runtime';
 import {
-    IgnoreCommonModel,
-    IgnoreCommonModelFromJSON,
-    IgnoreCommonModelToJSON,
     IgnoreCommonModelRequest,
     IgnoreCommonModelRequestFromJSON,
     IgnoreCommonModelRequestToJSON,
     RemoteFieldClass,
     RemoteFieldClassFromJSON,
-    
     User,
     UserFromJSON,
     UserToJSON,
@@ -78,7 +74,7 @@ export class UsersApi extends runtime.BaseAPI {
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async usersIgnoreCreateRaw(requestParameters: UsersIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
+    async usersIgnoreCreateRaw(requestParameters: UsersIgnoreCreateRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.modelId === null || requestParameters.modelId === undefined) {
             throw new runtime.RequiredError('modelId','Required parameter requestParameters.modelId was null or undefined when calling usersIgnoreCreate.');
         }
@@ -113,15 +109,14 @@ export class UsersApi extends runtime.BaseAPI {
             body: IgnoreCommonModelRequestToJSON(requestParameters.ignoreCommonModelRequest),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => IgnoreCommonModelFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async usersIgnoreCreate(requestParameters: UsersIgnoreCreateRequest): Promise<IgnoreCommonModel | undefined> {
-        const response = await this.usersIgnoreCreateRaw(requestParameters);
-        return await response.value();
+    async usersIgnoreCreate(requestParameters: UsersIgnoreCreateRequest): Promise<void> {
+        await this.usersIgnoreCreateRaw(requestParameters);
     }
 
     /**

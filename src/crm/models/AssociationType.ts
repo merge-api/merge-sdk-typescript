@@ -84,6 +84,12 @@ export interface AssociationType {
      * @memberof AssociationType
      */
     remote_id?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof AssociationType
+     */
+    readonly modified_at?: Date;
 }
 
 export function AssociationTypeFromJSON(json: JSONValue): AssociationType | undefined {
@@ -105,6 +111,7 @@ export function AssociationTypeFromJSONTyped(json: JSONValue): AssociationType |
         'is_required': !exists(json, 'is_required') ? undefined : json['is_required'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

@@ -19,6 +19,10 @@ import {
     PriorityEnumFromJSON,
     PriorityEnumFromJSONTyped,
     PriorityEnumToJSON,
+    RemoteFieldRequest,
+    RemoteFieldRequestFromJSON,
+    RemoteFieldRequestFromJSONTyped,
+    RemoteFieldRequestToJSON,
     TicketStatusEnum,
     TicketStatusEnumFromJSON,
     TicketStatusEnumFromJSONTyped,
@@ -63,6 +67,11 @@ export interface PatchedTicketRequest {
     due_date?: Date | null;
     /**
      * The current status of the ticket.
+     * 
+     * * `OPEN` - OPEN
+     * * `CLOSED` - CLOSED
+     * * `IN_PROGRESS` - IN_PROGRESS
+     * * `ON_HOLD` - ON_HOLD
      * @type {TicketStatusEnum}
      * @memberof PatchedTicketRequest
      */
@@ -129,6 +138,11 @@ export interface PatchedTicketRequest {
     ticket_url?: string | null;
     /**
      * The priority or urgency of the Ticket.
+     * 
+     * * `URGENT` - URGENT
+     * * `HIGH` - HIGH
+     * * `NORMAL` - NORMAL
+     * * `LOW` - LOW
      * @type {PriorityEnum}
      * @memberof PatchedTicketRequest
      */
@@ -145,6 +159,12 @@ export interface PatchedTicketRequest {
      * @memberof PatchedTicketRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteFieldRequest>}
+     * @memberof PatchedTicketRequest
+     */
+    remote_fields?: Array<RemoteFieldRequest>;
 }
 
 export function PatchedTicketRequestFromJSON(json: JSONValue): PatchedTicketRequest | undefined {
@@ -176,6 +196,7 @@ export function PatchedTicketRequestFromJSONTyped(json: JSONValue): PatchedTicke
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldRequestFromJSON)) as Array<RemoteFieldRequest>,
     };
 }
 
@@ -204,6 +225,7 @@ export function PatchedTicketRequestToJSON(value?: PatchedTicketRequest): JSONVa
         'priority': PriorityEnumToJSON(value.priority),
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
+        'remote_fields': value.remote_fields === undefined ? undefined : ((value.remote_fields as Array<any>).map(RemoteFieldRequestToJSON)),
     };
 }
 

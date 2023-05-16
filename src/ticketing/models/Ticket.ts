@@ -86,6 +86,11 @@ export interface Ticket {
     due_date?: Date | null;
     /**
      * The current status of the ticket.
+     * 
+     * * `OPEN` - OPEN
+     * * `CLOSED` - CLOSED
+     * * `IN_PROGRESS` - IN_PROGRESS
+     * * `ON_HOLD` - ON_HOLD
      * @type {TicketStatusEnum}
      * @memberof Ticket
      */
@@ -176,6 +181,11 @@ export interface Ticket {
     ticket_url?: string | null;
     /**
      * The priority or urgency of the Ticket.
+     * 
+     * * `URGENT` - URGENT
+     * * `HIGH` - HIGH
+     * * `NORMAL` - NORMAL
+     * * `LOW` - LOW
      * @type {PriorityEnum}
      * @memberof Ticket
      */
@@ -186,6 +196,12 @@ export interface Ticket {
      * @memberof Ticket
      */
     readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Ticket
+     */
+    readonly modified_at?: Date;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -234,6 +250,7 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };

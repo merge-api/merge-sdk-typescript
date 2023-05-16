@@ -61,6 +61,12 @@ export interface Tag {
      */
     readonly field_mappings?: { [key: string]: any; } | null;
     /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Tag
+     */
+    readonly modified_at?: Date;
+    /**
      * 
      * @type {Array<RemoteData>}
      * @memberof Tag
@@ -83,6 +89,7 @@ export function TagFromJSONTyped(json: JSONValue): Tag | undefined {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

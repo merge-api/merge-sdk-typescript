@@ -28,7 +28,8 @@ import {
     MKTGCampaignResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON
+    MetaResponseToJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

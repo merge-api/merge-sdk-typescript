@@ -15,6 +15,14 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    FieldFormatEnum,
+    FieldFormatEnumFromJSON,
+    FieldFormatEnumFromJSONTyped,
+    FieldFormatEnumToJSON,
+    FieldTypeEnum,
+    FieldTypeEnumFromJSON,
+    FieldTypeEnumFromJSONTyped,
+    FieldTypeEnumToJSON,
     ItemSchema,
     ItemSchemaFromJSON,
     ItemSchemaFromJSONTyped,
@@ -66,16 +74,16 @@ export interface RemoteFieldClass {
     is_required?: boolean;
     /**
      * 
-     * @type {boolean}
+     * @type {FieldTypeEnum}
      * @memberof RemoteFieldClass
      */
-    field_type?: boolean;
+    field_type?: FieldTypeEnum;
     /**
      * 
-     * @type {boolean}
+     * @type {FieldFormatEnum}
      * @memberof RemoteFieldClass
      */
-    field_format?: boolean;
+    field_format?: FieldFormatEnum;
     /**
      * 
      * @type {Array<string>}
@@ -107,8 +115,8 @@ export function RemoteFieldClassFromJSONTyped(json: JSONValue): RemoteFieldClass
         'description': !exists(json, 'description') ? undefined : json['description'],
         'is_custom': !exists(json, 'is_custom') ? undefined : json['is_custom'],
         'is_required': !exists(json, 'is_required') ? undefined : json['is_required'],
-        'field_type': !exists(json, 'field_type') ? undefined : json['field_type'],
-        'field_format': !exists(json, 'field_format') ? undefined : json['field_format'],
+        'field_type': !exists(json, 'field_type') ? undefined : FieldTypeEnumFromJSON(json['field_type']) as FieldTypeEnum,
+        'field_format': !exists(json, 'field_format') ? undefined : FieldFormatEnumFromJSON(json['field_format']) as FieldFormatEnum,
         'field_choices': !exists(json, 'field_choices') ? undefined : json['field_choices'],
         'item_schema': !exists(json, 'item_schema') ? undefined : ItemSchemaFromJSON(json['item_schema']) as ItemSchema,
     };
@@ -127,8 +135,8 @@ export function RemoteFieldClassToJSON(value?: RemoteFieldClass): JSONValue {
         'description': value.description,
         'is_custom': value.is_custom,
         'is_required': value.is_required,
-        'field_type': value.field_type,
-        'field_format': value.field_format,
+        'field_type': FieldTypeEnumToJSON(value.field_type),
+        'field_format': FieldFormatEnumToJSON(value.field_format),
         'field_choices': value.field_choices,
         'item_schema': ItemSchemaToJSON(value.item_schema),
     };

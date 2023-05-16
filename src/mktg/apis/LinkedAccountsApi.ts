@@ -15,8 +15,8 @@
 
 import * as runtime from '../../runtime';
 import {
-	AccountDetailsAndActions,
-    AccountDetailsAndActionsFromJSON
+    AccountDetailsAndActionsFromJSON,
+	AccountDetailsAndActions
 } from '../models';
 import {
 	MergePaginatedResponse,

@@ -24,9 +24,6 @@ import {
     EmployeeResponse,
     EmployeeResponseFromJSON,
     EmployeeResponseToJSON,
-    IgnoreCommonModel,
-    IgnoreCommonModelFromJSON,
-    IgnoreCommonModelToJSON,
     IgnoreCommonModelRequest,
     IgnoreCommonModelRequestFromJSON,
     IgnoreCommonModelRequestToJSON,
@@ -79,7 +76,11 @@ export interface EmployeesListRequest {
     remoteFields?: EmployeesListRemoteFieldsEnum;
     remoteId?: string | null;
     showEnumOrigins?: EmployeesListShowEnumOriginsEnum;
+    startedAfter?: Date | null;
+    startedBefore?: Date | null;
     teamId?: string;
+    terminatedAfter?: Date | null;
+    terminatedBefore?: Date | null;
     workEmail?: string | null;
     workLocationId?: string;
 }
@@ -155,7 +156,7 @@ export class EmployeesApi extends runtime.BaseAPI {
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async employeesIgnoreCreateRaw(requestParameters: EmployeesIgnoreCreateRequest): Promise<runtime.ApiResponse<IgnoreCommonModel | undefined>> {
+    async employeesIgnoreCreateRaw(requestParameters: EmployeesIgnoreCreateRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.modelId === null || requestParameters.modelId === undefined) {
             throw new runtime.RequiredError('modelId','Required parameter requestParameters.modelId was null or undefined when calling employeesIgnoreCreate.');
         }
@@ -190,15 +191,14 @@ export class EmployeesApi extends runtime.BaseAPI {
             body: IgnoreCommonModelRequestToJSON(requestParameters.ignoreCommonModelRequest),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => IgnoreCommonModelFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.
      */
-    async employeesIgnoreCreate(requestParameters: EmployeesIgnoreCreateRequest): Promise<IgnoreCommonModel | undefined> {
-        const response = await this.employeesIgnoreCreateRaw(requestParameters);
-        return await response.value();
+    async employeesIgnoreCreate(requestParameters: EmployeesIgnoreCreateRequest): Promise<void> {
+        await this.employeesIgnoreCreateRaw(requestParameters);
     }
 
     /**
@@ -295,8 +295,24 @@ export class EmployeesApi extends runtime.BaseAPI {
             queryParameters['show_enum_origins'] = requestParameters.showEnumOrigins;
         }
 
+        if (requestParameters.startedAfter !== undefined) {
+            queryParameters['started_after'] = (requestParameters.startedAfter as any).toISOString();
+        }
+
+        if (requestParameters.startedBefore !== undefined) {
+            queryParameters['started_before'] = (requestParameters.startedBefore as any).toISOString();
+        }
+
         if (requestParameters.teamId !== undefined) {
             queryParameters['team_id'] = requestParameters.teamId;
+        }
+
+        if (requestParameters.terminatedAfter !== undefined) {
+            queryParameters['terminated_after'] = (requestParameters.terminatedAfter as any).toISOString();
+        }
+
+        if (requestParameters.terminatedBefore !== undefined) {
+            queryParameters['terminated_before'] = (requestParameters.terminatedBefore as any).toISOString();
         }
 
         if (requestParameters.workEmail !== undefined) {

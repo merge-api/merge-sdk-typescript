@@ -19,7 +19,14 @@ import {
     EarningTypeEnumFromJSON,
     EarningTypeEnumFromJSONTyped,
     EarningTypeEnumToJSON,
+    
 } from './';
+import {
+	RemoteData,
+	RemoteDataFromJSON,
+	RemoteDataFromJSONTyped,
+	RemoteDataToJSON,
+} from '../../remote_data';
 
 
 /**
@@ -40,6 +47,12 @@ export interface Earning {
      */
     readonly id?: string;
     /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof Earning
+     */
+    remote_id?: string | null;
+    /**
      * 
      * @type {string}
      * @memberof Earning
@@ -53,6 +66,11 @@ export interface Earning {
     amount?: number | null;
     /**
      * The type of earning.
+     * 
+     * * `SALARY` - SALARY
+     * * `REIMBURSEMENT` - REIMBURSEMENT
+     * * `OVERTIME` - OVERTIME
+     * * `BONUS` - BONUS
      * @type {EarningTypeEnum}
      * @memberof Earning
      */
@@ -63,6 +81,24 @@ export interface Earning {
      * @memberof Earning
      */
     remote_was_deleted?: boolean;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Earning
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof Earning
+     */
+    readonly modified_at?: Date;
+    /**
+     * 
+     * @type {Array<RemoteData>}
+     * @memberof Earning
+     */
+    readonly remote_data?: Array<RemoteData> | null;
 }
 
 export function EarningFromJSON(json: JSONValue): Earning | undefined {
@@ -77,10 +113,14 @@ export function EarningFromJSONTyped(json: JSONValue): Earning | undefined {
     return {
         
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'employee_payroll_run': !exists(json, 'employee_payroll_run') ? undefined : json['employee_payroll_run'],
         'amount': !exists(json, 'amount') ? undefined : json['amount'],
         'type': !exists(json, 'type') ? undefined : EarningTypeEnumFromJSON(json['type']) as EarningTypeEnum,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
 
@@ -91,6 +131,7 @@ export function EarningToJSON(value?: Earning): JSONValue {
 
     return {
         
+        'remote_id': value.remote_id,
         'employee_payroll_run': value.employee_payroll_run,
         'amount': value.amount,
         'type': EarningTypeEnumToJSON(value.type),

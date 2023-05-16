@@ -45,7 +45,6 @@ export * from './GenderEnum';
 export * from './GenerateRemoteKeyRequest';
 export * from './Group';
 export * from './GroupTypeEnum';
-export * from './IgnoreCommonModel';
 export * from './IgnoreCommonModelRequest';
 export * from './Issue';
 export * from './IssueStatusEnum';

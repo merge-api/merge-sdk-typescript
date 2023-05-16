@@ -33,6 +33,12 @@ export interface AssociationSubType {
      * @memberof AssociationSubType
      */
     readonly origin_type?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof AssociationSubType
+     */
+    readonly modified_at?: Date;
 }
 
 export function AssociationSubTypeFromJSON(json: JSONValue): AssociationSubType | undefined {
@@ -48,6 +54,7 @@ export function AssociationSubTypeFromJSONTyped(json: JSONValue): AssociationSub
         
         'id': !exists(json, 'id') ? undefined : json['id'],
         'origin_type': !exists(json, 'origin_type') ? undefined : json['origin_type'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

@@ -19,6 +19,10 @@ import {
     DirectionEnumFromJSON,
     DirectionEnumFromJSONTyped,
     DirectionEnumToJSON,
+    RemoteFieldRequest,
+    RemoteFieldRequestFromJSON,
+    RemoteFieldRequestFromJSONTyped,
+    RemoteFieldRequestToJSON,
 } from './';
 
 
@@ -101,6 +105,12 @@ export interface EngagementRequest {
      * @memberof EngagementRequest
      */
     linked_account_params?: { [key: string]: any; } | null;
+    /**
+     * 
+     * @type {Array<RemoteFieldRequest>}
+     * @memberof EngagementRequest
+     */
+    remote_fields?: Array<RemoteFieldRequest>;
 }
 
 export function EngagementRequestFromJSON(json: JSONValue): EngagementRequest | undefined {
@@ -125,6 +135,7 @@ export function EngagementRequestFromJSONTyped(json: JSONValue): EngagementReque
         'contacts': !exists(json, 'contacts') ? undefined : json['contacts'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
+        'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldRequestFromJSON)) as Array<RemoteFieldRequest>,
     };
 }
 
@@ -146,6 +157,7 @@ export function EngagementRequestToJSON(value?: EngagementRequest): JSONValue {
         'contacts': value.contacts,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
+        'remote_fields': value.remote_fields === undefined ? undefined : ((value.remote_fields as Array<any>).map(RemoteFieldRequestToJSON)),
     };
 }
 

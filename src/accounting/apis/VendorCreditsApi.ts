@@ -206,6 +206,7 @@ export class VendorCreditsApi extends runtime.BaseAPI {
 export enum VendorCreditsListExpandEnum {
     Company = 'company',
     Lines = 'lines',
+    TrackingCategories = 'tracking_categories',
     Vendor = 'vendor'
 }
 /**
@@ -215,5 +216,6 @@ export enum VendorCreditsListExpandEnum {
 export enum VendorCreditsRetrieveExpandEnum {
     Company = 'company',
     Lines = 'lines',
+    TrackingCategories = 'tracking_categories',
     Vendor = 'vendor'
 }

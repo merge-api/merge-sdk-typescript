@@ -18,6 +18,15 @@ import {
     Activity,
     ActivityFromJSON,
     ActivityToJSON,
+    ActivityEndpointRequest,
+    ActivityEndpointRequestFromJSON,
+    ActivityEndpointRequestToJSON,
+    ActivityResponse,
+    ActivityResponseFromJSON,
+    ActivityResponseToJSON,
+    MetaResponse,
+    MetaResponseFromJSON,
+    MetaResponseToJSON,
     
 } from '../models';
 import {
@@ -29,6 +38,12 @@ import {
 import {
     MergeMetaRequest
 } from '../../merge_meta_request';
+
+export interface ActivitiesCreateRequest {
+    activityEndpointRequest: ActivityEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
 
 export interface ActivitiesListRequest {
     createdAfter?: Date;
@@ -46,6 +61,7 @@ export interface ActivitiesListRequest {
     userId?: string;
 }
 
+// extends MergeMetaRequest
 export interface ActivitiesRetrieveRequest {
     id: string;
     expand?: Array<ActivitiesRetrieveExpandEnum>;
@@ -58,6 +74,59 @@ export interface ActivitiesRetrieveRequest {
  * 
  */
 export class ActivitiesApi extends runtime.BaseAPI {
+
+    /**
+     * Creates an `Activity` object with the given values.
+     */
+    async activitiesCreateRaw(requestParameters: ActivitiesCreateRequest): Promise<runtime.ApiResponse<ActivityResponse | undefined>> {
+        if (requestParameters.activityEndpointRequest === null || requestParameters.activityEndpointRequest === undefined) {
+            throw new runtime.RequiredError('activityEndpointRequest','Required parameter requestParameters.activityEndpointRequest was null or undefined when calling activitiesCreate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/activities`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ActivityEndpointRequestToJSON(requestParameters.activityEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ActivityResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Creates an `Activity` object with the given values.
+     */
+    async activitiesCreate(requestParameters: ActivitiesCreateRequest): Promise<ActivityResponse | undefined> {
+        const response = await this.activitiesCreateRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Returns a list of `Activity` objects.
@@ -146,6 +215,50 @@ export class ActivitiesApi extends runtime.BaseAPI {
      */
     async activitiesList(requestParameters: ActivitiesListRequest): Promise<MergePaginatedResponse<Activity> | undefined> {
         const response = await this.activitiesListRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns metadata for `Activity` POSTs.
+     */
+    async activitiesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/activities/meta/post`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Activity` POSTs.
+     */
+    async activitiesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.activitiesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 

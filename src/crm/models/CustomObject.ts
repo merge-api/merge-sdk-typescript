@@ -57,6 +57,12 @@ export interface CustomObject {
      */
     readonly id?: string;
     /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof CustomObject
+     */
+    readonly modified_at?: Date;
+    /**
      * 
      * @type {Array<RemoteField>}
      * @memberof CustomObject
@@ -79,6 +85,7 @@ export function CustomObjectFromJSONTyped(json: JSONValue): CustomObject | undef
         'fields': !exists(json, 'fields') ? undefined : json['fields'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'id': !exists(json, 'id') ? undefined : json['id'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
 }

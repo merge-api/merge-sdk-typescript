@@ -99,6 +99,12 @@ export interface CreditNoteLineItem {
      * @memberof CreditNoteLineItem
      */
     remote_id?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof CreditNoteLineItem
+     */
+    readonly modified_at?: Date;
 }
 
 export function CreditNoteLineItemFromJSON(json: JSONValue): CreditNoteLineItem | undefined {
@@ -125,6 +131,7 @@ export function CreditNoteLineItemFromJSONTyped(json: JSONValue): CreditNoteLine
         'account': !exists(json, 'account') ? undefined : json['account'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 

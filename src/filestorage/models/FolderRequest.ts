@@ -20,7 +20,7 @@ import { JSONValue } from '../../merge_json';
  * ### Description
  * The `Folder` object is used to represent a collection of files and/or folders in the workspace. Could be within a drive, if it exsts.
  * ### Usage Example
- * Fetch from the `GET /api/file-storage/v1/folders` endpoint and view their folders.
+ * Fetch from the `GET /api/filestorage/v1/folders` endpoint and view their folders.
  * @export
  * @interface FolderRequest
  */
@@ -62,6 +62,12 @@ export interface FolderRequest {
      */
     drive?: string | null;
     /**
+     * The Permission object is used to represent a user's or group's access to a File or Folder. Permissions are unexpanded by default. Use the query param `expand=permissions` to see more details under `GET /folders`.
+     * @type {Array<string>}
+     * @memberof FolderRequest
+     */
+    permissions: Array<string>;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof FolderRequest
@@ -92,6 +98,7 @@ export function FolderRequestFromJSONTyped(json: JSONValue): FolderRequest | und
         'description': !exists(json, 'description') ? undefined : json['description'],
         'parent_folder': !exists(json, 'parent_folder') ? undefined : json['parent_folder'],
         'drive': !exists(json, 'drive') ? undefined : json['drive'],
+        'permissions': json['permissions'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -110,6 +117,7 @@ export function FolderRequestToJSON(value?: FolderRequest): JSONValue {
         'description': value.description,
         'parent_folder': value.parent_folder,
         'drive': value.drive,
+        'permissions': value.permissions,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

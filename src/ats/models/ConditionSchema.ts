@@ -63,11 +63,19 @@ export interface ConditionSchema {
      */
     is_unique?: boolean;
     /**
+     * The type of value(s) that can be set for this condition.
      * 
+     * * `BOOLEAN` - BOOLEAN
+     * * `DATE` - DATE
+     * * `DATE_TIME` - DATE_TIME
+     * * `INTEGER` - INTEGER
+     * * `FLOAT` - FLOAT
+     * * `STRING` - STRING
+     * * `LIST_OF_STRINGS` - LIST_OF_STRINGS
      * @type {ConditionTypeEnum}
      * @memberof ConditionSchema
      */
-    condition_type: ConditionTypeEnum;
+    condition_type: ConditionTypeEnum | null;
     /**
      * The schemas for the operators that can be used on a condition.
      * @type {Array<OperatorSchema>}

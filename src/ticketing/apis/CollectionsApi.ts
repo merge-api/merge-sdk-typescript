@@ -19,7 +19,7 @@ import {
     CollectionFromJSON,
     CollectionToJSON,
     User,
-    UserFromJSON
+    UserFromJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,

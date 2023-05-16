@@ -27,6 +27,12 @@ import { JSONValue } from '../../merge_json';
  */
 export interface ExpenseLine {
     /**
+     * The third-party API ID of the matching object.
+     * @type {string}
+     * @memberof ExpenseLine
+     */
+    remote_id?: string | null;
+    /**
      * The line's item.
      * @type {string}
      * @memberof ExpenseLine
@@ -75,11 +81,17 @@ export interface ExpenseLine {
      */
     description?: string | null;
     /**
-     * The third-party API ID of the matching object.
+     * The expense line item's exchange rate.
      * @type {string}
      * @memberof ExpenseLine
      */
-    remote_id?: string | null;
+    exchange_rate?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof ExpenseLine
+     */
+    readonly modified_at?: Date;
 }
 
 export function ExpenseLineFromJSON(json: JSONValue): ExpenseLine | undefined {
@@ -93,6 +105,7 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | undefin
 
     return {
         
+        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'item': !exists(json, 'item') ? undefined : json['item'],
         'net_amount': !exists(json, 'net_amount') ? undefined : json['net_amount'],
         'tracking_category': !exists(json, 'tracking_category') ? undefined : json['tracking_category'],
@@ -101,7 +114,8 @@ export function ExpenseLineFromJSONTyped(json: JSONValue): ExpenseLine | undefin
         'account': !exists(json, 'account') ? undefined : json['account'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 
@@ -112,6 +126,7 @@ export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
 
     return {
         
+        'remote_id': value.remote_id,
         'item': value.item,
         'net_amount': value.net_amount,
         'tracking_category': value.tracking_category,
@@ -120,7 +135,7 @@ export function ExpenseLineToJSON(value?: ExpenseLine): JSONValue {
         'account': value.account,
         'contact': value.contact,
         'description': value.description,
-        'remote_id': value.remote_id,
+        'exchange_rate': value.exchange_rate,
     };
 }
 

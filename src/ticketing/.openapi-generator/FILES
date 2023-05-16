@@ -60,6 +60,8 @@ src/models/EnabledActionsEnum.ts
 src/models/EncodingEnum.ts
 src/models/EndUserDetailsRequest.ts
 src/models/ErrorValidationProblem.ts
+src/models/FieldFormatEnum.ts
+src/models/FieldTypeEnum.ts
 src/models/GenerateRemoteKeyRequest.ts
 src/models/Issue.ts
 src/models/IssueStatusEnum.ts
@@ -82,6 +84,7 @@ src/models/PriorityEnum.ts
 src/models/Project.ts
 src/models/RemoteField.ts
 src/models/RemoteFieldClass.ts
+src/models/RemoteFieldRequest.ts
 src/models/RemoteKey.ts
 src/models/RemoteKeyForRegenerationRequest.ts
 src/models/RemoteResponse.ts

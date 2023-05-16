@@ -56,6 +56,12 @@ export interface ReportItem {
      * @memberof ReportItem
      */
     company?: string | null;
+    /**
+     * This is the datetime that this object was last updated by Merge
+     * @type {Date}
+     * @memberof ReportItem
+     */
+    readonly modified_at?: Date;
 }
 
 export function ReportItemFromJSON(json: JSONValue): ReportItem | undefined {
@@ -74,6 +80,7 @@ export function ReportItemFromJSONTyped(json: JSONValue): ReportItem | undefined
         'value': !exists(json, 'value') ? undefined : json['value'],
         'sub_items': !exists(json, 'sub_items') ? undefined : json['sub_items'],
         'company': !exists(json, 'company') ? undefined : json['company'],
+        'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
     };
 }
 
