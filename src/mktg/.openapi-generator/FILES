@@ -4,7 +4,6 @@ src/apis/ActionsApi.ts
 src/apis/AutomationsApi.ts
 src/apis/AvailableActionsApi.ts
 src/apis/CampaignsApi.ts
-src/apis/CommonModelScopesApi.ts
 src/apis/ContactsApi.ts
 src/apis/DeleteAccountApi.ts
 src/apis/EmailsApi.ts
@@ -40,13 +39,7 @@ src/models/Campaign.ts
 src/models/CampaignRequest.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
-src/models/CommonModelScopeData.ts
-src/models/CommonModelScopes.ts
 src/models/CommonModelScopesBodyRequest.ts
-src/models/CommonModelScopesDisabledModels.ts
-src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPostInnerDeserializerRequest.ts
-src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts
 src/models/Contact.ts

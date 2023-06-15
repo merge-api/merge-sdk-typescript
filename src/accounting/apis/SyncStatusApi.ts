@@ -15,8 +15,7 @@
 
 import * as runtime from '../../runtime';
 import {
-    SyncStatusFromJSON,
-	SyncStatus
+	SyncStatus, SyncStatusFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -39,7 +38,7 @@ export interface SyncStatusListRequest {
 export class SyncStatusApi extends runtime.BaseAPI {
 
     /**
-     * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
+     * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`
      */
     async syncStatusListRaw(requestParameters: SyncStatusListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<SyncStatus> | undefined>> {
         const queryParameters: any = {};
@@ -77,7 +76,7 @@ export class SyncStatusApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PAUSED`, `SYNCING`
+     * Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`
      */
     async syncStatusList(requestParameters: SyncStatusListRequest): Promise<MergePaginatedResponse<SyncStatus> | undefined> {
         const response = await this.syncStatusListRaw(requestParameters);

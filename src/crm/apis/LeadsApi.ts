@@ -28,7 +28,8 @@ import {
     MetaResponseFromJSON,
     MetaResponseToJSON,
     RemoteFieldClass,
-    RemoteFieldClassFromJSON
+    RemoteFieldClassFromJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

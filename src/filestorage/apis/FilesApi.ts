@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Merge Marketing Automation API
- * The unified API for building rich integrations with multiple Marketing Automation platforms.
+ * Merge File Storage API
+ * The unified API for building rich integrations with multiple File Storage platforms.
  *
  * The version of the OpenAPI document: 1.0
  * Contact: hello@merge.dev
@@ -15,17 +15,15 @@
 
 import * as runtime from '../../runtime';
 import {
-    Contact,
-    ContactFromJSON,
-    List,
-    ListFromJSON,
-    ListToJSON,
-    MKTGListEndpointRequest,
-    MKTGListEndpointRequestFromJSON,
-    MKTGListEndpointRequestToJSON,
-    MKTGListResponse,
-    MKTGListResponseFromJSON,
-    MKTGListResponseToJSON,
+    FileStorageFile,
+    FileStorageFileFromJSON,
+    FileStorageFileToJSON,
+    FileStorageFileEndpointRequest,
+    FileStorageFileEndpointRequestFromJSON,
+    FileStorageFileEndpointRequestToJSON,
+    FileStorageFileResponse,
+    FileStorageFileResponseFromJSON,
+    FileStorageFileResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
@@ -41,49 +39,49 @@ import {
     MergeMetaRequest
 } from '../../merge_meta_request';
 
-export interface ListsCreateRequest {
-    mKTGListEndpointRequest: MKTGListEndpointRequest;
+export interface FilesCreateRequest {
+    fileStorageFileEndpointRequest: FileStorageFileEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
-export interface ListsListRequest {
+export interface FilesDownloadRetrieveRequest {
+    id: string;
+}
+
+export interface FilesListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
+    expand?: Array<FilesListExpandEnum>;
+    folderId?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
+    name?: string | null;
     pageSize?: number;
     remoteId?: string | null;
 }
 
 // extends MergeMetaRequest
-export interface ListsRetrieveRequest {
+export interface FilesRetrieveRequest {
     id: string;
+    expand?: Array<FilesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
-}
-
-export interface ListsSubscribersListRequest {
-    parentId: string;
-    cursor?: string;
-    includeDeletedData?: boolean;
-    includeRemoteData?: boolean;
-    pageSize?: number;
 }
 
 /**
  * 
  */
-export class ListsApi extends runtime.BaseAPI {
+export class FilesApi extends runtime.BaseAPI {
 
     /**
-     * Creates a `List` object with the given values.
+     * Creates a `File` object with the given values.
      */
-    async listsCreateRaw(requestParameters: ListsCreateRequest): Promise<runtime.ApiResponse<MKTGListResponse | undefined>> {
-        if (requestParameters.mKTGListEndpointRequest === null || requestParameters.mKTGListEndpointRequest === undefined) {
-            throw new runtime.RequiredError('mKTGListEndpointRequest','Required parameter requestParameters.mKTGListEndpointRequest was null or undefined when calling listsCreate.');
+    async filesCreateRaw(requestParameters: FilesCreateRequest): Promise<runtime.ApiResponse<FileStorageFileResponse | undefined>> {
+        if (requestParameters.fileStorageFileEndpointRequest === null || requestParameters.fileStorageFileEndpointRequest === undefined) {
+            throw new runtime.RequiredError('fileStorageFileEndpointRequest','Required parameter requestParameters.fileStorageFileEndpointRequest was null or undefined when calling filesCreate.');
         }
 
         const queryParameters: any = {};
@@ -113,28 +111,70 @@ export class ListsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/mktg/v1/lists`,
+            path: `/filestorage/v1/files`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: MKTGListEndpointRequestToJSON(requestParameters.mKTGListEndpointRequest),
+            body: FileStorageFileEndpointRequestToJSON(requestParameters.fileStorageFileEndpointRequest),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MKTGListResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileStorageFileResponseFromJSON(jsonValue));
     }
 
     /**
-     * Creates a `List` object with the given values.
+     * Creates a `File` object with the given values.
      */
-    async listsCreate(requestParameters: ListsCreateRequest): Promise<MKTGListResponse | undefined> {
-        const response = await this.listsCreateRaw(requestParameters);
+    async filesCreate(requestParameters: FilesCreateRequest): Promise<FileStorageFileResponse | undefined> {
+        const response = await this.filesCreateRaw(requestParameters);
         return await response.value();
     }
 
     /**
-     * Returns a list of `List` objects.
+     * Returns a `File` object with the given `id`.
      */
-    async listsListRaw(requestParameters: ListsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<List> | undefined>> {
+    async filesDownloadRetrieveRaw(requestParameters: FilesDownloadRetrieveRequest): Promise<runtime.ApiResponse<Blob | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling filesDownloadRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/filestorage/v1/files/{id}/download`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Returns a `File` object with the given `id`.
+     */
+    async filesDownloadRetrieve(requestParameters: FilesDownloadRetrieveRequest): Promise<Blob | undefined> {
+        const response = await this.filesDownloadRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns a list of `File` objects.
+     */
+    async filesListRaw(requestParameters: FilesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<FileStorageFile> | undefined>> {
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -147,6 +187,14 @@ export class ListsApi extends runtime.BaseAPI {
 
         if (requestParameters.cursor !== undefined) {
             queryParameters['cursor'] = requestParameters.cursor;
+        }
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
+
+        if (requestParameters.folderId !== undefined) {
+            queryParameters['folder_id'] = requestParameters.folderId;
         }
 
         if (requestParameters.includeDeletedData !== undefined) {
@@ -163,6 +211,10 @@ export class ListsApi extends runtime.BaseAPI {
 
         if (requestParameters.modifiedBefore !== undefined) {
             queryParameters['modified_before'] = (requestParameters.modifiedBefore as any).toISOString();
+        }
+
+        if (requestParameters.name !== undefined) {
+            queryParameters['name'] = requestParameters.name;
         }
 
         if (requestParameters.pageSize !== undefined) {
@@ -188,27 +240,27 @@ export class ListsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/mktg/v1/lists`,
+            path: `/filestorage/v1/files`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ListFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, FileStorageFileFromJSON));
     }
 
     /**
-     * Returns a list of `List` objects.
+     * Returns a list of `File` objects.
      */
-    async listsList(requestParameters: ListsListRequest): Promise<MergePaginatedResponse<List> | undefined> {
-        const response = await this.listsListRaw(requestParameters);
+    async filesList(requestParameters: FilesListRequest): Promise<MergePaginatedResponse<FileStorageFile> | undefined> {
+        const response = await this.filesListRaw(requestParameters);
         return await response.value();
     }
 
     /**
-     * Returns metadata for `MKTGList` POSTs.
+     * Returns metadata for `FileStorageFile` POSTs.
      */
-    async listsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async filesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
         const queryParameters: any = {};
 
 
@@ -232,7 +284,7 @@ export class ListsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/mktg/v1/lists/meta/post`,
+            path: `/filestorage/v1/files/meta/post`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -242,22 +294,26 @@ export class ListsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns metadata for `MKTGList` POSTs.
+     * Returns metadata for `FileStorageFile` POSTs.
      */
-    async listsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
-        const response = await this.listsMetaPostRetrieveRaw(requestParameters);
+    async filesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+        const response = await this.filesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
 
     /**
-     * Returns a `List` object with the given `id`.
+     * Returns a `File` object with the given `id`.
      */
-    async listsRetrieveRaw(requestParameters: ListsRetrieveRequest): Promise<runtime.ApiResponse<List | undefined>> {
+    async filesRetrieveRaw(requestParameters: FilesRetrieveRequest): Promise<runtime.ApiResponse<FileStorageFile | undefined>> {
         if (requestParameters.id === null || requestParameters.id === undefined) {
-            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listsRetrieve.');
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling filesRetrieve.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.expand) {
+            queryParameters['expand'] = requestParameters.expand;
+        }
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
@@ -278,79 +334,40 @@ export class ListsApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/mktg/v1/lists/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            path: `/filestorage/v1/files/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ListFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileStorageFileFromJSON(jsonValue));
     }
 
     /**
-     * Returns a `List` object with the given `id`.
+     * Returns a `File` object with the given `id`.
      */
-    async listsRetrieve(requestParameters: ListsRetrieveRequest): Promise<List | undefined> {
-        const response = await this.listsRetrieveRaw(requestParameters);
+    async filesRetrieve(requestParameters: FilesRetrieveRequest): Promise<FileStorageFile | undefined> {
+        const response = await this.filesRetrieveRaw(requestParameters);
         return await response.value();
     }
 
-    /**
-     * Returns a list of `Contact` objects.
-     */
-    async listsSubscribersListRaw(requestParameters: ListsSubscribersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
-        if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
-            throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling listsSubscribersList.');
-        }
+}
 
-        const queryParameters: any = {};
-
-        if (requestParameters.cursor !== undefined) {
-            queryParameters['cursor'] = requestParameters.cursor;
-        }
-
-        if (requestParameters.includeDeletedData !== undefined) {
-            queryParameters['include_deleted_data'] = requestParameters.includeDeletedData;
-        }
-
-        if (requestParameters.includeRemoteData !== undefined) {
-            queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
-        }
-
-        if (requestParameters.pageSize !== undefined) {
-            queryParameters['page_size'] = requestParameters.pageSize;
-        }
-
-
-        
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
-        }
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
-        }
-
-        const response = await this.request({
-            path: `/mktg/v1/lists/{parent_id}/subscribers`.replace(`{${"parent_id"}}`, encodeURIComponent(String(requestParameters.parentId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, ContactFromJSON));
-    }
-
-    /**
-     * Returns a list of `Contact` objects.
-     */
-    async listsSubscribersList(requestParameters: ListsSubscribersListRequest): Promise<MergePaginatedResponse<Contact> | undefined> {
-        const response = await this.listsSubscribersListRaw(requestParameters);
-        return await response.value();
-    }
-
+/**
+* @export
+* @enum {string}
+*/
+export enum FilesListExpandEnum {
+    Drive = 'drive',
+    Folder = 'folder',
+    Permissions = 'permissions'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum FilesRetrieveExpandEnum {
+    Drive = 'drive',
+    Folder = 'folder',
+    Permissions = 'permissions'
 }

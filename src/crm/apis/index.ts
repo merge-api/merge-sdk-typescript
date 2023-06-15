@@ -6,7 +6,6 @@ export * from './AccountsApi';
 export * from './AssociationTypesApi';
 export * from './AssociationsApi';
 export * from './AvailableActionsApi';
-export * from './CommonModelScopesApi';
 export * from './ContactsApi';
 export * from './CustomObjectClassesApi';
 export * from './CustomObjectsApi';

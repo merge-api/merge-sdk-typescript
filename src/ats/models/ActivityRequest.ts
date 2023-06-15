@@ -75,6 +75,12 @@ export interface ActivityRequest {
      */
     visibility?: VisibilityEnum | null;
     /**
+     * The activity’s candidate.
+     * @type {string}
+     * @memberof ActivityRequest
+     */
+    candidate?: string | null;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof ActivityRequest
@@ -104,6 +110,7 @@ export function ActivityRequestFromJSONTyped(json: JSONValue): ActivityRequest |
         'subject': !exists(json, 'subject') ? undefined : json['subject'],
         'body': !exists(json, 'body') ? undefined : json['body'],
         'visibility': !exists(json, 'visibility') ? undefined : VisibilityEnumFromJSON(json['visibility']) as VisibilityEnum,
+        'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
         'integration_params': !exists(json, 'integration_params') ? undefined : json['integration_params'],
         'linked_account_params': !exists(json, 'linked_account_params') ? undefined : json['linked_account_params'],
     };
@@ -121,6 +128,7 @@ export function ActivityRequestToJSON(value?: ActivityRequest): JSONValue {
         'subject': value.subject,
         'body': value.body,
         'visibility': VisibilityEnumToJSON(value.visibility),
+        'candidate': value.candidate,
         'integration_params': value.integration_params,
         'linked_account_params': value.linked_account_params,
     };

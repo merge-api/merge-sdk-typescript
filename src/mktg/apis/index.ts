@@ -6,7 +6,6 @@ export * from './ActionsApi';
 export * from './AutomationsApi';
 export * from './AvailableActionsApi';
 export * from './CampaignsApi';
-export * from './CommonModelScopesApi';
 export * from './ContactsApi';
 export * from './DeleteAccountApi';
 export * from './EmailsApi';

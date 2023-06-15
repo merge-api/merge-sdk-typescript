@@ -20,6 +20,7 @@ import { JSONValue } from "../../merge_json";
  * * `FAILED` - FAILED
  * * `DISABLED` - DISABLED
  * * `PAUSED` - PAUSED
+ * * `PARTIALLY_SYNCED` - PARTIALLY_SYNCED
  * @export
  * @enum {string}
  */
@@ -29,7 +30,8 @@ export enum SyncStatusStatusEnumValues {
     Done = 'DONE',
     Failed = 'FAILED',
     Disabled = 'DISABLED',
-    Paused = 'PAUSED'
+    Paused = 'PAUSED',
+    PartiallySynced = 'PARTIALLY_SYNCED'
 }
 
 export interface SyncStatusStatusEnum {

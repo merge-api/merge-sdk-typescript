@@ -18,8 +18,6 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
-    RemoteFieldClass,
-    RemoteFieldClassFromJSON,
     PatchedTaskEndpointRequest,
     PatchedTaskEndpointRequestFromJSON,
     PatchedTaskEndpointRequestToJSON,
@@ -32,6 +30,8 @@ import {
     TaskResponse,
     TaskResponseFromJSON,
     TaskResponseToJSON,
+    RemoteFieldClass,
+    RemoteFieldClassFromJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -500,6 +500,7 @@ export class TasksApi extends runtime.BaseAPI {
 */
 export enum TasksListExpandEnum {
     Account = 'account',
+    Opportunity = 'opportunity',
     Owner = 'owner'
 }
 /**
@@ -508,5 +509,6 @@ export enum TasksListExpandEnum {
 */
 export enum TasksRetrieveExpandEnum {
     Account = 'account',
+    Opportunity = 'opportunity',
     Owner = 'owner'
 }

@@ -20,7 +20,7 @@ import {
     Event,
     EventFromJSON,
     EventToJSON,
-
+    
 } from '../models';
 import {
 	MergePaginatedResponse,
