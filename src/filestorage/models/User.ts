@@ -50,6 +50,12 @@ export interface User {
      */
     email_address?: string | null;
     /**
+     * Whether the user is the one who linked this account.
+     * @type {boolean}
+     * @memberof User
+     */
+    is_me?: boolean;
+    /**
      * 
      * @type {{ [key: string]: any; }}
      * @memberof User
@@ -84,6 +90,7 @@ export function UserFromJSONTyped(json: JSONValue): User | undefined {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'email_address': !exists(json, 'email_address') ? undefined : json['email_address'],
+        'is_me': !exists(json, 'is_me') ? undefined : json['is_me'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
@@ -100,6 +107,7 @@ export function UserToJSON(value?: User): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'email_address': value.email_address,
+        'is_me': value.is_me,
         'remote_data': value.remote_data,
     };
 }

@@ -49,6 +49,12 @@ import {
  */
 export interface Invoice {
     /**
+     * 
+     * @type {string}
+     * @memberof Invoice
+     */
+    readonly id?: string;
+    /**
      * Whether the invoice is an accounts receivable or accounts payable. If `type` is `accounts_payable`, the invoice is a bill. If `type` is `accounts_receivable`, it is an invoice.
      * 
      * * `ACCOUNTS_RECEIVABLE` - ACCOUNTS_RECEIVABLE
@@ -455,6 +461,12 @@ export interface Invoice {
      */
     remote_updated_at?: Date | null;
     /**
+     * 
+     * @type {Array<string>}
+     * @memberof Invoice
+     */
+    tracking_categories?: Array<string> | JSONValue;
+    /**
      * Array of `Payment` object IDs.
      * @type {Array<string>}
      * @memberof Invoice
@@ -468,22 +480,10 @@ export interface Invoice {
     readonly line_items?: Array<InvoiceLineItem> | JSONValue;
     /**
      * 
-     * @type {Array<string>}
-     * @memberof Invoice
-     */
-    tracking_categories?: Array<string> | JSONValue;
-    /**
-     * 
      * @type {boolean}
      * @memberof Invoice
      */
     readonly remote_was_deleted?: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof Invoice
-     */
-    readonly id?: string;
     /**
      * The third-party API ID of the matching object.
      * @type {string}
@@ -521,6 +521,7 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
 
     return {
         
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'type': !exists(json, 'type') ? undefined : InvoiceTypeEnumFromJSON(json['type']) as InvoiceTypeEnum,
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'number': !exists(json, 'number') ? undefined : json['number'],
@@ -537,11 +538,10 @@ export function InvoiceFromJSONTyped(json: JSONValue): Invoice | undefined {
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'balance': !exists(json, 'balance') ? undefined : json['balance'],
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
+        'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'payments': !exists(json, 'payments') ? undefined : json['payments'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(InvoiceLineItemFromJSON)) as Array<InvoiceLineItem>,
-        'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
-        'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
@@ -572,8 +572,8 @@ export function InvoiceToJSON(value?: Invoice): JSONValue {
         'total_amount': value.total_amount,
         'balance': value.balance,
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
-        'payments': value.payments,
         'tracking_categories': value.tracking_categories,
+        'payments': value.payments,
         'remote_id': value.remote_id,
     };
 }

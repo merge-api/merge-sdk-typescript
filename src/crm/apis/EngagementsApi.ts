@@ -30,8 +30,8 @@ import {
     PatchedEngagementEndpointRequest,
     PatchedEngagementEndpointRequestFromJSON,
     PatchedEngagementEndpointRequestToJSON,
+    RemoteFieldClassFromJSON,
     RemoteFieldClass,
-    RemoteFieldClassFromJSON
 } from '../models';
 import {
 	MergePaginatedResponse,

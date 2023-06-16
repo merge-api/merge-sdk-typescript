@@ -100,6 +100,12 @@ export interface Activity {
      */
     visibility?: VisibilityEnum | null;
     /**
+     * The activity’s candidate.
+     * @type {string}
+     * @memberof Activity
+     */
+    candidate?: string | null;
+    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Activity
@@ -144,6 +150,7 @@ export function ActivityFromJSONTyped(json: JSONValue): Activity | undefined {
         'subject': !exists(json, 'subject') ? undefined : json['subject'],
         'body': !exists(json, 'body') ? undefined : json['body'],
         'visibility': !exists(json, 'visibility') ? undefined : VisibilityEnumFromJSON(json['visibility']) as VisibilityEnum,
+        'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
@@ -165,6 +172,7 @@ export function ActivityToJSON(value?: Activity): JSONValue {
         'subject': value.subject,
         'body': value.body,
         'visibility': VisibilityEnumToJSON(value.visibility),
+        'candidate': value.candidate,
     };
 }
 

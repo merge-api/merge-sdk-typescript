@@ -5,7 +5,6 @@ src/apis/AttachmentsApi.ts
 src/apis/AvailableActionsApi.ts
 src/apis/CollectionsApi.ts
 src/apis/CommentsApi.ts
-src/apis/CommonModelScopesApi.ts
 src/apis/ContactsApi.ts
 src/apis/DeleteAccountApi.ts
 src/apis/ForceResyncApi.ts
@@ -43,13 +42,7 @@ src/models/Comment.ts
 src/models/CommentEndpointRequest.ts
 src/models/CommentRequest.ts
 src/models/CommentResponse.ts
-src/models/CommonModelScopeData.ts
-src/models/CommonModelScopes.ts
 src/models/CommonModelScopesBodyRequest.ts
-src/models/CommonModelScopesDisabledModels.ts
-src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPostInnerDeserializerRequest.ts
-src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts
 src/models/Contact.ts

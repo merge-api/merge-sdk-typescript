@@ -61,6 +61,12 @@ export interface PatchedTaskRequest {
      */
     account?: string | null;
     /**
+     * The task's opportunity.
+     * @type {string}
+     * @memberof PatchedTaskRequest
+     */
+    opportunity?: string | null;
+    /**
      * When the task is completed.
      * @type {Date}
      * @memberof PatchedTaskRequest
@@ -116,6 +122,7 @@ export function PatchedTaskRequestFromJSONTyped(json: JSONValue): PatchedTaskReq
         'content': !exists(json, 'content') ? undefined : json['content'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'opportunity': !exists(json, 'opportunity') ? undefined : json['opportunity'],
         'completed_date': !exists(json, 'completed_date') ? undefined : (json['completed_date'] === null ? null : new Date(json['completed_date'])),
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'status': !exists(json, 'status') ? undefined : TaskStatusEnumFromJSON(json['status']) as TaskStatusEnum,
@@ -136,6 +143,7 @@ export function PatchedTaskRequestToJSON(value?: PatchedTaskRequest): JSONValue 
         'content': value.content,
         'owner': value.owner,
         'account': value.account,
+        'opportunity': value.opportunity,
         'completed_date': value.completed_date === undefined ? undefined : (value.completed_date === null ? null : value.completed_date.toISOString()),
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'status': TaskStatusEnumToJSON(value.status),

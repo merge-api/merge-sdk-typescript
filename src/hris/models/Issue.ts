@@ -35,7 +35,10 @@ export interface Issue {
      */
     readonly id?: string;
     /**
+     * Status of the issue. Options: ('ONGOING', 'RESOLVED')
      * 
+     * * `ONGOING` - ONGOING
+     * * `RESOLVED` - RESOLVED
      * @type {IssueStatusEnum}
      * @memberof Issue
      */

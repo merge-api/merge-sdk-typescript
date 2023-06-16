@@ -68,6 +68,12 @@ export interface Task {
      */
     account?: string | JSONValue | null;
     /**
+     * The task's opportunity.
+     * @type {string}
+     * @memberof Task
+     */
+    opportunity?: string | JSONValue | null;
+    /**
      * When the task is completed.
      * @type {Date}
      * @memberof Task
@@ -147,6 +153,7 @@ export function TaskFromJSONTyped(json: JSONValue): Task | undefined {
         'content': !exists(json, 'content') ? undefined : json['content'],
         'owner': !exists(json, 'owner') ? undefined : json['owner'],
         'account': !exists(json, 'account') ? undefined : json['account'],
+        'opportunity': !exists(json, 'opportunity') ? undefined : json['opportunity'],
         'completed_date': !exists(json, 'completed_date') ? undefined : (json['completed_date'] === null ? null : new Date(json['completed_date'])),
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'status': !exists(json, 'status') ? undefined : TaskStatusEnumFromJSON(json['status']) as TaskStatusEnum,
@@ -171,6 +178,7 @@ export function TaskToJSON(value?: Task): JSONValue {
         'content': value.content,
         'owner': value.owner,
         'account': value.account,
+        'opportunity': value.opportunity,
         'completed_date': value.completed_date === undefined ? undefined : (value.completed_date === null ? null : value.completed_date.toISOString()),
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'status': TaskStatusEnumToJSON(value.status),

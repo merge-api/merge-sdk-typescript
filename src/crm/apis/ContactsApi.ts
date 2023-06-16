@@ -34,7 +34,7 @@ import {
     PatchedCRMContactEndpointRequestFromJSON,
     PatchedCRMContactEndpointRequestToJSON,
     RemoteFieldClass,
-    RemoteFieldClassFromJSON
+    RemoteFieldClassFromJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,

@@ -79,6 +79,18 @@ export interface Benefit {
      */
     company_contribution?: number | null;
     /**
+     * The day and time the benefit started.
+     * @type {Date}
+     * @memberof Benefit
+     */
+    start_date?: Date | null;
+    /**
+     * The day and time the benefit ended.
+     * @type {Date}
+     * @memberof Benefit
+     */
+    end_date?: Date | null;
+    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof Benefit
@@ -122,6 +134,8 @@ export function BenefitFromJSONTyped(json: JSONValue): Benefit | undefined {
         'benefit_plan_type': !exists(json, 'benefit_plan_type') ? undefined : json['benefit_plan_type'],
         'employee_contribution': !exists(json, 'employee_contribution') ? undefined : json['employee_contribution'],
         'company_contribution': !exists(json, 'company_contribution') ? undefined : json['company_contribution'],
+        'start_date': !exists(json, 'start_date') ? undefined : (json['start_date'] === null ? null : new Date(json['start_date'])),
+        'end_date': !exists(json, 'end_date') ? undefined : (json['end_date'] === null ? null : new Date(json['end_date'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
@@ -142,6 +156,8 @@ export function BenefitToJSON(value?: Benefit): JSONValue {
         'benefit_plan_type': value.benefit_plan_type,
         'employee_contribution': value.employee_contribution,
         'company_contribution': value.company_contribution,
+        'start_date': value.start_date === undefined ? undefined : (value.start_date === null ? null : value.start_date.toISOString()),
+        'end_date': value.end_date === undefined ? undefined : (value.end_date === null ? null : value.end_date.toISOString()),
     };
 }
 

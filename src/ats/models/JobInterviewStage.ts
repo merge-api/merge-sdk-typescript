@@ -60,6 +60,12 @@ export interface JobInterviewStage {
      */
     job?: string | JSONValue | null;
     /**
+     * The stage’s order, with the lowest values ordered first. If the third-party does not return details on the order of stages, this field will not be populated.
+     * @type {number}
+     * @memberof JobInterviewStage
+     */
+    stage_order?: number | null;
+    /**
      * Indicates whether or not this object has been deleted by third party webhooks.
      * @type {boolean}
      * @memberof JobInterviewStage
@@ -100,6 +106,7 @@ export function JobInterviewStageFromJSONTyped(json: JSONValue): JobInterviewSta
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'job': !exists(json, 'job') ? undefined : json['job'],
+        'stage_order': !exists(json, 'stage_order') ? undefined : json['stage_order'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
@@ -117,6 +124,7 @@ export function JobInterviewStageToJSON(value?: JobInterviewStage): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'job': value.job,
+        'stage_order': value.stage_order,
     };
 }
 

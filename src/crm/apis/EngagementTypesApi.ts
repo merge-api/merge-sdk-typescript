@@ -19,7 +19,8 @@ import {
     EngagementTypeFromJSON,
     EngagementTypeToJSON,
     RemoteFieldClass,
-    RemoteFieldClassFromJSON
+    RemoteFieldClassFromJSON,
+    
 } from '../models';
 import {
 	MergePaginatedResponse,

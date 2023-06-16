@@ -5,7 +5,6 @@ src/apis/ApplicationsApi.ts
 src/apis/AttachmentsApi.ts
 src/apis/AvailableActionsApi.ts
 src/apis/CandidatesApi.ts
-src/apis/CommonModelScopesApi.ts
 src/apis/DeleteAccountApi.ts
 src/apis/DepartmentsApi.ts
 src/apis/EeocsApi.ts
@@ -58,13 +57,7 @@ src/models/CandidateRequest.ts
 src/models/CandidateResponse.ts
 src/models/CategoriesEnum.ts
 src/models/CategoryEnum.ts
-src/models/CommonModelScopeData.ts
-src/models/CommonModelScopes.ts
 src/models/CommonModelScopesBodyRequest.ts
-src/models/CommonModelScopesDisabledModels.ts
-src/models/CommonModelScopesDisabledModelsEnabledActionsEnum.ts
-src/models/CommonModelScopesPostInnerDeserializerRequest.ts
-src/models/CommonModelScopesUpdateSerializer.ts
 src/models/ConditionSchema.ts
 src/models/ConditionTypeEnum.ts
 src/models/DataPassthroughRequest.ts

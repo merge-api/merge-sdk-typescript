@@ -15,14 +15,14 @@
 
 import * as runtime from '../../runtime';
 import {
-    ConditionSchema,
-    ConditionSchemaFromJSON,
     LinkedAccountSelectiveSyncConfiguration,
     LinkedAccountSelectiveSyncConfigurationFromJSON,
     LinkedAccountSelectiveSyncConfigurationToJSON,
     LinkedAccountSelectiveSyncConfigurationListRequest,
     LinkedAccountSelectiveSyncConfigurationListRequestFromJSON,
     LinkedAccountSelectiveSyncConfigurationListRequestToJSON,
+    ConditionSchema,
+    ConditionSchemaFromJSON,
     
 } from '../models';
 import {
