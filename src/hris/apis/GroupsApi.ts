@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface GroupsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -46,6 +47,7 @@ export interface GroupsListRequest {
 }
 
 export interface GroupsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: GroupsRetrieveRemoteFieldsEnum;
@@ -61,6 +63,10 @@ export class GroupsApi extends runtime.BaseAPI {
      * Returns a list of `Group` objects.
      */
     async groupsListRaw(requestParameters: GroupsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Group> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling groupsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -116,10 +122,11 @@ export class GroupsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -147,6 +154,10 @@ export class GroupsApi extends runtime.BaseAPI {
      * Returns a `Group` object with the given `id`.
      */
     async groupsRetrieveRaw(requestParameters: GroupsRetrieveRequest): Promise<runtime.ApiResponse<Group | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling groupsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling groupsRetrieve.');
         }
@@ -170,10 +181,11 @@ export class GroupsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

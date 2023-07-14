@@ -43,6 +43,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface CustomObjectClassesCustomObjectsCreateRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     cRMCustomObjectEndpointRequest: CRMCustomObjectEndpointRequest;
     isDebugMode?: boolean;
@@ -50,6 +51,7 @@ export interface CustomObjectClassesCustomObjectsCreateRequest {
 }
 
 export interface CustomObjectClassesCustomObjectsListRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -64,15 +66,18 @@ export interface CustomObjectClassesCustomObjectsListRequest {
 }
 
 export interface CustomObjectClassesCustomObjectsMetaPatchRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     id: string;
 }
 
 export interface CustomObjectClassesCustomObjectsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
     customObjectClassId: string;
 }
 
 export interface CustomObjectClassesCustomObjectsPartialUpdateRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     id: string;
     patchedCRMCustomObjectEndpointRequest: PatchedCRMCustomObjectEndpointRequest;
@@ -81,6 +86,7 @@ export interface CustomObjectClassesCustomObjectsPartialUpdateRequest {
 }
 
 export interface CustomObjectClassesCustomObjectsRetrieveRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     id: string;
     includeRemoteData?: boolean;
@@ -96,6 +102,10 @@ export class CustomObjectsApi extends runtime.BaseAPI {
      * Creates a `CustomObject` object with the given values.
      */
     async customObjectClassesCustomObjectsCreateRaw(requestParameters: CustomObjectClassesCustomObjectsCreateRequest): Promise<runtime.ApiResponse<CRMCustomObjectResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesCustomObjectsCreate.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsCreate.');
         }
@@ -121,10 +131,11 @@ export class CustomObjectsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -153,6 +164,10 @@ export class CustomObjectsApi extends runtime.BaseAPI {
      * Returns a list of `CustomObject` objects.
      */
     async customObjectClassesCustomObjectsListRaw(requestParameters: CustomObjectClassesCustomObjectsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CustomObject> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesCustomObjectsList.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsList.');
         }
@@ -204,10 +219,11 @@ export class CustomObjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -235,6 +251,10 @@ export class CustomObjectsApi extends runtime.BaseAPI {
      * Returns metadata for `CRMCustomObject` PATCHs.
      */
     async customObjectClassesCustomObjectsMetaPatchRetrieveRaw(requestParameters: CustomObjectClassesCustomObjectsMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesCustomObjectsMetaPatchRetrieve.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsMetaPatchRetrieve.');
         }
@@ -257,10 +277,11 @@ export class CustomObjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -288,6 +309,10 @@ export class CustomObjectsApi extends runtime.BaseAPI {
      * Returns metadata for `CRMCustomObject` POSTs.
      */
     async customObjectClassesCustomObjectsMetaPostRetrieveRaw(requestParameters: CustomObjectClassesCustomObjectsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesCustomObjectsMetaPostRetrieve.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsMetaPostRetrieve.');
         }
@@ -305,10 +330,11 @@ export class CustomObjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -336,6 +362,10 @@ export class CustomObjectsApi extends runtime.BaseAPI {
      * Updates a `CustomObject` object with the given `id`.
      */
     async customObjectClassesCustomObjectsPartialUpdateRaw(requestParameters: CustomObjectClassesCustomObjectsPartialUpdateRequest): Promise<runtime.ApiResponse<CRMCustomObjectResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesCustomObjectsPartialUpdate.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsPartialUpdate.');
         }
@@ -365,10 +395,11 @@ export class CustomObjectsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -397,6 +428,10 @@ export class CustomObjectsApi extends runtime.BaseAPI {
      * Returns a `CustomObject` object with the given `id`.
      */
     async customObjectClassesCustomObjectsRetrieveRaw(requestParameters: CustomObjectClassesCustomObjectsRetrieveRequest): Promise<runtime.ApiResponse<CustomObject | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesCustomObjectsRetrieve.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesCustomObjectsRetrieve.');
         }
@@ -420,10 +455,11 @@ export class CustomObjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

@@ -79,17 +79,17 @@ export interface Deduction {
      */
     remote_was_deleted?: boolean;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Deduction
-     */
-    readonly field_mappings?: { [key: string]: any; } | null;
-    /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof Deduction
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Deduction
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -116,8 +116,8 @@ export function DeductionFromJSONTyped(json: JSONValue): Deduction | undefined {
         'employee_deduction': !exists(json, 'employee_deduction') ? undefined : json['employee_deduction'],
         'company_deduction': !exists(json, 'company_deduction') ? undefined : json['company_deduction'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

@@ -25,6 +25,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface AddressesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
     remoteFields?: AddressesRetrieveRemoteFieldsEnum;
@@ -40,6 +41,10 @@ export class AddressesApi extends runtime.BaseAPI {
      * Returns an `Address` object with the given `id`.
      */
     async addressesRetrieveRaw(requestParameters: AddressesRetrieveRequest): Promise<runtime.ApiResponse<Address | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling addressesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling addressesRetrieve.');
         }
@@ -63,10 +68,11 @@ export class AddressesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

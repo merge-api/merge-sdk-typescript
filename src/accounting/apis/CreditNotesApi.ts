@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface CreditNotesListRequest {
+    xAccountToken: string;
     companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -49,6 +50,7 @@ export interface CreditNotesListRequest {
 }
 
 export interface CreditNotesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<CreditNotesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -65,6 +67,10 @@ export class CreditNotesApi extends runtime.BaseAPI {
      * Returns a list of `CreditNote` objects.
      */
     async creditNotesListRaw(requestParameters: CreditNotesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CreditNote> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling creditNotesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.companyId !== undefined) {
@@ -132,10 +138,11 @@ export class CreditNotesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -163,6 +170,10 @@ export class CreditNotesApi extends runtime.BaseAPI {
      * Returns a `CreditNote` object with the given `id`.
      */
     async creditNotesRetrieveRaw(requestParameters: CreditNotesRetrieveRequest): Promise<runtime.ApiResponse<CreditNote | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling creditNotesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling creditNotesRetrieve.');
         }
@@ -190,10 +201,11 @@ export class CreditNotesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

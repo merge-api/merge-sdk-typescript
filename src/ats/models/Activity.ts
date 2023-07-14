@@ -112,17 +112,17 @@ export interface Activity {
      */
     readonly remote_was_deleted?: boolean;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Activity
-     */
-    readonly field_mappings?: { [key: string]: any; } | null;
-    /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof Activity
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Activity
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -152,8 +152,8 @@ export function ActivityFromJSONTyped(json: JSONValue): Activity | undefined {
         'visibility': !exists(json, 'visibility') ? undefined : VisibilityEnumFromJSON(json['visibility']) as VisibilityEnum,
         'candidate': !exists(json, 'candidate') ? undefined : json['candidate'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

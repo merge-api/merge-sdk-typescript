@@ -104,17 +104,23 @@ export interface FileStorageFile {
      */
     remote_updated_at?: Date | null;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
      * @memberof FileStorageFile
      */
-    readonly field_mappings?: { [key: string]: any; } | null;
+    remote_was_deleted?: boolean;
     /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof FileStorageFile
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof FileStorageFile
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -147,8 +153,9 @@ export function FileStorageFileFromJSONTyped(json: JSONValue): FileStorageFile |
         'drive': !exists(json, 'drive') ? undefined : json['drive'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'remote_updated_at': !exists(json, 'remote_updated_at') ? undefined : (json['remote_updated_at'] === null ? null : new Date(json['remote_updated_at'])),
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
@@ -172,6 +179,7 @@ export function FileStorageFileToJSON(value?: FileStorageFile): JSONValue {
         'drive': value.drive,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'remote_updated_at': value.remote_updated_at === undefined ? undefined : (value.remote_updated_at === null ? null : value.remote_updated_at.toISOString()),
+        'remote_was_deleted': value.remote_was_deleted,
         'remote_data': value.remote_data,
     };
 }

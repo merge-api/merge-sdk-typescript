@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface ActivitiesCreateRequest {
+    xAccountToken: string;
     activityEndpointRequest: ActivityEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface ActivitiesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -61,8 +63,12 @@ export interface ActivitiesListRequest {
     userId?: string;
 }
 
-// extends MergeMetaRequest
+export interface ActivitiesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface ActivitiesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<ActivitiesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -79,6 +85,10 @@ export class ActivitiesApi extends runtime.BaseAPI {
      * Creates an `Activity` object with the given values.
      */
     async activitiesCreateRaw(requestParameters: ActivitiesCreateRequest): Promise<runtime.ApiResponse<ActivityResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesCreate.');
+        }
+
         if (requestParameters.activityEndpointRequest === null || requestParameters.activityEndpointRequest === undefined) {
             throw new runtime.RequiredError('activityEndpointRequest','Required parameter requestParameters.activityEndpointRequest was null or undefined when calling activitiesCreate.');
         }
@@ -100,10 +110,11 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -132,6 +143,10 @@ export class ActivitiesApi extends runtime.BaseAPI {
      * Returns a list of `Activity` objects.
      */
     async activitiesListRaw(requestParameters: ActivitiesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Activity> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -191,10 +206,11 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -221,7 +237,11 @@ export class ActivitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Activity` POSTs.
      */
-    async activitiesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async activitiesMetaPostRetrieveRaw(requestParameters: ActivitiesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -235,10 +255,11 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -257,7 +278,7 @@ export class ActivitiesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Activity` POSTs.
      */
-    async activitiesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async activitiesMetaPostRetrieve(requestParameters: ActivitiesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.activitiesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -266,6 +287,10 @@ export class ActivitiesApi extends runtime.BaseAPI {
      * Returns an `Activity` object with the given `id`.
      */
     async activitiesRetrieveRaw(requestParameters: ActivitiesRetrieveRequest): Promise<runtime.ApiResponse<Activity | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling activitiesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling activitiesRetrieve.');
         }
@@ -293,10 +318,11 @@ export class ActivitiesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

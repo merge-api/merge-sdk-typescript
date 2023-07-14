@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface TeamsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -45,6 +46,7 @@ export interface TeamsListRequest {
 }
 
 export interface TeamsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<TeamsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -59,6 +61,10 @@ export class TeamsApi extends runtime.BaseAPI {
      * Returns a list of `Team` objects.
      */
     async teamsListRaw(requestParameters: TeamsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Team> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling teamsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -110,10 +116,11 @@ export class TeamsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -141,6 +148,10 @@ export class TeamsApi extends runtime.BaseAPI {
      * Returns a `Team` object with the given `id`.
      */
     async teamsRetrieveRaw(requestParameters: TeamsRetrieveRequest): Promise<runtime.ApiResponse<Team | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling teamsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling teamsRetrieve.');
         }
@@ -160,10 +171,11 @@ export class TeamsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

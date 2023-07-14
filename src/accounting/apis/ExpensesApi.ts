@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface ExpensesCreateRequest {
+    xAccountToken: string;
     expenseEndpointRequest: ExpenseEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface ExpensesListRequest {
+    xAccountToken: string;
     companyId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -61,8 +63,12 @@ export interface ExpensesListRequest {
     transactionDateBefore?: Date | null;
 }
 
-// extends MergeMetaRequest
+export interface ExpensesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface ExpensesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<ExpensesRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -77,6 +83,10 @@ export class ExpensesApi extends runtime.BaseAPI {
      * Creates an `Expense` object with the given values.
      */
     async expensesCreateRaw(requestParameters: ExpensesCreateRequest): Promise<runtime.ApiResponse<ExpenseResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesCreate.');
+        }
+
         if (requestParameters.expenseEndpointRequest === null || requestParameters.expenseEndpointRequest === undefined) {
             throw new runtime.RequiredError('expenseEndpointRequest','Required parameter requestParameters.expenseEndpointRequest was null or undefined when calling expensesCreate.');
         }
@@ -98,10 +108,11 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -130,6 +141,10 @@ export class ExpensesApi extends runtime.BaseAPI {
      * Returns a list of `Expense` objects.
      */
     async expensesListRaw(requestParameters: ExpensesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Expense> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.companyId !== undefined) {
@@ -189,10 +204,11 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -219,7 +235,11 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Expense` POSTs.
      */
-    async expensesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async expensesMetaPostRetrieveRaw(requestParameters: ExpensesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -233,10 +253,11 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -255,7 +276,7 @@ export class ExpensesApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `Expense` POSTs.
      */
-    async expensesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async expensesMetaPostRetrieve(requestParameters: ExpensesMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.expensesMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -264,6 +285,10 @@ export class ExpensesApi extends runtime.BaseAPI {
      * Returns an `Expense` object with the given `id`.
      */
     async expensesRetrieveRaw(requestParameters: ExpensesRetrieveRequest): Promise<runtime.ApiResponse<Expense | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling expensesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling expensesRetrieve.');
         }
@@ -283,10 +308,11 @@ export class ExpensesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

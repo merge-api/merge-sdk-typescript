@@ -40,6 +40,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface CustomObjectClassesAssociationTypesCreateRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     cRMAssociationTypeEndpointRequest: CRMAssociationTypeEndpointRequest;
     isDebugMode?: boolean;
@@ -47,6 +48,7 @@ export interface CustomObjectClassesAssociationTypesCreateRequest {
 }
 
 export interface CustomObjectClassesAssociationTypesListRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -61,10 +63,12 @@ export interface CustomObjectClassesAssociationTypesListRequest {
 }
 
 export interface CustomObjectClassesAssociationTypesMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
     customObjectClassId: string;
 }
 
 export interface CustomObjectClassesAssociationTypesRetrieveRequest {
+    xAccountToken: string;
     customObjectClassId: string;
     id: string;
     expand?: Array<CustomObjectClassesAssociationTypesRetrieveExpandEnum>;
@@ -80,6 +84,10 @@ export class AssociationTypesApi extends runtime.BaseAPI {
      * Creates an `AssociationType` object with the given values.
      */
     async customObjectClassesAssociationTypesCreateRaw(requestParameters: CustomObjectClassesAssociationTypesCreateRequest): Promise<runtime.ApiResponse<CRMAssociationTypeResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesAssociationTypesCreate.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesCreate.');
         }
@@ -105,10 +113,11 @@ export class AssociationTypesApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -137,6 +146,10 @@ export class AssociationTypesApi extends runtime.BaseAPI {
      * Returns a list of `AssociationType` objects.
      */
     async customObjectClassesAssociationTypesListRaw(requestParameters: CustomObjectClassesAssociationTypesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<AssociationType> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesAssociationTypesList.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesList.');
         }
@@ -188,10 +201,11 @@ export class AssociationTypesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -219,6 +233,10 @@ export class AssociationTypesApi extends runtime.BaseAPI {
      * Returns metadata for `CRMAssociationType` POSTs.
      */
     async customObjectClassesAssociationTypesMetaPostRetrieveRaw(requestParameters: CustomObjectClassesAssociationTypesMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesAssociationTypesMetaPostRetrieve.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesMetaPostRetrieve.');
         }
@@ -236,10 +254,11 @@ export class AssociationTypesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -267,6 +286,10 @@ export class AssociationTypesApi extends runtime.BaseAPI {
      * Returns an `AssociationType` object with the given `id`.
      */
     async customObjectClassesAssociationTypesRetrieveRaw(requestParameters: CustomObjectClassesAssociationTypesRetrieveRequest): Promise<runtime.ApiResponse<AssociationType | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling customObjectClassesAssociationTypesRetrieve.');
+        }
+
         if (requestParameters.customObjectClassId === null || requestParameters.customObjectClassId === undefined) {
             throw new runtime.RequiredError('customObjectClassId','Required parameter requestParameters.customObjectClassId was null or undefined when calling customObjectClassesAssociationTypesRetrieve.');
         }
@@ -290,10 +313,11 @@ export class AssociationTypesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

@@ -116,7 +116,7 @@ export function RemoteFieldClassForCustomObjectClassFromJSONTyped(json: JSONValu
 }
 
 export function RemoteFieldClassForCustomObjectClassToJSON(value?: RemoteFieldClassForCustomObjectClass): JSONValue {
-    if (value === undefined || value === null  || value.item_schema === null) {
+    if (value === undefined || value === null) {
         return undefined;
     }
 

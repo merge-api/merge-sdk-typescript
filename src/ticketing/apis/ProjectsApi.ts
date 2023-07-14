@@ -15,12 +15,13 @@
 
 import * as runtime from '../../runtime';
 import {
+    PaginatedProjectList,
+    PaginatedProjectListFromJSON,
+    PaginatedProjectListToJSON,
     
     Project,
     ProjectFromJSON,
     ProjectToJSON,
-    User,
-    UserFromJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -33,6 +34,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface ProjectsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -45,11 +47,13 @@ export interface ProjectsListRequest {
 }
 
 export interface ProjectsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
 
 export interface ProjectsUsersListRequest {
+    xAccountToken: string;
     parentId: string;
     cursor?: string;
     expand?: Array<ProjectsUsersListExpandEnum>;
@@ -67,6 +71,10 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Returns a list of `Project` objects.
      */
     async projectsListRaw(requestParameters: ProjectsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Project> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -110,10 +118,11 @@ export class ProjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -141,6 +150,10 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Returns a `Project` object with the given `id`.
      */
     async projectsRetrieveRaw(requestParameters: ProjectsRetrieveRequest): Promise<runtime.ApiResponse<Project | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling projectsRetrieve.');
         }
@@ -156,10 +169,11 @@ export class ProjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -187,6 +201,10 @@ export class ProjectsApi extends runtime.BaseAPI {
      * Returns a list of `User` objects.
      */
     async projectsUsersListRaw(requestParameters: ProjectsUsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling projectsUsersList.');
+        }
+
         if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
             throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling projectsUsersList.');
         }
@@ -218,10 +236,11 @@ export class ProjectsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -252,5 +271,6 @@ export class ProjectsApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum ProjectsUsersListExpandEnum {
+    Roles = 'roles',
     Teams = 'teams'
 }

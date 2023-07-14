@@ -102,12 +102,6 @@ export interface Ticket {
      */
     description?: string | null;
     /**
-     * The project the ticket belongs to.
-     * @type {string}
-     * @memberof Ticket
-     */
-    project?: string | JSONValue | null;
-    /**
      * 
      * @type {Array<string>}
      * @memberof Ticket
@@ -191,17 +185,17 @@ export interface Ticket {
      */
     priority?: PriorityEnum | null;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Ticket
-     */
-    readonly field_mappings?: { [key: string]: any; } | null;
-    /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof Ticket
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Ticket
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -235,7 +229,6 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'project': !exists(json, 'project') ? undefined : json['project'],
         'collections': !exists(json, 'collections') ? undefined : json['collections'],
         'ticket_type': !exists(json, 'ticket_type') ? undefined : json['ticket_type'],
         'account': !exists(json, 'account') ? undefined : json['account'],
@@ -249,8 +242,8 @@ export function TicketFromJSONTyped(json: JSONValue): Ticket | undefined {
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'ticket_url': !exists(json, 'ticket_url') ? undefined : json['ticket_url'],
         'priority': !exists(json, 'priority') ? undefined : PriorityEnumFromJSON(json['priority']) as PriorityEnum,
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
         'remote_fields': !exists(json, 'remote_fields') ? undefined : ((json['remote_fields'] as Array<JSONValue>).map(RemoteFieldFromJSON)) as Array<RemoteField>,
     };
@@ -270,7 +263,6 @@ export function TicketToJSON(value?: Ticket): JSONValue {
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'status': TicketStatusEnumToJSON(value.status),
         'description': value.description,
-        'project': value.project,
         'collections': value.collections,
         'ticket_type': value.ticket_type,
         'account': value.account,

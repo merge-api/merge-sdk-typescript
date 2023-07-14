@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface OfficesListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -43,6 +44,7 @@ export interface OfficesListRequest {
 }
 
 export interface OfficesRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -56,6 +58,10 @@ export class OfficesApi extends runtime.BaseAPI {
      * Returns a list of `Office` objects.
      */
     async officesListRaw(requestParameters: OfficesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Office> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling officesList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -99,10 +105,11 @@ export class OfficesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -130,6 +137,10 @@ export class OfficesApi extends runtime.BaseAPI {
      * Returns an `Office` object with the given `id`.
      */
     async officesRetrieveRaw(requestParameters: OfficesRetrieveRequest): Promise<runtime.ApiResponse<Office | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling officesRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling officesRetrieve.');
         }
@@ -145,10 +156,11 @@ export class OfficesApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

@@ -56,17 +56,23 @@ export interface User {
      */
     is_me?: boolean;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
      * @memberof User
      */
-    readonly field_mappings?: { [key: string]: any; } | null;
+    remote_was_deleted?: boolean;
     /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof User
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof User
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -91,8 +97,9 @@ export function UserFromJSONTyped(json: JSONValue): User | undefined {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'email_address': !exists(json, 'email_address') ? undefined : json['email_address'],
         'is_me': !exists(json, 'is_me') ? undefined : json['is_me'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
@@ -108,6 +115,7 @@ export function UserToJSON(value?: User): JSONValue {
         'name': value.name,
         'email_address': value.email_address,
         'is_me': value.is_me,
+        'remote_was_deleted': value.remote_was_deleted,
         'remote_data': value.remote_data,
     };
 }

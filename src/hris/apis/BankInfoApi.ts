@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface BankInfoListRequest {
+    xAccountToken: string;
     accountType?: BankInfoListAccountTypeEnum;
     bankName?: string | null;
     createdAfter?: Date;
@@ -50,6 +51,7 @@ export interface BankInfoListRequest {
 }
 
 export interface BankInfoRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<BankInfoRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -66,6 +68,10 @@ export class BankInfoApi extends runtime.BaseAPI {
      * Returns a list of `BankInfo` objects.
      */
     async bankInfoListRaw(requestParameters: BankInfoListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<BankInfo> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling bankInfoList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.accountType !== undefined) {
@@ -137,10 +143,11 @@ export class BankInfoApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -168,6 +175,10 @@ export class BankInfoApi extends runtime.BaseAPI {
      * Returns a `BankInfo` object with the given `id`.
      */
     async bankInfoRetrieveRaw(requestParameters: BankInfoRetrieveRequest): Promise<runtime.ApiResponse<BankInfo | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling bankInfoRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling bankInfoRetrieve.');
         }
@@ -195,10 +206,11 @@ export class BankInfoApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -244,8 +256,8 @@ export enum BankInfoListExpandEnum {
 * @enum {string}
 */
 export enum BankInfoListOrderByEnum {
-    RemoteCreatedAtDESC = '-remote_created_at',
-    RemoteCreatedAtASC = 'remote_created_at'
+    RemoteCreatedAt = '-remote_created_at',
+    RemoteCreatedAt = 'remote_created_at'
 }
 /**
 * @export

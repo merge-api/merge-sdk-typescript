@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface EeocsListRequest {
+    xAccountToken: string;
     candidateId?: string;
     createdAfter?: Date;
     createdBefore?: Date;
@@ -47,6 +48,7 @@ export interface EeocsListRequest {
 }
 
 export interface EeocsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<EeocsRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -63,6 +65,10 @@ export class EeocsApi extends runtime.BaseAPI {
      * Returns a list of `EEOC` objects.
      */
     async eeocsListRaw(requestParameters: EeocsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<EEOC> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling eeocsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.candidateId !== undefined) {
@@ -122,10 +128,11 @@ export class EeocsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -153,6 +160,10 @@ export class EeocsApi extends runtime.BaseAPI {
      * Returns an `EEOC` object with the given `id`.
      */
     async eeocsRetrieveRaw(requestParameters: EeocsRetrieveRequest): Promise<runtime.ApiResponse<EEOC | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling eeocsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling eeocsRetrieve.');
         }
@@ -180,10 +191,11 @@ export class EeocsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

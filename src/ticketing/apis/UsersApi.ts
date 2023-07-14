@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface UsersListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -45,6 +46,7 @@ export interface UsersListRequest {
 }
 
 export interface UsersRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<UsersRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -59,6 +61,10 @@ export class UsersApi extends runtime.BaseAPI {
      * Returns a list of `User` objects.
      */
     async usersListRaw(requestParameters: UsersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<User> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling usersList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -110,10 +116,11 @@ export class UsersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -141,6 +148,10 @@ export class UsersApi extends runtime.BaseAPI {
      * Returns a `User` object with the given `id`.
      */
     async usersRetrieveRaw(requestParameters: UsersRetrieveRequest): Promise<runtime.ApiResponse<User | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling usersRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling usersRetrieve.');
         }
@@ -160,10 +171,11 @@ export class UsersApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -194,6 +206,7 @@ export class UsersApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum UsersListExpandEnum {
+    Roles = 'roles',
     Teams = 'teams'
 }
 /**
@@ -201,5 +214,6 @@ export enum UsersListExpandEnum {
 * @enum {string}
 */
 export enum UsersRetrieveExpandEnum {
+    Roles = 'roles',
     Teams = 'teams'
 }

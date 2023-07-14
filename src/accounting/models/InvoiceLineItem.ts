@@ -419,17 +419,17 @@ export interface InvoiceLineItem {
      */
     readonly id?: string;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof InvoiceLineItem
-     */
-    readonly field_mappings?: { [key: string]: any; } | null;
-    /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof InvoiceLineItem
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof InvoiceLineItem
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
 }
 
 export function InvoiceLineItemFromJSON(json: JSONValue): InvoiceLineItem | undefined {
@@ -456,8 +456,8 @@ export function InvoiceLineItemFromJSONTyped(json: JSONValue): InvoiceLineItem |
         'tracking_categories': !exists(json, 'tracking_categories') ? undefined : json['tracking_categories'],
         'company': !exists(json, 'company') ? undefined : json['company'],
         'id': !exists(json, 'id') ? undefined : json['id'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
     };
 }
 

@@ -40,12 +40,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface ActionsCreateRequest {
+    xAccountToken: string;
     mKTGActionEndpointRequest: MKTGActionEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface ActionsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -57,8 +59,12 @@ export interface ActionsListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface ActionsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface ActionsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -72,6 +78,10 @@ export class ActionsApi extends runtime.BaseAPI {
      * Creates an `Action` object with the given values.
      */
     async actionsCreateRaw(requestParameters: ActionsCreateRequest): Promise<runtime.ApiResponse<MKTGActionResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling actionsCreate.');
+        }
+
         if (requestParameters.mKTGActionEndpointRequest === null || requestParameters.mKTGActionEndpointRequest === undefined) {
             throw new runtime.RequiredError('mKTGActionEndpointRequest','Required parameter requestParameters.mKTGActionEndpointRequest was null or undefined when calling actionsCreate.');
         }
@@ -93,10 +103,11 @@ export class ActionsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -125,6 +136,10 @@ export class ActionsApi extends runtime.BaseAPI {
      * Returns a list of `Action` objects.
      */
     async actionsListRaw(requestParameters: ActionsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Action> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling actionsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -168,10 +183,11 @@ export class ActionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -198,7 +214,11 @@ export class ActionsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGAction` POSTs.
      */
-    async actionsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async actionsMetaPostRetrieveRaw(requestParameters: ActionsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling actionsMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -212,10 +232,11 @@ export class ActionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -234,7 +255,7 @@ export class ActionsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGAction` POSTs.
      */
-    async actionsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async actionsMetaPostRetrieve(requestParameters: ActionsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.actionsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -243,6 +264,10 @@ export class ActionsApi extends runtime.BaseAPI {
      * Returns an `Action` object with the given `id`.
      */
     async actionsRetrieveRaw(requestParameters: ActionsRetrieveRequest): Promise<runtime.ApiResponse<Action | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling actionsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling actionsRetrieve.');
         }
@@ -258,10 +283,11 @@ export class ActionsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

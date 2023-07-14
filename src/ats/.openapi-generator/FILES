@@ -97,6 +97,8 @@ src/models/OfferStatusEnum.ts
 src/models/Office.ts
 src/models/OperatorSchema.ts
 src/models/OverallRecommendationEnum.ts
+src/models/PatchedCandidateEndpointRequest.ts
+src/models/PatchedCandidateRequest.ts
 src/models/PhoneNumber.ts
 src/models/PhoneNumberRequest.ts
 src/models/PhoneNumberTypeEnum.ts

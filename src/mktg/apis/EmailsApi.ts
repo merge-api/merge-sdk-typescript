@@ -15,11 +15,12 @@
 
 import * as runtime from '../../runtime';
 import {
-    Contact,
-    ContactFromJSON,
     MarketingEmail,
     MarketingEmailFromJSON,
     MarketingEmailToJSON,
+    PaginatedContactList,
+    PaginatedContactListFromJSON,
+    PaginatedContactListToJSON,
     
 } from '../models';
 import {
@@ -33,6 +34,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface EmailsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -45,6 +47,7 @@ export interface EmailsListRequest {
 }
 
 export interface EmailsRecipientsListRequest {
+    xAccountToken: string;
     parentId: string;
     cursor?: string;
     includeDeletedData?: boolean;
@@ -53,6 +56,7 @@ export interface EmailsRecipientsListRequest {
 }
 
 export interface EmailsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -66,6 +70,10 @@ export class EmailsApi extends runtime.BaseAPI {
      * Returns a list of `MarketingEmail` objects.
      */
     async emailsListRaw(requestParameters: EmailsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<MarketingEmail> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling emailsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -109,10 +117,11 @@ export class EmailsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -140,6 +149,10 @@ export class EmailsApi extends runtime.BaseAPI {
      * Returns a list of `Contact` objects.
      */
     async emailsRecipientsListRaw(requestParameters: EmailsRecipientsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling emailsRecipientsList.');
+        }
+
         if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
             throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling emailsRecipientsList.');
         }
@@ -167,10 +180,11 @@ export class EmailsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -198,6 +212,10 @@ export class EmailsApi extends runtime.BaseAPI {
      * Returns a `MarketingEmail` object with the given `id`.
      */
     async emailsRetrieveRaw(requestParameters: EmailsRetrieveRequest): Promise<runtime.ApiResponse<MarketingEmail | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling emailsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling emailsRetrieve.');
         }
@@ -213,10 +231,11 @@ export class EmailsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

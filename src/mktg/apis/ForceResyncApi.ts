@@ -24,7 +24,10 @@ import {
     MergeMetaRequest
 } from '../../merge_meta_request';
 
-//
+export interface SyncStatusResyncCreateRequest {
+    xAccountToken: string;
+}
+
 /**
  * 
  */
@@ -33,7 +36,11 @@ export class ForceResyncApi extends runtime.BaseAPI {
     /**
      * Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.
      */
-    async syncStatusResyncCreateRaw(): Promise<runtime.ApiResponse<Array<SyncStatus> | undefined>> {
+    async syncStatusResyncCreateRaw(requestParameters: SyncStatusResyncCreateRequest): Promise<runtime.ApiResponse<Array<SyncStatus> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling syncStatusResyncCreate.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -41,10 +48,11 @@ export class ForceResyncApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -63,8 +71,8 @@ export class ForceResyncApi extends runtime.BaseAPI {
     /**
      * Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.
      */
-    async syncStatusResyncCreate(): Promise<Array<SyncStatus> | undefined> {
-        const response = await this.syncStatusResyncCreateRaw();
+    async syncStatusResyncCreate(requestParameters: SyncStatusResyncCreateRequest): Promise<Array<SyncStatus> | undefined> {
+        const response = await this.syncStatusResyncCreateRaw(requestParameters);
         return await response.value();
     }
 

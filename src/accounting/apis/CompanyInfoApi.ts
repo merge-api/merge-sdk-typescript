@@ -31,6 +31,7 @@ import {
 } from '../../merge_meta_request';
 
 export interface CompanyInfoListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -44,6 +45,7 @@ export interface CompanyInfoListRequest {
 }
 
 export interface CompanyInfoRetrieveRequest {
+    xAccountToken: string;
     id: string;
     expand?: Array<CompanyInfoRetrieveExpandEnum>;
     includeRemoteData?: boolean;
@@ -58,6 +60,10 @@ export class CompanyInfoApi extends runtime.BaseAPI {
      * Returns a list of `CompanyInfo` objects.
      */
     async companyInfoListRaw(requestParameters: CompanyInfoListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<CompanyInfo> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling companyInfoList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -105,10 +111,11 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -136,6 +143,10 @@ export class CompanyInfoApi extends runtime.BaseAPI {
      * Returns a `CompanyInfo` object with the given `id`.
      */
     async companyInfoRetrieveRaw(requestParameters: CompanyInfoRetrieveRequest): Promise<runtime.ApiResponse<CompanyInfo | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling companyInfoRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling companyInfoRetrieve.');
         }
@@ -155,10 +166,11 @@ export class CompanyInfoApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

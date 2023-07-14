@@ -15,8 +15,6 @@
 
 import * as runtime from '../../runtime';
 import {
-    Contact,
-    ContactFromJSON,
     List,
     ListFromJSON,
     ListToJSON,
@@ -29,6 +27,9 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    PaginatedContactList,
+    PaginatedContactListFromJSON,
+    PaginatedContactListToJSON,
     
 } from '../models';
 import {
@@ -42,12 +43,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface ListsCreateRequest {
+    xAccountToken: string;
     mKTGListEndpointRequest: MKTGListEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface ListsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -59,13 +62,18 @@ export interface ListsListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface ListsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface ListsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
 
 export interface ListsSubscribersListRequest {
+    xAccountToken: string;
     parentId: string;
     cursor?: string;
     includeDeletedData?: boolean;
@@ -82,6 +90,10 @@ export class ListsApi extends runtime.BaseAPI {
      * Creates a `List` object with the given values.
      */
     async listsCreateRaw(requestParameters: ListsCreateRequest): Promise<runtime.ApiResponse<MKTGListResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling listsCreate.');
+        }
+
         if (requestParameters.mKTGListEndpointRequest === null || requestParameters.mKTGListEndpointRequest === undefined) {
             throw new runtime.RequiredError('mKTGListEndpointRequest','Required parameter requestParameters.mKTGListEndpointRequest was null or undefined when calling listsCreate.');
         }
@@ -103,10 +115,11 @@ export class ListsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -135,6 +148,10 @@ export class ListsApi extends runtime.BaseAPI {
      * Returns a list of `List` objects.
      */
     async listsListRaw(requestParameters: ListsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<List> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling listsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -178,10 +195,11 @@ export class ListsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -208,7 +226,11 @@ export class ListsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGList` POSTs.
      */
-    async listsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async listsMetaPostRetrieveRaw(requestParameters: ListsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling listsMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -222,10 +244,11 @@ export class ListsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -244,7 +267,7 @@ export class ListsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGList` POSTs.
      */
-    async listsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async listsMetaPostRetrieve(requestParameters: ListsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.listsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -253,6 +276,10 @@ export class ListsApi extends runtime.BaseAPI {
      * Returns a `List` object with the given `id`.
      */
     async listsRetrieveRaw(requestParameters: ListsRetrieveRequest): Promise<runtime.ApiResponse<List | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling listsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling listsRetrieve.');
         }
@@ -268,10 +295,11 @@ export class ListsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -299,6 +327,10 @@ export class ListsApi extends runtime.BaseAPI {
      * Returns a list of `Contact` objects.
      */
     async listsSubscribersListRaw(requestParameters: ListsSubscribersListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling listsSubscribersList.');
+        }
+
         if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
             throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling listsSubscribersList.');
         }
@@ -326,10 +358,11 @@ export class ListsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;

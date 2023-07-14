@@ -18,8 +18,6 @@ import {
     Automation,
     AutomationFromJSON,
     AutomationToJSON,
-    Contact,
-    ContactFromJSON,
     MKTGAutomationEndpointRequest,
     MKTGAutomationEndpointRequestFromJSON,
     MKTGAutomationEndpointRequestToJSON,
@@ -29,6 +27,9 @@ import {
     MetaResponse,
     MetaResponseFromJSON,
     MetaResponseToJSON,
+    PaginatedAutomationList,
+    PaginatedAutomationListFromJSON,
+    PaginatedAutomationListToJSON,
     
 } from '../models';
 import {
@@ -42,12 +43,14 @@ import {
 } from '../../merge_meta_request';
 
 export interface AutomationsCreateRequest {
+    xAccountToken: string;
     mKTGAutomationEndpointRequest: MKTGAutomationEndpointRequest;
     isDebugMode?: boolean;
     runAsync?: boolean;
 }
 
 export interface AutomationsListRequest {
+    xAccountToken: string;
     createdAfter?: Date;
     createdBefore?: Date;
     cursor?: string;
@@ -59,8 +62,12 @@ export interface AutomationsListRequest {
     remoteId?: string | null;
 }
 
-// extends MergeMetaRequest
+export interface AutomationsMetaPostRetrieveRequest extends MergeMetaRequest {
+    xAccountToken: string;
+}
+
 export interface AutomationsRecipientsListRequest {
+    xAccountToken: string;
     parentId: string;
     cursor?: string;
     includeDeletedData?: boolean;
@@ -69,6 +76,7 @@ export interface AutomationsRecipientsListRequest {
 }
 
 export interface AutomationsRetrieveRequest {
+    xAccountToken: string;
     id: string;
     includeRemoteData?: boolean;
 }
@@ -82,6 +90,10 @@ export class AutomationsApi extends runtime.BaseAPI {
      * Creates an `Automation` object with the given values.
      */
     async automationsCreateRaw(requestParameters: AutomationsCreateRequest): Promise<runtime.ApiResponse<MKTGAutomationResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling automationsCreate.');
+        }
+
         if (requestParameters.mKTGAutomationEndpointRequest === null || requestParameters.mKTGAutomationEndpointRequest === undefined) {
             throw new runtime.RequiredError('mKTGAutomationEndpointRequest','Required parameter requestParameters.mKTGAutomationEndpointRequest was null or undefined when calling automationsCreate.');
         }
@@ -103,10 +115,11 @@ export class AutomationsApi extends runtime.BaseAPI {
 
         headerParameters['Content-Type'] = 'application/json';
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -135,6 +148,10 @@ export class AutomationsApi extends runtime.BaseAPI {
      * Returns a list of `Automation` objects.
      */
     async automationsListRaw(requestParameters: AutomationsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Automation> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling automationsList.');
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -178,10 +195,11 @@ export class AutomationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -208,7 +226,11 @@ export class AutomationsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGAutomation` POSTs.
      */
-    async automationsMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+    async automationsMetaPostRetrieveRaw(requestParameters: AutomationsMetaPostRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling automationsMetaPostRetrieve.');
+        }
+
         const queryParameters: any = {};
 
 
@@ -222,10 +244,11 @@ export class AutomationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -244,7 +267,7 @@ export class AutomationsApi extends runtime.BaseAPI {
     /**
      * Returns metadata for `MKTGAutomation` POSTs.
      */
-    async automationsMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
+    async automationsMetaPostRetrieve(requestParameters: AutomationsMetaPostRetrieveRequest): Promise<MetaResponse | undefined> {
         const response = await this.automationsMetaPostRetrieveRaw(requestParameters);
         return await response.value();
     }
@@ -253,6 +276,10 @@ export class AutomationsApi extends runtime.BaseAPI {
      * Returns a list of `Contact` objects.
      */
     async automationsRecipientsListRaw(requestParameters: AutomationsRecipientsListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<Contact> | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling automationsRecipientsList.');
+        }
+
         if (requestParameters.parentId === null || requestParameters.parentId === undefined) {
             throw new runtime.RequiredError('parentId','Required parameter requestParameters.parentId was null or undefined when calling automationsRecipientsList.');
         }
@@ -280,10 +307,11 @@ export class AutomationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
@@ -311,6 +339,10 @@ export class AutomationsApi extends runtime.BaseAPI {
      * Returns an `Automation` object with the given `id`.
      */
     async automationsRetrieveRaw(requestParameters: AutomationsRetrieveRequest): Promise<runtime.ApiResponse<Automation | undefined>> {
+        if (requestParameters.xAccountToken === null || requestParameters.xAccountToken === undefined) {
+            throw new runtime.RequiredError('xAccountToken','Required parameter requestParameters.xAccountToken was null or undefined when calling automationsRetrieve.');
+        }
+
         if (requestParameters.id === null || requestParameters.id === undefined) {
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling automationsRetrieve.');
         }
@@ -326,10 +358,11 @@ export class AutomationsApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-
-        if (this.configuration && this.configuration.accessToken) {
-            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        if (requestParameters.xAccountToken !== undefined && requestParameters.xAccountToken !== null) {
+            headerParameters['X-Account-Token'] = String(requestParameters.xAccountToken);
         }
+
+
 
         if (this.configuration && this.configuration.apiKey) {
             headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
