@@ -2,6 +2,7 @@ import * as merge_sdk from '../src/index'
 import { Configuration, JSONValue, MergePaginatedResponseFromJSON, querystring } from '../src/index';
 import fetch from 'node-fetch'
 import { EmployeeFromJSON } from '../src/hris';
+import { get } from 'http';
 
 // note this is skipped for CI, just here for reference
 test.skip("can call ATS api", async () => {
@@ -182,3 +183,21 @@ test("deserializing paginated values runs per-item deserialize function", async(
     expect(deserialized_page?.results?.length).toBe(1)
     expect(deserialized_page?.results?.[0]?.start_date instanceof Date).toBe(true)
 })
+
+
+test.skip("can call Ticketing Download api", async () => {
+    /*
+    REDACTED TEST CONFS
+    */
+    let test_conf_ticketing = new Configuration({
+        apiKey: "",
+        accessToken: ""
+    });
+    let get_attachments = new merge_sdk.Ticketing.AttachmentsApi(test_conf_ticketing)
+    let response = await get_attachments.attachmentsList({})
+
+    // ticketing attachment download call w query
+    let emp_api = new merge_sdk.Ticketing.AttachmentsApi(test_conf_ticketing)
+    let response3 = await emp_api.attachmentsDownloadRetrieve({id: "[add attachment id]"})
+    expect(response3).toBeDefined()
+});

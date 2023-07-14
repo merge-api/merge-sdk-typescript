@@ -31,7 +31,6 @@ import {
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
 import {

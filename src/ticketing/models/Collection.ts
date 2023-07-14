@@ -15,6 +15,10 @@
 import { exists, mapValues } from '../../runtime';
 import { JSONValue } from '../../merge_json';
 import {
+    AccessLevelEnum,
+    AccessLevelEnumFromJSON,
+    AccessLevelEnumFromJSONTyped,
+    AccessLevelEnumToJSON,
     CollectionTypeEnum,
     CollectionTypeEnumFromJSON,
     CollectionTypeEnumFromJSONTyped,
@@ -87,17 +91,27 @@ export interface Collection {
      */
     remote_was_deleted?: boolean;
     /**
+     * The level of access a User has to the Collection and its sub-objects.
      * 
-     * @type {{ [key: string]: any; }}
+     * * `PRIVATE` - PRIVATE
+     * * `COMPANY` - COMPANY
+     * * `PUBLIC` - PUBLIC
+     * @type {AccessLevelEnum}
      * @memberof Collection
      */
-    readonly field_mappings?: { [key: string]: any; } | null;
+    access_level?: AccessLevelEnum | null;
     /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof Collection
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Collection
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -124,8 +138,9 @@ export function CollectionFromJSONTyped(json: JSONValue): Collection | undefined
         'collection_type': !exists(json, 'collection_type') ? undefined : CollectionTypeEnumFromJSON(json['collection_type']) as CollectionTypeEnum,
         'parent_collection': !exists(json, 'parent_collection') ? undefined : json['parent_collection'],
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'access_level': !exists(json, 'access_level') ? undefined : AccessLevelEnumFromJSON(json['access_level']) as AccessLevelEnum,
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }
@@ -143,6 +158,7 @@ export function CollectionToJSON(value?: Collection): JSONValue {
         'collection_type': CollectionTypeEnumToJSON(value.collection_type),
         'parent_collection': value.parent_collection,
         'remote_was_deleted': value.remote_was_deleted,
+        'access_level': AccessLevelEnumToJSON(value.access_level),
     };
 }
 

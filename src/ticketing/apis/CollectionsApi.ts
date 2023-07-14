@@ -17,7 +17,6 @@ import * as runtime from '../../runtime';
 import {
     Collection,
     CollectionFromJSON,
-    CollectionToJSON,
     User,
     UserFromJSON,
     
@@ -25,12 +24,8 @@ import {
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
-import {
-    MergeMetaRequest
-} from '../../merge_meta_request';
 
 export interface CollectionsListRequest {
     collectionType?: CollectionsListCollectionTypeEnum;
@@ -342,5 +337,6 @@ export enum CollectionsRetrieveShowEnumOriginsEnum {
 * @enum {string}
 */
 export enum CollectionsUsersListExpandEnum {
+    Roles = 'roles',
     Teams = 'teams'
 }

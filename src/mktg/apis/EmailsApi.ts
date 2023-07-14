@@ -19,18 +19,13 @@ import {
     ContactFromJSON,
     MarketingEmail,
     MarketingEmailFromJSON,
-    MarketingEmailToJSON,
     
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
-import {
-    MergeMetaRequest
-} from '../../merge_meta_request';
 
 export interface EmailsListRequest {
     createdAfter?: Date;

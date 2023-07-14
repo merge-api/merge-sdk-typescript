@@ -45,6 +45,10 @@ export interface AttachmentsCreateRequest {
     runAsync?: boolean;
 }
 
+export interface AttachmentsDownloadRetrieveRequest {
+    id: string;
+}
+
 export interface AttachmentsListRequest {
     createdAfter?: Date;
     createdBefore?: Date;
@@ -121,6 +125,48 @@ export class AttachmentsApi extends runtime.BaseAPI {
      */
     async attachmentsCreate(requestParameters: AttachmentsCreateRequest): Promise<TicketingAttachmentResponse | undefined> {
         const response = await this.attachmentsCreateRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Returns an `Attachment` object with the given `id`.
+     */
+    async attachmentsDownloadRetrieveRaw(requestParameters: AttachmentsDownloadRetrieveRequest): Promise<runtime.ApiResponse<Blob | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling attachmentsDownloadRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ticketing/v1/attachments/{id}/download`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.BlobApiResponse(response);
+    }
+
+    /**
+     * Returns an `Attachment` object with the given `id`.
+     */
+    async attachmentsDownloadRetrieve(requestParameters: AttachmentsDownloadRetrieveRequest): Promise<Blob | undefined> {
+        const response = await this.attachmentsDownloadRetrieveRaw(requestParameters);
         return await response.value();
     }
 

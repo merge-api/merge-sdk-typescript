@@ -50,17 +50,23 @@ export interface Group {
      */
     users: Array<string>;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
      * @memberof Group
      */
-    readonly field_mappings?: { [key: string]: any; } | null;
+    remote_was_deleted?: boolean;
     /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof Group
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Group
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -84,8 +90,9 @@ export function GroupFromJSONTyped(json: JSONValue): Group | undefined {
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'users': json['users'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
@@ -100,6 +107,7 @@ export function GroupToJSON(value?: Group): JSONValue {
         'remote_id': value.remote_id,
         'name': value.name,
         'users': value.users,
+        'remote_was_deleted': value.remote_was_deleted,
         'remote_data': value.remote_data,
     };
 }

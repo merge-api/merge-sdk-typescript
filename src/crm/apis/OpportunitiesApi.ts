@@ -17,19 +17,13 @@ import * as runtime from '../../runtime';
 import {
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON,
     Opportunity,
     OpportunityFromJSON,
-    OpportunityToJSON,
     OpportunityEndpointRequest,
-    OpportunityEndpointRequestFromJSON,
     OpportunityEndpointRequestToJSON,
     OpportunityResponse,
     OpportunityResponseFromJSON,
-    OpportunityResponseToJSON,
-    
     PatchedOpportunityEndpointRequest,
-    PatchedOpportunityEndpointRequestFromJSON,
     PatchedOpportunityEndpointRequestToJSON,
     RemoteFieldClassFromJSON,
     RemoteFieldClass,
@@ -37,7 +31,6 @@ import {
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
 import {

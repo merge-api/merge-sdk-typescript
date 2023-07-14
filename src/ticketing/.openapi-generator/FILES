@@ -24,6 +24,7 @@ src/apis/UsersApi.ts
 src/apis/WebhookReceiversApi.ts
 src/apis/index.ts
 src/index.ts
+src/models/AccessLevelEnum.ts
 src/models/Account.ts
 src/models/AccountDetails.ts
 src/models/AccountDetailsAndActions.ts

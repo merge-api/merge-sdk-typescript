@@ -17,19 +17,14 @@ import * as runtime from '../../runtime';
 import {
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON,
     PatchedTicketEndpointRequest,
-    PatchedTicketEndpointRequestFromJSON,
     PatchedTicketEndpointRequestToJSON,
     Ticket,
     TicketFromJSON,
-    TicketToJSON,
     TicketEndpointRequest,
-    TicketEndpointRequestFromJSON,
     TicketEndpointRequestToJSON,
     TicketResponse,
     TicketResponseFromJSON,
-    TicketResponseToJSON,
     User,
     UserFromJSON,
     RemoteFieldClass,
@@ -38,7 +33,6 @@ import {
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
 import {
@@ -677,6 +671,7 @@ export class TicketsApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum TicketsCollaboratorsListExpandEnum {
+    Roles = 'roles',
     Teams = 'teams'
 }
 /**
@@ -690,8 +685,7 @@ export enum TicketsListExpandEnum {
     Collections = 'collections',
     Contact = 'contact',
     Creator = 'creator',
-    ParentTicket = 'parent_ticket',
-    Project = 'project'
+    ParentTicket = 'parent_ticket'
 }
 /**
 * @export
@@ -750,8 +744,7 @@ export enum TicketsRetrieveExpandEnum {
     Collections = 'collections',
     Contact = 'contact',
     Creator = 'creator',
-    ParentTicket = 'parent_ticket',
-    Project = 'project'
+    ParentTicket = 'parent_ticket'
 }
 /**
 * @export
