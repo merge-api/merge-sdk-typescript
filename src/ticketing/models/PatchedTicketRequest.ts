@@ -83,12 +83,6 @@ export interface PatchedTicketRequest {
      */
     description?: string | null;
     /**
-     * The project the ticket belongs to.
-     * @type {string}
-     * @memberof PatchedTicketRequest
-     */
-    project?: string | null;
-    /**
      * 
      * @type {Array<string>}
      * @memberof PatchedTicketRequest
@@ -184,7 +178,6 @@ export function PatchedTicketRequestFromJSONTyped(json: JSONValue): PatchedTicke
         'due_date': !exists(json, 'due_date') ? undefined : (json['due_date'] === null ? null : new Date(json['due_date'])),
         'status': !exists(json, 'status') ? undefined : TicketStatusEnumFromJSON(json['status']) as TicketStatusEnum,
         'description': !exists(json, 'description') ? undefined : json['description'],
-        'project': !exists(json, 'project') ? undefined : json['project'],
         'collections': !exists(json, 'collections') ? undefined : json['collections'],
         'ticket_type': !exists(json, 'ticket_type') ? undefined : json['ticket_type'],
         'account': !exists(json, 'account') ? undefined : json['account'],
@@ -213,7 +206,6 @@ export function PatchedTicketRequestToJSON(value?: PatchedTicketRequest): JSONVa
         'due_date': value.due_date === undefined ? undefined : (value.due_date === null ? null : value.due_date.toISOString()),
         'status': TicketStatusEnumToJSON(value.status),
         'description': value.description,
-        'project': value.project,
         'collections': value.collections,
         'ticket_type': value.ticket_type,
         'account': value.account,

@@ -17,24 +17,19 @@ import * as runtime from '../../runtime';
 import {
     Campaign,
     CampaignFromJSON,
-    CampaignToJSON,
     Contact,
     ContactFromJSON,
     MKTGCampaignEndpointRequest,
-    MKTGCampaignEndpointRequestFromJSON,
     MKTGCampaignEndpointRequestToJSON,
     MKTGCampaignResponse,
     MKTGCampaignResponseFromJSON,
-    MKTGCampaignResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON,
     
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
 import {

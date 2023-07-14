@@ -99,17 +99,17 @@ export interface TrackingCategory {
      */
     remote_id?: string | null;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof TrackingCategory
-     */
-    readonly field_mappings?: { [key: string]: any; } | null;
-    /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof TrackingCategory
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof TrackingCategory
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -137,8 +137,8 @@ export function TrackingCategoryFromJSONTyped(json: JSONValue): TrackingCategory
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'id': !exists(json, 'id') ? undefined : json['id'],
         'remote_id': !exists(json, 'remote_id') ? undefined : json['remote_id'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

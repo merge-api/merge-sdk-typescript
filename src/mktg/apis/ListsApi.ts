@@ -19,22 +19,17 @@ import {
     ContactFromJSON,
     List,
     ListFromJSON,
-    ListToJSON,
     MKTGListEndpointRequest,
-    MKTGListEndpointRequestFromJSON,
     MKTGListEndpointRequestToJSON,
     MKTGListResponse,
     MKTGListResponseFromJSON,
-    MKTGListResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON,
     
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
 import {

@@ -38,6 +38,7 @@ import {
 import {
     MergeMetaRequest
 } from '../../merge_meta_request';
+import { JSONValue } from '../../merge_json';
 
 export interface FilesCreateRequest {
     fileStorageFileEndpointRequest: FileStorageFileEndpointRequest;
@@ -174,7 +175,7 @@ export class FilesApi extends runtime.BaseAPI {
     /**
      * Returns a list of `File` objects.
      */
-    async filesListRaw(requestParameters: FilesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<FileStorageFile> | undefined>> {
+    async filesListRaw(requestParameters: FilesListRequest): Promise<runtime.ApiResponse<MergePaginatedResponse<File> | undefined>> {
         const queryParameters: any = {};
 
         if (requestParameters.createdAfter !== undefined) {
@@ -246,13 +247,13 @@ export class FilesApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, FileStorageFileFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => MergePaginatedResponseFromJSON(jsonValue, FileFromJSON));
     }
 
     /**
      * Returns a list of `File` objects.
      */
-    async filesList(requestParameters: FilesListRequest): Promise<MergePaginatedResponse<FileStorageFile> | undefined> {
+    async filesList(requestParameters: FilesListRequest): Promise<MergePaginatedResponse<File> | undefined> {
         const response = await this.filesListRaw(requestParameters);
         return await response.value();
     }
@@ -371,3 +372,7 @@ export enum FilesRetrieveExpandEnum {
     Folder = 'folder',
     Permissions = 'permissions'
 }
+function FileFromJSON(j: JSONValue): File | undefined {
+    throw new Error('Function not implemented.');
+}
+

@@ -194,6 +194,7 @@ export class UsersApi extends runtime.BaseAPI {
 * @enum {string}
 */
 export enum UsersListExpandEnum {
+    Roles = 'roles',
     Teams = 'teams'
 }
 /**
@@ -201,5 +202,6 @@ export enum UsersListExpandEnum {
 * @enum {string}
 */
 export enum UsersRetrieveExpandEnum {
+    Roles = 'roles',
     Teams = 'teams'
 }

@@ -100,17 +100,17 @@ export interface Scorecard {
      */
     readonly remote_was_deleted?: boolean;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Scorecard
-     */
-    readonly field_mappings?: { [key: string]: any; } | null;
-    /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof Scorecard
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Scorecard
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -139,8 +139,8 @@ export function ScorecardFromJSONTyped(json: JSONValue): Scorecard | undefined {
         'submitted_at': !exists(json, 'submitted_at') ? undefined : (json['submitted_at'] === null ? null : new Date(json['submitted_at'])),
         'overall_recommendation': !exists(json, 'overall_recommendation') ? undefined : OverallRecommendationEnumFromJSON(json['overall_recommendation']) as OverallRecommendationEnum,
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

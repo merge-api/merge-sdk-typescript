@@ -31,6 +31,9 @@ import {
     MetaResponseFromJSON,
     MetaResponseToJSON,
     
+    PatchedCandidateEndpointRequest,
+    PatchedCandidateEndpointRequestFromJSON,
+    PatchedCandidateEndpointRequestToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
@@ -70,7 +73,18 @@ export interface CandidatesListRequest {
     tags?: string;
 }
 
+export interface CandidatesMetaPatchRetrieveRequest extends MergeMetaRequest {
+    id: string;
+}
+
 // extends MergeMetaRequest
+export interface CandidatesPartialUpdateRequest {
+    id: string;
+    patchedCandidateEndpointRequest: PatchedCandidateEndpointRequest;
+    isDebugMode?: boolean;
+    runAsync?: boolean;
+}
+
 export interface CandidatesRetrieveRequest {
     id: string;
     expand?: Array<CandidatesRetrieveExpandEnum>;
@@ -278,6 +292,55 @@ export class CandidatesApi extends runtime.BaseAPI {
     }
 
     /**
+     * Returns metadata for `Candidate` PATCHs.
+     */
+    async candidatesMetaPatchRetrieveRaw(requestParameters: CandidatesMetaPatchRetrieveRequest): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling candidatesMetaPatchRetrieve.');
+        }
+
+        const queryParameters: any = {};
+
+
+        if (requestParameters !== undefined) {
+            Object.keys(requestParameters.misc_params_query).forEach((key) => {
+                if (requestParameters.misc_params_query[key] !== undefined) {
+                    queryParameters[key] = requestParameters.misc_params_query[key];
+                }
+            })
+        }
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/candidates/meta/patch/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => MetaResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Returns metadata for `Candidate` PATCHs.
+     */
+    async candidatesMetaPatchRetrieve(requestParameters: CandidatesMetaPatchRetrieveRequest): Promise<MetaResponse | undefined> {
+        const response = await this.candidatesMetaPatchRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
      * Returns metadata for `Candidate` POSTs.
      */
     async candidatesMetaPostRetrieveRaw(requestParameters: MergeMetaRequest | undefined = undefined): Promise<runtime.ApiResponse<MetaResponse | undefined>> {
@@ -318,6 +381,63 @@ export class CandidatesApi extends runtime.BaseAPI {
      */
     async candidatesMetaPostRetrieve(requestParameters: MergeMetaRequest | undefined = undefined): Promise<MetaResponse | undefined> {
         const response = await this.candidatesMetaPostRetrieveRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * Updates a `Candidate` object with the given `id`.
+     */
+    async candidatesPartialUpdateRaw(requestParameters: CandidatesPartialUpdateRequest): Promise<runtime.ApiResponse<CandidateResponse | undefined>> {
+        if (requestParameters.id === null || requestParameters.id === undefined) {
+            throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling candidatesPartialUpdate.');
+        }
+
+        if (requestParameters.patchedCandidateEndpointRequest === null || requestParameters.patchedCandidateEndpointRequest === undefined) {
+            throw new runtime.RequiredError('patchedCandidateEndpointRequest','Required parameter requestParameters.patchedCandidateEndpointRequest was null or undefined when calling candidatesPartialUpdate.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.isDebugMode !== undefined) {
+            queryParameters['is_debug_mode'] = requestParameters.isDebugMode;
+        }
+
+        if (requestParameters.runAsync !== undefined) {
+            queryParameters['run_async'] = requestParameters.runAsync;
+        }
+
+
+        
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+
+        if (this.configuration && this.configuration.accessToken) {
+            headerParameters["X-Account-Token"] = this.configuration.accessToken; // bearerAuth authentication
+        }
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = `Bearer ${this.configuration.apiKey}`;
+        }
+
+        const response = await this.request({
+            path: `/ats/v1/candidates/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+            method: 'PATCH',
+            headers: headerParameters,
+            query: queryParameters,
+            body: PatchedCandidateEndpointRequestToJSON(requestParameters.patchedCandidateEndpointRequest),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => CandidateResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Updates a `Candidate` object with the given `id`.
+     */
+    async candidatesPartialUpdate(requestParameters: CandidatesPartialUpdateRequest): Promise<CandidateResponse | undefined> {
+        const response = await this.candidatesPartialUpdateRaw(requestParameters);
         return await response.value();
     }
 

@@ -17,24 +17,19 @@ import * as runtime from '../../runtime';
 import {
     Automation,
     AutomationFromJSON,
-    AutomationToJSON,
     Contact,
     ContactFromJSON,
     MKTGAutomationEndpointRequest,
-    MKTGAutomationEndpointRequestFromJSON,
     MKTGAutomationEndpointRequestToJSON,
     MKTGAutomationResponse,
     MKTGAutomationResponseFromJSON,
-    MKTGAutomationResponseToJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    MetaResponseToJSON,
     
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
 import {

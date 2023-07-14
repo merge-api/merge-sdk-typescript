@@ -56,17 +56,23 @@ export interface Drive {
      */
     drive_url?: string | null;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
+     * Indicates whether or not this object has been deleted by third party webhooks.
+     * @type {boolean}
      * @memberof Drive
      */
-    readonly field_mappings?: { [key: string]: any; } | null;
+    remote_was_deleted?: boolean;
     /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof Drive
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof Drive
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<{ [key: string]: any; }>}
@@ -91,8 +97,9 @@ export function DriveFromJSONTyped(json: JSONValue): Drive | undefined {
         'name': !exists(json, 'name') ? undefined : json['name'],
         'remote_created_at': !exists(json, 'remote_created_at') ? undefined : (json['remote_created_at'] === null ? null : new Date(json['remote_created_at'])),
         'drive_url': !exists(json, 'drive_url') ? undefined : json['drive_url'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
+        'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : json['remote_data'],
     };
 }
@@ -108,6 +115,7 @@ export function DriveToJSON(value?: Drive): JSONValue {
         'name': value.name,
         'remote_created_at': value.remote_created_at === undefined ? undefined : (value.remote_created_at === null ? null : value.remote_created_at.toISOString()),
         'drive_url': value.drive_url,
+        'remote_was_deleted': value.remote_was_deleted,
         'remote_data': value.remote_data,
     };
 }

@@ -69,7 +69,7 @@ export interface EndUserDetailsRequest {
      */
     link_expiry_mins?: number;
     /**
-     * Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.
+     * Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/integrations-fast-say-hello-to-magic-link.
      * @type {boolean}
      * @memberof EndUserDetailsRequest
      */

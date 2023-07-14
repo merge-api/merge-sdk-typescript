@@ -105,17 +105,17 @@ export interface PayrollRun {
      */
     readonly remote_was_deleted?: boolean;
     /**
-     * 
-     * @type {{ [key: string]: any; }}
-     * @memberof PayrollRun
-     */
-    readonly field_mappings?: { [key: string]: any; } | null;
-    /**
      * This is the datetime that this object was last updated by Merge
      * @type {Date}
      * @memberof PayrollRun
      */
     readonly modified_at?: Date;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof PayrollRun
+     */
+    readonly field_mappings?: { [key: string]: any; } | null;
     /**
      * 
      * @type {Array<RemoteData>}
@@ -143,8 +143,8 @@ export function PayrollRunFromJSONTyped(json: JSONValue): PayrollRun | undefined
         'end_date': !exists(json, 'end_date') ? undefined : (json['end_date'] === null ? null : new Date(json['end_date'])),
         'check_date': !exists(json, 'check_date') ? undefined : (json['check_date'] === null ? null : new Date(json['check_date'])),
         'remote_was_deleted': !exists(json, 'remote_was_deleted') ? undefined : json['remote_was_deleted'],
-        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'modified_at': !exists(json, 'modified_at') ? undefined : (new Date(json['modified_at'])),
+        'field_mappings': !exists(json, 'field_mappings') ? undefined : json['field_mappings'],
         'remote_data': !exists(json, 'remote_data') ? undefined : (json['remote_data'] === null ? null : (json['remote_data'] as Array<JSONValue>).map(RemoteDataFromJSON)) as Array<RemoteData>,
     };
 }

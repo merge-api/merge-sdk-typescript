@@ -16,26 +16,19 @@
 import * as runtime from '../../runtime';
 import {
     IgnoreCommonModelRequest,
-    IgnoreCommonModelRequestFromJSON,
     IgnoreCommonModelRequestToJSON,
-    
     RemoteFieldClass,
     
     RemoteFieldClassFromJSON,
     
     User,
     UserFromJSON,
-    UserToJSON,
 } from '../models';
 import {
 	MergePaginatedResponse,
 	MergePaginatedResponseFromJSON,
-	MergePaginatedResponseToJSON,
 } from '../../merge_paginated_response';
 
-import {
-    MergeMetaRequest
-} from '../../merge_meta_request';
 
 export interface UsersIgnoreCreateRequest {
     modelId: string;

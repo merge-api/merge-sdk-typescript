@@ -66,6 +66,8 @@ export * from './OfferStatusEnum';
 export * from './Office';
 export * from './OperatorSchema';
 export * from './OverallRecommendationEnum';
+export * from './PatchedCandidateEndpointRequest';
+export * from './PatchedCandidateRequest';
 export * from './PhoneNumber';
 export * from './PhoneNumberRequest';
 export * from './PhoneNumberTypeEnum';
