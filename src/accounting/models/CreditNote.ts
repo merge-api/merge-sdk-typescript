@@ -95,6 +95,12 @@ export interface CreditNote {
      */
     company?: string | null;
     /**
+     * The credit note's exchange rate.
+     * @type {string}
+     * @memberof CreditNote
+     */
+    exchange_rate?: string | null;
+    /**
      * The credit note's total amount.
      * @type {number}
      * @memberof CreditNote
@@ -493,6 +499,7 @@ export function CreditNoteFromJSONTyped(json: JSONValue): CreditNote | undefined
         'number': !exists(json, 'number') ? undefined : json['number'],
         'contact': !exists(json, 'contact') ? undefined : json['contact'],
         'company': !exists(json, 'company') ? undefined : json['company'],
+        'exchange_rate': !exists(json, 'exchange_rate') ? undefined : json['exchange_rate'],
         'total_amount': !exists(json, 'total_amount') ? undefined : json['total_amount'],
         'remaining_credit': !exists(json, 'remaining_credit') ? undefined : json['remaining_credit'],
         'line_items': !exists(json, 'line_items') ? undefined : ((json['line_items'] as Array<JSONValue>).map(CreditNoteLineItemFromJSON)) as Array<CreditNoteLineItem>,
@@ -521,6 +528,7 @@ export function CreditNoteToJSON(value?: CreditNote): JSONValue {
         'number': value.number,
         'contact': value.contact,
         'company': value.company,
+        'exchange_rate': value.exchange_rate,
         'total_amount': value.total_amount,
         'remaining_credit': value.remaining_credit,
         'line_items': value.line_items === undefined ? undefined : ((value.line_items as Array<any>).map(CreditNoteLineItemToJSON)),

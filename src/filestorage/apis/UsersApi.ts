@@ -36,6 +36,7 @@ export interface UsersListRequest {
     cursor?: string;
     includeDeletedData?: boolean;
     includeRemoteData?: boolean;
+    isMe?: boolean;
     modifiedAfter?: Date;
     modifiedBefore?: Date;
     pageSize?: number;
@@ -76,6 +77,10 @@ export class UsersApi extends runtime.BaseAPI {
 
         if (requestParameters.includeRemoteData !== undefined) {
             queryParameters['include_remote_data'] = requestParameters.includeRemoteData;
+        }
+
+        if (requestParameters.isMe !== undefined) {
+            queryParameters['is_me'] = requestParameters.isMe;
         }
 
         if (requestParameters.modifiedAfter !== undefined) {
