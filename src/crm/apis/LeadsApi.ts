@@ -23,8 +23,8 @@ import {
     LeadResponseFromJSON,
     MetaResponse,
     MetaResponseFromJSON,
-    RemoteFieldClassFromJSON,
     RemoteFieldClass,
+    RemoteFieldClassFromJSON,
     
 } from '../models';
 import {
