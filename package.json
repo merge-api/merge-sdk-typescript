@@ -1,6 +1,6 @@
 {
   "name": "@mergeapi/merge-sdk-typescript",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "NodeJS client for Merge API, Inc's unified API's.",
   "author": "hello@merge.dev",
   "main": "./dist/index.js",

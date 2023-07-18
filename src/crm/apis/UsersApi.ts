@@ -18,9 +18,7 @@ import {
     IgnoreCommonModelRequest,
     IgnoreCommonModelRequestToJSON,
     RemoteFieldClass,
-    
     RemoteFieldClassFromJSON,
-    
     User,
     UserFromJSON,
 } from '../models';

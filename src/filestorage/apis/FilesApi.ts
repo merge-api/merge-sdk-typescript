@@ -372,7 +372,7 @@ export enum FilesRetrieveExpandEnum {
     Folder = 'folder',
     Permissions = 'permissions'
 }
+
 function FileFromJSON(j: JSONValue): File | undefined {
     throw new Error('Function not implemented.');
 }
-

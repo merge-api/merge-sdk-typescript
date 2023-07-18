@@ -16,9 +16,7 @@
 import * as runtime from '../../runtime';
 import {
     RemoteFieldClass,
-    
     RemoteFieldClassFromJSON,
-    
     Stage,
     StageFromJSON,
 } from '../models';

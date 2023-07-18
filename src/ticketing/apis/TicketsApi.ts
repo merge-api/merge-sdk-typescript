@@ -25,10 +25,10 @@ import {
     TicketEndpointRequestToJSON,
     TicketResponse,
     TicketResponseFromJSON,
-    User,
-    UserFromJSON,
     RemoteFieldClass,
     RemoteFieldClassFromJSON,
+    UserFromJSON,
+    User,
 } from '../models';
 import {
 	MergePaginatedResponse,
