@@ -50,7 +50,7 @@ examples for calling various category API's:
 This SDK relies on the Fetch API, which is baked into Node starting at version 17.5. For those customers on older
 versions of Node, we allow you to explicitly set the fetchApi property like so:
 
-```
+```typescript
 import fetch from 'node-fetch'
 
 ...
@@ -68,7 +68,7 @@ versions of Node may require additional type adjustments to make it work.
 
 #### Accounting
 
-```
+```typescript
 const confAccounting = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
@@ -85,7 +85,7 @@ console.log(response);
 
 #### ATS
 
-```
+```typescript
 const confAts = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
@@ -102,7 +102,7 @@ console.log(response);
 
 #### CRM
 
-```
+```typescript
 const confCrm = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
@@ -117,7 +117,7 @@ console.log(response);
 
 #### HRIS
 
-```
+```typescript
 const confHris = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
@@ -134,7 +134,7 @@ console.log(response);
 
 #### Ticketing
 
-```
+```typescript
 const confTicketing = new Configuration({
     apiKey: "REDACTED-YourAPIKeyWithMerge",
     accessToken: "REDACTED-YourCustomer1Key"
@@ -154,7 +154,7 @@ sporadic cases where integration enum values are too unique to be mapped. In the
 come back as-is. In order to support this behavior, starting in v3.0.0 of merge-sdk-typescript, all enum
 values will be wrapped in an interface like:
 
-```
+```typescript
 {
     value: EnumValue,
     rawValue: string
@@ -168,7 +168,7 @@ from the integration source.
 
 To build and compile the typescript sources to javascript use:
 
-```
+```bash
 npm install
 npm run build
 ```
@@ -185,12 +185,12 @@ navigate to the folder of your consuming project and run one of the following co
 
 _published:_
 
-```
+```bash
 npm install @mergeapi/merge-sdk-typescript@3.0.9 --save
 ```
 
 _unPublished (not recommended):_
 
-```
+```bash
 npm install PATH_TO_GENERATED_PACKAGE --save
 ```
